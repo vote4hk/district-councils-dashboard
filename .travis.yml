@@ -5,6 +5,8 @@ node_js:
 before_install:
   - cd web
   - npm install
+  
+script: 'true'
 
 deploy:
   provider: pages
@@ -12,4 +14,4 @@ deploy:
   github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
   keep_history: true
   on:
-    branch: master
+    branch: master  
