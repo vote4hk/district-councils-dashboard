@@ -5,7 +5,7 @@ node_js:
 before_install:
   - cd web
   - npm install
-  
+
 script: 'true'
 
 deploy:
