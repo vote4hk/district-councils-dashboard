@@ -23,6 +23,7 @@ import MapboxMap from './components/MapboxMap'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import createMuiTheme from './ui/theme';
+import DCCAElectionResult from './components/DCCAElectionResult'
 
 import './App.css'
 import { loadDCCAdata } from './actions'
@@ -32,6 +33,7 @@ import dc2007 from './data/DCCA_2007'
 import dc2011 from './data/DCCA_2011'
 import dc2015 from './data/DCCA_2015'
 import dc2019 from './data/DCCA_2019'
+import electors from './data/electors'
 
 
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
@@ -93,7 +95,7 @@ class App extends Component {
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
             <Typography variant="h6" color="inherit" noWrap>
-              Clipped drawer
+              District Council Dashboard
             </Typography>
           </Toolbar>
         </AppBar>
@@ -117,6 +119,10 @@ class App extends Component {
                 <StepContent>
                   <Typography>{`${feature.CNAME} ${feature.ENAME}`}</Typography>
                   <div className={classes.actionsContainer}>
+                    <DCCAElectionResult
+                      electors={electors}
+                      year={feature.year}
+                      cacode={feature.CACODE} />
                   {`${feature.CACODE}`}
                   </div>
                 </StepContent>
