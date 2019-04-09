@@ -123,7 +123,6 @@ class App extends Component {
                       electors={electors}
                       year={feature.year}
                       cacode={feature.CACODE} />
-                  {`${feature.CACODE}`}
                   </div>
                 </StepContent>
               </Step>

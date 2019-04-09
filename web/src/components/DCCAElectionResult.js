@@ -8,7 +8,6 @@ const DCCAElectionResult = (props) => {
     const { electors, year, cacode } = props
     const yearIndex = electors.findIndex(o => o.year === parseInt(year))
     const result = yearIndex > -1 ? electors[yearIndex].election.find(e => e.cacode === cacode) : false
-    console.log(result)
     return (
         <React.Fragment>
             {`${result.cacode}`} <br />
