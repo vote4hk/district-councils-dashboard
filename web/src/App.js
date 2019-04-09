@@ -22,6 +22,7 @@ import BoundariesMap from './components/BoundariesMap'
 import MapboxMap from './components/MapboxMap'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import createMuiTheme from './ui/theme';
 
 import './App.css'
 import { loadDCCAdata } from './actions'
@@ -33,7 +34,11 @@ import dc2015 from './data/DCCA_2015'
 import dc2019 from './data/DCCA_2019'
 
 
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+
 const drawerWidth = 240;
+
+const theme = createMuiTheme
 
 const styles = theme => ({
   root: {
@@ -76,9 +81,13 @@ class App extends Component {
     this.props.actions.loadDCCAdata([dc2003, dc2007, dc2011, dc2015, dc2019])
   }
 
+  
+
   render() {
     const { classes, dccaList, map } = this.props;
+
     return (
+      <MuiThemeProvider theme={theme}>
       <div className={classes.root}>
         <CssBaseline />
         <AppBar position="fixed" className={classes.appBar}>
@@ -131,6 +140,7 @@ class App extends Component {
             />}
         </main>
       </div>
+      </MuiThemeProvider>
     );
   }
 }
