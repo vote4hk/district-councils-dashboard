@@ -83,9 +83,6 @@ class App extends Component {
       selectedDCCA: null
     }
 
-    this.onMapPanned = this.onMapPanned.bind(this)
-    this.onMapClicked = this.onMapClicked.bind(this)
-
     this.dccaList = [dc2003, dc2007, dc2011, dc2015, dc2019]
 
   }
@@ -94,7 +91,7 @@ class App extends Component {
     // this.props.actions.loadDCCAdata([dc2003, dc2007, dc2011, dc2015, dc2019])
   }
 
-  onMapPanned(lng, lat, zoom) {
+  onMapPanned = (lng, lat, zoom) => {
     this.setState({
       map: {
         center: [lng, lat],
@@ -103,7 +100,7 @@ class App extends Component {
     })
   }
 
-  onMapClicked(e) {
+  onMapClicked = (e) => {
     this.setState({
       map: {
         lastClick : [e.lngLat.lng, e.lngLat.lat]
