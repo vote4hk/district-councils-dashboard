@@ -15,7 +15,7 @@ const DCCAElectionResult = (props) => {
             {result &&
                 <List>
                     {
-                        result.candidates.map(r => <ListItem key={year}>
+                        result.candidates.map(r => <ListItem key={`${r.number}`}>
                             <ListItemText
                                 primary={`${r.number > 0 ? r.cName : ''} ${r.eName}`}
                                 secondary={r.vote > 0 ? `${r.vote}票` : '自動當選'}

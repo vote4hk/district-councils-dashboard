@@ -20,13 +20,11 @@ import { withStyles } from '@material-ui/core/styles';
 import SideBar from './components/SideBar';
 import BoundariesMap from './components/BoundariesMap'
 import MapboxMap from './components/MapboxMap'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux';
 import createMuiTheme from './ui/theme';
 import DCCAElectionResult from './components/DCCAElectionResult'
+import { getAllFeaturesFromPoint } from './utils/features'
 
 import './App.css'
-import { loadDCCAdata } from './actions'
 
 import dc2003 from './data/DCCA_2003'
 import dc2007 from './data/DCCA_2007'
@@ -75,18 +73,48 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
-    };
+      open: false,
+      map: {
+        center: [LONG, LAT],
+        zoom: ZOOM,
+        styleID: STYLE_ID,
+        lastClick: null
+      },
+      selectedDCCA: null
+    }
+
+    this.onMapPanned = this.onMapPanned.bind(this)
+    this.onMapClicked = this.onMapClicked.bind(this)
+
+    this.dccaList = [dc2003, dc2007, dc2011, dc2015, dc2019]
+
   }
 
   componentDidMount() {
-    this.props.actions.loadDCCAdata([dc2003, dc2007, dc2011, dc2015, dc2019])
+    // this.props.actions.loadDCCAdata([dc2003, dc2007, dc2011, dc2015, dc2019])
   }
 
-  
+  onMapPanned(lng, lat, zoom) {
+    this.setState({
+      map: {
+        center: [lng, lat],
+        zoom,
+      }
+    })
+  }
+
+  onMapClicked(e) {
+    this.setState({
+      map: {
+        lastClick : [e.lngLat.lng, e.lngLat.lat]
+      },
+      selectedDCCA: getAllFeaturesFromPoint(e.lngLat, this.dccaList)
+    })
+  }
 
   render() {
-    const { classes, dccaList, map } = this.props;
+    const { map: {center, zoom, lastClick}, selectedDCCA } = this.state
+    const { classes, map } = this.props
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -109,11 +137,11 @@ class App extends Component {
           <div className={classes.toolbar} />
 
           <Divider />
-          <div>{`Longitude: ${map.lng} Latitude: ${map.lat} Zoom: ${map.zoom}`}</div>
-          <div>{map.lastClick ? `lastClick: ${map.lastClick.lat} ${map.lastClick.lng}` : ''}</div>
-
+          <div>{center && zoom && `Longitude: ${center[0]} Latitude: ${center[1]} Zoom: ${zoom}`}</div><br />
+          <div>{lastClick ? `lastClick: ${lastClick[0]} ${lastClick[1]}` : ''}</div>
+          {console.log(this.state)}
           <Stepper orientation="vertical">
-            {map.selectedFeature && map.selectedFeature.map((feature, index) => (
+            {selectedDCCA && selectedDCCA.map((feature, index) => (
               <Step key={feature.year} active={true}>
                 <StepLabel>{feature.year}</StepLabel>
                 <StepContent>
@@ -132,16 +160,17 @@ class App extends Component {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          {dccaList &&
+          {this.dccaList &&
             <MapboxMap
-              mapLayers={dccaList}
+              mapLayers={this.dccaList}
               token={TOKEN}
-              longitude={LONG}
-              latitude={LAT}
-              zoom={ZOOM}
+              center={center}
+              zoom={zoom}
               showPopUp={true}
               styleID={STYLE_ID}
               minZoom={MIN_ZOOM}
+              onMapClicked={this.onMapClicked}
+              onMapPanned={this.onMapPanned}
             />}
         </main>
       </div>
@@ -150,15 +179,4 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    dccaList: state.dcca,
-    map: state.map
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return { actions: bindActionCreators({ loadDCCAdata }, dispatch) }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(App))
+export default withStyles(styles, { withTheme: true })(App)

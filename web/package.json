@@ -1,22 +1,22 @@
 {
   "name": "web",
   "version": "0.1.0",
-  "private": true,
+  "homepage": "https://cswbrian.github.io/district-councils-dashboard/",
   "dependencies": {
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
     "@turf/turf": "^5.1.6",
+    "gh-pages": "^2.0.1",
     "mapbox-gl": "^0.53.1",
     "ol": "^5.3.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-redux": "^6.0.1",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8",
-    "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "react-scripts": "2.1.8"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

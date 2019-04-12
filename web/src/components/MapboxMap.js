@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux';
 import mapboxgl from 'mapbox-gl'
-import { panMap, clickMap, clickDCCA } from '../actions/map'
-import { getAllFeaturesFromPoint, getBoundingBox } from '../utils/features'
+import { getBoundingBox } from '../utils/features'
 
 class MapboxMap extends Component {
     componentDidMount() {
         // set map properties
-        const { token, longitude, latitude, zoom, minZoom, styleID, mapLayers } = this.props;
+        const { token, center, zoom, minZoom, styleID, mapLayers, onMapClicked, onMapPanned } = this.props;
 
         const mapConfig = {
             container: 'map',
             style: `mapbox://styles/${styleID}`,
-            center: [longitude, latitude],
+            center: center,
             zoom: zoom,
             minZoom: minZoom
         };
@@ -28,7 +25,7 @@ class MapboxMap extends Component {
 
             map.addSource('2019', {
                 type: 'geojson',
-                data: this.props.mapLayers.dccaList[4],
+                data: mapLayers[4],
                 generateId: true
                 // When enabled, the feature.id property will be auto assigned based on its index in the features array, over-writing any previous values.
             });
@@ -116,19 +113,12 @@ class MapboxMap extends Component {
 
 
             map.on('click', e => {
-                this.props.actions.clickMap(e.lngLat)
-                this.props.actions.clickDCCA(getAllFeaturesFromPoint(e.lngLat, this.props.mapLayers.dccaList))
+                onMapClicked(e)
             });
 
             map.on('move', () => {
                 const { lng, lat } = map.getCenter();
-
-                this.props.actions.panMap({
-                    lng: lng.toFixed(4),
-                    lat: lat.toFixed(4),
-                    zoom: map.getZoom().toFixed(2)
-                })
-
+                onMapPanned(lng.toFixed(4), lat.toFixed(4), map.getZoom().toFixed(2))
             });
 
         });
@@ -150,14 +140,4 @@ class MapboxMap extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        mapConfig: state.map
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return { actions: bindActionCreators({ panMap, clickMap, clickDCCA }, dispatch) }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MapboxMap)
+export default MapboxMap
