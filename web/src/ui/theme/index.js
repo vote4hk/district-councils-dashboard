@@ -6,4 +6,8 @@ const palette = {
 };
 const themeName = 'Pizazz Spring Green Falcon';
 
-export default createMuiTheme({ palette, themeName });
+const typography =  {
+  useNextVariants: true,
+}
+
+export default createMuiTheme({ palette, themeName, typography });
