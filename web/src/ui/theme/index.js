@@ -8,6 +8,7 @@ const themeName = 'Pizazz Spring Green Falcon';
 
 const typography =  {
   useNextVariants: true,
+  fontFamily: "'Noto Sans TC', sans-serif"
 }
 
 export default createMuiTheme({ palette, themeName, typography });
