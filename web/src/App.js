@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import AppBar from '@material-ui/core/AppBar'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Toolbar from '@material-ui/core/Toolbar'
 import List from '@material-ui/core/List'
 import Typography from '@material-ui/core/Typography'
 import ListItem from '@material-ui/core/ListItem'
 import { withStyles } from '@material-ui/core/styles'
+import NavBar from './layout/NavBar'
 import MapboxMap from './components/MapboxMap'
 import InfoCard from './components/InfoCard'
 import createMuiTheme from './ui/theme'
@@ -125,13 +125,7 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
       <div className={classes.root}>
         <CssBaseline />
-        <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="h6" color="inherit" noWrap>
-            區議會選區分界地圖（2003-2019）
-            </Typography>
-          </Toolbar>
-        </AppBar>
+        <NavBar />
         <main className={classes.content}>
           <div className={classes.toolbar} />
           {dccaList &&
