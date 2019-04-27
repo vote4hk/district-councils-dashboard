@@ -19,7 +19,7 @@ class NavBar extends Component {
             <AppBar position="fixed" className={classes.appBar}>
             <Toolbar>
               <Typography variant="h6" color="inherit" noWrap>
-              區議會選區分界地圖（2003-2019）
+              香港議會大典
               </Typography>
               <Link to="/map"><Button color="inherit">地圖（2003-2019）</Button></Link>
               <Link to="/table"><Button color="inherit">原始資料</Button></Link>
