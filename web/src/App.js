@@ -30,6 +30,7 @@ class App extends Component {
           <div className={classes.root}>
             <CssBaseline />
             <NavBar />
+            <Route exact path="/" component={mapPage} />
             <Route exact path="/map" component={mapPage} />
           </div>
         </MuiThemeProvider>
