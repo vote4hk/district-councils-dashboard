@@ -126,7 +126,7 @@ class IntegrationAutosuggest extends React.Component {
 
   handleAddressSelected(address) {
     const coordinate = address.coordinate();
-    console.log(coordinate);
+    this.props.onAutoSuggestClicked(coordinate)
   }
 
   async onAddressFieldChanged(event, { newValue }) {
