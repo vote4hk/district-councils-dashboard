@@ -133,7 +133,7 @@ class IntegrationAutosuggest extends React.Component {
     const records = await AddressParser.parse(newValue);
 
     this.setState({
-      suggestions: records.map(record => ({ label: record.fullAddress(AddressParser.Address.LANG_ZH) })),
+      suggestions: records.filter((_, index) => index < 10).map(record => ({ label: record.fullAddress(AddressParser.Address.LANG_ZH) })),
     })
     console.log(this.state);
   }
