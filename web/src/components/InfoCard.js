@@ -18,7 +18,7 @@ const styles = {
     card: {    
         width: '400px',
         position: 'absolute',
-        top: '15%',
+        top: '20%',
         left: '100px'
     },
     pos: {

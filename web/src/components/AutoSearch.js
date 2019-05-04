@@ -60,8 +60,13 @@ function getSuggestionValue(suggestion) {
 
 const styles = theme => ({
   root: {
-    height: 250,
+    display: 'block',
+    // height: 250,
     flexGrow: 1,
+    position: 'absolute',
+    width: '100%',
+    backgroundColor: '#fff',
+    padding: '10px'
   },
   container: {
     position: 'relative',
@@ -74,12 +79,12 @@ const styles = theme => ({
     right: 0,
   },
   suggestion: {
-    display: 'block',
+    display: 'block'
   },
   suggestionsList: {
     margin: 0,
     padding: 0,
-    listStyleType: 'none',
+    listStyleType: 'none'
   },
   divider: {
     height: theme.spacing.unit * 2,
@@ -171,38 +176,41 @@ class IntegrationAutosuggest extends React.Component {
     };
 
     return (
+
       <div className={classes.root}>
-        <Autosuggest
-          {...autosuggestProps}
-          inputProps={{
-            classes,
-            label: 'Label',
-            placeholder: 'With Popper',
-            value: this.state.value,
-            onChange: this.onAddressFieldChanged.bind(this),
-            inputRef: node => {
-              this.popperNode = node;
-            },
-            InputLabelProps: {
-              shrink: true,
-            },
-          }}
-          theme={{
-            suggestionsList: classes.suggestionsList,
-            suggestion: classes.suggestion,
-          }}
-          renderSuggestionsContainer={options => (
-            <Popper anchorEl={this.popperNode} open={Boolean(options.children)}>
-              <Paper
-                square
-                {...options.containerProps}
-                style={{ width: this.popperNode ? this.popperNode.clientWidth : null }}
-              >
-                {options.children}
-              </Paper>
-            </Popper>
-          )}
-        />
+        <div className={classes.autoSuggestDiv}>
+          <Autosuggest
+            {...autosuggestProps}
+            inputProps={{
+              classes,
+              label: 'Label',
+              placeholder: 'With Popper',
+              value: this.state.value,
+              onChange: this.onAddressFieldChanged.bind(this),
+              inputRef: node => {
+                this.popperNode = node;
+              },
+              InputLabelProps: {
+                shrink: true,
+              },
+            }}
+            theme={{
+              suggestionsList: classes.suggestionsList,
+              suggestion: classes.suggestion,
+            }}
+            renderSuggestionsContainer={options => (
+              <Popper anchorEl={this.popperNode} open={Boolean(options.children)}>
+                <Paper
+                  square
+                  {...options.containerProps}
+                  style={{ width: this.popperNode ? this.popperNode.clientWidth : null }}
+                >
+                  {options.children}
+                </Paper>
+              </Popper>
+            )}
+          />
+        </div>
       </div>
     );
   }
