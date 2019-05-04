@@ -34,7 +34,8 @@ function renderInputComponent(inputProps) {
 function renderSuggestion(suggestion, { query, isHighlighted }) {
   const matches = match(suggestion.label, query);
   const parts = parse(suggestion.label, matches);
-
+  console.log(query);
+  console.log(suggestion);
   return (
     <MenuItem selected={isHighlighted} component="div">
       <div>
@@ -112,9 +113,10 @@ class IntegrationAutosuggest extends React.Component {
   }
 
   handleSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: this.getSuggestions(value),
-    });
+    console.log('fetched');
+    // this.setState({
+    //   suggestions: this.getSuggestions(value),
+    // });
   };
 
   handleSuggestionsClearRequested = () => {
@@ -129,18 +131,12 @@ class IntegrationAutosuggest extends React.Component {
       value: newValue
     })
     const records = await AddressParser.parse(newValue);
+
     this.setState({
-      suggestions: records.map(record => ({ label: record.fullAddress() })),
+      suggestions: records.map(record => ({ label: record.fullAddress(AddressParser.Address.LANG_ZH) })),
     })
     console.log(this.state);
   }
-
-  handleChange = name => (event, { newValue }) => {
-    this.setState({
-      [name]: newValue,
-    });
-  };
-
   render() {
     const { classes } = this.props;
 
