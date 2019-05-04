@@ -94,6 +94,16 @@ class MapPage extends Component {
     })
   }
 
+
+  onAutoSuggestClicked = (e) => {
+    this.setState({
+      map: {
+        lastClick : [e.lng, e.lat]
+      },
+      selectedDCCA: getAllFeaturesFromPoint({lat: parseFloat(e.lat), lng: parseFloat(e.lng)}, this.state.dccaList)
+    })
+  }
+
   onYearBtnClicked = (name) => {
     const idx = this.state.dccaList.findIndex(dcca => dcca.name === name)
     let dccaList = [...this.state.dccaList]
@@ -133,7 +143,10 @@ class MapPage extends Component {
             cacode={currentYear && selectedDCCA && selectedDCCA.find(feature => feature.year === currentYear).CACODE}
             />
             
-            <AutoSearch className={classes.searchBox} />
+            <AutoSearch 
+            className={classes.searchBox} 
+            onAutoSuggestClicked={this.onAutoSuggestClicked}
+            />
             <div className={classes.yearButton}>
               <List>
                 {dccaList.map((dcca, index) => <ListItem key={`${dcca.name}`}>
