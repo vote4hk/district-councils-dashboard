@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { instanceOf } from 'prop-types';
 import deburr from 'lodash/deburr';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
@@ -34,8 +34,7 @@ function renderInputComponent(inputProps) {
 function renderSuggestion(suggestion, { query, isHighlighted }) {
   const matches = match(suggestion.label, query);
   const parts = parse(suggestion.label, matches);
-  console.log(query);
-  console.log(suggestion);
+
   return (
     <MenuItem selected={isHighlighted} component="div">
       <div>
@@ -113,7 +112,7 @@ class IntegrationAutosuggest extends React.Component {
   }
 
   handleSuggestionsFetchRequested = ({ value }) => {
-    console.log('fetched');
+    // console.log('fetched');
     // this.setState({
     //   suggestions: this.getSuggestions(value),
     // });
@@ -125,17 +124,39 @@ class IntegrationAutosuggest extends React.Component {
     });
   };
 
-  async onAddressFieldChanged(event, { newValue }) {
-    console.log('searching');
-    this.setState({
-      value: newValue
-    })
-    const records = await AddressParser.parse(newValue);
+  handleAddressSelected(address) {
+    const coordinate = address.coordinate();
+    console.log(coordinate);
+  }
 
-    this.setState({
-      suggestions: records.filter((_, index) => index < 10).map(record => ({ label: record.fullAddress(AddressParser.Address.LANG_ZH) })),
-    })
-    console.log(this.state);
+  async onAddressFieldChanged(event, { newValue }) {
+    const isMouseClick = event.nativeEvent instanceof MouseEvent;
+    if (isMouseClick) {
+      this.setState({
+        value: newValue
+      })
+
+      let foundAddress = null;
+      try {
+        foundAddress = this.state.addresses.filter( address => address.fullAddress(AddressParser.Address.LANG_ZH) === newValue)[0];
+      } catch (error) {
+      }
+
+      if (foundAddress) {
+        this.handleAddressSelected(foundAddress);
+      }
+    } else {
+      this.setState({
+        value: newValue
+      })
+      const records = await AddressParser.parse(newValue);
+
+      this.setState({
+        suggestions: records.filter((_, index) => index < 10).map(record => ({ label: record.fullAddress(AddressParser.Address.LANG_ZH) })),
+        addresses: records,
+      })
+    }
+
   }
   render() {
     const { classes } = this.props;
