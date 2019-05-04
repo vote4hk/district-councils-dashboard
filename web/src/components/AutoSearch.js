@@ -137,6 +137,7 @@ class IntegrationAutosuggest extends React.Component {
   async onAddressFieldChanged(event, { newValue }) {
     const isMouseClick = event.nativeEvent instanceof MouseEvent;
     if (isMouseClick) {
+      // This is fired when clicked on the pull down menu
       this.setState({
         value: newValue
       })
@@ -151,15 +152,21 @@ class IntegrationAutosuggest extends React.Component {
         this.handleAddressSelected(foundAddress);
       }
     } else {
+      // this is fired when typing in the search field
       this.setState({
+        currentSearchingResult: newValue,
         value: newValue
       })
       const records = await AddressParser.parse(newValue);
 
-      this.setState({
-        suggestions: records.filter((_, index) => index < 10).map(record => ({ label: record.fullAddress(AddressParser.Address.LANG_ZH) })),
-        addresses: records,
-      })
+      // Ignore the search if it is not the latest result
+      if (this.state.currentSearchingResult === newValue) {
+        this.setState({
+          suggestions: records.filter((_, index) => index < 10).map(record => ({ label: record.fullAddress(AddressParser.Address.LANG_ZH) })),
+          addresses: records,
+        })
+      }
+
     }
 
   }
