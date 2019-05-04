@@ -31,7 +31,7 @@ class App extends Component {
           <div className={classes.root}>
             <CssBaseline />
             <NavBar />
-            {/* <Route exact path="/" component={searchPage} /> */}
+            <Route exact path="/" component={searchPage} />
             <Route exact path="/map" component={mapPage} />
           </div>
         </MuiThemeProvider>
