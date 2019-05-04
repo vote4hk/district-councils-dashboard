@@ -64,8 +64,9 @@ const SimpleCard = props => {
                     {
                         result.candidates.map(candi => <ListItem alignItems="flex-start" key={`${candi.number}`}>
                             <ListItemAvatar>
-                                <Avatar>
-                                    <PersonIcon />
+                                <Avatar 
+                                src={`/static/images/avatar/${year}/${result.cacode}_${year === 2011 ? '0' : ''}${candi.number}.jpg`}
+                                imgProps={{ onError: (e) => { e.target.src = '/static/images/avatar/default.png'; } }} >
                                 </Avatar>
                             </ListItemAvatar>
                             <ListItemText
