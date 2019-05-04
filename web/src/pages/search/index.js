@@ -14,6 +14,7 @@ import dc2011 from '../../data/DCCA_2011'
 import dc2015 from '../../data/DCCA_2015'
 import dc2019 from '../../data/DCCA_2019'
 import electors from '../../data/electors'
+import candidates from '../../data/initium-full-dc-candidates'
 
 import * as AddressParser from 'hk-address-parser-lib';
 
@@ -44,6 +45,7 @@ class SearchPage extends Component {
     super(props);
     this.state = {
       autoCompleteList: [],
+      autoCompleteNameList: [],
     }
   }
 
@@ -59,9 +61,19 @@ class SearchPage extends Component {
     })
   }
 
+  async onNameFieldChanged(evt) {
+    const { value } = evt.target;
+    const records = candidates.filter(candidate => candidate.Candidate_name.includes(value))
+    console.log( records );
+    this.setState({
+      autoCompleteNameList: records
+    })
+  }
+
   render() {
     const { classes } = this.props
     const { autoCompleteList } = this.state;
+    const { autoCompleteNameList } = this.state;
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
@@ -82,8 +94,10 @@ class SearchPage extends Component {
         inputProps={{
           'aria-label': 'Description',
         }}
+        onChange={this.onNameFieldChanged.bind(this)}
       />
       { autoCompleteList.map( (address, index) => (<div key={index}><p>{address.fullAddress()}</p></div>))}
+      { autoCompleteNameList.map( (candidate, index) => (<div key={index}><p>{candidate.ID} {candidate.Year} {candidate.Constituency_code}</p></div>))}
     </div>
 
         </main>
