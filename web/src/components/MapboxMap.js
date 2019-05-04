@@ -5,7 +5,7 @@ import { getBoundingBox } from '../utils/features'
 class MapboxMap extends Component {
     componentDidMount() {
         // set map properties
-        const { token, center, zoom, minZoom, styleID, mapLayers, onMapClicked, onMapPanned, color } = this.props
+        const { token, center, zoom, minZoom, styleID, mapLayers, selectedDCCA, onMapClicked, onMapPanned, color } = this.props
 
         const mapConfig = {
             container: 'map',
@@ -158,6 +158,10 @@ class MapboxMap extends Component {
                     this.map.setLayoutProperty(`${layer.name}-highlight`, 'visibility', layer.visibility)
                 }
             })
+        }
+
+        if (this.props.selectedDCCA !== prevProps.selectedDCCA) {
+            console.log(this.props.selectedDCCA)
         }
     }
 

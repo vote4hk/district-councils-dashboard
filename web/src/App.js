@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles'
 import NavBar from './layout/NavBar'
 import createMuiTheme from './ui/theme'
 import { BrowserRouter as Router, Route } from "react-router-dom"
+import searchPage from './pages/search'
 import mapPage from './pages/map'
 
 import './App.css'
@@ -30,7 +31,7 @@ class App extends Component {
           <div className={classes.root}>
             <CssBaseline />
             <NavBar />
-            <Route exact path="/" component={mapPage} />
+            <Route exact path="/" component={searchPage} />
             <Route exact path="/map" component={mapPage} />
           </div>
         </MuiThemeProvider>

@@ -21,8 +21,8 @@ class NavBar extends Component {
               <Typography variant="h6" color="inherit" noWrap>
               District Council Dashboard
               </Typography>
-              {/* <Link to="/map"><Button color="inherit">地圖（2003-2019）</Button></Link> */}
-              {/* <Link to="/table"><Button color="inherit">原始資料</Button></Link> */}
+              <Link to="/"><Button color="inherit">Search</Button></Link>
+              <Link to="/map"><Button color="inherit">Map</Button></Link>
             </Toolbar>
           </AppBar>
         )

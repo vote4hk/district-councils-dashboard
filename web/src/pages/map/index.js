@@ -119,6 +119,7 @@ class MapPage extends Component {
               color={color}
               onMapClicked={this.onMapClicked}
               onMapPanned={this.onMapPanned}
+              selectedDCCA={selectedDCCA}
             />}
             <InfoCard 
             electors={electors}
