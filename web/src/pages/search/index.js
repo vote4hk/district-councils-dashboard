@@ -15,6 +15,8 @@ import dc2015 from '../../data/DCCA_2015'
 import dc2019 from '../../data/DCCA_2019'
 import electors from '../../data/electors'
 
+import * as AddressParser from 'hk-address-parser-lib';
+
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 
 const theme = createMuiTheme
@@ -39,11 +41,27 @@ const styles = theme => ({
 
 class SearchPage extends Component {
   constructor(props) {
-    super(props)
+    super(props);
+    this.state = {
+      autoCompleteList: [],
+    }
+  }
+
+  async componentDidMount() {
+
+  }
+
+  async onAddressFieldChanged(evt) {
+    const { value } = evt.target;
+    const records = await AddressParser.parse(value);
+    this.setState({
+      autoCompleteList: records,
+    })
   }
 
   render() {
     const { classes } = this.props
+    const { autoCompleteList } = this.state;
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
@@ -55,6 +73,7 @@ class SearchPage extends Component {
         inputProps={{
           'aria-label': 'Description',
         }}
+        onChange={this.onAddressFieldChanged.bind(this)}
       />
 
       <Input
@@ -64,8 +83,11 @@ class SearchPage extends Component {
           'aria-label': 'Description',
         }}
       />
+      { autoCompleteList.map( (address, index) => (<div key={index}><p>{address.fullAddress()}</p></div>))}
     </div>
+
         </main>
+
       </MuiThemeProvider>
     )
   }
