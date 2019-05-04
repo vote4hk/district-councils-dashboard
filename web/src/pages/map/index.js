@@ -10,6 +10,7 @@ import InfoCard from '../../components/InfoCard'
 import createMuiTheme from '../../ui/theme'
 import { getAllFeaturesFromPoint } from '../../utils/features'
 import Button from '@material-ui/core/Button'
+import AutoSearch from '../../components/AutoSearch'
 
 import dc2003 from '../../data/DCCA_2003'
 import dc2007 from '../../data/DCCA_2007'
@@ -31,6 +32,11 @@ const styles = theme => ({
     position: 'absolute',
     width: 100,
     top: '15%'
+  },
+  searchBox: {
+    position: 'absolute',
+    zIndex: 100,
+    top: '50%'
   }
 })
 
@@ -126,6 +132,8 @@ class MapPage extends Component {
             year={currentYear}
             cacode={currentYear && selectedDCCA && selectedDCCA.find(feature => feature.year === currentYear).CACODE}
             />
+            
+            <AutoSearch className={classes.searchBox} />
             <div className={classes.yearButton}>
               <List>
                 {dccaList.map((dcca, index) => <ListItem key={`${dcca.name}`}>
