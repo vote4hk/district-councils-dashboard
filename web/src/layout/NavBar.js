@@ -5,7 +5,6 @@ import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import AutoSearch from '../components/AutoSearch'
 
 const styles = theme => ({
     appBar: {
@@ -24,8 +23,6 @@ class NavBar extends Component {
               </Typography>
               <Link to="/"><Button color="inherit">Search</Button></Link>
               <Link to="/map"><Button color="inherit">Map</Button></Link>
-
-            <AutoSearch className={classes.searchBox} />
             </Toolbar>
           </AppBar>
         )
