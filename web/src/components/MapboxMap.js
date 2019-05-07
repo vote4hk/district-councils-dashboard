@@ -3,9 +3,17 @@ import mapboxgl from 'mapbox-gl'
 import { getBoundingBox } from '../utils/features'
 
 class MapboxMap extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            hoveredStateId: null,
+            clickedStateId: null
+        }
+      }
+
     componentDidMount() {
         // set map properties
-        const { token, center, zoom, minZoom, styleID, mapLayers, selectedDCCA, onMapClicked, onMapPanned, color } = this.props
+        const { token, center, zoom, minZoom, styleID, mapLayers, selectedDCCA, onMapClicked, onMapFeatureClicked, onMapPanned, color } = this.props
 
         const mapConfig = {
             container: 'map',
@@ -22,10 +30,6 @@ class MapboxMap extends Component {
             // Get the map style and set it in the state tree
             const style = this.map.getStyle()
             //   this.props.setStyle(style)
-
-            
-            let hoveredStateId = null
-            let clickedStateId = null
 
             mapLayers.forEach((layer, index) => {
                 this.map.addSource(layer.name, {
@@ -84,49 +88,46 @@ class MapboxMap extends Component {
 
                 // When the user moves their mouse over the state-fill layer, we'll update the
                 // feature state for the feature under the mouse.
-                this.map.on("mousemove", `${layer.name}-hovers`, function (e) {
-                    if (e.features.length > 0) {
-                        if (hoveredStateId) {
-                            this.setFeatureState({ source: layer.name, id: hoveredStateId }, { hover: false })
-                        }
-                        hoveredStateId = e.features[0].id
-                        this.setFeatureState({ source: layer.name, id: hoveredStateId }, { hover: true })
-                    }
-                })
+                // this.map.on("mousemove", `${layer.name}-hovers`, function (e) {
+                    // if (e.features.length > 0) {
+                        // if (this.state.hoveredStateId !== null) {
+                        //     this.setFeatureState({ source: layer.name, id: this.state.hoveredStateId }, { hover: false })
+                        // }
+                        // let currentFeatureId = e.features[0].id
+                        // this.setFeatureState({ source: layer.name, id: currentFeatureId }, { hover: true })
+                        // this.setState({hoveredStateId: currentFeatureId})
+                    // }
+                // })
 
                 // When the mouse leaves the state-fill layer, update the feature state of the
                 // previously hovered feature.
-                this.map.on("mouseleave", `${layer.name}-hovers`, function () {
-                    if (hoveredStateId) {
-                        this.setFeatureState({ source: layer.name, id: hoveredStateId }, { hover: false })
-                    }
-                    hoveredStateId = null
-                })
+                // this.map.on("mouseleave", `${layer.name}-hovers`, function () {
+                //     if (hoveredStateId) {
+                //         this.setFeatureState({ source: layer.name, id: hoveredStateId }, { hover: false })
+                //     }
+                //     hoveredStateId = null
+                // })
 
-                this.map.on("click", `${layer.name}-highlight`, function (e) {
-
-                    if (clickedStateId) {
-                        this.setFeatureState({ source: layer.name, id: clickedStateId }, { highlight: false })
-                        clickedStateId = null
-                    }
-                    clickedStateId = e.features[0].id
-                    this.setFeatureState({ source: layer.name, id: clickedStateId }, { highlight: true })
-    
-                    
-                    let bounds = getBoundingBox(e.features[0])
-    
-                    bounds = new mapboxgl.LngLatBounds(new mapboxgl.LngLat(bounds.xMin, bounds.yMin), new mapboxgl.LngLat(bounds.xMax, bounds.yMax))
-    
-                    this.fitBounds(bounds, {
-                        padding: 50,
-                        maxZoom: 13.5
-                    })
-    
-                })
+                // this.map.on("click", `${layer.name}-highlight`, function (e) {
+                // 
+                    // if (clickedStateId) {
+                    //     this.setFeatureState({ source: layer.name, id: clickedStateId }, { highlight: false })
+                    //     clickedStateId = null
+                    // }
+                    // clickedStateId = e.features[0].id
+                    // this.setFeatureState({ source: layer.name, id: clickedStateId }, { highlight: true })
+                    // let bounds = getBoundingBox(e.features[0])
+                    // bounds = new mapboxgl.LngLatBounds(new mapboxgl.LngLat(bounds.xMin, bounds.yMin), new mapboxgl.LngLat(bounds.xMax, bounds.yMax))
+                    // this.fitBounds(bounds, {
+                    //     padding: 50,
+                    //     maxZoom: 13.5
+                    // })
+                // })
 
             })
 
             this.map.on('click', e => {
+                this.getMapboxFeature(e.point)
                 onMapClicked(e)
             })
 
@@ -139,6 +140,24 @@ class MapboxMap extends Component {
 
         })
 
+    }
+
+    getMapboxFeature = (coordinate) => {
+        const current = this.props.mapLayers.find(layer => layer.checked)
+        const features = this.map.queryRenderedFeatures(
+            coordinate, { layers: [`${current.name}-highlight`] }
+          );
+          return features
+    }
+
+    zoomToBound = (feature) => {
+        let bounds = getBoundingBox(feature)
+        bounds = new mapboxgl.LngLatBounds(new mapboxgl.LngLat(bounds.xMin, bounds.yMin), new mapboxgl.LngLat(bounds.xMax, bounds.yMax))
+
+        this.map.fitBounds(bounds, {
+            padding: 50,
+            maxZoom: 13.5
+        })
     }
 
     componentDidUpdate(prevProps) {
@@ -160,8 +179,23 @@ class MapboxMap extends Component {
             })
         }
 
-        if (this.props.selectedDCCA !== prevProps.selectedDCCA) {
-            console.log(this.props.selectedDCCA)
+        if (this.props.lastClick !== prevProps.lastClick) {
+                if (this.state.clickedStateId) {
+                    this.map.setFeatureState({ source: 'DCCA_2015', id: this.state.clickedStateId }, { highlight: false })
+                }
+
+                if (this.props.lastClick) {
+                    const newFeature = this.getMapboxFeature(this.map.project(this.props.lastClick))[0]
+                    const newFeatureId = newFeature.id
+                    // this.zoomToBound(newFeature)
+                    this.map.setFeatureState({ source: 'DCCA_2015', id: newFeatureId }, { highlight: true })
+
+                    this.setState({
+                        clickedStateId: newFeatureId
+                    })
+                }
+                
+                
         }
     }
 

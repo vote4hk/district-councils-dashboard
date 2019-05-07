@@ -94,6 +94,11 @@ class MapPage extends Component {
     })
   }
 
+  onMapFeatureClicked = (e) => {
+    this.setState({
+      clickedStateId: e.features[0].id
+    })
+  }
 
   onAutoSuggestClicked = (e) => {
     this.setState({
@@ -129,13 +134,15 @@ class MapPage extends Component {
               token={TOKEN}
               center={center}
               zoom={zoom}
-              showPopUp={true}
               styleID={STYLE_ID}
               minZoom={MIN_ZOOM}
               color={color}
               onMapClicked={this.onMapClicked}
+              onMapFeatureClicked={this.onMapFeatureClicked}
               onMapPanned={this.onMapPanned}
+              clickedStateId={this.state.clickedStateId}
               selectedDCCA={selectedDCCA}
+              lastClick={lastClick}
             />}
             <InfoCard 
             electors={electors}
