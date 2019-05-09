@@ -137,7 +137,7 @@ class MapboxMap extends Component {
             })
 
 
-
+            
         })
 
     }
@@ -187,8 +187,12 @@ class MapboxMap extends Component {
                 if (this.props.lastClick) {
                     const newFeature = this.getMapboxFeature(this.map.project(this.props.lastClick))[0]
                     const newFeatureId = newFeature.id
-                    // this.zoomToBound(newFeature)
-                    this.map.setFeatureState({ source: 'DCCA_2015', id: newFeatureId }, { highlight: true })
+                    this.zoomToBound(newFeature)
+                    
+                    setTimeout(() => {
+                        this.map.setFeatureState({ source: 'DCCA_2015', id: newFeatureId }, { highlight: true }) 
+                    }, 1000)
+                    
 
                     this.setState({
                         clickedStateId: newFeatureId
