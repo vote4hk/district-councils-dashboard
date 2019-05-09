@@ -26,7 +26,7 @@ class App extends Component {
   render() {
     const { classes } = this.props
     return (
-      <Router>
+      <Router basename="district-councils-dashboard">
         <MuiThemeProvider theme={theme}>
           <div className={classes.root}>
             <CssBaseline />
