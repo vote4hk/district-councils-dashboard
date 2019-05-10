@@ -10,7 +10,7 @@ import InfoCard from '../../components/InfoCard'
 import createMuiTheme from '../../ui/theme'
 import { getAllFeaturesFromPoint } from '../../utils/features'
 import Button from '@material-ui/core/Button'
-import AutoSearch from '../../components/AutoSearch'
+import AddressSearcher from '../../components/AddressSearcher'
 
 import dc2003 from '../../data/DCCA_2003'
 import dc2007 from '../../data/DCCA_2007'
@@ -150,7 +150,7 @@ class MapPage extends Component {
             cacode={currentYear && selectedDCCA && selectedDCCA.find(feature => feature.year === currentYear).CACODE}
             />
             
-            <AutoSearch 
+            <AddressSearcher 
             className={classes.searchBox} 
             onAutoSuggestClicked={this.onAutoSuggestClicked}
             />
