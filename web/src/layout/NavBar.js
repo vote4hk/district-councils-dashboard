@@ -4,7 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const styles = theme => ({
     appBar: {
@@ -21,8 +21,8 @@ class NavBar extends Component {
               <Typography variant="h6" color="inherit" noWrap>
               District Council Dashboard
               </Typography>
-              <Link to="/"><Button color="inherit">Search</Button></Link>
-              <Link to="/map"><Button color="inherit">Map</Button></Link>
+              <NavLink to="/"><Button color="inherit">Search</Button></NavLink>
+              <NavLink to="/map"><Button color="inherit">Map</Button></NavLink>
             </Toolbar>
           </AppBar>
         )
