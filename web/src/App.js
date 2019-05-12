@@ -4,6 +4,8 @@ import { withStyles } from '@material-ui/core/styles'
 import NavBar from './layout/NavBar'
 import createMuiTheme from './ui/theme'
 import { Route, Switch } from "react-router-dom"
+import SearchPage from './pages/search'
+import MapPage from './pages/map'
 import ProfilePage from './pages/profile'
 import NotfoundPage from './pages/notfound'
 
@@ -36,8 +38,12 @@ class App extends Component {
         <main>
         <div className={classes.toolbar} />
         {/* Content will be shifted downwards by the div above. If the div is removed, the content will disappear under the app bar. */}
+        <Switch>
+          <Route exact path="/" component={SearchPage} />
+          <Route exact path="/map" component={MapPage} />
           <Route path="/profile/:name" component={ProfilePage} />
           <Route component={NotfoundPage} />
+        </Switch>
         </main>
         </MuiThemeProvider>
     )
