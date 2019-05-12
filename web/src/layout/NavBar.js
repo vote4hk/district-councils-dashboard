@@ -7,9 +7,9 @@ import Button from '@material-ui/core/Button';
 import { NavLink } from "react-router-dom";
 
 const styles = theme => ({
-    appBar: {
-      zIndex: theme.zIndex.drawer + 1,
-    }
+  grow: {
+    flexGrow: 1,
+  }
 })
 
 class NavBar extends Component {

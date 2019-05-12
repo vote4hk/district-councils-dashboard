@@ -14,7 +14,10 @@ const theme = createMuiTheme
 const styles = theme => ({
   root: {
     display: 'flex',
-  }
+  },
+  // Load app bar information from the theme
+  // https://stackoverflow.com/questions/48508449/content-beneath-fixed-appbar
+  toolbar: theme.mixins.toolbar
 })
 class App extends Component {
   constructor(props) {
@@ -28,9 +31,10 @@ class App extends Component {
           <div className={classes.root}>
             <CssBaseline />
             <NavBar />
-            <Route exact path="/" component={searchPage} />
-            <Route exact path="/map" component={mapPage} />
-          </div>
+        <main>
+        <div className={classes.toolbar} />
+        {/* Content will be shifted downwards by the div above. If the div is removed, the content will disappear under the app bar. */}
+        </main>
         </MuiThemeProvider>
     )
   }
