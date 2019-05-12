@@ -54,7 +54,7 @@ class SearchPage extends Component {
   }
 
   handlePeopleSelected = result => {
-    this.props.history.push(`people/${result.name}`)
+    this.props.history.push(`profile/${result.name}`)
   }
 
   render() {
