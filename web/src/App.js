@@ -3,9 +3,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { withStyles } from '@material-ui/core/styles'
 import NavBar from './layout/NavBar'
 import createMuiTheme from './ui/theme'
-import { BrowserRouter as Router, Route } from "react-router-dom"
-import searchPage from './pages/search'
-import mapPage from './pages/map'
+import { Route, Switch } from "react-router-dom"
 
 import './App.css'
 
@@ -26,7 +24,6 @@ class App extends Component {
   render() {
     const { classes } = this.props
     return (
-      <Router basename="district-councils-dashboard">
         <MuiThemeProvider theme={theme}>
           <div className={classes.root}>
             <CssBaseline />
@@ -35,7 +32,6 @@ class App extends Component {
             <Route exact path="/map" component={mapPage} />
           </div>
         </MuiThemeProvider>
-      </Router>
     )
   }
 }
