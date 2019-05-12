@@ -22,14 +22,12 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
   search1: {
     position: 'absolute',
-    top: '15%',
     width: '50%'
   },
   search2: {
     position: 'absolute',
-    top: '15%',
-    left: '55%',
-    width: '45%'
+    left: '50%',
+    width: '40%'
   }
 })
 
@@ -62,9 +60,6 @@ class SearchPage extends Component {
     const { autoCompleteList } = this.state;
     return (
       <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        <main className={classes.content}>
-        <div className={classes.container}>
       <Input
         defaultValue="Search Address"
         className={classes.search1}
@@ -79,9 +74,6 @@ class SearchPage extends Component {
             class={classes.search2}
             handlePeopleSelected={this.handlePeopleSelected}
       />
-    </div>
-
-        </main>
 
       </MuiThemeProvider>
     )
