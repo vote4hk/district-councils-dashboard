@@ -16,13 +16,13 @@ class NavBar extends Component {
     render() {
         const { classes } = this.props
         return (
-            <AppBar position="fixed" className={classes.appBar}>
+            <AppBar position="fixed">
             <Toolbar>
-              <Typography variant="h6" color="inherit" noWrap>
+              <Typography variant="h6" color="inherit" className={classes.grow}>
               District Council Dashboard
               </Typography>
-              <NavLink to="/"><Button color="inherit">Search</Button></NavLink>
-              <NavLink to="/map"><Button color="inherit">Map</Button></NavLink>
+              <Button component={NavLink} to="/">Search</Button>
+              <Button component={NavLink} to="/map">Map</Button>
             </Toolbar>
           </AppBar>
         )
