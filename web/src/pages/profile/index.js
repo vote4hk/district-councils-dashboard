@@ -32,7 +32,7 @@ class ProfilePage extends Component {
               // TODO: Add candi_number to candidate.json
               <Avatar 
               src={`/static/images/avatar/2015/${showCase[showCase.length-1].cacode}_0${showCase[showCase.length-1].candi_number}.jpg`}
-              imgProps={{ onError: (e) => { e.target.src = '/static/images/avatar/default.png'; } }} >
+              >
               </Avatar>
             }
             title={showCase[0].name_chi}
