@@ -1,14 +1,6 @@
 import React, { Component } from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import createMuiTheme from '../../ui/theme'
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
-
-const theme = createMuiTheme
-
-const styles = theme => ({
-  content: {
-  },
-})
+import { withTheme } from '@material-ui/core/styles'
+import candidates from '../../data/candidates'
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -19,13 +11,13 @@ class ProfilePage extends Component {
   }
 
   render() {
-    const { classes, match: { params } } = this.props
+    const { match: { params } } = this.props
     return (
-      <MuiThemeProvider theme={theme}>
-        {params.name}
-      </MuiThemeProvider>
+        <React.Fragment>
+          {params.name}
+        </React.Fragment>
     )
   }
 }
 
-export default withStyles(styles, { withTheme: true })(ProfilePage)
+export default withTheme()(ProfilePage)
