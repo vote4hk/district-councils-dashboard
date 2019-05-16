@@ -24,10 +24,12 @@ class ProfilePage extends Component {
     const { match: { params } } = this.props
     const showCase = candidates.filter(candidate => candidate.name_chi === params.name )
     return (
+      // TODO: UI design
       <Paper>
         <Card>
           <CardHeader
             avatar={
+              // TODO: Add candi_number to candidate.json
               <Avatar 
               src={`/static/images/avatar/2015/${showCase[showCase.length-1].cacode}_0${showCase[showCase.length-1].candi_number}.jpg`}
               imgProps={{ onError: (e) => { e.target.src = '/static/images/avatar/default.png'; } }} >
