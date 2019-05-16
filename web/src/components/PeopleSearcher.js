@@ -143,7 +143,7 @@ class PeopleSearcher extends React.Component {
           {...autosuggestProps}
           inputProps={{
             classes,
-            label: 'Label',
+            label: '揾人',
             placeholder: 'Please type a candidate name',
             value: this.state.popper,
             onChange: this.handleChange('popper'),
