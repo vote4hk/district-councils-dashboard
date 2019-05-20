@@ -8,6 +8,7 @@ import NavBar from './layout/NavBar'
 import SearchPage from './pages/search'
 import MapPage from './pages/map'
 import ProfilePage from './pages/profile'
+import DistrictPage from './pages/district'
 import NotfoundPage from './pages/notfound'
 import './App.css'
 
@@ -40,6 +41,7 @@ class App extends Component {
           <Route exact path="/" component={SearchPage} />
           <Route exact path="/map" component={MapPage} />
           <Route path="/profile/:name" component={ProfilePage} />
+          <Route path="/district/:year/:code" component={DistrictPage} />
           <Route component={NotfoundPage} />
         </Switch>
         </main>
