@@ -1,0 +1,146 @@
+[
+	{
+		"area_chi": "香港",
+		"lc_chi": "香港島",
+		"dname_chi": "中西區",
+		"dname_eng": "Central and Western",
+		"lccode": "LC1",
+		"dccode": "A"
+	},
+	{
+		"area_chi": "香港",
+		"lc_chi": "香港島",
+		"dname_chi": "灣仔",
+		"dname_eng": "Wan Chai",
+		"lccode": "LC1",
+		"dccode": "B"
+	},
+	{
+		"area_chi": "香港",
+		"lc_chi": "香港島",
+		"dname_chi": "東區",
+		"dname_eng": "Eastern",
+		"lccode": "LC1",
+		"dccode": "C"
+	},
+	{
+		"area_chi": "香港",
+		"lc_chi": "香港島",
+		"dname_chi": "南區",
+		"dname_eng": "Southern",
+		"lccode": "LC1",
+		"dccode": "D"
+	},
+	{
+		"area_chi": "九龍",
+		"lc_chi": "九龍西",
+		"dname_chi": "油尖旺",
+		"dname_eng": "Yau Tsim Mong",
+		"lccode": "LC2",
+		"dccode": "E"
+	},
+	{
+		"area_chi": "九龍",
+		"lc_chi": "九龍西",
+		"dname_chi": "深水埗",
+		"dname_eng": "Sham Shui Po",
+		"lccode": "LC2",
+		"dccode": "F"
+	},
+	{
+		"area_chi": "九龍",
+		"lc_chi": "九龍西",
+		"dname_chi": "九龍城",
+		"dname_eng": "Kowloon City",
+		"lccode": "LC2",
+		"dccode": "G"
+	},
+	{
+		"area_chi": "九龍",
+		"lc_chi": "九龍東",
+		"dname_chi": "黃大仙",
+		"dname_eng": "Wong Tai Sin",
+		"lccode": "LC3",
+		"dccode": "H"
+	},
+	{
+		"area_chi": "九龍",
+		"lc_chi": "九龍東",
+		"dname_chi": "觀塘",
+		"dname_eng": "Kwun Tong",
+		"lccode": "LC3",
+		"dccode": "J"
+	},
+	{
+		"area_chi": "新界",
+		"lc_chi": "新界西",
+		"dname_chi": "荃灣",
+		"dname_eng": "Tsuen Wan",
+		"lccode": "LC4",
+		"dccode": "K"
+	},
+	{
+		"area_chi": "新界",
+		"lc_chi": "新界西",
+		"dname_chi": "屯門",
+		"dname_eng": "Tuen Mun",
+		"lccode": "LC4",
+		"dccode": "L"
+	},
+	{
+		"area_chi": "新界",
+		"lc_chi": "新界西",
+		"dname_chi": "元朗",
+		"dname_eng": "Yuen Long",
+		"lccode": "LC4",
+		"dccode": "M"
+	},
+	{
+		"area_chi": "新界",
+		"lc_chi": "新界東",
+		"dname_chi": "北區",
+		"dname_eng": "North",
+		"lccode": "LC5",
+		"dccode": "N"
+	},
+	{
+		"area_chi": "新界",
+		"lc_chi": "新界東",
+		"dname_chi": "大埔",
+		"dname_eng": "Tai Po",
+		"lccode": "LC5",
+		"dccode": "P"
+	},
+	{
+		"area_chi": "新界",
+		"lc_chi": "新界東",
+		"dname_chi": "西貢",
+		"dname_eng": "Sai Kung",
+		"lccode": "LC5",
+		"dccode": "Q"
+	},
+	{
+		"area_chi": "新界",
+		"lc_chi": "新界東",
+		"dname_chi": "沙田",
+		"dname_eng": "Sha Tin",
+		"lccode": "LC5",
+		"dccode": "R"
+	},
+	{
+		"area_chi": "新界",
+		"lc_chi": "新界西",
+		"dname_chi": "葵青",
+		"dname_eng": "Kwai Tsing",
+		"lccode": "LC4",
+		"dccode": "S"
+	},
+	{
+		"area_chi": "新界",
+		"lc_chi": "新界西",
+		"dname_chi": "離島",
+		"dname_eng": "Islands",
+		"lccode": "LC4",
+		"dccode": "T"
+	}
+]
