@@ -1,12 +1,35 @@
-# district-councils-dashboard
+# District Councils Dashboard
 
-## Preliminary Schema
+> More transparency
 
-`districts.json`
+District Councils Dashboard:
+https://cswbrian.github.io/district-councils-dashboard
+
+### Set-up
+
+```bash
+cd web
+
+npm i
+
+npm start
+```
+
+### Reference
+
+[立場區議會選舉專頁 - 2015](https://dce2015.thestandnews.com)  
+[Vote Taiwan 投票指南](https://councils.g0v.tw)  
+[天下雜誌 - 全台村里選舉互動地圖](https://web.cw.com.tw/election2018)  
+[initiummedia/hk_district_council_election](https://github.com/initiummedia/hk_district_council_election)  
+[voteview.com](https://voteview.com/)  
+
+### Preliminary Schema
+
+`district.json`
 ```
 [
-    "year": {
-        "districts": {
+    <year_2003>: {
+        <district_code_A>: {
             "cname": (String) Chinese name of the district, 
             "ename": (String) English name of the district, 
             "expected_population": (Number) Projected Population as of Year,
@@ -17,21 +40,38 @@
                 "appointed"
                 "ex-officio"
             },
-            "constituent": [
-                {
-                    "cacode": (String) Constituent code,
-                    "cname": (String) Chinese name of the constituent,
-                    "ename": (String) English name of the constituent,
-                    "expected_population": (Number) Projected Population as of Year,
-                    "deviation_percentage",
-                    "boundaries"
-                    "main_areas"
-                    "GeoJSON": (GeoJSON Object)
-                }
-            ]
-        }
+            <constituent_code_01>: {   // A01
+                "cacode": (String) Constituent code,
+                "cname": (String) Chinese name of the constituent,
+                "ename": (String) English name of the constituent,
+                "expected_population": (Number) Projected Population as of Year,
+                "deviation_percentage",
+                "boundaries"
+                "main_areas"
+                "GeoJSON": (GeoJSON Object),
+                ....
+            },
+            <constituent_code_02>: {   // A02
+                "cacode": (String) Constituent code,
+                "cname": (String) Chinese name of the constituent,
+                "ename": (String) English name of the constituent,
+                "expected_population": (Number) Projected Population as of Year,
+                "deviation_percentage",
+                "boundaries"
+                "main_areas"
+                "GeoJSON": (GeoJSON Object),
+                ....
+            }
+        },
+         <district_code_B>: {
+             ...
+         } 
+    },
+    <year_2007>: {
+
     }
 ]
+
 ```
 
 `people.json`
