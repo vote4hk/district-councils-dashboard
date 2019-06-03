@@ -74,4 +74,4 @@ class ProfilePage extends Component {
   }
 }
 
-export default withTheme()(ProfilePage)
+export default ProfilePage

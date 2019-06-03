@@ -78,4 +78,4 @@ class DistrictPage extends Component {
   }
 }
 
-export default withTheme()(DistrictPage)
+export default DistrictPage
