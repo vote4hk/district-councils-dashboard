@@ -28,7 +28,10 @@ class DistrictPage extends Component {
     return (
       // TODO: UI design
       <Grid container spacing={24}>
-        <Grid item xs={12}>
+        <Grid item xs={9}>
+          This is the map
+        </Grid>
+        <Grid item xs={3}>
         <Card>
               <CardHeader
                 title={`${data.code} ${data.name}`}
@@ -38,13 +41,8 @@ class DistrictPage extends Component {
               </CardContent>
             </Card>
         </Grid>
-        <Grid item xs={6}>
-          <Paper>
-                <Typography variant="subtitle1" gutterBottom>
-                  估計人口： {data.expectedPopulation}
-                </Typography>
-
-                <Typography variant="subtitle1" gutterBottom>
+        <Grid item xs={12}>
+        <Typography variant="subtitle1" gutterBottom>
                   主要屋邨 / 地區：
                 </Typography>
                 <List>
@@ -57,9 +55,18 @@ class DistrictPage extends Component {
 
                   }
                 </List>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper>
+                <Typography variant="subtitle1" gutterBottom>
+                  估計人口： {data.expectedPopulation}
+                </Typography>
+
+                
+                
           </Paper>
         </Grid>
-        <Grid item xs={6}>
+        {/* <Grid item xs={6}>
           <Paper>
             <List>
               {
@@ -72,7 +79,7 @@ class DistrictPage extends Component {
               }
             </List>
           </Paper>
-        </Grid>
+        </Grid> */}
       </Grid>
     )
   }
