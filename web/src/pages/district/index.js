@@ -10,6 +10,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 import district from '../../data/district'
+import { fetchData } from '../../utils/httpClient'
 
 class DistrictPage extends Component {
   constructor(props) {
@@ -19,12 +20,50 @@ class DistrictPage extends Component {
     }
   }
 
+  async componentDidMount() {
+    const { match: { params } } = this.props
+    const { year, code } = params
+    const query = `
+    {
+      dc_area(where: {
+        cacode: {
+          _eq: "${code}"
+        },
+        year: {
+          _eq: "${year}"
+        }
+      }) {
+        id
+        cname
+        people (where: {
+          year: {
+            _eq: "${year}"
+          }
+        }) {
+          id
+          name_chi
+          year
+        }
+      }
+    }
+    `
+    const fetched_data = await fetchData(query);
+    console.log(fetched_data)
+  }
+
   render() {
     const { match: { params } } = this.props
     const { year, code } = params
     const districtCode = code.substring(0, 1)
     const dcca = code !== districtCode ? code : null
-    const data = district[year][districtCode][dcca]
+    const data = district[year][districtCode][dcca];
+
+
+
+    
+
+    
+   
     return (
       // TODO: UI design
       <Grid container spacing={24}>
