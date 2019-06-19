@@ -11,6 +11,7 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import candidates from '../../data/candidates'
+import { fetchData } from '../../utils/httpClient'
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -18,6 +19,22 @@ class ProfilePage extends Component {
     this.state = {
      
     }
+  }
+
+  async componentDidMount() {
+    const query = `
+    {
+      dc_people(distinct_on: name_chi) {
+        name_chi
+      }
+    }
+    `
+    const fetched_data = await fetchData(query)
+    this.setState({rawSuggestions: fetched_data.data.dc_people.map(i => {
+      return {
+        name: i.name_chi
+      }
+    })})
   }
 
   render() {

@@ -9,12 +9,7 @@ import Paper from '@material-ui/core/Paper'
 import MenuItem from '@material-ui/core/MenuItem'
 import Popper from '@material-ui/core/Popper'
 import { withStyles } from '@material-ui/core/styles'
-import candidates from '../data/candidates'
-
-const suggestions = candidates.map(item => {
-  return {
-    name: item.name_chi
-  }})
+import { fetchData } from '../utils/httpClient'
 
 function renderInputComponent(inputProps) {
   const { classes, inputRef = () => {}, ref, ...other } = inputProps
@@ -59,12 +54,7 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
   )
 }
 
-function getSuggestions(value) {
-  const inputValue = deburr(value.trim()).toLowerCase()
-  const inputLength = inputValue.length
 
-  return inputLength === 0 ? [] : suggestions.filter(suggestion => suggestion.name.includes(value))
-}
 
 function getSuggestionValue(suggestion) {
   return suggestion.name
@@ -100,11 +90,36 @@ class PeopleSearcher extends React.Component {
     single: '',
     popper: '',
     suggestions: [],
+    rawSuggestions: []
   }
+
+   getSuggestions(value) {
+    const inputValue = deburr(value.trim()).toLowerCase()
+    const inputLength = inputValue.length
+  
+    return inputLength === 0 ? [] : this.state.rawSuggestions.filter(suggestion => suggestion.name.includes(value))
+  }
+
+  async componentDidMount() {
+    const query = `
+    {
+      dc_people(distinct_on: name_chi) {
+        name_chi
+      }
+    }
+    `
+    const fetched_data = await fetchData(query)
+    this.setState({rawSuggestions: fetched_data.data.dc_people.map(i => {
+      return {
+        name: i.name_chi
+      }
+    })})
+  }
+
 
   handleSuggestionsFetchRequested = ({ value }) => {
     this.setState({
-      suggestions: getSuggestions(value),
+      suggestions: this.getSuggestions(value),
     })
   }
 

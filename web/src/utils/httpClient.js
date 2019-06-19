@@ -1,10 +1,9 @@
 export const fetchData = query => {
-    return fetch('https://api.opencultures.life/v1alpha1/graphql', {
+    return fetch('https://gql.opencultures.life/graphql', {
         method: 'POST', // or 'PUT'
         body: JSON.stringify({ query }), // data can be `string` or {object}!
         headers:{
-          'Content-Type': 'application/json',
-          'x-hasura-admin-secret': ''
+          'Content-Type': 'application/json'
         }
       })
       .then(res => res.json())
