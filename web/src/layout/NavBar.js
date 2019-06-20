@@ -27,7 +27,7 @@ class NavBar extends Component {
             <AppBar position="relative" className={classes.headerParent}>
             <Toolbar disableGutters className={classes.header}>
               <Typography variant="h6" color="inherit" className={classes.title}>
-              District Council Dashboard
+              Vote for Hong Kong
               </Typography>
               <Button component={NavLink} to="/">Search</Button>
               <Button component={NavLink} to="/map">Map</Button>
