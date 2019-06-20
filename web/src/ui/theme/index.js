@@ -1,14 +1,29 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles'
 
-const palette = {
-  primary: { main: '#FF8F00' },
-  secondary: { main: '#00E676' }
-};
-const themeName = 'Pizazz Spring Green Falcon';
+const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+    fontFamily: "'Noto Sans TC', sans-serif"
+  },
+  palette: {
+    primary: {
+      light: '#ffffff',
+      main: '#000000',
+      dark: '#cccccc'
+    },
+    secondary: {
+      light: '#2c2c2c',
+      main: '#000000',
+      dark: '#000000'
+    },
+    background: {
+      default: '#ffffff'
+    },
+  },
+  text: {
+    primary: '#000000'
+  }
+});
 
-const typography =  {
-  useNextVariants: true,
-  fontFamily: "'Noto Sans TC', sans-serif"
-}
-
-export default createMuiTheme({ palette, themeName, typography });
+console.log(theme)
+export default theme
