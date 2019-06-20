@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { styled } from '@material-ui/styles';
+import Button from '@material-ui/core/Button';
 import { withTheme } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
@@ -11,6 +13,24 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 import district from '../../data/district'
 import { fetchData } from '../../utils/httpClient'
+
+
+const Map = styled(Paper)({
+  background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+  border: 0,
+  boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+  color: 'white',
+  height: 300,
+  padding: '0 30px',
+});
+
+const DistrictCard = styled(Paper)({
+  background: '#f6f6f6',
+  border: 0,
+  color: '#00000',
+  height: 300,
+  padding: '0 30px',
+});
 
 class DistrictPage extends Component {
   constructor(props) {
@@ -66,19 +86,19 @@ class DistrictPage extends Component {
    
     return (
       // TODO: UI design
-      <Grid container spacing={24}>
+      <Grid container>
         <Grid item xs={9}>
-          This is the map
+        <Map>Styled Components</Map>
         </Grid>
         <Grid item xs={3}>
-        <Card>
+        <DistrictCard>
               <CardHeader
                 title={`${data.code} ${data.name}`}
                 subheader={year}
               />
               <CardContent>
               </CardContent>
-            </Card>
+        </DistrictCard>
         </Grid>
         <Grid item xs={12}>
         <Typography variant="subtitle1" gutterBottom>

@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom"
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { withStyles } from '@material-ui/core/styles'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
+import Container from '@material-ui/core/Container'
 import createMuiTheme from './ui/theme'
 import NavBar from './layout/NavBar'
 import SearchPage from './pages/search'
@@ -33,19 +34,21 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
-        <NavBar />
-        <main>
-          <div className={classes.toolbar} />
-          {/* Content will be shifted downwards by the div above. If the div is removed, the content will disappear under the app bar. */}
-        <Switch>
-          <Route exact path="/" component={SearchPage} />
-          <Route exact path="/map" component={MapPage} />
-          <Route path="/profile/:name" component={ProfilePage} />
-          <Route path="/district/:year/:code" component={DistrictPage} />
-          <Route component={NotfoundPage} />
-        </Switch>
-        </main>
-        </MuiThemeProvider >
+        <Container maxWidth="lg">
+          <NavBar />
+          <main>
+            {/* <div className={classes.toolbar} /> */}
+            {/* Content will be shifted downwards by the div above. If the div is removed, the content will disappear under the app bar. */}
+            <Switch>
+              <Route exact path="/" component={SearchPage} />
+              <Route exact path="/map" component={MapPage} />
+              <Route path="/profile/:name" component={ProfilePage} />
+              <Route path="/district/:year/:code" component={DistrictPage} />
+              <Route component={NotfoundPage} />
+            </Switch>
+          </main>
+        </Container>
+      </MuiThemeProvider>
     )
   }
 }
