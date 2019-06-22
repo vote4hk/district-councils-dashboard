@@ -22,6 +22,9 @@ query ($id: uuid!) {
     where: { 
       id: { _eq: $id}
     }
+    order_by: {elections_aggregate: {
+      max: { year: asc }
+    }}
   ) {
     name_en
     name_zh
@@ -30,6 +33,8 @@ query ($id: uuid!) {
     elections {
       cacode
       year
+      votes
+      vote_percentage
       constituency {
         name
         expected_population
@@ -80,34 +85,35 @@ class ProfilePage extends Component {
                 <CardContent>
                 </CardContent>
               </Card>
-              {/* <Table>
+              <Table>
                 <TableHead>
                   <TableRow>
                     <TableCell>Year</TableCell>
-                    <TableCell>Age</TableCell>
+                    <TableCell>Code</TableCell>
                     <TableCell>Distict</TableCell>
-                    <TableCell>DCCA</TableCell>
-                    <TableCell>Camp</TableCell>
-                    <TableCell>political_affiliation</TableCell>
-                    <TableCell align="right">votes</TableCell>
+                    <TableCell>Political Affiliation</TableCell>
+                    <TableCell>Votes</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {showCase.map(row => (
-                    <TableRow key={row.id}>
-                      <TableCell component="th" scope="row">
-                        {row.year}
-                      </TableCell>
-                      <TableCell align="right">{row.age}</TableCell>
-                      <TableCell align="right">{row.district_name_chi}</TableCell>
-                      <TableCell align="right">{row.CANAME_chi}</TableCell>
-                      <TableCell align="right">{row.camp}</TableCell>
-                      <TableCell align="right">{row.political_affiliation}</TableCell>
-                      <TableCell align="right">{`${row.votes} (${row.percentage}%)`}</TableCell>
+                  {person.elections.map(row => (
+                    <TableRow key={row.year + row.cacode}>
+                      <TableCell align="right">{row.year}</TableCell>
+                      <TableCell align="right">{row.cacode}</TableCell>
+                      {row.constituency ?
+                        <TableCell align="right">{row.constituency.name}</TableCell> :
+                        <TableCell align="right">?</TableCell>
+                      }
+                      {row.political_affiliation ?
+                        <TableCell align="right">{row.political_affiliation.name_zh}</TableCell> :
+                        <TableCell align="right">N/A</TableCell>
+                      }
+
+                      <TableCell align="right">{`${row.votes ? row.votes : '-'} (${row.vote_percentage ? row.vote_percentage : '-'}%)`}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
-              </Table> */}
+              </Table>
             </Paper>
           );
         }}
