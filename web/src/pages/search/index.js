@@ -37,7 +37,7 @@ class SearchPage extends Component {
   }
 
   handlePeopleSelected = result => {
-    this.props.history.push(`profile/${result.name}`)
+    this.props.history.push(`profile/${result.id}`)
   }
 
   renderDCCA = code => {
