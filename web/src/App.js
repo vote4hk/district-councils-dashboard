@@ -11,8 +11,14 @@ import MapPage from './pages/map'
 import ProfilePage from './pages/profile'
 import DistrictPage from './pages/district'
 import NotfoundPage from './pages/notfound'
+import ApolloClient from 'apollo-boost'
+import { ApolloProvider } from 'react-apollo'
+
 import './App.css'
 
+const client = new ApolloClient({
+  uri: "https://gql.opencultures.life/graphql"
+});
 
 const theme = createMuiTheme
 
@@ -32,23 +38,25 @@ class App extends Component {
   render() {
     const { classes } = this.props
     return (
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        <Container maxWidth="lg">
-          <NavBar />
-          <main>
-            {/* <div className={classes.toolbar} /> */}
-            {/* Content will be shifted downwards by the div above. If the div is removed, the content will disappear under the app bar. */}
-            <Switch>
-              <Route exact path="/" component={SearchPage} />
-              <Route exact path="/map" component={MapPage} />
-              <Route path="/profile/:name" component={ProfilePage} />
-              <Route path="/district/:year/:code" component={DistrictPage} />
-              <Route component={NotfoundPage} />
-            </Switch>
-          </main>
-        </Container>
-      </MuiThemeProvider>
+      <ApolloProvider client={client}>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline />
+          <Container maxWidth="lg">
+            <NavBar />
+            <main>
+              {/* <div className={classes.toolbar} /> */}
+              {/* Content will be shifted downwards by the div above. If the div is removed, the content will disappear under the app bar. */}
+              <Switch>
+                <Route exact path="/" component={SearchPage} />
+                <Route exact path="/map" component={MapPage} />
+                <Route path="/profile/:id" component={ProfilePage} />
+                <Route path="/district/:year/:code" component={DistrictPage} />
+                <Route component={NotfoundPage} />
+              </Switch>
+            </main>
+          </Container>
+        </MuiThemeProvider>
+      </ApolloProvider>
     )
   }
 }
