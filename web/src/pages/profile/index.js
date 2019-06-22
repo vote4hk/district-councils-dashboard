@@ -36,7 +36,7 @@ query ($id: uuid!) {
       votes
       vote_percentage
       constituency {
-        name
+        name_zh
         expected_population
         deviation_percentage
       }
