@@ -97,21 +97,22 @@ class PeopleSearcher extends React.Component {
     const inputValue = deburr(value.trim()).toLowerCase()
     const inputLength = inputValue.length
   
-    return inputLength === 0 ? [] : this.state.rawSuggestions.filter(suggestion => suggestion.name.includes(value))
+    console.log(this.state.rawSuggestions);
+    return inputLength === 0 ? [] : this.state.rawSuggestions.filter(suggestion => suggestion.name && suggestion.name.includes(value))
   }
 
   async componentDidMount() {
     const query = `
     {
-      dc_people(distinct_on: name_chi) {
-        name_chi
+      dc_people {
+        name_zh
       }
     }
     `
     const fetched_data = await fetchData(query)
     this.setState({rawSuggestions: fetched_data.data.dc_people.map(i => {
       return {
-        name: i.name_chi
+        name: i.name_zh ? i.name_zh : i.name_en
       }
     })})
   }
