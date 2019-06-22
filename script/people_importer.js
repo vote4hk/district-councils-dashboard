@@ -26,7 +26,7 @@ async function upsertPerson(person) {
       name_en: name_eng ? name_eng : null,
       estimated_yob: parseInt(estimated_birth.replace(/\/\d+/g, ''), 10),
       gender: gender === '男' ? 'male' : 'female',
-    }    
+    }
   };
 
   const res = await runQuery(query, variables);
@@ -66,14 +66,18 @@ async function upsertElection(personId, election) {
     political_affiliation, votes, percentage,
   } = election;
 
-  const paId = await upsertAffiliation(political_affiliation);
+  let paId = null;
+  if (political_affiliation) {
+    paId = await upsertAffiliation(political_affiliation);
+  }
+
   const query = `
     mutation insertCandidates($candidate: dc_candidates_insert_input!) {
       insert_dc_candidates(objects: [
         $candidate
       ], on_conflict: {
         constraint: dc_candidates_people_id_year_key
-        update_columns: [ candidate_number ]
+        update_columns: [ candidate_number, political_affiliation_id ]
       }) {
         returning {
           id
@@ -81,7 +85,7 @@ async function upsertElection(personId, election) {
       }
     }
   `;
-  
+
   const variables = {
     candidate: {
       year: parseInt(year, 10),
@@ -93,7 +97,7 @@ async function upsertElection(personId, election) {
       votes: votes === '' ? null : parseInt(votes, 10),
       vote_percentage: percentage === '' ? null : parseFloat(percentage),
       political_affiliation_id: paId,
-    }    
+    }
   };
 
   const res = await runQuery(query, variables);
@@ -114,7 +118,7 @@ async function insertCandidate(person) {
     console.error(`Cannot insert people: ${person.name_chi}`);
     console.error(error);
   }
-  
+
 }
 
 module.exports = {
