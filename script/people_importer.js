@@ -1,5 +1,7 @@
 const { runQuery } = require('./hasura');
 
+const constituencyHash = {};
+
 async function upsertPerson(person) {
   const {
     name_chi, name_eng, gender, estimated_birth,
@@ -76,7 +78,7 @@ async function upsertElection(personId, election) {
       insert_dc_candidates(objects: [
         $candidate
       ], on_conflict: {
-        constraint: dc_candidates_people_id_year_key
+        constraint: dc_candidates_people_id_year_cacode_key
         update_columns: [ candidate_number, political_affiliation_id ]
       }) {
         returning {
@@ -107,19 +109,52 @@ async function upsertElection(personId, election) {
   return res.body.data.insert_dc_candidates.returning[0].id;
 }
 
+async function upsertConstituency(year, code) {
+  const key = `${year}-${code}`;
+  if (constituencyHash[key]) {
+    return;
+  }
+  const query = `
+  mutation insertConstituency($year: Int!, $code: String!) {
+    insert_dc_constituencies(objects: {
+      year: $year
+      code: $code
+      name_zh: ""
+    } on_conflict: {
+      constraint: dc_boundaries_code_year_key
+      update_columns: []
+    }) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
+  const variables = {
+    year: parseInt(year, 10),
+    code,
+  };
+
+
+  await runQuery(query, variables);
+}
+
 
 async function insertCandidate(person) {
   try {
     const personId = await upsertPerson(person);
     for (const election of person.elections) {
       await upsertElection(personId, election);
+      // in case the constituency not exists
+      await upsertConstituency(election.year, election.CACODE);
     }
   } catch (error) {
     console.error(`Cannot insert people: ${person.name_chi}`);
     console.error(error);
   }
-
 }
+
 
 module.exports = {
   insertCandidate,

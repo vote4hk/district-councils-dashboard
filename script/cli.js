@@ -32,9 +32,10 @@ function getInsertCandidateFunc() {
     await insertCandidate(person); //eslint-disable-line
   });
 }
-async function upsert(filePath) {
+async function upsertPeople(filePath) {
   if (!fs.existsSync(filePath)) {
     log.error('File does not exists');
+    return;
   }
 
   try {
@@ -43,7 +44,7 @@ async function upsert(filePath) {
 
     async.eachOfLimit(rawPeople, 50, getInsertCandidateFunc(), (err) => {
       if (err) {
-        log.error(err);        
+        log.error(err);
       } else {
         log.info('Finished!');
       }
@@ -52,9 +53,7 @@ async function upsert(filePath) {
   } catch (error) {
     log.error(error);
   }
-  
 }
-
 
 program
   .version('0.1.0');
@@ -65,7 +64,7 @@ program
 program
   .command('upsert_people <filePath>')
   .description('insert/update the people data')
-  .action(upsert);
+  .action(upsertPeople);
 
 program.parse(process.argv);
 
