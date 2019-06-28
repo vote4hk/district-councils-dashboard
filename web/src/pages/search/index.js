@@ -73,9 +73,9 @@ class SearchPage extends Component {
         <Grid item xs={6}>
           <Paper className={classes.paper}>
             {/* TODO: Build a people.json for the autosuggest and profile */}
-            <PeopleSearcher
+            {/* <PeopleSearcher
               handlePeopleSelected={this.handlePeopleSelected}
-            />
+            /> */}
           </Paper>
         </Grid>
         <Grid item xs={12}>

@@ -103,15 +103,16 @@ class PeopleSearcher extends React.Component {
   async componentDidMount() {
     const query = `
     {
-      dc_people(distinct_on: name_chi) {
-        name_chi
+      dc_people(distinct_on: name_zh) {
+        name_zh
       }
     }
     `
     const fetched_data = await fetchData(query)
+    console.log(fetched_data)
     this.setState({rawSuggestions: fetched_data.data.dc_people.map(i => {
       return {
-        name: i.name_chi
+        name: i.name_zh
       }
     })})
   }
