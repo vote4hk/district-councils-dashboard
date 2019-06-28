@@ -2,17 +2,31 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import deburr from 'lodash/deburr'
 import Autosuggest from 'react-autosuggest'
-import match from 'autosuggest-highlight/match'
-import parse from 'autosuggest-highlight/parse'
 import TextField from '@material-ui/core/TextField'
 import Paper from '@material-ui/core/Paper'
 import MenuItem from '@material-ui/core/MenuItem'
 import Popper from '@material-ui/core/Popper'
 import { withStyles } from '@material-ui/core/styles'
-import { fetchData } from '../utils/httpClient'
+import { withApollo } from 'react-apollo'
+import gql from "graphql-tag";
+
+const GET_PEOPLE = gql`
+  query ($nameRegex: String) {
+    dc_people( where: {
+      _or: [
+        { name_zh: { _like: $nameRegex }},
+        { name_en: { _like: $nameRegex }},
+      ]
+    }, limit: 50) {
+      id
+      name_zh
+      name_en
+    }
+  }
+`
 
 function renderInputComponent(inputProps) {
-  const { classes, inputRef = () => {}, ref, ...other } = inputProps
+  const { classes, inputRef = () => { }, ref, ...other } = inputProps
 
   return (
     <TextField
@@ -32,23 +46,18 @@ function renderInputComponent(inputProps) {
 }
 
 function renderSuggestion(suggestion, { query, isHighlighted }) {
-  const matches = match(suggestion.name, query)
-  const parts = parse(suggestion.name, matches)
 
   return (
     <MenuItem selected={isHighlighted} component="div">
       <div>
-        {parts.map((part, index) =>
-          part.highlight ? (
-            <span key={String(index)} style={{ fontWeight: 500 }}>
-              {part.text}
-            </span>
-          ) : (
-            <strong key={String(index)} style={{ fontWeight: 300 }}>
-              {part.text}
-            </strong>
-          ),
-        )}
+        {isHighlighted ?
+          (<span>
+            {suggestion.name_zh ? suggestion.name_zh : suggestion.name_en}
+          </span>) :
+          (<strong>
+            {suggestion.name_zh ? suggestion.name_zh : suggestion.name_en}
+          </strong>)
+        }
       </div>
     </MenuItem>
   )
@@ -57,7 +66,7 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
 
 
 function getSuggestionValue(suggestion) {
-  return suggestion.name
+  return suggestion.name_zh ? suggestion.name_zh : suggestion.name_en;
 }
 
 const styles = theme => ({
@@ -89,40 +98,26 @@ class PeopleSearcher extends React.Component {
   state = {
     single: '',
     popper: '',
-    suggestions: [],
-    rawSuggestions: []
+    suggestions: []
   }
 
-   getSuggestions(value) {
+  getSuggestions(value) {
     const inputValue = deburr(value.trim()).toLowerCase()
     const inputLength = inputValue.length
-  
-    return inputLength === 0 ? [] : this.state.rawSuggestions.filter(suggestion => suggestion.name.includes(value))
+
+    return inputLength === 0 ? [] : this.state.suggestions.filter(suggestion => suggestion.name && suggestion.name.includes(value))
   }
 
   async componentDidMount() {
-    const query = `
-    {
-      dc_people(distinct_on: name_zh) {
-        name_zh
+    const { data } = await this.props.client.query({
+      query: GET_PEOPLE,
+      variables: {
+        nameRegex: '%'
       }
-    }
-    `
-    const fetched_data = await fetchData(query)
-    console.log(fetched_data)
-    this.setState({rawSuggestions: fetched_data.data.dc_people.map(i => {
-      return {
-        name: i.name_zh
-      }
-    })})
-  }
-
-
-  handleSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: this.getSuggestions(value),
     })
+    this.setState({ suggestions: data.dc_people })
   }
+
 
   handleSuggestionsClearRequested = () => {
     this.setState({
@@ -140,13 +135,27 @@ class PeopleSearcher extends React.Component {
     this.props.handlePeopleSelected(suggestion)
   }
 
+  // Autosuggest will call this function every time you need to update suggestions.
+  // You already implemented this logic above, so just use it.
+  onSuggestionsFetchRequested = async ({ value, reason }) => {
+    if (true) {
+      const { data } = await this.props.client.query({
+        query: GET_PEOPLE,
+        variables: {
+          nameRegex: `%${value}%`
+        }
+      })
+      this.setState({ suggestions: data.dc_people })
+    }
+  };
+
   render() {
     const { classes } = this.props
-    
+
     const autosuggestProps = {
       renderInputComponent,
       suggestions: this.state.suggestions,
-      onSuggestionsFetchRequested: this.handleSuggestionsFetchRequested,
+      onSuggestionsFetchRequested: this.onSuggestionsFetchRequested,
       onSuggestionsClearRequested: this.handleSuggestionsClearRequested,
       onSuggestionSelected: this.handleSuggestionSelected,
       getSuggestionValue,
@@ -195,4 +204,4 @@ PeopleSearcher.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(PeopleSearcher)
+export default withApollo(withStyles(styles)(PeopleSearcher));

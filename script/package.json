@@ -1,0 +1,27 @@
+{
+  "name": "script",
+  "version": "0.1.0",
+  "scripts": {
+    "test": "mocha --recursive test",
+    "pretest": "eslint ."
+  },
+  "dependencies": {
+    "async": "^3.0.1",
+    "bluebird": "^3.5.2",
+    "chalk": "^2.4.2",
+    "commander": "^2.18.0",
+    "dotenv": "^8.0.0",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "eslint": "^5.6.0",
+    "rewire": "^4.0.1",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-chai-friendly": "^0.4.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-mocha": "^5.2.0"
+  }
+}
