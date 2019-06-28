@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { NavLink } from "react-router-dom";
+import Container from '@material-ui/core/Container'
 import { relative } from 'path';
 
 const styles = theme => ({
@@ -24,6 +25,7 @@ class NavBar extends Component {
     render() {
         const { classes } = this.props
         return (
+          <Container maxWidth="lg">
             <AppBar position="relative" className={classes.headerParent}>
             <Toolbar disableGutters className={classes.header}>
               <Typography variant="h6" color="inherit" className={classes.title}>
@@ -33,6 +35,7 @@ class NavBar extends Component {
               <Button component={NavLink} to="/map">Map</Button> */}
             </Toolbar>
           </AppBar>
+          </Container>
         )
     }
 }
