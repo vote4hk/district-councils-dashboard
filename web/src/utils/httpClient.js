@@ -7,4 +7,5 @@ export const fetchData = query => {
         }
       })
       .then(res => res.json())
+      .then(resObj => resObj.data)
 }
