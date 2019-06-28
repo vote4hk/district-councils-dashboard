@@ -29,8 +29,8 @@ class NavBar extends Component {
               <Typography variant="h6" color="inherit" className={classes.title}>
               Vote for Hong Kong
               </Typography>
-              <Button component={NavLink} to="/">Search</Button>
-              <Button component={NavLink} to="/map">Map</Button>
+              {/* <Button component={NavLink} to="/">Search</Button>
+              <Button component={NavLink} to="/map">Map</Button> */}
             </Toolbar>
           </AppBar>
         )
