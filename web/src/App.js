@@ -3,7 +3,6 @@ import { Route, Switch } from "react-router-dom"
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { withStyles } from '@material-ui/core/styles'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
-import Container from '@material-ui/core/Container'
 import createMuiTheme from './ui/theme'
 import NavBar from './layout/NavBar'
 import SearchPage from './pages/search'
@@ -34,7 +33,6 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
-        <Container maxWidth="lg">
           <NavBar />
           <main>
             {/* <div className={classes.toolbar} /> */}
@@ -47,7 +45,6 @@ class App extends Component {
               <Route component={NotfoundPage} />
             </Switch>
           </main>
-        </Container>
       </MuiThemeProvider>
     )
   }
