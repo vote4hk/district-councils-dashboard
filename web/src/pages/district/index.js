@@ -60,10 +60,20 @@ query ($year: Int!, $code:String!) {
 `;
 
 class DistrictPage extends Component {
-  
+
   handleChangeDistrict = (year, code) => {
     if (!year || !code) return
     this.props.history.replace(`/district/${year}/${code}`)
+  }
+
+  onPrevElection() {
+    const { match: { params: { year, code } } } = this.props
+    this.props.history.replace(`/district/${parseInt(year, 10) - 4}/${code}`)
+  }
+
+  onNextElection() {
+    const { match: { params: { year, code } } } = this.props
+    this.props.history.replace(`/district/${parseInt(year, 10) + 4}/${code}`)
   }
 
   render() {
@@ -79,14 +89,14 @@ class DistrictPage extends Component {
             <React.Fragment>
               <Container maxWidth='lg'>
                 <Grid container spacing={3}>
-                  <Grid item xs={8}>
+                  <Grid item xs={12} md={8}>
                     <OLMap
                       year={year}
                       code={code}
                       changeDistrict={this.handleChangeDistrict}
                     />
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={12} md={4}>
                     <DistrictCard>
                       <Box
                         p={1}
@@ -97,13 +107,13 @@ class DistrictPage extends Component {
                           flexDirection="row"
                           alignItems='center'
                           justifyContent='space-between'>
-                          <IconButton aria-label='arrow_back'>
+                          <IconButton aria-label='arrow_back' onClick={this.onPrevElection.bind(this)}>
                             <ArrowBackIcon />
                           </IconButton>
                           <Typography variant='button' gutterBottom>
                             {year}
                           </Typography>
-                          <IconButton aria-label='arrow_forward'>
+                          <IconButton aria-label='arrow_forward' onClick={this.onNextElection.bind(this)}>
                             <ArrowForwardIcon />
                           </IconButton>
                         </Box>
@@ -199,8 +209,8 @@ class DistrictPage extends Component {
             </React.Fragment>)
         }}
       </Query>
-      )
-    }
+    )
   }
-  
-  export default DistrictPage
+}
+
+export default DistrictPage
