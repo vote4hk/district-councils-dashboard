@@ -174,7 +174,7 @@ class DistrictPage extends Component {
                             </Box>
                             <Box p={1}>
                               <Typography gutterBottom variant='h6'>
-                                {`${candidate.candidate_number}. ${candidate.person.name_zh}`}
+                                {`${candidate.candidate_number}. ${candidate.person.name_zh ? candidate.person.name_zh: candidate.person.name_en}`}
                               </Typography>
                             </Box>
                             <Box p={1}>
