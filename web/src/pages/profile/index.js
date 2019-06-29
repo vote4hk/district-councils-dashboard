@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
-import { withTheme } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardHeader from '@material-ui/core/CardHeader'
-import Avatar from '@material-ui/core/Avatar'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
-import candidates from '../../data/candidates'
 import moment from 'moment'
 import gql from "graphql-tag";
 import { Query } from "react-apollo";

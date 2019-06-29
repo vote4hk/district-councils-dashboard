@@ -103,7 +103,7 @@ async function upsertElection(personId, election) {
         $candidate
       ], on_conflict: {
         constraint: dc_candidates_people_id_year_cacode_key
-        update_columns: [ candidate_number, political_affiliation_id ]
+        update_columns: [ candidate_number ]
       }) {
         returning {
           id
@@ -119,7 +119,7 @@ async function upsertElection(personId, election) {
       people_id: personId,
       candidate_number: candi_number !== '' ? candi_number : null,
       occupation,
-      won: win_or_not === 'Y',
+      is_won: win_or_not === 'Y',
       votes: votes === '' ? null : parseInt(votes, 10),
       vote_percentage: percentage === '' ? null : parseFloat(percentage),
     }
@@ -158,7 +158,10 @@ async function upsertConstituencyWithoutName(year, code) {
     year: parseInt(year, 10),
     code,
   };
-  await runQuery(query, variables);
+  const res = await runQuery(query, variables);
+  if (res.statusCode !== 200) {
+    console.log(res.body);
+  }
   constituencyHash[key] = 1;
 }
 
