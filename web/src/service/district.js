@@ -1,10 +1,10 @@
 import { fetchData } from '../utils/httpClient'
 
 export const getDistrictDataByYearCode = async (year, code) => {
-    // It should call GraphQL
-    if (!year || !code) return
+  // It should call GraphQL
+  if (!year || !code) return
 
-    const query = `
+  const query = `
     {
         dc_constituencies(where: {year: {_eq: ${year}}, code: {_eq: "${code}"}}) {
           name_zh
@@ -19,10 +19,6 @@ export const getDistrictDataByYearCode = async (year, code) => {
               name_zh
               name_en
             }
-            political_affiliation {
-              name_zh
-              name_en
-            }
             vote_percentage
             votes
             won
@@ -30,12 +26,12 @@ export const getDistrictDataByYearCode = async (year, code) => {
         }
       }
       `
-    const fetchedData = await fetchData(query)
+  const fetchedData = await fetchData(query)
 
-    const result = {
-        ...fetchedData.dc_constituencies[0],
-        councillor: fetchedData.dc_constituencies[0].candidates.find(c => c.won)
+  const result = {
+    ...fetchedData.dc_constituencies[0],
+    councillor: fetchedData.dc_constituencies[0].candidates.find(c => c.won)
 
-    }
-    return result
+  }
+  return result
 }
