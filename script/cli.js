@@ -4,7 +4,7 @@ const program = require('commander');
 const fs = require('fs');
 const chalk = require('chalk');
 const async = require('async');
-const { insertCandidate } = require('./people_importer');
+const { insertCandidate, upsertConstituency } = require('./people_importer');
 
 require('dotenv').config();
 
@@ -32,6 +32,13 @@ function getInsertCandidateFunc() {
     await insertCandidate(person); //eslint-disable-line
   });
 }
+
+function getUpsertConstituencyFunc(year) {
+  return async.asyncify(async (feature) => {
+    await upsertConstituency(year, feature); //eslint-disable-line
+  });
+}
+
 async function upsertPeople(filePath) {
   if (!fs.existsSync(filePath)) {
     log.error('File does not exists');
@@ -55,6 +62,34 @@ async function upsertPeople(filePath) {
   }
 }
 
+async function upsertPolygon(year, filePath) {
+  if (!fs.existsSync(filePath)) {
+    log.error('File does not exists');
+    return;
+  }
+
+  if ((year - 1999 ) % 4 !== 0){
+    log.error(`Invalid year ${year}`);
+    return;
+  }
+
+  try {
+    const data = JSON.parse(fs.readFileSync(filePath).toString());
+    log.info(`Total ${data.features.length} region`);
+
+    async.eachOfLimit(data.features, 50, getUpsertConstituencyFunc(year), (err) => {
+      if (err) {
+        log.error(err);
+      } else {
+        log.info('Finished!');
+      }
+      end();
+    });
+  } catch (error) {
+    log.error(error);
+  }
+}
+
 program
   .version('0.1.0');
 
@@ -65,6 +100,11 @@ program
   .command('upsert_people <filePath>')
   .description('insert/update the people data')
   .action(upsertPeople);
+
+program
+  .command('upsert_polygon <year> <filePath>')
+  .description('insert/update the polygon data for constituency')
+  .action(upsertPolygon);
 
 program.parse(process.argv);
 
