@@ -9,7 +9,12 @@ import GeoJSON from 'ol/format/GeoJSON'
 import { Style, Stroke, Fill } from 'ol/style'
 import Select from 'ol/interaction/Select'
 
+
+import dc2003 from '../data/DCCA_2003'
+import dc2007 from '../data/DCCA_2007'
+import dc2011 from '../data/DCCA_2011'
 import dc2015 from '../data/DCCA_2015'
+import dc2019 from '../data/DCCA_2019'
 
 
 class OLMap extends Component {
@@ -17,14 +22,14 @@ class OLMap extends Component {
         super(props)
         this.state = {
         }
-
-        this.featureSource = new VectorSource({
-            features: (new GeoJSON()).readFeatures(dc2015)
-        })
     }
 
     componentDidMount() {
         const { year, code } = this.props
+
+        this.featureSource = new VectorSource({
+            features: (new GeoJSON()).readFeatures([dc2003, dc2007, dc2011, dc2015, dc2019].find(d => d.name === `DCCA_${year}`))
+        })
 
         const styleFunction = feature => {
             if (feature.getProperties().CACODE === code) {
@@ -48,8 +53,6 @@ class OLMap extends Component {
                 })
             })
         }
-
-        // getFeaturesByYearCode(year, code)
 
         const featuresLayer = new VectorLayer({
             source: this.featureSource,
@@ -75,11 +78,24 @@ class OLMap extends Component {
             })
         })
 
+        // Fit to feature 
+        const features = this.featureSource.getFeatures()
+        for (let i = 0; i < features.length; i++) {
+            if (features[i].getProperties().CACODE === code) {
+                const extent = features[i].getGeometry().getExtent()
+                map.getView().fit(extent, {
+                    size: map.getSize(),
+                    padding: [10, 10, 10, 10]
+                })
+                break
+            }
+        }
+
         this.setState({
             map,
             view: map.getView(),
             featuresLayer: featuresLayer
-        }, () => this.setView(this.featureSource))
+        })
 
         const select = new Select()
 
@@ -90,48 +106,18 @@ class OLMap extends Component {
 
     }
 
-    componentDidUpdate(prevProps) {
-        const { year, code } = this.props
-        if (year !== prevProps.year) {
-        }
-
-        if (code !== prevProps.code) {
-            this.setView(this.featureSource)
-        }
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextProps.year !== this.props.year
     }
 
     handleMapClick = e => {
         const { year, changeDistrict } = this.props
         const selectedFeature = e.target.getFeatures().getArray()
+        // const selectedFeatureExtent = selectedFeature[0].getGeometry().getExtent()
+        // this.state.map.getView().fit(selectedFeatureExtent)
 
         if (selectedFeature[0]) {
             changeDistrict(year, selectedFeature[0].getProperties().CACODE)
-        }
-    }
-
-    setView = featureSource => {
-        const { map, view } = this.state
-        const { code } = this.props
-
-        // Fit to feature 
-        const features = featureSource.getFeatures()
-        for (let i = 0; i < features.length; i++) {
-            if (features[i].getProperties().CACODE === code) {
-                const extent = features[i].getGeometry().getExtent()
-                map.getView().fit(extent, {
-                    size: map.getSize(),
-                    padding: [10, 10, 10, 10]
-                })
-
-                view.animate({
-                    // center: the coordinate of the centre of the selected Feature,
-                    duration: 2000,
-                    easing: t => {
-                        return Math.pow(2, -10 * t) * Math.sin((t - 0.075) * (2 * Math.PI) / 0.3) + 1;
-                    }
-                })
-                this.setState({ map })
-            }
         }
     }
 
