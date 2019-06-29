@@ -137,18 +137,21 @@ class DistrictPage extends Component {
                     </DistrictCard>
                   </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <Typography variant='h6' gutterBottom>主要屋邨 / 地區：</Typography>
-                  <List>
+                {district.main_areas.length > 0 && <Grid item xs={12}>
+                  <Typography variant='h6' gutterBottom>主要屋邨 / 地區</Typography>
+                  <Box
+                    display="flex"
+                    flexWrap="wrap"
+                    alignContent="flex-start"
+                  >
                     {
-                      district.main_areas.map((area, index) => <ListItem alignItems='flex-start' key={index}>
-                        <ListItemText
-                          primary={`${Object.keys(area)[0]}. ${area[Object.keys(area)[0]]}`}
-                        />
-                      </ListItem>)
+                      district.main_areas.map((area, index) =>
+                        <Box mr={1} key={index}>
+                          {`${Object.keys(area)[0]}. ${area[Object.keys(area)[0]]}`}
+                        </Box>)
                     }
-                  </List>
-                </Grid>
+                  </Box>
+                </Grid>}
               </Container>
               <Grid item xs={12}>
                 <Container maxWidth='lg'>
