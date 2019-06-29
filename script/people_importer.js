@@ -22,11 +22,15 @@ async function upsertPerson(person) {
     }
   `;
 
+  // TODO: assume we will have the valid yob
+  // To avoid duplicated records (yob is null)
+  const yob = estimated_birth.length === 0 ? 1900 : parseInt(estimated_birth.replace(/\/\d+/g, ''), 10);
+
   const variables = {
     person: {
       name_zh: name_chi ? name_chi : null,
       name_en: name_eng ? name_eng : null,
-      estimated_yob: parseInt(estimated_birth.replace(/\/\d+/g, ''), 10),
+      estimated_yob: yob,
       gender: gender === '男' ? 'male' : 'female',
     }
   };
