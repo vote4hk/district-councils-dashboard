@@ -1,4 +1,5 @@
 const { runQuery } = require('./hasura');
+const moment = require('moment');
 
 const constituencyHash = {};
 
@@ -40,42 +41,61 @@ async function upsertPerson(person) {
 }
 
 
-async function upsertAffiliation(name_zh) {
+async function upsertAffiliation(personId, election) {
+  const {
+    year, political_affiliation,
+  } = election;
   const query = `
-    mutation insertAffilation($name: String!) {
-      insert_dc_political_affiliations(objects: [
-        {
-          name_zh: $name
+  mutation insertPersonPoliticalAffiliation($personId: uuid!, 
+    $paName: String!,
+    $yearFrom: date,
+    $yearTo: date  
+  ){
+    insert_dc_people_political_affiliations(objects:[{
+      person_id: $personId
+      year_to: $yearTo
+      year_from: $yearFrom
+      political_affiliation: {
+        data: {
+          name_zh: $paName
         }
-      ], on_conflict: {
-        constraint: dc_political_affiliations_name_zh_key,
-        update_columns: [ name_zh ]
-      }) {
-        returning {
-          id
+        on_conflict: {
+          constraint: dc_political_affiliations_name_zh_key
+          update_columns: [name_zh]
         }
       }
+    }]
+    on_conflict: {
+      constraint: dc_people_political_affiliati_person_id_political_affiliati_key
+      update_columns: [year_to, year_from]
+    }) {
+      returning {
+        id
+      }
     }
+  }
   `;
 
+
   const variables = {
-    name: name_zh,
+    paName: political_affiliation,
+    personId,
+    yearFrom: moment(year, 'YYYY').format('YYYY-MM-DD'),
+    yearTo: moment(year, 'YYYY').add(4, 'years').add(-1, 'day').format('YYYY-MM-DD'),
   };
 
   const res = await runQuery(query, variables);
-  return res.body.data.insert_dc_political_affiliations.returning[0].id;
+  if (res.statusCode !== 200) {
+    console.log(res.body);
+  }
+  return res.body.data.insert_dc_people_political_affiliations.returning[0].id;
 }
 
 async function upsertElection(personId, election) {
   const {
     year, CACODE, candi_number, occupation, win_or_not,
-    political_affiliation, votes, percentage,
+    votes, percentage,
   } = election;
-
-  let paId = null;
-  if (political_affiliation) {
-    paId = await upsertAffiliation(political_affiliation);
-  }
 
   const query = `
     mutation insertCandidates($candidate: dc_candidates_insert_input!) {
@@ -102,7 +122,6 @@ async function upsertElection(personId, election) {
       won: win_or_not === 'Y',
       votes: votes === '' ? null : parseInt(votes, 10),
       vote_percentage: percentage === '' ? null : parseFloat(percentage),
-      political_affiliation_id: paId,
     }
   };
 
@@ -143,7 +162,7 @@ async function upsertConstituencyWithoutName(year, code) {
   constituencyHash[key] = 1;
 }
 
-async function upsertConstituencyName(year, { CACODE, ENAME, CNAME}) {
+async function upsertConstituencyName(year, { CACODE, ENAME, CNAME }) {
   const query = `
   mutation insertConstituency($year: Int!, $code: String!, $nameZh: String!, $nameEn: String!) {
     insert_dc_constituencies(objects: {
@@ -212,6 +231,7 @@ async function insertCandidate(person) {
   try {
     const personId = await upsertPerson(person);
     for (const election of person.elections) {
+      await upsertAffiliation(personId, election);
       await upsertElection(personId, election);
       // in case the constituency not exists
       await upsertConstituencyWithoutName(election.year, election.CACODE);
