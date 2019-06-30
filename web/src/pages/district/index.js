@@ -211,7 +211,8 @@ class DistrictPage extends Component {
                                 value={parseFloat(candidate.vote_percentage)} />
                             </Box>
                             <Box p={1}>
-                              {candidate.is_won && <CheckCircleIcon />}
+                              { candidate.is_won && <CheckCircleIcon /> }
+                              { !candidate.is_won && <div style={{ width: '24px', height: '24px' }}></div> }
                             </Box>
                           </Box>
                         </div>)
