@@ -26,16 +26,34 @@ class OLMap extends Component {
 
     componentDidMount() {
         const { year, code } = this.props
+        const dc = [dc2003, dc2007, dc2011, dc2015, dc2019].find(d => d.name === `DCCA_${year}`);
+        var isDCDataExist = true;
+        var featuresLayer;
 
-        this.featureSource = new VectorSource({
-            features: (new GeoJSON()).readFeatures([dc2003, dc2007, dc2011, dc2015, dc2019].find(d => d.name === `DCCA_${year}`))
-        })
+        if(dc === undefined) {
+            isDCDataExist = false;
+        }
 
-        const styleFunction = feature => {
-            if (feature.getProperties().CACODE === code) {
+        if(isDCDataExist) {
+            this.featureSource = new VectorSource({
+                features: (new GeoJSON()).readFeatures(dc)
+            })
+            
+            const styleFunction = feature => {
+                if (feature.getProperties().CACODE === code) {
+                    return new Style({
+                        fill: new Fill({
+                            color: 'rgba(74, 144, 226, 0.5)'
+                        }),
+                        stroke: new Stroke({
+                            color: '#3e59ef',
+                            width: 2
+                        })
+                    })
+                }
                 return new Style({
                     fill: new Fill({
-                        color: 'rgba(74, 144, 226, 0.5)'
+                        color: 'rgba(74, 144, 226, 0.05)'
                     }),
                     stroke: new Stroke({
                         color: '#3e59ef',
@@ -43,34 +61,30 @@ class OLMap extends Component {
                     })
                 })
             }
-            return new Style({
-                fill: new Fill({
-                    color: 'rgba(74, 144, 226, 0.05)'
-                }),
-                stroke: new Stroke({
-                    color: '#3e59ef',
-                    width: 2
-                })
+    
+            featuresLayer = new VectorLayer({
+                source: this.featureSource,
+                style: styleFunction
             })
         }
 
-        const featuresLayer = new VectorLayer({
-            source: this.featureSource,
-            style: styleFunction
-        })
-
         // create map object with feature layer
+        var layers = [
+            //default OSM layer
+            new TileLayer({
+                source: new XYZ({
+                    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}'
+                })
+            })
+        ];
+        
+        if(isDCDataExist) {
+            layers.push(featuresLayer)
+        }
+
         const map = new Map({
             target: this.refs.mapContainer,
-            layers: [
-                //default OSM layer
-                new TileLayer({
-                    source: new XYZ({
-                        url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}'
-                    })
-                }),
-                featuresLayer
-            ],
+            layers,
             view: new View({
                 projection: 'EPSG:4326',
                 center: [114.2029, 22.3844],
@@ -78,23 +92,25 @@ class OLMap extends Component {
             })
         })
 
-        // Fit to feature 
-        const features = this.featureSource.getFeatures()
-        for (let i = 0; i < features.length; i++) {
-            if (features[i].getProperties().CACODE === code) {
-                const extent = features[i].getGeometry().getExtent()
-                map.getView().fit(extent, {
-                    size: map.getSize(),
-                    padding: [10, 10, 10, 10]
-                })
-                break
+        if(isDCDataExist) {
+            // Fit to feature 
+            const features = this.featureSource.getFeatures()
+            for (let i = 0; i < features.length; i++) {
+                if (features[i].getProperties().CACODE === code) {
+                    const extent = features[i].getGeometry().getExtent()
+                    map.getView().fit(extent, {
+                        size: map.getSize(),
+                        padding: [10, 10, 10, 10]
+                    })
+                    break
+                }
             }
         }
-
+        
         this.setState({
             map,
             view: map.getView(),
-            featuresLayer: featuresLayer
+            featuresLayer: isDCDataExist ? featuresLayer : null
         })
 
         const select = new Select()
@@ -103,12 +119,12 @@ class OLMap extends Component {
             map.addInteraction(select);
             select.on('select', this.handleMapClick)
         }
-
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         return nextProps.year !== this.props.year
     }
+
 
     handleMapClick = e => {
         const { year, changeDistrict } = this.props

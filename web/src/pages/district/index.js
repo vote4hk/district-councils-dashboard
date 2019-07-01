@@ -77,7 +77,10 @@ class DistrictPage extends Component {
   }
 
   render() {
-    const { match: { params: { year, code } } } = this.props
+    const { match: { params: { year, code } } } = this.props   
+    const nextElectionYear = parseInt(year, 10) + 4;
+    const currentYear = new Date().getFullYear();
+
     return (
       <Query query={GET_DISTRICTS} variables={{ year, code }}>
         {({ loading, error, data }) => {
@@ -113,11 +116,18 @@ class DistrictPage extends Component {
                           <Typography variant='button' gutterBottom>
                             {year}
                           </Typography>
-                          <IconButton aria-label='arrow_forward' onClick={this.onNextElection.bind(this)}>
-                            <ArrowForwardIcon />
-                          </IconButton>
+                          {
+                            nextElectionYear < currentYear &&
+                            <IconButton aria-label='arrow_forward' onClick={this.onNextElection.bind(this)}>
+                              <ArrowForwardIcon />
+                            </IconButton>
+                          }
+                          {
+                             nextElectionYear >= currentYear &&
+                            //  if there is no next button, show a 48x48 empty box to align the above 2 elements
+                             <div style={{ width: '48px', height: '48px' }}></div>
+                          }
                         </Box>
-
                         <Typography variant='h4' color='inherit' style={{ display: 'inline-block' }}>
                           {district.name_zh}
                         </Typography>
@@ -177,7 +187,7 @@ class DistrictPage extends Component {
                             </Box>
                             <Box p={1}>
                               <Typography gutterBottom variant='h6'>
-                                {`${candidate.candidate_number}. ${candidate.person.name_zh || candidate.person.name_en}`}
+                                {`${candidate.candidate_number == null ? "" : candidate.candidate_number + "." } ${candidate.person.name_zh || candidate.person.name_en}`}
                               </Typography>
                             </Box>
                             <Box p={1}>
@@ -201,7 +211,8 @@ class DistrictPage extends Component {
                                 value={parseFloat(candidate.vote_percentage)} />
                             </Box>
                             <Box p={1}>
-                              {candidate.is_won && <CheckCircleIcon />}
+                              { candidate.is_won && <CheckCircleIcon /> }
+                              { !candidate.is_won && <div style={{ width: '24px', height: '24px' }}></div> }
                             </Box>
                           </Box>
                         </div>)
