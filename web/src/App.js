@@ -46,7 +46,6 @@ class App extends Component {
               {/* Content will be shifted downwards by the div above. If the div is removed, the content will disappear under the app bar. */}
               <Switch>
                 <Route exact path="/" component={SearchPage} />
-                <Route exact path="/map" component={MapPage} />
                 <Route path="/profile/:id" component={ProfilePage} />
                 <Route path="/district/:year/:code" component={DistrictPage} />
                 <Route component={NotfoundPage} />

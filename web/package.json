@@ -12,7 +12,6 @@
     "gh-pages": "^2.0.1",
     "graphql": "^14.3.1",
     "hk-address-parser-lib": "^0.2.4",
-    "mapbox-gl": "^0.53.1",
     "moment": "^2.24.0",
     "npm": "^6.9.0",
     "ol": "^5.3.3",
