@@ -61,6 +61,8 @@ query ($year: Int!, $code:String!) {
 
 class DistrictPage extends Component {
 
+  homeUrl = 'https://cswbrian.github.io/district-councils-dashboard/'
+
   handleChangeDistrict = (year, code) => {
     if (!year || !code) return
     this.props.history.replace(`/district/${year}/${code}`)
@@ -181,8 +183,8 @@ class DistrictPage extends Component {
                             justifyContent='space-between'>
                             <Box p={1}>
                               <Avatar
-                                src={`/static/images/avatar/${year}/${code}_${year === 2011 ? '0' : ''}${candidate.candidate_number}.jpg`}
-                                imgProps={{ onError: (e) => { e.target.src = '/static/images/avatar/default.png'; } }} >
+                                src={`${this.homeUrl}/static/images/avatar/${year}/${code}_${year === 2011 ? '0' : ''}${candidate.candidate_number}.jpg`}
+                                imgProps={{ onError: (e) => { e.target.src = this.homeUrl + '/static/images/avatar/default.png'; } }} >
                               </Avatar>
                             </Box>
                             <Box p={1}>
