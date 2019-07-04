@@ -8,13 +8,18 @@ import XYZ from 'ol/source/XYZ'
 import GeoJSON from 'ol/format/GeoJSON'
 import { Style, Stroke, Fill } from 'ol/style'
 import Select from 'ol/interaction/Select'
-
+import styled from 'styled-components';
 
 import dc2003 from '../data/DCCA_2003'
 import dc2007 from '../data/DCCA_2007'
 import dc2011 from '../data/DCCA_2011'
 import dc2015 from '../data/DCCA_2015'
 import dc2019 from '../data/DCCA_2019'
+
+const MapContainer = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
 
 class OLMap extends Component {
@@ -139,7 +144,7 @@ class OLMap extends Component {
 
     render() {
         return (
-            <div ref="mapContainer"> </div>
+            <MapContainer ref="mapContainer"> </MapContainer>
         )
     }
 
