@@ -9,62 +9,57 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import moment from 'moment'
-import gql from "graphql-tag";
-import { Query } from "react-apollo";
-
+import gql from 'graphql-tag'
+import { Query } from 'react-apollo'
 
 const GET_PEOPLE_PROFILE = gql`
-query ($id: uuid!) {
-  dc_people( 
-    where: { 
-      id: { _eq: $id}
-    }
-    order_by: {elections_aggregate: {
-      max: { year: asc }
-    }}
-  ) {
-    name_en
-    name_zh
-    estimated_yob
-    gender
-    elections {
-      cacode
-      year
-      votes
-      vote_percentage
-      constituency {
-        name_zh
-        expected_population
-        deviation_percentage
-      }
-      political_affiliation {
-        name_zh
+  query($id: uuid!) {
+    dc_people(
+      where: { id: { _eq: $id } }
+      order_by: { elections_aggregate: { max: { year: asc } } }
+    ) {
+      name_en
+      name_zh
+      estimated_yob
+      gender
+      elections {
+        cacode
+        year
+        votes
+        vote_percentage
+        constituency {
+          name_zh
+          expected_population
+          deviation_percentage
+        }
+        political_affiliation {
+          name_zh
+        }
       }
     }
   }
-}
-`;
-
+`
 
 class ProfilePage extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-
-    }
+    this.state = {}
   }
 
-  async componentDidMount() {
-  }
+  async componentDidMount() {}
 
   render() {
-    const { match: { params: { id } } } = this.props
+    const {
+      match: {
+        params: { id },
+      },
+    } = this.props
     return (
       <Query query={GET_PEOPLE_PROFILE} variables={{ id }}>
         {({ loading, error, data }) => {
-          if (loading) return null;
-          if (error) return `Error! ${error}`;
-          const person = data.dc_people[0];
+          if (loading) return null
+          if (error) return `Error! ${error}`
+          const person = data.dc_people[0]
           return (
             <Paper>
               <Card>
@@ -79,8 +74,7 @@ class ProfilePage extends Component {
                   title={person.name_zh ? person.name_zh : person.name_en}
                   subheader={`${moment().year() - person.estimated_yob}歲`}
                 />
-                <CardContent>
-                </CardContent>
+                <CardContent></CardContent>
               </Card>
               <Table>
                 <TableHead>
@@ -97,26 +91,35 @@ class ProfilePage extends Component {
                     <TableRow key={row.year + row.cacode}>
                       <TableCell align="right">{row.year}</TableCell>
                       <TableCell align="right">{row.cacode}</TableCell>
-                      {row.constituency ?
-                        <TableCell align="right">{row.constituency.name}</TableCell> :
+                      {row.constituency ? (
+                        <TableCell align="right">
+                          {row.constituency.name}
+                        </TableCell>
+                      ) : (
                         <TableCell align="right">?</TableCell>
-                      }
-                      {row.political_affiliation ?
-                        <TableCell align="right">{row.political_affiliation.name_zh}</TableCell> :
+                      )}
+                      {row.political_affiliation ? (
+                        <TableCell align="right">
+                          {row.political_affiliation.name_zh}
+                        </TableCell>
+                      ) : (
                         <TableCell align="right">N/A</TableCell>
-                      }
+                      )}
 
-                      <TableCell align="right">{`${row.votes ? row.votes : '-'} (${row.vote_percentage ? row.vote_percentage : '-'}%)`}</TableCell>
+                      <TableCell align="right">{`${
+                        row.votes ? row.votes : '-'
+                      } (${
+                        row.vote_percentage ? row.vote_percentage : '-'
+                      }%)`}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
             </Paper>
-          );
+          )
         }}
       </Query>
       // TODO: UI design
-
     )
   }
 }

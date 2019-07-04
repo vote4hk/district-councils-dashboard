@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { NavLink } from "react-router-dom"
+import { NavLink } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
@@ -12,25 +12,22 @@ import Button from '@material-ui/core/Button'
 
 import * as AddressParser from 'hk-address-parser-lib'
 
-const styles = theme => ({
-})
+const styles = theme => ({})
 
 class SearchPage extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       selectedDistrict: null,
-      autoCompleteList: []
+      autoCompleteList: [],
     }
   }
 
-  async componentDidMount() {
-
-  }
+  async componentDidMount() {}
 
   async onAddressFieldChanged(evt) {
-    const { value } = evt.target;
-    const records = await AddressParser.parse(value);
+    const { value } = evt.target
+    const records = await AddressParser.parse(value)
     this.setState({
       autoCompleteList: records,
     })
@@ -42,13 +39,22 @@ class SearchPage extends Component {
 
   renderDCCA = code => {
     if (!code) return null
-    return <div>
-      {Object.keys(district['2019'][code]).map(dcca => {
-        return (
-          <Button component={NavLink} to={`/district/2019/${dcca}`} key={district['2019'][code][dcca].code} color="secondary">{district['2019'][code][dcca].name}</Button>
-        )
-      })}
-    </div>
+    return (
+      <div>
+        {Object.keys(district['2019'][code]).map(dcca => {
+          return (
+            <Button
+              component={NavLink}
+              to={`/district/2019/${dcca}`}
+              key={district['2019'][code][dcca].code}
+              color="secondary"
+            >
+              {district['2019'][code][dcca].name}
+            </Button>
+          )
+        })}
+      </div>
+    )
   }
 
   render() {
@@ -67,7 +73,11 @@ class SearchPage extends Component {
               }}
               onChange={this.onAddressFieldChanged.bind(this)}
             />
-            {autoCompleteList.map((address, index) => (<div key={index}><p>{address.fullAddress()}</p></div>))}
+            {autoCompleteList.map((address, index) => (
+              <div key={index}>
+                <p>{address.fullAddress()}</p>
+              </div>
+            ))}
           </Paper>
         </Grid>
         <Grid item xs={6}>
@@ -80,17 +90,19 @@ class SearchPage extends Component {
         </Grid>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            {
-              area.map(a => <Button key={a.dccode} color="primary" onClick={() => this.setState({ selectedDistrict: a.dccode })}>{a.dname_chi}</Button>)
-            }
+            {area.map(a => (
+              <Button
+                key={a.dccode}
+                color="primary"
+                onClick={() => this.setState({ selectedDistrict: a.dccode })}
+              >
+                {a.dname_chi}
+              </Button>
+            ))}
             {this.renderDCCA(this.state.selectedDistrict)}
           </Paper>
         </Grid>
       </Grid>
-        
-
-      
-      
     )
   }
 }

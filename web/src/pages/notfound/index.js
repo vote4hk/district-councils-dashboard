@@ -6,22 +6,19 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 const theme = createMuiTheme
 
 const styles = theme => ({
-  content: {
-  },
+  content: {},
 })
 
 class NotFoundPage extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-     
-    }
+    this.state = {}
   }
 
   render() {
     return (
       <MuiThemeProvider theme={theme}>
-      TODO - <a href='https://notfound.collaction.hk/'>404</a>
+        TODO - <a href="https://notfound.collaction.hk/">404</a>
       </MuiThemeProvider>
     )
   }
