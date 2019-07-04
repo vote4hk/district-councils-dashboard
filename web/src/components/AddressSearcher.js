@@ -1,26 +1,26 @@
-import React from 'react';
-import PropTypes, { instanceOf } from 'prop-types';
-import deburr from 'lodash/deburr';
-import Autosuggest from 'react-autosuggest';
-import match from 'autosuggest-highlight/match';
-import parse from 'autosuggest-highlight/parse';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import MenuItem from '@material-ui/core/MenuItem';
-import Popper from '@material-ui/core/Popper';
-import { withStyles } from '@material-ui/core/styles';
-import * as AddressParser from 'hk-address-parser-lib';
+import React from 'react'
+import PropTypes, { instanceOf } from 'prop-types'
+import deburr from 'lodash/deburr'
+import Autosuggest from 'react-autosuggest'
+import match from 'autosuggest-highlight/match'
+import parse from 'autosuggest-highlight/parse'
+import TextField from '@material-ui/core/TextField'
+import Paper from '@material-ui/core/Paper'
+import MenuItem from '@material-ui/core/MenuItem'
+import Popper from '@material-ui/core/Popper'
+import { withStyles } from '@material-ui/core/styles'
+import * as AddressParser from 'hk-address-parser-lib'
 
 function renderInputComponent(inputProps) {
-  const { classes, inputRef = () => {}, ref, ...other } = inputProps;
+  const { classes, inputRef = () => {}, ref, ...other } = inputProps
 
   return (
     <TextField
       fullWidth
       InputProps={{
         inputRef: node => {
-          ref(node);
-          inputRef(node);
+          ref(node)
+          inputRef(node)
         },
         classes: {
           input: classes.input,
@@ -28,12 +28,12 @@ function renderInputComponent(inputProps) {
       }}
       {...other}
     />
-  );
+  )
 }
 
 function renderSuggestion(suggestion, { query, isHighlighted }) {
-  const matches = match(suggestion.label, query);
-  const parts = parse(suggestion.label, matches);
+  const matches = match(suggestion.label, query)
+  const parts = parse(suggestion.label, matches)
 
   return (
     <MenuItem selected={isHighlighted} component="div">
@@ -47,15 +47,15 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
             <strong key={String(index)} style={{ fontWeight: 300 }}>
               {part.text}
             </strong>
-          ),
+          )
         )}
       </div>
     </MenuItem>
-  );
+  )
 }
 
 function getSuggestionValue(suggestion) {
-  return suggestion.label;
+  return suggestion.label
 }
 
 const styles = theme => ({
@@ -66,7 +66,7 @@ const styles = theme => ({
     position: 'absolute',
     width: '100%',
     backgroundColor: '#fff',
-    padding: '10px'
+    padding: '10px',
   },
   container: {
     position: 'relative',
@@ -79,41 +79,42 @@ const styles = theme => ({
     right: 0,
   },
   suggestion: {
-    display: 'block'
+    display: 'block',
   },
   suggestionsList: {
     margin: 0,
     padding: 0,
-    listStyleType: 'none'
+    listStyleType: 'none',
   },
   divider: {
     height: theme.spacing.unit * 2,
   },
-});
+})
 
 class IntegrationAutosuggest extends React.Component {
   state = {
     value: '',
     suggestions: [],
-  };
+  }
 
   getSuggestions(value) {
-    const inputValue = deburr(value.trim()).toLowerCase();
-    const inputLength = inputValue.length;
-    let count = 0;
+    const inputValue = deburr(value.trim()).toLowerCase()
+    const inputLength = inputValue.length
+    let count = 0
 
     return inputLength === 0
       ? []
       : this.state.suggestions.filter(suggestion => {
           const keep =
-            count < 5 && suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
+            count < 5 &&
+            suggestion.label.slice(0, inputLength).toLowerCase() === inputValue
 
           if (keep) {
-            count += 1;
+            count += 1
           }
 
-          return keep;
-        });
+          return keep
+        })
   }
 
   handleSuggestionsFetchRequested = ({ value }) => {
@@ -121,57 +122,61 @@ class IntegrationAutosuggest extends React.Component {
     // this.setState({
     //   suggestions: this.getSuggestions(value),
     // });
-  };
+  }
 
   handleSuggestionsClearRequested = () => {
     this.setState({
       suggestions: [],
-    });
-  };
+    })
+  }
 
   handleAddressSelected(address) {
-    const coordinate = address.coordinate();
+    const coordinate = address.coordinate()
     this.props.onAutoSuggestClicked(coordinate)
   }
 
   async onAddressFieldChanged(event, { newValue }) {
-    const isMouseClick = event.nativeEvent instanceof MouseEvent;
+    const isMouseClick = event.nativeEvent instanceof MouseEvent
     if (isMouseClick) {
       // This is fired when clicked on the pull down menu
       this.setState({
-        value: newValue
+        value: newValue,
       })
 
-      let foundAddress = null;
+      let foundAddress = null
       try {
-        foundAddress = this.state.addresses.filter( address => address.fullAddress(AddressParser.Address.LANG_ZH) === newValue)[0];
-      } catch (error) {
-      }
+        foundAddress = this.state.addresses.filter(
+          address =>
+            address.fullAddress(AddressParser.Address.LANG_ZH) === newValue
+        )[0]
+      } catch (error) {}
 
       if (foundAddress) {
-        this.handleAddressSelected(foundAddress);
+        this.handleAddressSelected(foundAddress)
       }
     } else {
       // this is fired when typing in the search field
       this.setState({
         currentSearchingResult: newValue,
-        value: newValue
+        value: newValue,
       })
-      const records = await AddressParser.parse(newValue);
+      const records = await AddressParser.parse(newValue)
 
       // Ignore the search if it is not the latest result
       if (this.state.currentSearchingResult === newValue) {
         this.setState({
-          suggestions: records.filter((_, index) => index < 10).map(record => ({ label: record.fullAddress(AddressParser.Address.LANG_ZH) })),
+          suggestions: records
+            .filter((_, index) => index < 10)
+            .map(record => ({
+              label: record.fullAddress(AddressParser.Address.LANG_ZH),
+            })),
           addresses: records,
         })
       }
-
     }
-
   }
   render() {
-    const { classes } = this.props;
+    const { classes } = this.props
 
     const autosuggestProps = {
       renderInputComponent,
@@ -180,10 +185,9 @@ class IntegrationAutosuggest extends React.Component {
       onSuggestionsClearRequested: this.handleSuggestionsClearRequested,
       getSuggestionValue,
       renderSuggestion,
-    };
+    }
 
     return (
-
       <div className={classes.root}>
         <div className={classes.autoSuggestDiv}>
           <Autosuggest
@@ -195,7 +199,7 @@ class IntegrationAutosuggest extends React.Component {
               value: this.state.value,
               onChange: this.onAddressFieldChanged.bind(this),
               inputRef: node => {
-                this.popperNode = node;
+                this.popperNode = node
               },
               InputLabelProps: {
                 shrink: true,
@@ -206,11 +210,16 @@ class IntegrationAutosuggest extends React.Component {
               suggestion: classes.suggestion,
             }}
             renderSuggestionsContainer={options => (
-              <Popper anchorEl={this.popperNode} open={Boolean(options.children)}>
+              <Popper
+                anchorEl={this.popperNode}
+                open={Boolean(options.children)}
+              >
                 <Paper
                   square
                   {...options.containerProps}
-                  style={{ width: this.popperNode ? this.popperNode.clientWidth : null }}
+                  style={{
+                    width: this.popperNode ? this.popperNode.clientWidth : null,
+                  }}
                 >
                   {options.children}
                 </Paper>
@@ -219,12 +228,12 @@ class IntegrationAutosuggest extends React.Component {
           />
         </div>
       </div>
-    );
+    )
   }
 }
 
 IntegrationAutosuggest.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+}
 
-export default withStyles(styles)(IntegrationAutosuggest);
+export default withStyles(styles)(IntegrationAutosuggest)

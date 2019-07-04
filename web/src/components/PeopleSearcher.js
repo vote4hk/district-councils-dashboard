@@ -8,16 +8,19 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Popper from '@material-ui/core/Popper'
 import { withStyles } from '@material-ui/core/styles'
 import { withApollo } from 'react-apollo'
-import gql from "graphql-tag";
+import gql from 'graphql-tag'
 
 const GET_PEOPLE = gql`
-  query ($nameRegex: String) {
-    dc_people( where: {
-      _or: [
-        { name_zh: { _like: $nameRegex }},
-        { name_en: { _like: $nameRegex }},
-      ]
-    }, limit: 50) {
+  query($nameRegex: String) {
+    dc_people(
+      where: {
+        _or: [
+          { name_zh: { _like: $nameRegex } }
+          { name_en: { _like: $nameRegex } }
+        ]
+      }
+      limit: 50
+    ) {
       id
       name_zh
       name_en
@@ -26,7 +29,7 @@ const GET_PEOPLE = gql`
 `
 
 function renderInputComponent(inputProps) {
-  const { classes, inputRef = () => { }, ref, ...other } = inputProps
+  const { classes, inputRef = () => {}, ref, ...other } = inputProps
 
   return (
     <TextField
@@ -46,27 +49,25 @@ function renderInputComponent(inputProps) {
 }
 
 function renderSuggestion(suggestion, { query, isHighlighted }) {
-
   return (
     <MenuItem selected={isHighlighted} component="div">
       <div>
-        {isHighlighted ?
-          (<span>
+        {isHighlighted ? (
+          <span>
             {suggestion.name_zh ? suggestion.name_zh : suggestion.name_en}
-          </span>) :
-          (<strong>
+          </span>
+        ) : (
+          <strong>
             {suggestion.name_zh ? suggestion.name_zh : suggestion.name_en}
-          </strong>)
-        }
+          </strong>
+        )}
       </div>
     </MenuItem>
   )
 }
 
-
-
 function getSuggestionValue(suggestion) {
-  return suggestion.name_zh ? suggestion.name_zh : suggestion.name_en;
+  return suggestion.name_zh ? suggestion.name_zh : suggestion.name_en
 }
 
 const styles = theme => ({
@@ -91,33 +92,36 @@ const styles = theme => ({
     margin: 0,
     padding: 0,
     listStyleType: 'none',
-  }
+  },
 })
 
 class PeopleSearcher extends React.Component {
   state = {
     single: '',
     popper: '',
-    suggestions: []
+    suggestions: [],
   }
 
   getSuggestions(value) {
     const inputValue = deburr(value.trim()).toLowerCase()
     const inputLength = inputValue.length
 
-    return inputLength === 0 ? [] : this.state.suggestions.filter(suggestion => suggestion.name && suggestion.name.includes(value))
+    return inputLength === 0
+      ? []
+      : this.state.suggestions.filter(
+          suggestion => suggestion.name && suggestion.name.includes(value)
+        )
   }
 
   async componentDidMount() {
     const { data } = await this.props.client.query({
       query: GET_PEOPLE,
       variables: {
-        nameRegex: '%'
-      }
+        nameRegex: '%',
+      },
     })
     this.setState({ suggestions: data.dc_people })
   }
-
 
   handleSuggestionsClearRequested = () => {
     this.setState({
@@ -131,7 +135,10 @@ class PeopleSearcher extends React.Component {
     })
   }
 
-  handleSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
+  handleSuggestionSelected = (
+    event,
+    { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }
+  ) => {
     this.props.handlePeopleSelected(suggestion)
   }
 
@@ -142,12 +149,12 @@ class PeopleSearcher extends React.Component {
       const { data } = await this.props.client.query({
         query: GET_PEOPLE,
         variables: {
-          nameRegex: `%${value}%`
-        }
+          nameRegex: `%${value}%`,
+        },
       })
       this.setState({ suggestions: data.dc_people })
     }
-  };
+  }
 
   render() {
     const { classes } = this.props
@@ -188,7 +195,9 @@ class PeopleSearcher extends React.Component {
               <Paper
                 square
                 {...options.containerProps}
-                style={{ width: this.popperNode ? this.popperNode.clientWidth : null }}
+                style={{
+                  width: this.popperNode ? this.popperNode.clientWidth : null,
+                }}
               >
                 {options.children}
               </Paper>
@@ -204,4 +213,4 @@ PeopleSearcher.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withApollo(withStyles(styles)(PeopleSearcher));
+export default withApollo(withStyles(styles)(PeopleSearcher))
