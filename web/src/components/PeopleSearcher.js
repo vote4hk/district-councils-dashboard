@@ -49,18 +49,43 @@ function renderInputComponent(inputProps) {
 }
 
 function renderSuggestion(suggestion, { query, isHighlighted }) {
+  // TODO: update default avatar
+  // TODO: enrich avatar field
+  const avatar = suggestion.avatar
+    ? suggestion.avatar
+    : 'http://www.carderator.com/assets/avatar_placeholder_small.png'
+
+  // keyword this is not accessible here. so define the style here
+  const suggestionNameStyle = {
+    marginLeft: '68px',
+    lineHeight: '45px',
+  }
+  const boldStyle = {
+    fontWeight: '800',
+  }
+  const selectedSuggestionNameStyle = {
+    ...suggestionNameStyle,
+    ...boldStyle,
+  }
+
   return (
     <MenuItem selected={isHighlighted} component="div">
-      <div>
-        {isHighlighted ? (
-          <span>
-            {suggestion.name_zh ? suggestion.name_zh : suggestion.name_en}
-          </span>
-        ) : (
-          <strong>
-            {suggestion.name_zh ? suggestion.name_zh : suggestion.name_en}
-          </strong>
-        )}
+      <div
+        style={{
+          backgroundImage: `url(${avatar})`,
+          display: 'flex',
+          alignItems: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: '48px 48px',
+        }}
+      >
+        <span
+          style={
+            isHighlighted ? suggestionNameStyle : selectedSuggestionNameStyle
+          }
+        >
+          {suggestion.name_zh ? suggestion.name_zh : suggestion.name_en}
+        </span>
       </div>
     </MenuItem>
   )
