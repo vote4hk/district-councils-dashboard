@@ -15,6 +15,17 @@ npm i
 npm start
 ```
 
+#### Convert people.csv to people.json
+
+```bash
+cd web/src/data
+
+npm i
+
+node csv2json
+```
+
+
 ### Reference
 
 [立場區議會選舉專頁 - 2015](https://dce2015.thestandnews.com)  

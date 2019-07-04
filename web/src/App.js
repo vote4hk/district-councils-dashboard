@@ -6,7 +6,6 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import createMuiTheme from './ui/theme'
 import NavBar from './layout/NavBar'
 import SearchPage from './pages/search'
-import MapPage from './pages/map'
 import ProfilePage from './pages/profile'
 import DistrictPage from './pages/district'
 import NotfoundPage from './pages/notfound'
@@ -46,7 +45,6 @@ class App extends Component {
               {/* Content will be shifted downwards by the div above. If the div is removed, the content will disappear under the app bar. */}
               <Switch>
                 <Route exact path="/" component={SearchPage} />
-                <Route exact path="/map" component={MapPage} />
                 <Route path="/profile/:id" component={ProfilePage} />
                 <Route path="/district/:year/:code" component={DistrictPage} />
                 <Route component={NotfoundPage} />
