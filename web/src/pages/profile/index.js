@@ -32,9 +32,6 @@ const GET_PEOPLE_PROFILE = gql`
           expected_population
           deviation_percentage
         }
-        political_affiliation {
-          name_zh
-        }
       }
     }
   }
