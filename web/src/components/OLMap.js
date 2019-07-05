@@ -32,12 +32,8 @@ class OLMap extends Component {
     const dc = [dc2003, dc2007, dc2011, dc2015, dc2019].find(
       d => d.name === `DCCA_${year}`
     )
-    var isDCDataExist = true
-    var featuresLayer
-
-    if (dc === undefined) {
-      isDCDataExist = false
-    }
+    let isDCDataExist = dc ? true : false
+    let featuresLayer
 
     if (isDCDataExist) {
       this.featureSource = new VectorSource({
@@ -74,7 +70,7 @@ class OLMap extends Component {
     }
 
     // create map object with feature layer
-    var layers = [
+    const layers = [
       //default OSM layer
       new TileLayer({
         source: new XYZ({
@@ -127,16 +123,18 @@ class OLMap extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    //  if (this.props.route.path === nextProps.route.path) return false;
-    return true
-  }
   handleMapClick = e => {
     const { year, changeDistrict } = this.props
     const selectedFeature = e.target.getFeatures().getArray()
 
-    changeDistrict(year, selectedFeature[0].get('CACODE'))
-    this.state.map.getView().fit(selectedFeature[0].getGeometry().getExtent())
+    if (selectedFeature.length > 0) {
+      changeDistrict(year, selectedFeature[0].get('CACODE'))
+      this.state.map
+        .getView()
+        .fit(selectedFeature[0].getGeometry().getExtent(), {
+          duration: 200,
+        })
+    }
   }
 
   render() {
