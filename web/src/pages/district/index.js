@@ -1,16 +1,7 @@
 import React, { Component } from 'react'
-import { styled } from '@material-ui/styles'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
-import IconButton from '@material-ui/core/IconButton'
-import ArrowBackIcon from '@material-ui/icons/ArrowBack'
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
-import List from '@material-ui/core/List'
-import ListItemText from '@material-ui/core/ListItemText'
-import Divider from '@material-ui/core/Divider'
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import Typography from '@material-ui/core/Typography'
 import CustomizedProgressBars from '../../components/BorderLinearProgress'
 import Avatar from '@material-ui/core/Avatar'
@@ -18,12 +9,7 @@ import Box from '@material-ui/core/Box'
 import OLMap from '../../components/OLMap'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-
-const DistrictCard = styled(Paper)({
-  background: '#f6f6f6',
-  color: '#00000',
-  height: 300,
-})
+import DistrictCard from 'components/district/DistrictCard'
 
 const GET_DISTRICTS = gql`
   query($year: Int!, $code: String!) {
@@ -113,77 +99,42 @@ class DistrictPage extends Component {
         params: { year, code },
       },
     } = this.props
-    const nextElectionYear = parseInt(year, 10) + 4
-    const currentYear = new Date().getFullYear()
 
     return (
-      <Box display="flex" flexWrap="wrap" alignContent="flex-start">
-        <Box
-          width={{ sm: '100%', md: '960px' }}
-          height={{ sm: '300px', md: '400px' }}
-        >
-          <OLMap
-            year={year}
-            code={code}
-            changeDistrict={this.handleChangeDistrict}
-          />
-        </Box>
-        <Query query={GET_DISTRICTS} variables={{ year, code }}>
-          {({ loading, error, data }) => {
-            if (loading) return null
-            if (error) return `Error! ${error}`
-            const district = data.dc_constituencies[0]
+      <>
+        <Box display="flex" flexWrap="wrap" alignContent="flex-start" p="30px">
+          <Box
+            width={{ sm: '100%', md: '960px' }}
+            height={{ sm: '300px', md: '400px' }}
+          >
+            <OLMap
+              year={year}
+              code={code}
+              changeDistrict={this.handleChangeDistrict}
+            />
+          </Box>
+          <Query query={GET_DISTRICTS} variables={{ year, code }}>
+            {({ loading, error, data }) => {
+              if (loading) return null
+              if (error) return `Error! ${error}`
+              const district = data.dc_constituencies[0]
 
-            return (
-              <>
-                <Box
-                  p={1}
-                  width={{ sm: '100%', md: '400px' }}
-                  height={{ sm: '300px', md: '400px' }}
-                >
-                  <DistrictCard>
-                    <Box p={1} border={0} color="primary.minor">
-                      <Box
-                        display="flex"
-                        flexDirection="row"
-                        alignItems="center"
-                        justifyContent="space-between"
-                      >
-                        {this.renderPrevElectionButton(year)}
-                        <Typography variant="button" gutterBottom>
-                          {year}
-                        </Typography>
-                        {this.renderNextElectionButton(
-                          nextElectionYear,
-                          currentYear
-                        )}
-                      </Box>
-                      <Typography
-                        variant="h4"
-                        color="inherit"
-                        style={{ display: 'inline-block' }}
-                      >
-                        {district.name_zh}
-                      </Typography>
-                      <Typography
-                        variant="h4"
-                        color="inherit"
-                        style={{ display: 'inline-block' }}
-                      >
-                        {code}
-                      </Typography>
-                      <Divider />
-                      <List>
-                        <ListItemText primary={'區議員'} />
-                        <ListItemSecondaryAction></ListItemSecondaryAction>
-                      </List>
-                      <List>
-                        <ListItemText primary={'政黨'} />
-                        <ListItemSecondaryAction></ListItemSecondaryAction>
-                      </List>
-                    </Box>
-                  </DistrictCard>
-                </Box>
+              return (
+                <>
+                  <Box
+                    p={0}
+                    paddingLeft="30px"
+                    width={{ sm: '100%', md: '400px' }}
+                    height={{ sm: '300px', md: '400px' }}
+                  >
+                    <DistrictCard
+                      {...district}
+                      year={parseInt(year, 10)}
+                      code={code}
+                      onNextElection={this.onNextElection.bind(this)}
+                      onPrevElection={this.onPrevElection.bind(this)}
+                    />
+                  </Box>
 
                 <Grid item xs={12}>
                   {district.main_areas.length > 0 && (
