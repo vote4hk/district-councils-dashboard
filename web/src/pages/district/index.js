@@ -79,6 +79,34 @@ class DistrictPage extends Component {
     this.props.history.push(`/district/${parseInt(year, 10) + 4}/${code}`)
   }
 
+  renderPrevElectionButton(year) {
+    return year > 1999 ? (
+      <IconButton
+        aria-label="arrow_back"
+        onClick={this.onPrevElection.bind(this)}
+      >
+        <ArrowBackIcon />
+      </IconButton>
+    ) : (
+      // if there is no next button, show a 48x48 empty box to align the 2 elements on the right
+      <div style={{ width: '48px', height: '48px' }}></div>
+    )
+  }
+
+  renderNextElectionButton(nextElectionYear, currentYear) {
+    return nextElectionYear < currentYear ? (
+      <IconButton
+        aria-label="arrow_forward"
+        onClick={this.onNextElection.bind(this)}
+      >
+        <ArrowForwardIcon />
+      </IconButton>
+    ) : (
+      // if there is no next button, show a 48x48 empty box to align the 2 elements on the left
+      <div style={{ width: '48px', height: '48px' }}></div>
+    )
+  }
+
   render() {
     const {
       match: {
@@ -121,26 +149,13 @@ class DistrictPage extends Component {
                         alignItems="center"
                         justifyContent="space-between"
                       >
-                        <IconButton
-                          aria-label="arrow_back"
-                          onClick={this.onPrevElection.bind(this)}
-                        >
-                          <ArrowBackIcon />
-                        </IconButton>
+                        {this.renderPrevElectionButton(year)}
                         <Typography variant="button" gutterBottom>
                           {year}
                         </Typography>
-                        {nextElectionYear < currentYear && (
-                          <IconButton
-                            aria-label="arrow_forward"
-                            onClick={this.onNextElection.bind(this)}
-                          >
-                            <ArrowForwardIcon />
-                          </IconButton>
-                        )}
-                        {nextElectionYear >= currentYear && (
-                          //  if there is no next button, show a 48x48 empty box to align the above 2 elements
-                          <div style={{ width: '48px', height: '48px' }}></div>
+                        {this.renderNextElectionButton(
+                          nextElectionYear,
+                          currentYear
                         )}
                       </Box>
                       <Typography
