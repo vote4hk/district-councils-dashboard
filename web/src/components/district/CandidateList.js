@@ -197,6 +197,11 @@ class CandidateList extends Component {
                             this.homeUrl + '/static/images/avatar/default.png'
                         },
                       }}
+                      style={{
+                        width: '66px',
+                        height: '88px',
+                        borderRadius: 0,
+                      }}
                     ></Avatar>
                   </AvatarColumn>
                   <NameColumn p={1}>
