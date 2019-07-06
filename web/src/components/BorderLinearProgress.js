@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
 const BorderLinearProgress = withStyles({
   root: {
     height: 10,
+    width: 100,
     backgroundColor: lighten('#ff6c5c', 0.5),
   },
   bar: {
