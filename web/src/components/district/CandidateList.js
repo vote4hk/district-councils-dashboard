@@ -1,17 +1,31 @@
 import React, { Component } from 'react'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import Box from '@material-ui/core/Box'
+import Card from '@material-ui/core/Card'
 import PropTypes from 'prop-types'
-import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import CustomizedProgressBars from '../../components/BorderLinearProgress'
 import Avatar from '@material-ui/core/Avatar'
 import { bps } from 'utils/responsive'
 
+const commonFontStyle = css`
+  font-family: 'PingFangTC-Medium';
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+`
+
+const OvalButton = styled.div`
+  width: 95px;
+  height: 95px;
+  background: url('/static/images/electedIcon.png');
+`
+
 const Container = styled.div`
    {
-    padding-bottom: 100px;
+    padding: 0px 15px 100px 25px;
   }
 `
 
@@ -90,24 +104,75 @@ const StyledDivier = styled(Divider)`
     margin-right: 30px;
   }
 `
+const CandidateListTitle = styled.div`
+   {
+    ${commonFontStyle}
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+  }
+`
+
+const CandidateName = styled.div`
+   {
+    ${commonFontStyle}
+    font-size: 24px;
+    font-weight: 500;
+    color: #333333;
+  }
+`
+
+const BlueVoteContainer = styled.div`
+   {
+    ${commonFontStyle}
+    font-size: 18px;
+    font-weight: 500;
+    color: #306ece;
+  }
+`
+
+const RedVoteContainer = styled.div`
+   {
+    ${commonFontStyle}
+    font-size: 18px;
+    font-weight: 500;
+    color: #f6416e;
+  }
+`
+
+const ContentHeader = styled.div`
+   {
+    ${commonFontStyle}
+    font-size: 18px;
+    font-weight: 600;
+    color: #4a4a4a;
+  }
+`
+
+const Content = styled.div`
+   {
+    ${commonFontStyle}
+    font-size: 18px;
+    color: #4a4a4a;
+  }
+`
 
 class CandidateList extends Component {
   static propTypes = {
     candidates: PropTypes.array.isRequired,
     year: PropTypes.number.isRequired,
     code: PropTypes.string.isRequired,
+    legacy: PropTypes.array.isRequired,
   }
 
   // todo: use ENV_VAR
   homeUrl = 'https://cswbrian.github.io/district-councils-dashboard/'
 
   render() {
-    const { candidates, year, code } = this.props
+    const { candidates, year, code, legacy } = this.props
     return (
       <Container maxWidth="lg">
-        <Typography variant="h5" gutterBottom>
-          議員候選人
-        </Typography>
+        <CandidateListTitle>議員候選人</CandidateListTitle>
         <RowsContainer>
           {candidates
             .sort((a, b) => a.candidate_number - b.candidate_number)
@@ -131,60 +196,73 @@ class CandidateList extends Component {
                             this.homeUrl + '/static/images/avatar/default.png'
                         },
                       }}
+                      style={{
+                        width: '66px',
+                        height: '88px',
+                        borderRadius: 0,
+                      }}
                     ></Avatar>
                   </AvatarColumn>
                   <NameColumn p={1}>
-                    <Typography gutterBottom variant="h5">
+                    <CandidateName>
                       {`${
                         candidate.candidate_number == null
                           ? ''
                           : candidate.candidate_number + '.'
                       } ${candidate.person.name_zh ||
                         candidate.person.name_en}`}
-                    </Typography>
+                    </CandidateName>
                   </NameColumn>
                   <PoliticalColumn>
-                    <Typography variant="h6" display="block">
-                      陣營
-                    </Typography>
+                    <ContentHeader>陣營</ContentHeader>
                     {'\n'}
-                    <Typography display="block">
+                    <Content>
                       {candidate.political_affiliation
                         ? candidate.political_affiliation.name_zh
-                        : '-'}
-                    </Typography>
+                        : ''}
+                    </Content>
                   </PoliticalColumn>
                   <PoliticalColumn>
-                    <Typography variant="h6" display="block">
-                      政治聯繫
-                    </Typography>
+                    <ContentHeader>政治聯繫</ContentHeader>
                     {'\n'}
-                    <Typography display="block">
-                      {candidate.political_affiliation
-                        ? candidate.political_affiliation.name_zh
+                    <Content>
+                      {// TODO: Refactor
+                      legacy.filter(
+                        o => o.name_chi == candidate.person.name_zh
+                      )[0]
+                        ? legacy.filter(
+                            o => o.name_chi == candidate.person.name_zh
+                          )[0].camp
                         : '-'}
-                    </Typography>
+                    </Content>
                   </PoliticalColumn>
                   <PoliticalColumn>
-                    <Typography gutterBottom>
-                      {`${candidate.votes} (${candidate.vote_percentage}%)`}
-                    </Typography>
+                    {candidate.is_won && (
+                      <BlueVoteContainer>
+                        {' '}
+                        {`${candidate.votes} (${candidate.vote_percentage}%)`}{' '}
+                      </BlueVoteContainer>
+                    )}
+                    {!candidate.is_won && (
+                      <RedVoteContainer>
+                        {' '}
+                        {`${candidate.votes} (${candidate.vote_percentage}%)`}{' '}
+                      </RedVoteContainer>
+                    )}
                   </PoliticalColumn>
                   <FlexColumn>
-                    <Typography color="textSecondary" variant="body2">
-                      得票率
-                    </Typography>
+                    <ContentHeader>得票率</ContentHeader>
                     <CustomizedProgressBars
                       value={parseFloat(candidate.vote_percentage)}
                     />
                   </FlexColumn>
                   <FlexColumn>
-                    {candidate.is_won && <CheckCircleIcon />}
+                    {candidate.is_won && <OvalButton />}
                     {!candidate.is_won && (
                       <div
                         style={{
-                          width: '24px',
-                          height: '24px',
+                          width: '95px',
+                          height: '95px',
                         }}
                       ></div>
                     )}
