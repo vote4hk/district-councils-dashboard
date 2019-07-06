@@ -3,7 +3,6 @@ import { Route, Switch } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { withStyles } from '@material-ui/core/styles'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
-import createMuiTheme from './ui/theme'
 import NavBar from './layout/NavBar'
 import SearchPage from './pages/search'
 import ProfilePage from './pages/profile'
@@ -11,14 +10,12 @@ import DistrictPage from './pages/district'
 import NotfoundPage from './pages/notfound'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
-
+import theme from 'ui/theme'
 import './App.css'
 
 const client = new ApolloClient({
   uri: 'https://gql.opencultures.life/graphql',
 })
-
-const theme = createMuiTheme
 
 const styles = theme => ({
   root: {
@@ -29,12 +26,7 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
 })
 class App extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
-    const { classes } = this.props
     return (
       <ApolloProvider client={client}>
         <MuiThemeProvider theme={theme}>
