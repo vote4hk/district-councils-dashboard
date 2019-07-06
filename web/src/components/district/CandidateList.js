@@ -162,14 +162,13 @@ class CandidateList extends Component {
     candidates: PropTypes.array.isRequired,
     year: PropTypes.number.isRequired,
     code: PropTypes.string.isRequired,
-    legacy: PropTypes.array.isRequired,
   }
 
   // todo: use ENV_VAR
   homeUrl = 'https://cswbrian.github.io/district-councils-dashboard/'
 
   render() {
-    const { candidates, year, code, legacy } = this.props
+    const { candidates, year, code } = this.props
     return (
       <Container maxWidth="lg">
         <CandidateListTitle>議員候選人</CandidateListTitle>
@@ -219,20 +218,15 @@ class CandidateList extends Component {
                     <Content>
                       {candidate.political_affiliation
                         ? candidate.political_affiliation.name_zh
-                        : ''}
+                        : '-'}
                     </Content>
                   </PoliticalColumn>
                   <PoliticalColumn>
                     <ContentHeader>政治聯繫</ContentHeader>
                     {'\n'}
                     <Content>
-                      {// TODO: Refactor
-                      legacy.filter(
-                        o => o.name_chi == candidate.person.name_zh
-                      )[0]
-                        ? legacy.filter(
-                            o => o.name_chi == candidate.person.name_zh
-                          )[0].camp
+                      {candidate.political_affiliation
+                        ? candidate.political_affiliation.camp
                         : '-'}
                     </Content>
                   </PoliticalColumn>

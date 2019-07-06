@@ -35,6 +35,7 @@ const GET_DISTRICTS = gql`
             political_affiliation {
               name_zh
               id
+              camp
             }
           }
         }
@@ -42,10 +43,6 @@ const GET_DISTRICTS = gql`
         votes
         is_won
       }
-    }
-    dc_people_legacy(where: { year: { _eq: $year }, cacode: { _eq: $code } }) {
-      camp
-      name_chi
     }
   }
 `
@@ -155,7 +152,6 @@ class DistrictPage extends Component {
               if (loading) return null
               if (error) return `Error! ${error}`
               const district = data.dc_constituencies[0]
-              const legacy = data.dc_people_legacy
               return (
                 <>
                   <DistrictCardContainer>
@@ -183,7 +179,6 @@ class DistrictPage extends Component {
                           candidates={district.candidates}
                           year={parseInt(year, 10)}
                           code={code}
-                          legacy={legacy}
                         />
                       </FullWidthBox>
                     </FlexRowContainer>
