@@ -49,6 +49,7 @@ const FlexRowContainer = styled(Box)`
     align-content: flex-start;
     width: 1440px;
     margin: auto;
+    cursor: pointer;
     ${bps.down('md')} {
       width: 1440px;
       margin: auto;
@@ -169,6 +170,7 @@ class CandidateList extends Component {
 
   render() {
     const { candidates, year, code } = this.props
+
     return (
       <Container maxWidth="lg">
         <CandidateListTitle>議員候選人</CandidateListTitle>
@@ -181,6 +183,9 @@ class CandidateList extends Component {
                 <FlexRowContainer
                   style={{ width: '100%' }}
                   key={candidate.candidate_number}
+                  onClick={() => {
+                    this.props.handleCandidateSelected(candidate.person.id)
+                  }}
                 >
                   <AvatarColumn>
                     <Avatar
@@ -243,7 +248,9 @@ class CandidateList extends Component {
                     )}
                   </PoliticalColumn>
                   <FlexColumn>
-                    <ContentHeader>得票率</ContentHeader>
+                    <ContentHeader style={{ color: '#9b9b9b' }}>
+                      得票率
+                    </ContentHeader>
                     <Content>
                       <CustomizedProgressBars
                         value={parseFloat(candidate.vote_percentage)}

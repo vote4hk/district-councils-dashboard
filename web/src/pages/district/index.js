@@ -22,6 +22,7 @@ const GET_DISTRICTS = gql`
       candidates {
         candidate_number
         person {
+          id
           name_zh
           name_en
           political_affiliations(
@@ -103,6 +104,10 @@ class DistrictPage extends Component {
     return true
   }
 
+  handleCandidateSelected = candidateId => {
+    this.props.history.push(`/profile/${candidateId}`)
+  }
+
   handleChangeDistrict = (year, code) => {
     if (!year || !code) return
     this.props.history.push(`/district/${year}/${code}`)
@@ -181,6 +186,7 @@ class DistrictPage extends Component {
                           candidates={district.candidates}
                           year={parseInt(year, 10)}
                           code={code}
+                          handleCandidateSelected={this.handleCandidateSelected}
                         />
                       </FullWidthBox>
                     </FlexRowContainer>
