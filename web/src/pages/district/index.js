@@ -11,7 +11,7 @@ import styled from 'styled-components'
 import { bps } from 'utils/responsive'
 
 const GET_DISTRICTS = gql`
-  query($year: Int!, $code: String!) {
+  query($year: Int!, $code: String!, $legacyYear: String!) {
     dc_constituencies(where: { year: { _eq: $year }, code: { _eq: $code } }) {
       name_zh
       name_en
@@ -29,6 +29,12 @@ const GET_DISTRICTS = gql`
         votes
         is_won
       }
+    }
+    dc_people_legacy(
+      where: { year: { _eq: $legacyYear }, cacode: { _eq: $code } }
+    ) {
+      camp
+      name_chi
     }
   }
 `
@@ -101,6 +107,8 @@ class DistrictPage extends Component {
       },
     } = this.props
 
+    // TODO: wrong type in dc_people_legacy. should change it in schema instead of using an extra variable. String -> Int
+    const legacyYear = year.toString()
     return (
       <>
         <FlexRowContainer>
@@ -114,12 +122,13 @@ class DistrictPage extends Component {
               changeDistrict={this.handleChangeDistrict}
             />
           </Box>
-          <Query query={GET_DISTRICTS} variables={{ year, code }}>
+          <Query query={GET_DISTRICTS} variables={{ year, code, legacyYear }}>
             {({ loading, error, data }) => {
               if (loading) return null
               if (error) return `Error! ${error}`
               const district = data.dc_constituencies[0]
-
+              console.log(data)
+              const legacy = data.dc_people_legacy
               return (
                 <>
                   <Box
@@ -152,6 +161,7 @@ class DistrictPage extends Component {
                           candidates={district.candidates}
                           year={parseInt(year, 10)}
                           code={code}
+                          legacy={legacy}
                         />
                       </FullWidthBox>
                     </FlexRowContainer>
