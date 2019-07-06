@@ -10,7 +10,7 @@ import Avatar from '@material-ui/core/Avatar'
 import { bps } from 'utils/responsive'
 
 const commonFontStyle = css`
-  font-family: 'PingFangHK-Regular';
+  font-family: 'PingFangTC-Medium';
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
@@ -107,7 +107,6 @@ const StyledDivier = styled(Divier)`
 const CandidateListTitle = styled.div`
    {
     ${commonFontStyle}
-    font-family: PingFangTC;
     font-size: 32px;
     font-weight: 600;
     color: #333333;
