@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Typography from '@material-ui/core/Typography'
-import Divier from '@material-ui/core/Divider'
+import Divider from '@material-ui/core/Divider'
 import styled from 'styled-components'
 import Box from '@material-ui/core/Box'
 import PropTypes from 'prop-types'
@@ -84,7 +84,7 @@ const PoliticalColumn = styled(FlexColumn)`
   }
 `
 
-const StyledDivier = styled(Divier)`
+const StyledDivier = styled(Divider)`
   && {
     margin-left: 30px;
     margin-right: 30px;
