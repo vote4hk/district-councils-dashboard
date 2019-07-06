@@ -49,6 +49,7 @@ const FlexRowContainer = styled(Box)`
     align-content: flex-start;
     width: 1440px;
     margin: auto;
+    cursor: pointer;
     ${bps.down('md')} {
       width: 1440px;
       margin: auto;
@@ -91,7 +92,7 @@ const PoliticalColumn = styled(FlexColumn)`
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    width: 160px;
+    width: 180px;
     ${bps.down('md')} {
       width: 100%;
     }
@@ -162,14 +163,14 @@ class CandidateList extends Component {
     candidates: PropTypes.array.isRequired,
     year: PropTypes.number.isRequired,
     code: PropTypes.string.isRequired,
-    legacy: PropTypes.array.isRequired,
   }
 
   // todo: use ENV_VAR
   homeUrl = 'https://cswbrian.github.io/district-councils-dashboard/'
 
   render() {
-    const { candidates, year, code, legacy } = this.props
+    const { candidates, year, code } = this.props
+
     return (
       <Container maxWidth="lg">
         <CandidateListTitle>議員候選人</CandidateListTitle>
@@ -182,6 +183,9 @@ class CandidateList extends Component {
                 <FlexRowContainer
                   style={{ width: '100%' }}
                   key={candidate.candidate_number}
+                  onClick={() => {
+                    this.props.handleCandidateSelected(candidate.person.id)
+                  }}
                 >
                   <AvatarColumn>
                     <Avatar
@@ -219,42 +223,40 @@ class CandidateList extends Component {
                     <Content>
                       {candidate.political_affiliation
                         ? candidate.political_affiliation.name_zh
-                        : ''}
+                        : '-'}
                     </Content>
                   </PoliticalColumn>
                   <PoliticalColumn>
                     <ContentHeader>政治聯繫</ContentHeader>
                     {'\n'}
                     <Content>
-                      {// TODO: Refactor
-                      legacy.filter(
-                        o => o.name_chi == candidate.person.name_zh
-                      )[0]
-                        ? legacy.filter(
-                            o => o.name_chi == candidate.person.name_zh
-                          )[0].camp
+                      {candidate.political_affiliation
+                        ? candidate.political_affiliation.camp.name_zh
                         : '-'}
                     </Content>
                   </PoliticalColumn>
                   <PoliticalColumn>
                     {candidate.is_won && (
                       <BlueVoteContainer>
-                        {' '}
-                        {`${candidate.votes} (${candidate.vote_percentage}%)`}{' '}
+                        {`${candidate.votes}票 (${candidate.vote_percentage}%)`}
                       </BlueVoteContainer>
                     )}
                     {!candidate.is_won && (
                       <RedVoteContainer>
-                        {' '}
-                        {`${candidate.votes} (${candidate.vote_percentage}%)`}{' '}
+                        {`${candidate.votes}票 (${candidate.vote_percentage}%)`}
                       </RedVoteContainer>
                     )}
                   </PoliticalColumn>
                   <FlexColumn>
-                    <ContentHeader>得票率</ContentHeader>
-                    <CustomizedProgressBars
-                      value={parseFloat(candidate.vote_percentage)}
-                    />
+                    <ContentHeader style={{ color: '#9b9b9b' }}>
+                      得票率
+                    </ContentHeader>
+                    <Content>
+                      <CustomizedProgressBars
+                        value={parseFloat(candidate.vote_percentage)}
+                        color={candidate.is_won ? '#306ece' : '#f6416e'}
+                      />
+                    </Content>
                   </FlexColumn>
                   <FlexColumn>
                     {candidate.is_won && <OvalButton />}

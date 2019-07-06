@@ -22,6 +22,7 @@ const GET_DISTRICTS = gql`
       candidates {
         candidate_number
         person {
+          id
           name_zh
           name_en
           political_affiliations(
@@ -35,6 +36,9 @@ const GET_DISTRICTS = gql`
             political_affiliation {
               name_zh
               id
+              camp {
+                name_zh
+              }
             }
           }
         }
@@ -42,12 +46,6 @@ const GET_DISTRICTS = gql`
         votes
         is_won
       }
-    }
-    dc_people_legacy(
-      where: { year: { _eq: $legacyYear }, cacode: { _eq: $code } }
-    ) {
-      camp
-      name_chi
     }
   }
 `
@@ -106,6 +104,10 @@ class DistrictPage extends Component {
     return true
   }
 
+  handleCandidateSelected = candidateId => {
+    this.props.history.push(`/profile/${candidateId}`)
+  }
+
   handleChangeDistrict = (year, code) => {
     if (!year || !code) return
     this.props.history.push(`/district/${year}/${code}`)
@@ -157,7 +159,6 @@ class DistrictPage extends Component {
               if (loading) return null
               if (error) return `Error! ${error}`
               const district = data.dc_constituencies[0]
-              const legacy = data.dc_people_legacy
               return (
                 <>
                   <DistrictCardContainer>
@@ -185,7 +186,7 @@ class DistrictPage extends Component {
                           candidates={district.candidates}
                           year={parseInt(year, 10)}
                           code={code}
-                          legacy={legacy}
+                          handleCandidateSelected={this.handleCandidateSelected}
                         />
                       </FullWidthBox>
                     </FlexRowContainer>
