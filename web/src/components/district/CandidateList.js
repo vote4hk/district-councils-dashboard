@@ -247,6 +247,7 @@ class CandidateList extends Component {
                     <Content>
                       <CustomizedProgressBars
                         value={parseFloat(candidate.vote_percentage)}
+                        color={candidate.is_won ? '#306ece' : '#f6416e'}
                       />
                     </Content>
                   </FlexColumn>
