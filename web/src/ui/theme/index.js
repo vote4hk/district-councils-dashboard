@@ -4,6 +4,7 @@ export const headingFontFamily = 'PingFangTC-Medium, sans-serif'
 export const bodyFontFamily = 'PT Serif, sans-serif'
 
 export const fontFamily = [
+  'PingFangTC',
   'Noto Sans TC',
   'sans-serif',
   '-apple-system',
@@ -24,9 +25,13 @@ export const typography = {
   },
   h3: {
     fontFamily: headingFontFamily,
+    fontSize: 40,
+    fontWeight: 500,
   },
   h4: {
     fontFamily: headingFontFamily,
+    fontSize: 30,
+    fontWeight: 500,
   },
   h5: {
     fontFamily: headingFontFamily,

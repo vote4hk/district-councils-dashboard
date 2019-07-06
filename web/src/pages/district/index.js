@@ -11,7 +11,7 @@ import styled from 'styled-components'
 import { bps } from 'utils/responsive'
 
 const GET_DISTRICTS = gql`
-  query($year: Int!, $code: String!, $legacyYear: String!) {
+  query($year: Int!, $code: String!, $electionYear: date) {
     dc_constituencies(where: { year: { _eq: $year }, code: { _eq: $code } }) {
       name_zh
       name_en
@@ -24,6 +24,19 @@ const GET_DISTRICTS = gql`
         person {
           name_zh
           name_en
+          political_affiliations(
+            where: {
+              year_from: { _lte: $electionYear }
+              year_to: { _gte: $electionYear }
+            }
+          ) {
+            year_to
+            year_from
+            political_affiliation {
+              name_zh
+              id
+            }
+          }
         }
         vote_percentage
         votes
@@ -72,6 +85,21 @@ const FlexRowContainer = styled(Box)`
   }
 `
 
+const DistrictCardContainer = styled(Box)`
+  && {
+    padding-left: 30px;
+    margin: 0px;
+    width: 400px;
+    height: 400px;
+
+    ${bps.down('md')} {
+      margin: 10px;
+      width: 100%;
+      padding: 0px;
+    }
+  }
+`
+
 class DistrictPage extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     //  if (this.props.route.path === nextProps.route.path) return false;
@@ -108,8 +136,9 @@ class DistrictPage extends Component {
       },
     } = this.props
 
-    // TODO: wrong type in dc_people_legacy. should change it in schema instead of using an extra variable. String -> Int
-    const legacyYear = year.toString()
+    // TODO: this should be the election date
+    const electionYear = `${year}-01-01`
+
     return (
       <>
         <FlexRowContainer>
@@ -123,7 +152,7 @@ class DistrictPage extends Component {
               changeDistrict={this.handleChangeDistrict}
             />
           </Box>
-          <Query query={GET_DISTRICTS} variables={{ year, code, legacyYear }}>
+          <Query query={GET_DISTRICTS} variables={{ year, code, electionYear }}>
             {({ loading, error, data }) => {
               if (loading) return null
               if (error) return `Error! ${error}`
@@ -131,12 +160,7 @@ class DistrictPage extends Component {
               const legacy = data.dc_people_legacy
               return (
                 <>
-                  <Box
-                    p={0}
-                    paddingLeft="30px"
-                    width={{ sm: '100%', md: '400px' }}
-                    height={{ sm: '300px', md: '400px' }}
-                  >
+                  <DistrictCardContainer>
                     <DistrictCard
                       {...district}
                       year={parseInt(year, 10)}
@@ -144,7 +168,7 @@ class DistrictPage extends Component {
                       onNextElection={this.onNextElection.bind(this)}
                       onPrevElection={this.onPrevElection.bind(this)}
                     />
-                  </Box>
+                  </DistrictCardContainer>
                   <FullWidthBox>
                     <MainAreas areas={district.main_areas || []} />
                   </FullWidthBox>
