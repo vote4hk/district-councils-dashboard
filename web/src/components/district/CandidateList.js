@@ -226,7 +226,7 @@ class CandidateList extends Component {
                     {'\n'}
                     <Content>
                       {candidate.political_affiliation
-                        ? candidate.political_affiliation.camp
+                        ? candidate.political_affiliation.camp.name_zh
                         : '-'}
                     </Content>
                   </PoliticalColumn>

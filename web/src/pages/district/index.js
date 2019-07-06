@@ -35,7 +35,9 @@ const GET_DISTRICTS = gql`
             political_affiliation {
               name_zh
               id
-              camp
+              camp {
+                name_zh
+              }
             }
           }
         }
