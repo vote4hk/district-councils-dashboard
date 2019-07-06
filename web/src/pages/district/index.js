@@ -41,6 +41,7 @@ const GET_DISTRICTS = gql`
 
 const FullWidthBox = styled(Box)`
   && {
+    padding-top: 60px;
     width: 100%;
   }
 `
@@ -151,8 +152,8 @@ class DistrictPage extends Component {
                   <LowerBackgroundContainer>
                     <FlexRowContainer>
                       <FullWidthBox>
-                        <Typography variant="h5" gutterBottom>
-                          估計人口
+                        <Typography variant="h5" bold gutterBottom>
+                          人口資料
                         </Typography>
                         {district.expected_population}
                       </FullWidthBox>
