@@ -5,12 +5,10 @@ import Paper from '@material-ui/core/Paper'
 import IconButton from '@material-ui/core/IconButton'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
-import List from '@material-ui/core/List'
-import ListItemText from '@material-ui/core/ListItemText'
 import Divider from '@material-ui/core/Divider'
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import Box from '@material-ui/core/Box'
 import PropTypes from 'prop-types'
+import { bps } from 'utils/responsive'
 
 const Container = styled(Paper)`
   && {
@@ -18,51 +16,91 @@ const Container = styled(Paper)`
     height: 400px;
     background-color: #f6f6f6;
     padding: 0;
+
+    ${bps.down('md')} {
+      width: 100%;
+    }
   }
 `
+
+const InnerContainer = styled(Box)`
+  && {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+`
+
 const YearText = styled(Typography)`
   && {
-    width: 72px;
-    height: 41px;
     font-family: Avenir;
     font-size: 30px;
     font-weight: 900;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
     color: #333333;
   }
 `
 
 const RegionText = styled(Typography)`
   && {
-    font-family: PingFangTC;
-    font-size: 40px;
-    font-weight: 600;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    color: #333333;
-    display: inline-block;
+    width: 100%;
+    font-family: PingFangTC-Medium;
+    font-size: 20px;
+    font-weight: 500;
+    color: #ffb700;
   }
 `
 
 const CodeText = styled(Typography)`
   && {
-    padding-left: 10px;
-    font-family: Avenir;
-    font-size: 30px;
-    font-weight: 900;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    color: #333333;
-    display: inline-block;
+    margin-left: 10px;
+    font-family: PingFangTC-Light;
+    font-size: 40px;
+    font-weight: 300;
+    color: #9b9b9b;
   }
 `
+
+const StyledDivier = styled(Divider)`
+  && {
+    margin-top: 40px;
+    background-color: #cecece;
+    width: 100%;
+  }
+`
+
+const SeperatedRow = styled(Box)`
+  && {
+    margin-top: 20px;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+`
+
+function getCouncillor(candidates) {
+  const councillor = {
+    name: '',
+    politicalAffiliation: '',
+  }
+
+  const electedCandidate = candidates.find(candidate => candidate.is_won)
+  if (electedCandidate) {
+    councillor.name =
+      electedCandidate.person.name_zh || electedCandidate.person.name_en
+    if (electedCandidate.person.political_affiliations.length) {
+      const political_affiliation =
+        electedCandidate.person.political_affiliations[0].political_affiliation
+      councillor.political_affiliation = political_affiliation.name_zh
+    }
+  }
+
+  return councillor
+}
 
 class DistrictCard extends Component {
   static propTypes = {
@@ -72,6 +110,7 @@ class DistrictCard extends Component {
     name_en: PropTypes.string.isRequired,
     onPrevElection: PropTypes.func.isRequired,
     onNextElection: PropTypes.func.isRequired,
+    candidates: PropTypes.array.isRequired,
   }
 
   renderPrevElectionButton(year) {
@@ -102,34 +141,35 @@ class DistrictCard extends Component {
   }
 
   render() {
-    const { name_zh, name_en, year, code } = this.props
+    const { name_zh, year, code, candidates } = this.props
+    const councillor = getCouncillor(candidates)
     return (
       <Container>
-        <Box border={0} color="primary.minor" p={4}>
-          <Box
-            display="flex"
-            flexDirection="row"
-            alignItems="center"
-            justifyContent="space-between"
-          >
+        <InnerContainer border={0} color="primary.minor">
+          <SeperatedRow>
             {this.renderPrevElectionButton(year)}
             <YearText variant="button" gutterBottom>
               {year}
             </YearText>
             {this.renderNextElectionButton(year)}
-          </Box>
-          <RegionText>{name_zh}</RegionText>
+          </SeperatedRow>
+          <RegionText>--區</RegionText>
+          <Typography variant="h3">{name_zh}</Typography>
           <CodeText>{code}</CodeText>
-          <Divider />
-          <List>
-            <ListItemText primary={'區議員'} />
-            <ListItemSecondaryAction></ListItemSecondaryAction>
-          </List>
-          <List>
-            <ListItemText primary={'政黨'} />
-            <ListItemSecondaryAction></ListItemSecondaryAction>
-          </List>
-        </Box>
+          <StyledDivier />
+          <SeperatedRow>
+            <Typography variant="h6">區議員</Typography>
+            <Typography>{councillor.name}</Typography>
+          </SeperatedRow>
+          <SeperatedRow>
+            <Typography variant="h6">政治聯繫</Typography>
+            <Typography>{councillor.political_affiliation}</Typography>
+          </SeperatedRow>
+          <SeperatedRow>
+            <Typography variant="h6">投票站</Typography>
+            <Typography variant="subtitle2">-</Typography>
+          </SeperatedRow>
+        </InnerContainer>
       </Container>
     )
   }

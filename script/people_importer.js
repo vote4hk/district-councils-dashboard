@@ -45,9 +45,13 @@ async function upsertAffiliation(personId, election) {
   const {
     year, political_affiliation,
   } = election;
+  if (political_affiliation === '') {
+    return;
+  }
+
   const query = `
   mutation insertPersonPoliticalAffiliation($personId: uuid!, 
-    $paName: String!,
+    $paName: String,
     $yearFrom: date,
     $yearTo: date  
   ){
@@ -78,7 +82,7 @@ async function upsertAffiliation(personId, election) {
 
 
   const variables = {
-    paName: political_affiliation,
+    paName: political_affiliation !== '' ? political_affiliation : null,
     personId,
     yearFrom: moment(year, 'YYYY').format('YYYY-MM-DD'),
     yearTo: moment(year, 'YYYY').add(4, 'years').add(-1, 'day').format('YYYY-MM-DD'),
