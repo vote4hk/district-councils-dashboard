@@ -1,10 +1,50 @@
 import { createMuiTheme } from '@material-ui/core/styles'
 
-const theme = createMuiTheme({
-  typography: {
-    useNextVariants: true,
-    fontFamily: "'Noto Sans TC', sans-serif",
+export const headingFontFamily = 'PingFangTC-Medium, sans-serif'
+export const bodyFontFamily = 'PT Serif, sans-serif'
+
+export const fontFamily = [
+  'Noto Sans TC',
+  'sans-serif',
+  '-apple-system',
+  '"Helvetica Neue"',
+  'Arial',
+]
+
+export const typography = {
+  useNextVariants: true,
+  fontSize: 16,
+  fontFamily: fontFamily.join(','),
+  h1: {
+    fontFamily: headingFontFamily,
   },
+  h2: {
+    fontFamily: headingFontFamily,
+    fontSize: 24,
+  },
+  h3: {
+    fontFamily: headingFontFamily,
+  },
+  h4: {
+    fontFamily: headingFontFamily,
+  },
+  h5: {
+    fontFamily: headingFontFamily,
+    fontSize: 24,
+    fontWeight: 500,
+  },
+  h6: {
+    fontFamily: headingFontFamily,
+    fontSize: 18,
+    fontWeight: 500,
+  },
+  body1: {
+    fontFamily: bodyFontFamily,
+  },
+}
+
+export default createMuiTheme({
+  typography,
   palette: {
     primary: {
       light: '#ffffff',
@@ -24,6 +64,3 @@ const theme = createMuiTheme({
     primary: '#000000',
   },
 })
-
-console.log(theme)
-export default theme

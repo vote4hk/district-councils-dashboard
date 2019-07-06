@@ -1,18 +1,93 @@
 import React, { Component } from 'react'
 import Typography from '@material-ui/core/Typography'
+import Divier from '@material-ui/core/Divider'
 import styled from 'styled-components'
-import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import PropTypes from 'prop-types'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import CustomizedProgressBars from '../../components/BorderLinearProgress'
 import Avatar from '@material-ui/core/Avatar'
+import { bps } from 'utils/responsive'
 
 const Container = styled.div`
    {
-    width: 100%;
-    height: 220px;
-    padding: 0;
+    padding-bottom: 100px;
+  }
+`
+
+const RowsContainer = styled.div`
+   {
+    margin-top: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+    ${bps.down('md')} {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+`
+
+const FlexRowContainer = styled(Box)`
+  && {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    width: 1440px;
+    margin: auto;
+    ${bps.down('md')} {
+      width: 1440px;
+      margin: auto;
+    }
+  }
+`
+
+const FlexColumn = styled(Box)`
+  && {
+    height: 149px;
+    align-items: center;
+    display: flex;
+    padding-left: 40px;
+    ${bps.down('md')} {
+      height: 70px;
+    }
+  }
+`
+
+const AvatarColumn = styled(FlexColumn)`
+  && {
+    width: 100px;
+    ${bps.down('md')} {
+      width: 100%;
+    }
+  }
+`
+
+const NameColumn = styled(FlexColumn)`
+  && {
+    width: 200px;
+    ${bps.down('md')} {
+      width: 100%;
+    }
+  }
+`
+
+const PoliticalColumn = styled(FlexColumn)`
+  && {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 160px;
+    ${bps.down('md')} {
+      width: 100%;
+    }
+  }
+`
+
+const StyledDivier = styled(Divier)`
+  && {
+    margin-left: 30px;
+    margin-right: 30px;
   }
 `
 
@@ -33,17 +108,17 @@ class CandidateList extends Component {
         <Typography variant="h5" gutterBottom>
           議員候選人
         </Typography>
-        <Grid item xs={12}>
+        <RowsContainer>
           {candidates
             .sort((a, b) => a.candidate_number - b.candidate_number)
-            .map(candidate => (
-              <div style={{ width: '100%' }} key={candidate.candidate_number}>
-                <Box
-                  display="flex"
-                  flexDirection="row"
-                  justifyContent="space-between"
+            .map((candidate, index) => (
+              <>
+                {index > 0 ? <StyledDivier /> : null}
+                <FlexRowContainer
+                  style={{ width: '100%' }}
+                  key={candidate.candidate_number}
                 >
-                  <Box p={1}>
+                  <AvatarColumn>
                     <Avatar
                       src={`${
                         this.homeUrl
@@ -57,9 +132,9 @@ class CandidateList extends Component {
                         },
                       }}
                     ></Avatar>
-                  </Box>
-                  <Box p={1}>
-                    <Typography gutterBottom variant="h6">
+                  </AvatarColumn>
+                  <NameColumn p={1}>
+                    <Typography gutterBottom variant="h5">
                       {`${
                         candidate.candidate_number == null
                           ? ''
@@ -67,31 +142,43 @@ class CandidateList extends Component {
                       } ${candidate.person.name_zh ||
                         candidate.person.name_en}`}
                     </Typography>
-                  </Box>
-                  <Box p={1}>
-                    <Typography color="textSecondary" variant="body2">
+                  </NameColumn>
+                  <PoliticalColumn>
+                    <Typography variant="h6" display="block">
                       陣營
                     </Typography>
-                    <Typography gutterBottom variant="body1">
+                    {'\n'}
+                    <Typography display="block">
                       {candidate.political_affiliation
                         ? candidate.political_affiliation.name_zh
-                        : ''}
+                        : '-'}
                     </Typography>
-                  </Box>
-                  <Box p={1}>
-                    <Typography gutterBottom variant="body1">
+                  </PoliticalColumn>
+                  <PoliticalColumn>
+                    <Typography variant="h6" display="block">
+                      政治聯繫
+                    </Typography>
+                    {'\n'}
+                    <Typography display="block">
+                      {candidate.political_affiliation
+                        ? candidate.political_affiliation.name_zh
+                        : '-'}
+                    </Typography>
+                  </PoliticalColumn>
+                  <PoliticalColumn>
+                    <Typography gutterBottom>
                       {`${candidate.votes} (${candidate.vote_percentage}%)`}
                     </Typography>
-                  </Box>
-                  <Box p={1}>
+                  </PoliticalColumn>
+                  <FlexColumn>
                     <Typography color="textSecondary" variant="body2">
                       得票率
                     </Typography>
                     <CustomizedProgressBars
                       value={parseFloat(candidate.vote_percentage)}
                     />
-                  </Box>
-                  <Box p={1}>
+                  </FlexColumn>
+                  <FlexColumn>
                     {candidate.is_won && <CheckCircleIcon />}
                     {!candidate.is_won && (
                       <div
@@ -101,11 +188,11 @@ class CandidateList extends Component {
                         }}
                       ></div>
                     )}
-                  </Box>
-                </Box>
-              </div>
+                  </FlexColumn>
+                </FlexRowContainer>
+              </>
             ))}
-        </Grid>
+        </RowsContainer>
       </Container>
     )
   }
