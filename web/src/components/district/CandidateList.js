@@ -91,7 +91,7 @@ const PoliticalColumn = styled(FlexColumn)`
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    width: 160px;
+    width: 180px;
     ${bps.down('md')} {
       width: 100%;
     }
@@ -233,22 +233,22 @@ class CandidateList extends Component {
                   <PoliticalColumn>
                     {candidate.is_won && (
                       <BlueVoteContainer>
-                        {' '}
-                        {`${candidate.votes} (${candidate.vote_percentage}%)`}{' '}
+                        {`${candidate.votes}票 (${candidate.vote_percentage}%)`}
                       </BlueVoteContainer>
                     )}
                     {!candidate.is_won && (
                       <RedVoteContainer>
-                        {' '}
-                        {`${candidate.votes} (${candidate.vote_percentage}%)`}{' '}
+                        {`${candidate.votes}票 (${candidate.vote_percentage}%)`}
                       </RedVoteContainer>
                     )}
                   </PoliticalColumn>
                   <FlexColumn>
                     <ContentHeader>得票率</ContentHeader>
-                    <CustomizedProgressBars
-                      value={parseFloat(candidate.vote_percentage)}
-                    />
+                    <Content>
+                      <CustomizedProgressBars
+                        value={parseFloat(candidate.vote_percentage)}
+                      />
+                    </Content>
                   </FlexColumn>
                   <FlexColumn>
                     {candidate.is_won && <OvalButton />}
