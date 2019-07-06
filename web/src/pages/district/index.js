@@ -128,7 +128,6 @@ class DistrictPage extends Component {
               if (loading) return null
               if (error) return `Error! ${error}`
               const district = data.dc_constituencies[0]
-              console.log(data)
               const legacy = data.dc_people_legacy
               return (
                 <>
