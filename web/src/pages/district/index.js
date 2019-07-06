@@ -43,9 +43,7 @@ const GET_DISTRICTS = gql`
         is_won
       }
     }
-    dc_people_legacy(
-      where: { year: { _eq: $legacyYear }, cacode: { _eq: $code } }
-    ) {
+    dc_people_legacy(where: { year: { _eq: $year }, cacode: { _eq: $code } }) {
       camp
       name_chi
     }
