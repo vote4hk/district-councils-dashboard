@@ -151,6 +151,8 @@ class ProfilePage extends Component {
                   </CandidateName>
                 </Box>
               </FlexRowContainer>
+              {/* TODO: Basic Info */}
+              {/* TODO: History */}
             </>
           )
         }}
