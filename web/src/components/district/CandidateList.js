@@ -35,7 +35,7 @@ const RowsContainer = styled.div`
     border-radius: 8px;
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
     background-color: #ffffff;
-    ${bps.down('md')} {
+    ${bps.down('sm')} {
       margin-left: 10px;
       margin-right: 10px;
     }
@@ -50,7 +50,7 @@ const FlexRowContainer = styled(Box)`
     width: 1440px;
     margin: auto;
     cursor: pointer;
-    ${bps.down('md')} {
+    ${bps.down('sm')} {
       width: 1440px;
       margin: auto;
     }
@@ -63,8 +63,8 @@ const FlexColumn = styled(Box)`
     align-items: center;
     display: flex;
     padding-left: 40px;
-    ${bps.down('md')} {
-      height: 70px;
+    ${bps.down('sm')} {
+      height: 80px;
     }
   }
 `
@@ -72,8 +72,9 @@ const FlexColumn = styled(Box)`
 const AvatarColumn = styled(FlexColumn)`
   && {
     width: 100px;
-    ${bps.down('md')} {
+    ${bps.down('sm')} {
       width: 100%;
+      height: 149px;
     }
   }
 `
@@ -81,7 +82,7 @@ const AvatarColumn = styled(FlexColumn)`
 const NameColumn = styled(FlexColumn)`
   && {
     width: 200px;
-    ${bps.down('md')} {
+    ${bps.down('sm')} {
       width: 100%;
     }
   }
@@ -93,7 +94,7 @@ const PoliticalColumn = styled(FlexColumn)`
     justify-content: center;
     align-items: flex-start;
     width: 180px;
-    ${bps.down('md')} {
+    ${bps.down('sm')} {
       width: 100%;
     }
   }
@@ -103,6 +104,9 @@ const StyledDivier = styled(Divider)`
   && {
     margin-left: 30px;
     margin-right: 30px;
+    ${bps.down('sm')} {
+      margin-top: 30px;
+    }
   }
 `
 const CandidateListTitle = styled.div`
