@@ -1,16 +1,11 @@
 import React, { Component } from 'react'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import CardHeader from '@material-ui/core/CardHeader'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
-import Paper from '@material-ui/core/Paper'
+import Box from '@material-ui/core/Box'
+import styled, { css } from 'styled-components'
+import Avatar from '@material-ui/core/Avatar'
 import moment from 'moment'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
+import { bps } from 'utils/responsive'
 
 const GET_PEOPLE_PROFILE = gql`
   query($id: uuid!) {
@@ -37,6 +32,85 @@ const GET_PEOPLE_PROFILE = gql`
   }
 `
 
+const commonFontStyle = css`
+  font-family: 'PingFangTC-Light';
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+`
+
+const CandidateName = styled.div`
+   {
+    ${commonFontStyle}
+    margin: 20px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #ffffff;
+    ${bps.up('sm')} {
+      margin: 0px;
+      margin-top: 50px;
+      font-size: 30px;
+    }
+
+    ${bps.up('md')} {
+      margin-top: 50px;
+      font-size: 48px;
+    }
+  }
+`
+
+const DistrictName = styled.div`
+   {
+    ${commonFontStyle}
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    ${bps.up('sm')} {
+      font-size: 20px;
+    }
+
+    ${bps.up('md')} {
+      font-size: 36px;
+    }
+  }
+`
+
+const FlexRowContainer = styled(Box)`
+  && {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    opacity: 0.95;
+    background-color: #f6416e;
+    ${bps.up('md')} {
+      width: 100%;
+    }
+
+    ${bps.up('lg')} {
+      width: 1440px;
+    }
+    margin: auto;
+  }
+`
+
+const CandidateAvatar = styled(Avatar)`
+  && {
+    width: 153px;
+    height: 180px;
+    border-radius: 0;
+
+    ${bps.up('sm')} {
+      margin-top: 40px;
+      margin-left: 60px;
+    }
+
+    ${bps.up('md')} {
+      margin-left: 120px;
+    }
+  }
+`
+
 class ProfilePage extends Component {
   constructor(props) {
     super(props)
@@ -58,65 +132,29 @@ class ProfilePage extends Component {
           if (error) return `Error! ${error}`
           const person = data.dc_people[0]
           return (
-            <Paper>
-              <Card>
-                <CardHeader
-                  // avatar={
-                  //   // TODO: Add candi_number to candidate.json
-                  //   <Avatar
-                  //     src={`/static/images/avatar/2015/${showCase[showCase.length - 1].cacode}_0${showCase[showCase.length - 1].candi_number}.jpg`}
-                  //   >
-                  //   </Avatar>
-                  // }
-                  title={person.name_zh ? person.name_zh : person.name_en}
-                  subheader={`${moment().year() - person.estimated_yob}歲`}
-                />
-                <CardContent></CardContent>
-              </Card>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Year</TableCell>
-                    <TableCell>Code</TableCell>
-                    <TableCell>Distict</TableCell>
-                    <TableCell>Political Affiliation</TableCell>
-                    <TableCell>Votes</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {person.elections.map(row => (
-                    <TableRow key={row.year + row.cacode}>
-                      <TableCell align="right">{row.year}</TableCell>
-                      <TableCell align="right">{row.cacode}</TableCell>
-                      {row.constituency ? (
-                        <TableCell align="right">
-                          {row.constituency.name}
-                        </TableCell>
-                      ) : (
-                        <TableCell align="right">?</TableCell>
-                      )}
-                      {row.political_affiliation ? (
-                        <TableCell align="right">
-                          {row.political_affiliation.name_zh}
-                        </TableCell>
-                      ) : (
-                        <TableCell align="right">N/A</TableCell>
-                      )}
-
-                      <TableCell align="right">{`${
-                        row.votes ? row.votes : '-'
-                      } (${
-                        row.vote_percentage ? row.vote_percentage : '-'
-                      }%)`}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Paper>
+            <>
+              <FlexRowContainer>
+                <Box
+                  width={{ sm: '250px', md: '300px' }}
+                  height={{ sm: '200px' }}
+                >
+                  <CandidateAvatar src="/static/images/avatar/default.png" />
+                </Box>
+                <Box>
+                  <CandidateName>
+                    {person.name_zh ? person.name_zh : ''}{' '}
+                    {person.name_zh ? person.name_en : ''}
+                    <DistrictName>
+                      {/* TODO */}
+                      沙田區, 水街
+                    </DistrictName>
+                  </CandidateName>
+                </Box>
+              </FlexRowContainer>
+            </>
           )
         }}
       </Query>
-      // TODO: UI design
     )
   }
 }
