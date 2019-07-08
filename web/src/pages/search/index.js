@@ -1,24 +1,33 @@
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
+
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
-import Grid from '@material-ui/core/Grid'
 import Input from '@material-ui/core/Input'
 import PeopleSearcher from '../../components/PeopleSearcher'
 import AddressSearcher from '../../components/AddressSearcher'
-import area from '../../data/area'
-import district from '../../data/district'
-import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+
+import styled from 'styled-components'
+import DistrictSelector from 'components/search/DistrictSelector'
 
 import * as AddressParser from 'hk-address-parser-lib'
 
 const styles = theme => ({})
 
+const Container = styled.div`
+  width: 800px;
+  margin: auto;
+`
+
 class SearchPage extends Component {
+  expanded = false
+
   constructor(props) {
     super(props)
     this.state = {
-      selectedDistrict: null,
       autoCompleteList: [],
     }
   }
@@ -37,69 +46,77 @@ class SearchPage extends Component {
     this.props.history.push(`profile/${result.id}`)
   }
 
-  renderDCCA = code => {
-    if (!code) return null
-    return (
-      <div>
-        {Object.keys(district['2019'][code]).map(dcca => {
-          return (
-            <Button
-              component={NavLink}
-              to={`/district/2019/${dcca}`}
-              key={district['2019'][code][dcca].code}
-              color="secondary"
-            >
-              {district['2019'][code][dcca].name}
-            </Button>
-          )
-        })}
-      </div>
-    )
+  handleChange(panel) {
+    return (event, newExpanded) => {
+      console.log(this.state)
+      this.setState({
+        expanded: newExpanded ? panel : false,
+      })
+    }
   }
 
   render() {
-    const { classes } = this.props
-    const { autoCompleteList } = this.state
+    const { expanded } = this.state
 
     return (
-      <Grid container spacing={24}>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>
-            {/* TODO: Change the following input to AddressSearcher component, similar to PeopleSearcher */}
-            <Input
-              defaultValue="Search Address"
-              inputProps={{
-                'aria-label': 'Description',
-              }}
-              onChange={this.onAddressFieldChanged.bind(this)}
-            />
-            {autoCompleteList.map((address, index) => (
-              <div key={index}>
-                <p>{address.fullAddress()}</p>
-              </div>
-            ))}
-          </Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>
-            <PeopleSearcher handlePeopleSelected={this.handlePeopleSelected} />
-          </Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            {area.map(a => (
-              <Button
-                key={a.dccode}
-                color="primary"
-                onClick={() => this.setState({ selectedDistrict: a.dccode })}
-              >
-                {a.dname_chi}
-              </Button>
-            ))}
-            {this.renderDCCA(this.state.selectedDistrict)}
-          </Paper>
-        </Grid>
-      </Grid>
+      <Container>
+        <ExpansionPanel
+          square
+          expanded={expanded === 'panel1'}
+          onChange={this.handleChange('panel1').bind(this)}
+        >
+          <ExpansionPanelSummary>
+            <Typography>Search People</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            {/* <Paper>
+              TODO: Change the following input to AddressSearcher component, similar to PeopleSearcher
+              <Input
+                defaultValue="Search Address"
+                inputProps={{
+                  'aria-label': 'Description',
+                }}
+                onChange={this.onAddressFieldChanged.bind(this)}
+              />
+              {autoCompleteList.map((address, index) => (
+                <div key={index}>
+                  <p>{address.fullAddress()}</p>
+                </div>
+              ))}
+            </Paper> */}
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+
+        <ExpansionPanel
+          square
+          expanded={expanded === 'panel2'}
+          onChange={this.handleChange('panel2').bind(this)}
+        >
+          <ExpansionPanelSummary>
+            <Typography>Search Address</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <Paper>
+              <PeopleSearcher
+                handlePeopleSelected={this.handlePeopleSelected}
+              />
+            </Paper>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+
+        <ExpansionPanel
+          square
+          expanded={expanded === 'panel3'}
+          onChange={this.handleChange('panel3').bind(this)}
+        >
+          <ExpansionPanelSummary>
+            <Typography> Region</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <DistrictSelector />
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      </Container>
     )
   }
 }
