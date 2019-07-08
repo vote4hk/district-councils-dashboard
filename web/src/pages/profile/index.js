@@ -18,6 +18,7 @@ const GET_PEOPLE_PROFILE = gql`
       estimated_yob
       gender
       elections {
+        occupation
         cacode
         year
         votes
@@ -111,6 +112,98 @@ const CandidateAvatar = styled(Avatar)`
   }
 `
 
+const BasicInfoContainer = styled(FlexRowContainer)`
+  && {
+    margin-top: 20px;
+    background-color: #ffffff;
+    ${bps.up('md')} {
+      height: 245px;
+    }
+  }
+`
+
+const BasicInfoHeader = styled.div`
+  && {
+    ${commonFontStyle}
+    font-size: 32px;
+    font-weight: 600;
+    width: 100%;
+    ${bps.up('sm')} {
+      margin-top: 40px;
+      margin-left: 60px;
+      width: inherit;
+    }
+
+    ${bps.up('md')} {
+      margin-left: 120px;
+    }
+  }
+`
+
+const commonFlexStyle = css`
+   {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 20px 0px;
+  }
+`
+
+const SubHeaderFlexColumn = styled(Box)`
+  && {
+    ${commonFontStyle}
+    ${commonFlexStyle}
+    font-weight: 600;
+    color: #4a4a4a;
+    font-size: 18px;
+    width: 120px;
+  }
+`
+
+const ContentColumn = styled(Box)`
+  && {
+    ${commonFontStyle}
+    ${commonFlexStyle}
+    color: #4a4a4a;
+    font-size: 18px;
+    ${bps.down('sm')} {
+      width: 100%;
+    }
+  }
+`
+const BasicInfoHeaderBox = styled(Box)`
+  && {
+    width: 100%;
+
+    ${bps.up('sm')} {
+      width: 250px;
+      height: 200px;
+    }
+
+    ${bps.up('md')} {
+      width: 300px;
+    }
+  }
+`
+const BasicInfoBox = styled(Box)`
+  && {
+    ${bps.up('sm')} {
+      margin-top: 25px;
+      margin-left: 50px;
+    }
+  }
+`
+
+const BasicInfoGridBox = styled(Box)`
+  && {
+    display: inline-flex;
+    margin-left: 50px ${bps.up('sm')} {
+      margin-left: 0px;
+      margin-right: 50px;
+    }
+  }
+`
+
 class ProfilePage extends Component {
   constructor(props) {
     super(props)
@@ -151,7 +244,52 @@ class ProfilePage extends Component {
                   </CandidateName>
                 </Box>
               </FlexRowContainer>
-              {/* TODO: Basic Info */}
+              <BasicInfoContainer>
+                <BasicInfoHeaderBox>
+                  <BasicInfoHeader>基本資料</BasicInfoHeader>
+                </BasicInfoHeaderBox>
+                <BasicInfoGridBox>
+                  <BasicInfoBox>
+                    <SubHeaderFlexColumn>性別</SubHeaderFlexColumn>
+                    <SubHeaderFlexColumn>年齡</SubHeaderFlexColumn>
+                    <SubHeaderFlexColumn>出生年份</SubHeaderFlexColumn>
+                  </BasicInfoBox>
+                  <BasicInfoBox>
+                    <ContentColumn>
+                      {person.gender
+                        ? person.gender == 'male'
+                          ? '男'
+                          : '女'
+                        : '-'}
+                    </ContentColumn>
+                    <ContentColumn>
+                      {person.estimated_yob
+                        ? `${moment().year() - person.estimated_yob}歲`
+                        : '-'}
+                    </ContentColumn>
+                    <ContentColumn>
+                      {person.estimated_yob ? person.estimated_yob : '-'}
+                    </ContentColumn>
+                  </BasicInfoBox>
+                </BasicInfoGridBox>
+
+                <BasicInfoGridBox>
+                  <BasicInfoBox>
+                    <SubHeaderFlexColumn>職業</SubHeaderFlexColumn>
+                    <SubHeaderFlexColumn>陣營</SubHeaderFlexColumn>
+                    <SubHeaderFlexColumn>所屬政治聯繫</SubHeaderFlexColumn>
+                  </BasicInfoBox>
+                  <BasicInfoBox>
+                    <ContentColumn>
+                      {person.elections.occupation
+                        ? person.elections.occupation
+                        : '-'}
+                    </ContentColumn>
+                    <ContentColumn>TODO</ContentColumn>
+                    <ContentColumn>TODO</ContentColumn>
+                  </BasicInfoBox>
+                </BasicInfoGridBox>
+              </BasicInfoContainer>
               {/* TODO: History */}
             </>
           )
