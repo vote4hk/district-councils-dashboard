@@ -213,12 +213,9 @@ class CandidateList extends Component {
                   </AvatarColumn>
                   <NameColumn p={1}>
                     <CandidateName>
-                      {`${
-                        candidate.candidate_number == null
-                          ? ''
-                          : candidate.candidate_number + '.'
-                      } ${candidate.person.name_zh ||
-                        candidate.person.name_en}`}
+                      {candidate.candidate_number !== 0 &&
+                        `${candidate.candidate_number}. `}
+                      {candidate.person.name_zh || candidate.person.name_en}
                     </CandidateName>
                   </NameColumn>
                   <PoliticalColumn>
@@ -239,29 +236,33 @@ class CandidateList extends Component {
                         : '-'}
                     </Content>
                   </PoliticalColumn>
-                  <PoliticalColumn>
-                    {candidate.is_won && (
-                      <BlueVoteContainer>
-                        {`${candidate.votes}票 (${candidate.vote_percentage}%)`}
-                      </BlueVoteContainer>
-                    )}
-                    {!candidate.is_won && (
-                      <RedVoteContainer>
-                        {`${candidate.votes}票 (${candidate.vote_percentage}%)`}
-                      </RedVoteContainer>
-                    )}
-                  </PoliticalColumn>
-                  <FlexColumn>
-                    <ContentHeader style={{ color: '#9b9b9b' }}>
-                      得票率
-                    </ContentHeader>
-                    <Content>
-                      <CustomizedProgressBars
-                        value={parseFloat(candidate.vote_percentage)}
-                        color={candidate.is_won ? '#306ece' : '#f6416e'}
-                      />
-                    </Content>
-                  </FlexColumn>
+                  {candidate.candidate_number !== 0 && (
+                    <>
+                      <PoliticalColumn>
+                        {candidate.is_won && (
+                          <BlueVoteContainer>
+                            {`${candidate.votes}票 (${candidate.vote_percentage}%)`}
+                          </BlueVoteContainer>
+                        )}
+                        {!candidate.is_won && (
+                          <RedVoteContainer>
+                            {`${candidate.votes}票 (${candidate.vote_percentage}%)`}
+                          </RedVoteContainer>
+                        )}
+                      </PoliticalColumn>
+                      <FlexColumn>
+                        <ContentHeader style={{ color: '#9b9b9b' }}>
+                          得票率
+                        </ContentHeader>
+                        <Content>
+                          <CustomizedProgressBars
+                            value={parseFloat(candidate.vote_percentage)}
+                            color={candidate.is_won ? '#306ece' : '#f6416e'}
+                          />
+                        </Content>
+                      </FlexColumn>
+                    </>
+                  )}
                   <FlexColumn>
                     {candidate.is_won && <OvalButton />}
                     {!candidate.is_won && (
