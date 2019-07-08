@@ -46,6 +46,20 @@ class SearchPage extends Component {
     this.props.history.push(`profile/${result.id}`)
   }
 
+  handleAddressSelected = result => {
+    if (!result) return
+
+    const lastest = result.pop()
+
+    /* TODO: 
+      Use context (?) to store the Global district result array
+      When user select click previous button in district page, 
+      the CACODE should follow follow the above result
+    */
+
+    this.props.history.push(`district/${lastest.year}/${lastest.CACODE}`)
+  }
+
   handleChange(panel) {
     return (event, newExpanded) => {
       console.log(this.state)
@@ -66,24 +80,12 @@ class SearchPage extends Component {
           onChange={this.handleChange('panel1').bind(this)}
         >
           <ExpansionPanelSummary>
-            <Typography>Search People</Typography>
+            <Typography>Search Address</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            {/* <Paper>
-              TODO: Change the following input to AddressSearcher component, similar to PeopleSearcher
-              <Input
-                defaultValue="Search Address"
-                inputProps={{
-                  'aria-label': 'Description',
-                }}
-                onChange={this.onAddressFieldChanged.bind(this)}
-              />
-              {autoCompleteList.map((address, index) => (
-                <div key={index}>
-                  <p>{address.fullAddress()}</p>
-                </div>
-              ))}
-            </Paper> */}
+            <AddressSearcher
+              handleAddressSelected={this.handleAddressSelected}
+            />
           </ExpansionPanelDetails>
         </ExpansionPanel>
 
@@ -93,7 +95,7 @@ class SearchPage extends Component {
           onChange={this.handleChange('panel2').bind(this)}
         >
           <ExpansionPanelSummary>
-            <Typography>Search Address</Typography>
+            <Typography>Search People</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Paper>

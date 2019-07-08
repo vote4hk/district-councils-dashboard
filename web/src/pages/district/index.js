@@ -9,6 +9,7 @@ import MainAreas from 'components/district/MainAreas'
 import CandidateList from 'components/district/CandidateList'
 import styled from 'styled-components'
 import { bps } from 'utils/responsive'
+import Container from '@material-ui/core/Container'
 
 const GET_DISTRICTS = gql`
   query($year: Int!, $code: String!, $electionYear: date) {
@@ -52,7 +53,7 @@ const GET_DISTRICTS = gql`
 
 const FullWidthBox = styled(Box)`
   && {
-    padding-top: 60px;
+    padding-top: 4rem;
     width: 100%;
   }
 `
@@ -143,7 +144,7 @@ class DistrictPage extends Component {
 
     return (
       <>
-        <FlexRowContainer>
+        <Container>
           <Box
             width={{ sm: '100%', md: '960px' }}
             height={{ sm: '300px', md: '400px' }}
@@ -195,7 +196,7 @@ class DistrictPage extends Component {
               )
             }}
           </Query>
-        </FlexRowContainer>
+        </Container>
       </>
     )
   }
