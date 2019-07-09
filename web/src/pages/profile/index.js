@@ -2,11 +2,14 @@ import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
 import styled, { css } from 'styled-components'
 import Avatar from '@material-ui/core/Avatar'
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
 import moment from 'moment'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import { bps } from 'utils/responsive'
 
+// TODO: add age, camp & political_affiliation
 const GET_PEOPLE_PROFILE = gql`
   query($id: uuid!) {
     dc_people(
@@ -197,10 +200,83 @@ const BasicInfoBox = styled(Box)`
 const BasicInfoGridBox = styled(Box)`
   && {
     display: inline-flex;
-    margin-left: 50px ${bps.up('sm')} {
+    margin-left: 50px;
+    ${bps.up('sm')} {
       margin-left: 0px;
       margin-right: 50px;
     }
+  }
+`
+
+const ElectionHistoryContainer = styled(FlexRowContainer)`
+  && {
+    padding: 20px;
+    background-color: #fafafa;
+    ${bps.up('sm')} {
+      padding-left: 40px;
+    }
+
+    ${bps.up('md')} {
+      padding-left: 120px;
+      height: 100%;
+    }
+  }
+`
+const ElectionHistoryHeader = styled.div`
+  && {
+    ${commonFontStyle}
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+    margin-top: 60px;
+  }
+`
+
+const YearDiv = styled.div`
+  && {
+    font-size: 24px;
+    font-weight: 600;
+    color: #9b9b9b;
+    margin-bottom: 20px;
+  }
+`
+
+const ElectionHistoryPaper = styled(Paper)`
+  && {
+    padding: 20px;
+  }
+`
+
+const ElectionHistoryContentGrid = styled(Grid)`
+  && {
+    padding: 15px;
+  }
+`
+
+const ElectionHistoryContentSpan = styled(Grid)`
+  && {
+    ${commonFontStyle}
+    font-size: 18px;
+    color: #4a4a4a;
+  }
+`
+
+const ElectionHistoryContentHeaderSpan = styled(ElectionHistoryContentSpan)`
+  && {
+    font-weight: 500;
+  }
+`
+const ElectionDetailButton = styled.div`
+  && {
+    ${commonFontStyle}
+    padding: 15px;
+    font-weight: 600;
+    color: #ffb700;
+    width: 100%;
+    text-align: center;
+    border-radius: 4px;
+    border: 2px solid #ffb700;
+    cursor: pointer;
   }
 `
 
@@ -211,6 +287,80 @@ class ProfilePage extends Component {
   }
 
   async componentDidMount() {}
+
+  handleElectionDetailButton = () => {
+    //TODO
+  }
+
+  renderElectionInfoCard(election, yob) {
+    console.log(election)
+    return (
+      <Grid item xs={12} md={4}>
+        <YearDiv>{`${election.year}年`}</YearDiv>
+        <ElectionHistoryPaper>
+          <ElectionHistoryContentGrid container spacing={1}>
+            <ElectionHistoryContentHeaderSpan item xs={12} md={4}>
+              年齡
+            </ElectionHistoryContentHeaderSpan>
+            <ElectionHistoryContentSpan item xs={12} md={8}>
+              {yob && election.year ? `${election.year - yob}歲` : '-'}
+            </ElectionHistoryContentSpan>
+          </ElectionHistoryContentGrid>
+          <hr />
+          <ElectionHistoryContentGrid container spacing={1}>
+            <ElectionHistoryContentHeaderSpan item xs={12} md={4}>
+              地區
+            </ElectionHistoryContentHeaderSpan>
+            <ElectionHistoryContentSpan item xs={12} md={8}>
+              {' '}
+              {election.constituency && election.constituency.name
+                ? election.constituency.name
+                : '-'}{' '}
+            </ElectionHistoryContentSpan>
+          </ElectionHistoryContentGrid>
+          <hr />
+          <ElectionHistoryContentGrid container spacing={1}>
+            <ElectionHistoryContentHeaderSpan item xs={12} md={4}>
+              選區
+            </ElectionHistoryContentHeaderSpan>
+            <ElectionHistoryContentSpan item xs={12} md={8}>
+              {election.political_affiliation
+                ? election.political_affiliation.name_zh
+                : '-'}
+            </ElectionHistoryContentSpan>
+          </ElectionHistoryContentGrid>
+          <hr />
+          <ElectionHistoryContentGrid container spacing={1}>
+            <ElectionHistoryContentHeaderSpan item xs={12} md={4}>
+              陣營
+            </ElectionHistoryContentHeaderSpan>
+            <ElectionHistoryContentSpan item xs={12} md={8}>
+              {election.camp ? election.camp : '-'}
+            </ElectionHistoryContentSpan>
+          </ElectionHistoryContentGrid>
+          <hr />
+          <ElectionHistoryContentGrid container spacing={1}>
+            <ElectionHistoryContentHeaderSpan item xs={12} md={4}>
+              選舉結果
+            </ElectionHistoryContentHeaderSpan>
+            <ElectionHistoryContentSpan item xs={12} md={8}>
+              {' '}
+              {`${election.votes} ( ${election.vote_percentage}% )`}{' '}
+            </ElectionHistoryContentSpan>
+          </ElectionHistoryContentGrid>
+          <ElectionHistoryContentGrid container spacing={1}>
+            <ElectionDetailButton
+              onClick={() => {
+                this.handleElectionDetailButton()
+              }}
+            >
+              查看選舉資料
+            </ElectionDetailButton>
+          </ElectionHistoryContentGrid>
+        </ElectionHistoryPaper>
+      </Grid>
+    )
+  }
 
   render() {
     const {
@@ -244,6 +394,7 @@ class ProfilePage extends Component {
                   </CandidateName>
                 </Box>
               </FlexRowContainer>
+              {/* TODO: use grid instead */}
               <BasicInfoContainer>
                 <BasicInfoHeaderBox>
                   <BasicInfoHeader>基本資料</BasicInfoHeader>
@@ -281,8 +432,9 @@ class ProfilePage extends Component {
                   </BasicInfoBox>
                   <BasicInfoBox>
                     <ContentColumn>
-                      {person.elections.occupation
-                        ? person.elections.occupation
+                      {person.elections[person.elections.length - 1].occupation
+                        ? person.elections[person.elections.length - 1]
+                            .occupation
                         : '-'}
                     </ContentColumn>
                     <ContentColumn>TODO</ContentColumn>
@@ -290,7 +442,17 @@ class ProfilePage extends Component {
                   </BasicInfoBox>
                 </BasicInfoGridBox>
               </BasicInfoContainer>
-              {/* TODO: History */}
+              <ElectionHistoryContainer>
+                <Grid container spacing={3}>
+                  <Grid item xs={12}>
+                    <ElectionHistoryHeader>區議會選舉</ElectionHistoryHeader>
+                  </Grid>
+
+                  {person.elections.map(election =>
+                    this.renderElectionInfoCard(election, person.estimated_yob)
+                  )}
+                </Grid>
+              </ElectionHistoryContainer>
             </>
           )
         }}
