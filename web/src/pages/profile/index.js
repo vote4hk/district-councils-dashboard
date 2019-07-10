@@ -410,9 +410,14 @@ class ProfilePage extends Component {
                     <ElectionHistoryHeader>區議會選舉</ElectionHistoryHeader>
                   </Grid>
 
-                  {person.elections.map(election =>
-                    this.renderElectionInfoCard(election, person.estimated_yob)
-                  )}
+                  {person.elections
+                    .sort((a, b) => b.year - a.year)
+                    .map(election =>
+                      this.renderElectionInfoCard(
+                        election,
+                        person.estimated_yob
+                      )
+                    )}
                 </Grid>
               </ElectionHistoryContainer>
             </>
