@@ -203,7 +203,8 @@ const BasicInfoGridContainer = styled(Grid)`
   && {
     margin-top: 40px;
     margin-left: 20px;
-    margin-bottom: 40px ${bps.up('md')} {
+    margin-bottom: 40px;
+    ${bps.up('md')} {
       margin-left: 40px;
     }
   }
