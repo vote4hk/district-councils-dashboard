@@ -26,6 +26,7 @@ const GET_PEOPLE_PROFILE = gql`
         year
         votes
         vote_percentage
+        is_won
         constituency {
           name_zh
           expected_population
@@ -246,15 +247,6 @@ class ProfilePage extends Component {
         <ElectionHistoryPaper>
           <ElectionHistoryContentGrid container spacing={1}>
             <ElectionHistoryContentHeaderSpan item xs={12} md={4}>
-              年齡
-            </ElectionHistoryContentHeaderSpan>
-            <ElectionHistoryContentSpan item xs={12} md={8}>
-              {yob && election.year ? `${election.year - yob}歲` : '-'}
-            </ElectionHistoryContentSpan>
-          </ElectionHistoryContentGrid>
-          <hr />
-          <ElectionHistoryContentGrid container spacing={1}>
-            <ElectionHistoryContentHeaderSpan item xs={12} md={4}>
               地區
             </ElectionHistoryContentHeaderSpan>
             <ElectionHistoryContentSpan item xs={12} md={8}>
@@ -270,9 +262,7 @@ class ProfilePage extends Component {
               選區
             </ElectionHistoryContentHeaderSpan>
             <ElectionHistoryContentSpan item xs={12} md={8}>
-              {election.political_affiliation
-                ? election.political_affiliation.name_zh
-                : '-'}
+              {`${election.constituency.name_zh} （${election.cacode}）`}
             </ElectionHistoryContentSpan>
           </ElectionHistoryContentGrid>
           <hr />
@@ -287,11 +277,12 @@ class ProfilePage extends Component {
           <hr />
           <ElectionHistoryContentGrid container spacing={1}>
             <ElectionHistoryContentHeaderSpan item xs={12} md={4}>
-              選舉結果
+              得票率
             </ElectionHistoryContentHeaderSpan>
             <ElectionHistoryContentSpan item xs={12} md={8}>
-              {' '}
-              {`${election.votes} ( ${election.vote_percentage}% )`}{' '}
+              {`${election.vote_percentage}% （${
+                election.is_won ? '當選' : '落敗'
+              }）`}
             </ElectionHistoryContentSpan>
           </ElectionHistoryContentGrid>
           <ElectionHistoryContentGrid container spacing={1}>
