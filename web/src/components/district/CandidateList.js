@@ -1,16 +1,23 @@
 import React, { Component } from 'react'
-import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import styled, { css } from 'styled-components'
 import Box from '@material-ui/core/Box'
-import Card from '@material-ui/core/Card'
 import PropTypes from 'prop-types'
 import CustomizedProgressBars from '../../components/BorderLinearProgress'
 import Avatar from '@material-ui/core/Avatar'
 import { bps } from 'utils/responsive'
+import { getCamp, getPoliticalAffiliation } from 'helpers/candidate'
 
-const commonFontStyle = css`
+const fontBoldStyle = css`
   font-family: 'PingFangTC-Medium';
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+`
+
+const fontNormalStyle = css`
+  font-family: 'PingFangTC';
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
@@ -111,7 +118,7 @@ const StyledDivier = styled(Divider)`
 `
 const CandidateListTitle = styled.div`
    {
-    ${commonFontStyle}
+    ${fontBoldStyle}
     font-size: 32px;
     font-weight: 600;
     color: #333333;
@@ -120,7 +127,7 @@ const CandidateListTitle = styled.div`
 
 const CandidateName = styled.div`
    {
-    ${commonFontStyle}
+    ${fontBoldStyle}
     font-size: 24px;
     font-weight: 500;
     color: #333333;
@@ -129,7 +136,7 @@ const CandidateName = styled.div`
 
 const BlueVoteContainer = styled.div`
    {
-    ${commonFontStyle}
+    ${fontBoldStyle}
     font-size: 18px;
     font-weight: 500;
     color: #306ece;
@@ -138,7 +145,7 @@ const BlueVoteContainer = styled.div`
 
 const RedVoteContainer = styled.div`
    {
-    ${commonFontStyle}
+    ${fontBoldStyle}
     font-size: 18px;
     font-weight: 500;
     color: #f6416e;
@@ -147,7 +154,7 @@ const RedVoteContainer = styled.div`
 
 const ContentHeader = styled.div`
    {
-    ${commonFontStyle}
+    ${fontBoldStyle}
     font-size: 18px;
     font-weight: 600;
     color: #4a4a4a;
@@ -156,7 +163,7 @@ const ContentHeader = styled.div`
 
 const Content = styled.div`
    {
-    ${commonFontStyle}
+    ${fontNormalStyle}
     font-size: 18px;
     color: #4a4a4a;
   }
@@ -221,20 +228,12 @@ class CandidateList extends Component {
                   <PoliticalColumn>
                     <ContentHeader>陣營</ContentHeader>
                     {'\n'}
-                    <Content>
-                      {candidate.political_affiliation
-                        ? candidate.political_affiliation.name_zh
-                        : '-'}
-                    </Content>
+                    <Content>{getCamp(candidate)}</Content>
                   </PoliticalColumn>
                   <PoliticalColumn>
                     <ContentHeader>政治聯繫</ContentHeader>
                     {'\n'}
-                    <Content>
-                      {candidate.political_affiliation
-                        ? candidate.political_affiliation.camp.name_zh
-                        : '-'}
-                    </Content>
+                    <Content>{getPoliticalAffiliation(candidate)}</Content>
                   </PoliticalColumn>
                   {candidate.candidate_number !== 0 && (
                     <>
