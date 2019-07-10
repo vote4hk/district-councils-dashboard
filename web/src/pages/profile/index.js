@@ -234,8 +234,8 @@ class ProfilePage extends Component {
 
   async componentDidMount() {}
 
-  handleElectionDetailButton = () => {
-    //TODO
+  handleElectionDetailButton = (year, code) => {
+    this.props.history.push(`/district/${year}/${code}`)
   }
 
   renderElectionInfoCard(election, yob) {
@@ -297,7 +297,7 @@ class ProfilePage extends Component {
           <ElectionHistoryContentGrid container spacing={1}>
             <ElectionDetailButton
               onClick={() => {
-                this.handleElectionDetailButton()
+                this.handleElectionDetailButton(election.year, election.cacode)
               }}
             >
               查看選舉資料
