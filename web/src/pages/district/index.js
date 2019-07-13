@@ -52,7 +52,7 @@ const GET_DISTRICTS = gql`
 
 const FullWidthBox = styled(Box)`
   && {
-    padding-top: 60px;
+    padding-top: 4rem;
     width: 100%;
   }
 `

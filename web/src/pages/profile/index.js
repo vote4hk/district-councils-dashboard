@@ -26,6 +26,7 @@ const GET_PEOPLE_PROFILE = gql`
         year
         votes
         vote_percentage
+        is_won
         constituency {
           name_zh
           expected_population
@@ -235,8 +236,8 @@ class ProfilePage extends Component {
 
   async componentDidMount() {}
 
-  handleElectionDetailButton = () => {
-    //TODO
+  handleElectionDetailButton = (year, code) => {
+    this.props.history.push(`/district/${year}/${code}`)
   }
 
   renderElectionInfoCard(election, yob) {
@@ -245,15 +246,6 @@ class ProfilePage extends Component {
       <Grid item xs={12} md={4}>
         <YearDiv>{`${election.year}年`}</YearDiv>
         <ElectionHistoryPaper>
-          <ElectionHistoryContentGrid container spacing={1}>
-            <ElectionHistoryContentHeaderSpan item xs={12} md={4}>
-              年齡
-            </ElectionHistoryContentHeaderSpan>
-            <ElectionHistoryContentSpan item xs={12} md={8}>
-              {yob && election.year ? `${election.year - yob}歲` : '-'}
-            </ElectionHistoryContentSpan>
-          </ElectionHistoryContentGrid>
-          <hr />
           <ElectionHistoryContentGrid container spacing={1}>
             <ElectionHistoryContentHeaderSpan item xs={12} md={4}>
               地區
@@ -271,9 +263,7 @@ class ProfilePage extends Component {
               選區
             </ElectionHistoryContentHeaderSpan>
             <ElectionHistoryContentSpan item xs={12} md={8}>
-              {election.political_affiliation
-                ? election.political_affiliation.name_zh
-                : '-'}
+              {`${election.constituency.name_zh} （${election.cacode}）`}
             </ElectionHistoryContentSpan>
           </ElectionHistoryContentGrid>
           <hr />
@@ -288,17 +278,18 @@ class ProfilePage extends Component {
           <hr />
           <ElectionHistoryContentGrid container spacing={1}>
             <ElectionHistoryContentHeaderSpan item xs={12} md={4}>
-              選舉結果
+              得票率
             </ElectionHistoryContentHeaderSpan>
             <ElectionHistoryContentSpan item xs={12} md={8}>
-              {' '}
-              {`${election.votes} ( ${election.vote_percentage}% )`}{' '}
+              {`${election.vote_percentage}% （${
+                election.is_won ? '當選' : '落敗'
+              }）`}
             </ElectionHistoryContentSpan>
           </ElectionHistoryContentGrid>
           <ElectionHistoryContentGrid container spacing={1}>
             <ElectionDetailButton
               onClick={() => {
-                this.handleElectionDetailButton()
+                this.handleElectionDetailButton(election.year, election.cacode)
               }}
             >
               查看選舉資料
@@ -411,9 +402,14 @@ class ProfilePage extends Component {
                     <ElectionHistoryHeader>區議會選舉</ElectionHistoryHeader>
                   </Grid>
 
-                  {person.elections.map(election =>
-                    this.renderElectionInfoCard(election, person.estimated_yob)
-                  )}
+                  {person.elections
+                    .sort((a, b) => b.year - a.year)
+                    .map(election =>
+                      this.renderElectionInfoCard(
+                        election,
+                        person.estimated_yob
+                      )
+                    )}
                 </Grid>
               </ElectionHistoryContainer>
             </>

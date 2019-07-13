@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { withStyles } from '@material-ui/core/styles'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
-import NavBar from './layout/NavBar'
+import NavBar from './components/NavBar'
 import SearchPage from './pages/search'
 import ProfilePage from './pages/profile'
 import DistrictPage from './pages/district'
@@ -33,8 +33,6 @@ class App extends Component {
           <CssBaseline />
           <NavBar />
           <main>
-            {/* <div className={classes.toolbar} /> */}
-            {/* Content will be shifted downwards by the div above. If the div is removed, the content will disappear under the app bar. */}
             <Switch>
               <Route exact path="/" component={SearchPage} />
               <Route path="/profile/:id" component={ProfilePage} />
