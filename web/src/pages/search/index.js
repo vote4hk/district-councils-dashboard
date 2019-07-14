@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 
 import { withStyles } from '@material-ui/core/styles'
+import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 import Input from '@material-ui/core/Input'
+import Divider from '@material-ui/core/Divider'
 import PeopleSearcher from '../../components/PeopleSearcher'
 import AddressSearcher from '../../components/AddressSearcher'
 import Typography from '@material-ui/core/Typography'
@@ -11,24 +14,80 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 
 import styled from 'styled-components'
+import { bps } from 'utils/responsive'
 import DistrictSelector from 'components/search/DistrictSelector'
 
 import * as AddressParser from 'hk-address-parser-lib'
 
 const styles = theme => ({})
 
+const StyledDivier = styled(Divider)`
+  && {
+    background-color: #ececec;
+    width: 100%;
+  }
+`
+
 const Container = styled.div`
-  width: 800px;
+  ${bps.up('md')} {
+    width: 100%;
+  }
+
+  ${bps.up('lg')} {
+    width: 1440px;
+  }
+  padding-top: 50px;
   margin: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  padding-left: 32px;
+  padding-right: 32px;
+  flex-grow: 1;
+`
+
+const RowContainer = styled(Box)`
+  && {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+  }
+`
+
+const TabButton = styled(Button)`
+  && {
+    width: 200px;
+    margin-left: 30px;
+    margin-right: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+    color: ${props => (props.active ? '#ffd731' : '#c2c2c2')};
+
+    border-bottom: ${props => (props.active ? '1px solid #ffd731' : 'none')};
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+`
+
+const ContentContainer = styled(Box)`
+  && {
+    margin: 50px;
+    width: 50%;
+    justify-content: center;
+  }
 `
 
 class SearchPage extends Component {
-  expanded = false
+  selectedTab
 
   constructor(props) {
     super(props)
     this.state = {
       autoCompleteList: [],
+      selectedTab: 'district',
     }
   }
 
@@ -60,21 +119,55 @@ class SearchPage extends Component {
     this.props.history.push(`district/${lastest.year}/${lastest.CACODE}`)
   }
 
-  handleChange(panel) {
-    return (event, newExpanded) => {
-      console.log(this.state)
+  renderSearchPeople() {
+    return <></>
+  }
+  onTabSelected(tab) {
+    return () => {
       this.setState({
-        expanded: newExpanded ? panel : false,
+        selectedTab: tab,
       })
     }
   }
 
-  render() {
-    const { expanded } = this.state
+  renderSearchDistrict() {
+    return (
+      <RowContainer>
+        <ContentContainer>
+          <AddressSearcher handleAddressSelected={this.handleAddressSelected} />
+        </ContentContainer>
+        <ContentContainer>
+          <DistrictSelector />
+        </ContentContainer>
+      </RowContainer>
+    )
+  }
 
+  render() {
+    const { selectedTab } = this.state
+    const isSearchPeople = selectedTab === 'people'
+    console.log(selectedTab)
     return (
       <Container>
-        <ExpansionPanel
+        <RowContainer>
+          <TabButton
+            active={!isSearchPeople}
+            onClick={this.onTabSelected('district').bind(this)}
+          >
+            <Typography variant="h2">找選區</Typography>
+          </TabButton>
+          <TabButton
+            active={isSearchPeople}
+            onClick={this.onTabSelected('people').bind(this)}
+          >
+            <Typography variant="h2">找議員</Typography>
+          </TabButton>
+        </RowContainer>
+        <StyledDivier />
+        {isSearchPeople
+          ? this.renderSearchPeople()
+          : this.renderSearchDistrict()}
+        {/* <ExpansionPanel
           square
           expanded={expanded === 'panel1'}
           onChange={this.handleChange('panel1').bind(this)}
@@ -117,7 +210,7 @@ class SearchPage extends Component {
           <ExpansionPanelDetails>
             <DistrictSelector />
           </ExpansionPanelDetails>
-        </ExpansionPanel>
+        </ExpansionPanel> */}
       </Container>
     )
   }
