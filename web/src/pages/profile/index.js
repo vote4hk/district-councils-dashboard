@@ -86,8 +86,8 @@ const FlexRowContainer = styled(Box)`
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
-    opacity: 0.95;
-    background-color: #f6416e;
+    margin: auto;
+
     ${bps.up('md')} {
       width: 100%;
     }
@@ -95,7 +95,13 @@ const FlexRowContainer = styled(Box)`
     ${bps.up('lg')} {
       width: 1440px;
     }
-    margin: auto;
+  }
+`
+
+const CandidateHeaderContainer = styled(FlexRowContainer)`
+  && {
+    opacity: 0.95;
+    background-color: #f6416e;
   }
 `
 
@@ -200,13 +206,21 @@ const ElectionDetailButton = styled.div`
   }
 `
 
-const BasicInfoGridContainer = styled(Grid)`
+const BasicInfoGridContainer = styled(FlexRowContainer)`
   && {
     margin-top: 40px;
     margin-left: 20px;
     margin-bottom: 40px;
+
+    ${bps.up('sm')} {
+      padding-left: 40px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     ${bps.up('md')} {
-      margin-left: 40px;
+      padding-left: 55px;
+      height: 100%;
     }
   }
 `
@@ -314,7 +328,7 @@ class ProfilePage extends Component {
           const person = data.dc_people[0]
           return (
             <>
-              <FlexRowContainer>
+              <CandidateHeaderContainer>
                 <Box
                   width={{ sm: '250px', md: '300px' }}
                   height={{ sm: '200px' }}
@@ -331,67 +345,70 @@ class ProfilePage extends Component {
                     </DistrictName>
                   </CandidateName>
                 </Box>
-              </FlexRowContainer>
+              </CandidateHeaderContainer>
 
-              <BasicInfoGridContainer container spacing={3}>
-                <Grid item xs={12} md={3}>
-                  <BasicInfoHeader>基本資料</BasicInfoHeader>
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                  <Grid container spacing={3}>
-                    <BasicInfoGridHeader item xs={6}>
-                      性別
-                    </BasicInfoGridHeader>
-                    <BasicInfoGridContent item xs={6}>
-                      {person.gender
-                        ? person.gender == 'male'
-                          ? '男'
-                          : '女'
-                        : '-'}
-                    </BasicInfoGridContent>
-
-                    <BasicInfoGridHeader item xs={6}>
-                      年齡
-                    </BasicInfoGridHeader>
-                    <BasicInfoGridContent item xs={6}>
-                      {person.estimated_yob
-                        ? `${moment().year() - person.estimated_yob}歲`
-                        : '-'}
-                    </BasicInfoGridContent>
-
-                    <BasicInfoGridHeader item xs={6}>
-                      出生年份
-                    </BasicInfoGridHeader>
-                    <BasicInfoGridContent item xs={6}>
-                      {person.estimated_yob ? person.estimated_yob : '-'}
-                    </BasicInfoGridContent>
+              <BasicInfoGridContainer>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={3}>
+                    <BasicInfoHeader>基本資料</BasicInfoHeader>
                   </Grid>
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                  <Grid container spacing={3}>
-                    <BasicInfoGridHeader item xs={6}>
-                      職業
-                    </BasicInfoGridHeader>
-                    <BasicInfoGridContent item xs={6}>
-                      {person.elections[person.elections.length - 1].occupation
-                        ? person.elections[person.elections.length - 1]
-                            .occupation
-                        : '-'}
-                    </BasicInfoGridContent>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Grid container spacing={3}>
+                      <BasicInfoGridHeader item xs={5}>
+                        性別
+                      </BasicInfoGridHeader>
+                      <BasicInfoGridContent item xs={7}>
+                        {person.gender
+                          ? person.gender == 'male'
+                            ? '男'
+                            : '女'
+                          : '-'}
+                      </BasicInfoGridContent>
 
-                    <BasicInfoGridHeader item xs={6}>
-                      陣營
-                    </BasicInfoGridHeader>
-                    <BasicInfoGridContent item xs={6}>
-                      TODO
-                    </BasicInfoGridContent>
+                      <BasicInfoGridHeader item xs={5}>
+                        年齡
+                      </BasicInfoGridHeader>
+                      <BasicInfoGridContent item xs={7}>
+                        {person.estimated_yob
+                          ? `${moment().year() - person.estimated_yob}歲`
+                          : '-'}
+                      </BasicInfoGridContent>
 
-                    <BasicInfoGridHeader item xs={6}>
-                      所屬政治聯繫
-                    </BasicInfoGridHeader>
-                    <BasicInfoGridContent item xs={6}>
-                      TODO
-                    </BasicInfoGridContent>
+                      <BasicInfoGridHeader item xs={5}>
+                        出生年份
+                      </BasicInfoGridHeader>
+                      <BasicInfoGridContent item xs={7}>
+                        {person.estimated_yob ? person.estimated_yob : '-'}
+                      </BasicInfoGridContent>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Grid container spacing={3}>
+                      <BasicInfoGridHeader item xs={5}>
+                        職業
+                      </BasicInfoGridHeader>
+                      <BasicInfoGridContent item xs={7}>
+                        {person.elections[person.elections.length - 1]
+                          .occupation
+                          ? person.elections[person.elections.length - 1]
+                              .occupation
+                          : '-'}
+                      </BasicInfoGridContent>
+
+                      <BasicInfoGridHeader item xs={5}>
+                        陣營
+                      </BasicInfoGridHeader>
+                      <BasicInfoGridContent item xs={7}>
+                        {/* TODO */}-
+                      </BasicInfoGridContent>
+
+                      <BasicInfoGridHeader item xs={5}>
+                        所屬政治聯繫
+                      </BasicInfoGridHeader>
+                      <BasicInfoGridContent item xs={7}>
+                        {/* TODO */}-
+                      </BasicInfoGridContent>
+                    </Grid>
                   </Grid>
                 </Grid>
               </BasicInfoGridContainer>
