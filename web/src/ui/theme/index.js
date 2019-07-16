@@ -21,7 +21,8 @@ export const typography = {
   },
   h2: {
     fontFamily: headingFontFamily,
-    fontSize: 24,
+    fontSize: 50,
+    fontWeight: 500,
   },
   h3: {
     fontFamily: headingFontFamily,
@@ -64,8 +65,9 @@ export default createMuiTheme({
     background: {
       default: '#ffffff',
     },
-  },
-  text: {
-    primary: '#000000',
+    button: {
+      primary: '#ffd731',
+      secondary: '#ffd731',
+    },
   },
 })
