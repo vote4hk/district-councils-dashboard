@@ -4,7 +4,7 @@ const program = require('commander');
 const fs = require('fs');
 const chalk = require('chalk');
 const async = require('async');
-const { insertCandidate, upsertConstituency } = require('./people_importer');
+const { insertCandidate, upsertConstituency } = require('./lib/people_importer');
 
 require('dotenv').config();
 
@@ -68,7 +68,7 @@ async function upsertPolygon(year, filePath) {
     return;
   }
 
-  if ((year - 1999 ) % 4 !== 0){
+  if ((year - 1999) % 4 !== 0) {
     log.error(`Invalid year ${year}`);
     return;
   }
@@ -105,6 +105,9 @@ program
   .command('upsert_polygon <year> <filePath>')
   .description('insert/update the polygon data for constituency')
   .action(upsertPolygon);
+
+program.command('export [command]', 'export data from hasura to csv');
+program.command('import [command]', 'import data from csv to hasura');
 
 program.parse(process.argv);
 

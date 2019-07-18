@@ -1,5 +1,6 @@
-const { runQuery } = require('./hasura');
 const moment = require('moment');
+const { runQuery } = require('./hasura');
+
 
 const constituencyHash = {};
 
