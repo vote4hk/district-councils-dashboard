@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField'
 import Paper from '@material-ui/core/Paper'
 import MenuItem from '@material-ui/core/MenuItem'
 import Popper from '@material-ui/core/Popper'
+import Avatar from '@material-ui/core/Avatar'
 import { withStyles } from '@material-ui/core/styles'
 import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
@@ -49,15 +50,16 @@ function renderInputComponent(inputProps) {
 }
 
 function renderSuggestion(suggestion, { query, isHighlighted }) {
-  // TODO: update default avatar
-  // TODO: enrich avatar field
-  const avatar = suggestion.avatar
-    ? suggestion.avatar
-    : 'http://www.carderator.com/assets/avatar_placeholder_small.png'
+  // todo: use ENV_VAR
+  const homeUrl = 'https://cswbrian.github.io/district-councils-dashboard/'
+  const { id, name_zh, name_en } = suggestion
+  const avatarPath = id
+    ? `${homeUrl}/static/images/avatar/${id}.jpg`
+    : `${homeUrl}/static/images/avatar/default.png`
 
   // keyword this is not accessible here. so define the style here
   const suggestionNameStyle = {
-    marginLeft: '68px',
+    marginLeft: '20px',
     lineHeight: '45px',
   }
   const boldStyle = {
@@ -70,23 +72,26 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
 
   return (
     <MenuItem selected={isHighlighted} component="div">
-      <div
-        style={{
-          backgroundImage: `url(${avatar})`,
-          display: 'flex',
-          alignItems: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: '48px 48px',
+      <Avatar
+        src={avatarPath}
+        imgProps={{
+          onError: e => {
+            e.target.src = `${homeUrl}/static/images/avatar/default.png`
+          },
         }}
+        style={{
+          width: '48px',
+          height: '48px',
+          borderRadius: 0,
+        }}
+      />
+      <span
+        style={
+          isHighlighted ? suggestionNameStyle : selectedSuggestionNameStyle
+        }
       >
-        <span
-          style={
-            isHighlighted ? suggestionNameStyle : selectedSuggestionNameStyle
-          }
-        >
-          {suggestion.name_zh ? suggestion.name_zh : suggestion.name_en}
-        </span>
-      </div>
+        {name_zh ? name_zh : name_en}
+      </span>
     </MenuItem>
   )
 }
