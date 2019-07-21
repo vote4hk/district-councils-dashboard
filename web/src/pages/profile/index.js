@@ -16,6 +16,7 @@ const GET_PEOPLE_PROFILE = gql`
       where: { id: { _eq: $id } }
       order_by: { elections_aggregate: { max: { year: asc } } }
     ) {
+      id
       name_en
       name_zh
       estimated_yob
@@ -320,12 +321,17 @@ class ProfilePage extends Component {
         params: { id },
       },
     } = this.props
+
+    // todo: use ENV_VAR
+    const homeUrl = 'https://cswbrian.github.io/district-councils-dashboard/'
+
     return (
       <Query query={GET_PEOPLE_PROFILE} variables={{ id }}>
         {({ loading, error, data }) => {
           if (loading) return null
           if (error) return `Error! ${error}`
           const person = data.dc_people[0]
+
           return (
             <>
               <CandidateHeaderContainer>
@@ -333,16 +339,20 @@ class ProfilePage extends Component {
                   width={{ sm: '250px', md: '300px' }}
                   height={{ sm: '200px' }}
                 >
-                  <CandidateAvatar src="/static/images/avatar/default.png" />
+                  <CandidateAvatar
+                    src={`${homeUrl}/static/images/avatar/${person.id}.jpg`}
+                    imgProps={{
+                      onError: e => {
+                        e.target.src = `${homeUrl}/static/images/avatar/default.png`
+                      },
+                    }}
+                  ></CandidateAvatar>
                 </Box>
                 <Box>
                   <CandidateName>
                     {person.name_zh ? person.name_zh : ''}{' '}
                     {person.name_zh ? person.name_en : ''}
-                    <DistrictName>
-                      {/* TODO */}
-                      沙田區, 水街
-                    </DistrictName>
+                    <DistrictName>{/* TODO */}-</DistrictName>
                   </CandidateName>
                 </Box>
               </CandidateHeaderContainer>
