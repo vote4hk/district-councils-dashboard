@@ -30,8 +30,8 @@ async function upsertPerson(person) {
 
   const variables = {
     person: {
-      name_zh: name_chi ? name_chi : null,
-      name_en: name_eng ? name_eng : null,
+      name_zh: name_chi ? name_chi : '',
+      name_en: name_eng ? name_eng : '',
       estimated_yob: yob,
       gender: gender === '男' ? 'male' : 'female',
     }

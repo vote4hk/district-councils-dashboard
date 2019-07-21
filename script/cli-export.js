@@ -7,7 +7,7 @@ const async = require('async');
 const json2csv = require('json2csv');
 
 const { runQuery } = require('./lib/hasura');
-const { QUERY_GET_PEOPLE, QUERY_GET_CONSTITUENCIES } = require('./lib/gql');
+const { QUERY_GET_PEOPLE, QUERY_GET_CONSTITUENCIES, QUERY_GET_CANDIDATES } = require('./lib/gql');
 
 
 require('dotenv').config();
@@ -47,6 +47,16 @@ async function exportDistrict(filePath) {
   fs.writeFileSync(filePath, csv);
 }
 
+async function exportCandidate(filePath) {
+  log.info(`Prepare to export the candidate data to ${filePath} ...`);
+  const res = await runQuery(QUERY_GET_CANDIDATES, {});
+  const { dc_candidates } = res.body.data;
+  log.info(`Total candidates: ${dc_candidates.length}`);
+
+  const csv = json2csv.parse(dc_candidates);
+  fs.writeFileSync(filePath, csv);
+}
+
 
 program
   .version('0.1.0');
@@ -61,6 +71,12 @@ program
   .command('district <file>')
   .description('export the district data')
   .action(exportDistrict);
+
+
+program
+  .command('candidates <file>')
+  .description('export the candidates data')
+  .action(exportCandidate);
 
 
 program.parse(process.argv);
