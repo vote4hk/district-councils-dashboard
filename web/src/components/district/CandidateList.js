@@ -200,11 +200,7 @@ class CandidateList extends Component {
                 >
                   <AvatarColumn>
                     <Avatar
-                      src={`${
-                        this.homeUrl
-                      }/static/images/avatar/${year}/${code}_${
-                        year === 2011 ? '0' : ''
-                      }${candidate.candidate_number}.jpg`}
+                      src={`${this.homeUrl}/static/images/avatar/${candidate.person.id}.jpg`}
                       imgProps={{
                         onError: e => {
                           e.target.src =
