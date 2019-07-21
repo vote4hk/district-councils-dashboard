@@ -7,6 +7,7 @@ import { Query } from 'react-apollo'
 import DistrictCard from 'components/district/DistrictCard'
 import MainAreas from 'components/district/MainAreas'
 import CandidateList from 'components/district/CandidateList'
+import Metrics from 'components/district/Metrics'
 import styled from 'styled-components'
 import { bps } from 'utils/responsive'
 
@@ -176,10 +177,11 @@ class DistrictPage extends Component {
                   <LowerBackgroundContainer>
                     <FlexRowContainer>
                       <FullWidthBox>
-                        <Typography variant="h5" bold gutterBottom>
-                          人口資料
-                        </Typography>
-                        {district.expected_population}
+                        <Metrics
+                          year={year}
+                          code={code}
+                          district={district}
+                        ></Metrics>
                       </FullWidthBox>
                       <FullWidthBox>
                         <CandidateList
