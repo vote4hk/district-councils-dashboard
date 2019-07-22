@@ -7,6 +7,7 @@ import NavBar from './components/NavBar'
 import SearchPage from './pages/search'
 import ProfilePage from './pages/profile'
 import DistrictPage from './pages/district'
+import BattleGroundPage from './pages/battleground'
 import NotfoundPage from './pages/notfound'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
@@ -36,6 +37,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={SearchPage} />
               <Route path="/profile/:id" component={ProfilePage} />
+              <Route path="/district/2019/:code" component={BattleGroundPage} />
               <Route path="/district/:year/:code" component={DistrictPage} />
               <Route component={NotfoundPage} />
             </Switch>
