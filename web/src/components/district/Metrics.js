@@ -3,11 +3,10 @@ import Typography from '@material-ui/core/Typography'
 import styled from 'styled-components'
 import Box from '@material-ui/core/Box'
 import PropTypes from 'prop-types'
-import * as d3 from 'd3'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import AnimatedPieSVG from './AnimatedPieSVG'
 import * as _ from 'lodash'
+import VoterTurnoutChart from './VoterTurnoutChart'
 
 const QUERY_FETCH_VOTES = gql`
   query($year: Int!, $code: String!) {
@@ -51,7 +50,6 @@ class MainAreas extends Component {
       code,
       district: { expected_population },
     } = this.props
-    console.log(expected_population)
     return (
       <Query query={QUERY_FETCH_VOTES} variables={{ year, code }}>
         {({ loading, error, data }) => {
@@ -59,29 +57,32 @@ class MainAreas extends Component {
           if (error) return `Error! ${error}`
 
           const stats = data.dc_constituencies[0].vote_stats
-          let pieData = {}
-          stats.forEach(stat => {
-            stat.votes.forEach(vote => {
-              pieData[vote.gender + '_' + vote.age] =
-                pieData[vote] || 0 + vote.votes
-            })
-          })
-          console.log(stats)
-          pieData = Object.keys(pieData).map(key => {
-            return {
-              value: pieData[key],
-            }
-          })
+
+          const barVote = { data: {} }
+          barVote.total = stats.reduce((acc, cur) => {
+            const sub_total = cur.votes.reduce((acc, cur) => {
+              if (typeof barVote.data[cur.age] === 'undefined') {
+                barVote.data[cur.age] = {}
+              }
+
+              if (typeof barVote.data[cur.age][cur.gender] === 'undefined') {
+                barVote.data[cur.age][cur.gender] = 0
+              }
+
+              barVote.data[cur.age][cur.gender] += cur.votes
+
+              return acc + cur.votes
+            }, 0)
+            return acc + sub_total
+          }, 0)
+
           return (
             <Container>
               <Typography variant="h4">人口資料</Typography>
               <Typography variant="h4">{expected_population}</Typography>
-              <AnimatedPieSVG
-                data={pieData}
-                width={200}
-                height={200}
-                innerRadius={60}
-                outerRadius={100}
+              <VoterTurnoutChart
+                id={`${year}_${code}_voter_turnout`}
+                data={barVote}
               />
             </Container>
           )
