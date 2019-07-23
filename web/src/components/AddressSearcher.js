@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes, { instanceOf } from 'prop-types'
-import deburr from 'lodash/deburr'
 import Autosuggest from 'react-autosuggest'
 import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'
@@ -9,6 +8,9 @@ import Paper from '@material-ui/core/Paper'
 import MenuItem from '@material-ui/core/MenuItem'
 import Popper from '@material-ui/core/Popper'
 import { withStyles } from '@material-ui/core/styles'
+import IconButton from '@material-ui/core/IconButton'
+import SearchIcon from '@material-ui/icons/Search'
+import InputAdornment from '@material-ui/core/InputAdornment'
 import * as AddressParser from 'hk-address-parser-lib'
 import { getAllFeaturesFromPoint } from '../utils/features'
 
@@ -16,19 +18,30 @@ function renderInputComponent(inputProps) {
   const { classes, inputRef = () => {}, ref, ...other } = inputProps
 
   return (
-    <TextField
-      fullWidth
-      InputProps={{
-        inputRef: node => {
-          ref(node)
-          inputRef(node)
-        },
-        classes: {
-          input: classes.input,
-        },
-      }}
-      {...other}
-    />
+    <>
+      <TextField
+        fullWidth
+        InputProps={{
+          inputRef: node => {
+            ref(node)
+            inputRef(node)
+          },
+          classes: {
+            input: classes.input,
+          },
+          disableUnderline: true,
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton className={classes.searchButton} aria-label="Search">
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+        disableUnderline={true}
+        {...other}
+      />
+    </>
   )
 }
 
@@ -81,6 +94,19 @@ const styles = theme => ({
     margin: 0,
     padding: 0,
     listStyleType: 'none',
+  },
+  suggestInput: {
+    height: '60px',
+    borderRadius: '4px',
+    boxShadow: '0 2px 16px 0 rgba(0, 0, 0, 0.1)',
+    backgroundColor: '#ffffff',
+    padding: '10px 20px',
+  },
+  input: {
+    textDecoration: 'none',
+  },
+  searchButton: {
+    color: '#ffd731',
   },
 })
 
@@ -157,8 +183,7 @@ class IntegrationAutosuggest extends React.Component {
           {...autosuggestProps}
           inputProps={{
             classes,
-            label: '你住邊',
-            placeholder: 'Please type an address',
+            placeholder: '尋找選區...',
             value: this.state.value,
             onChange: this.handleChange('value'),
             inputRef: node => {
@@ -171,6 +196,7 @@ class IntegrationAutosuggest extends React.Component {
           theme={{
             suggestionsList: classes.suggestionsList,
             suggestion: classes.suggestion,
+            input: classes.suggestInput,
           }}
           renderSuggestionsContainer={options => (
             <Popper anchorEl={this.popperNode} open={Boolean(options.children)}>
