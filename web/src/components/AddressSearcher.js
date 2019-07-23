@@ -6,7 +6,6 @@ import parse from 'autosuggest-highlight/parse'
 import TextField from '@material-ui/core/TextField'
 import Paper from '@material-ui/core/Paper'
 import MenuItem from '@material-ui/core/MenuItem'
-import Popper from '@material-ui/core/Popper'
 import { withStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/Search'
@@ -51,19 +50,17 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
 
   return (
     <MenuItem selected={isHighlighted} component="div">
-      <div>
-        {parts.map((part, index) =>
-          part.highlight ? (
-            <span key={String(index)} style={{ fontWeight: 500 }}>
-              {part.text}
-            </span>
-          ) : (
-            <strong key={String(index)} style={{ fontWeight: 300 }}>
-              {part.text}
-            </strong>
-          )
-        )}
-      </div>
+      {parts.map((part, index) =>
+        part.highlight ? (
+          <span key={String(index)} style={{ fontWeight: 500 }}>
+            {part.text}
+          </span>
+        ) : (
+          <strong key={String(index)} style={{ fontWeight: 300 }}>
+            {part.text}
+          </strong>
+        )
+      )}
     </MenuItem>
   )
 }
@@ -199,17 +196,15 @@ class IntegrationAutosuggest extends React.Component {
             input: classes.suggestInput,
           }}
           renderSuggestionsContainer={options => (
-            <Popper anchorEl={this.popperNode} open={Boolean(options.children)}>
-              <Paper
-                square
-                {...options.containerProps}
-                style={{
-                  width: this.popperNode ? this.popperNode.clientWidth : null,
-                }}
-              >
-                {options.children}
-              </Paper>
-            </Popper>
+            <Paper
+              square
+              {...options.containerProps}
+              style={{
+                width: '100%',
+              }}
+            >
+              {options.children}
+            </Paper>
           )}
         />
       </div>
