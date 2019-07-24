@@ -3,15 +3,9 @@ import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
-import Paper from '@material-ui/core/Paper'
-import Input from '@material-ui/core/Input'
 import Divider from '@material-ui/core/Divider'
-import PeopleSearcher from '../../components/PeopleSearcher'
 import AddressSearcher from '../../components/AddressSearcher'
 import Typography from '@material-ui/core/Typography'
-import ExpansionPanel from '@material-ui/core/ExpansionPanel'
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 
 import styled from 'styled-components'
 import { bps } from 'utils/responsive'
@@ -55,6 +49,15 @@ const RowContainer = styled(Box)`
   }
 `
 
+const ContentRowContainer = styled(RowContainer)`
+  && {
+    flex-flow: row;
+    ${bps.down('md')} {
+      flex-flow: column;
+    }
+  }
+`
+
 const TabButton = styled(Button)`
   && {
     width: 200px;
@@ -76,8 +79,25 @@ const ContentContainer = styled(Box)`
   && {
     margin: 50px;
     width: 50%;
+    ${bps.down('md')} {
+      width: 100%;
+    }
     justify-content: center;
   }
+`
+const LandingIcon = styled.div`
+  margin-top: 70px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 461px;
+  height: 295px;
+
+  ${bps.down('md')} {
+    width: 200px;
+    height: 128px;
+  }
+  background: url('/static/images/landingIcon.svg') no-repeat;
+  background-size: cover;
 `
 
 class SearchPage extends Component {
@@ -132,14 +152,15 @@ class SearchPage extends Component {
 
   renderSearchDistrict() {
     return (
-      <RowContainer>
+      <ContentRowContainer>
         <ContentContainer>
           <AddressSearcher handleAddressSelected={this.handleAddressSelected} />
+          <LandingIcon />
         </ContentContainer>
         <ContentContainer>
           <DistrictSelector />
         </ContentContainer>
-      </RowContainer>
+      </ContentRowContainer>
     )
   }
 
@@ -167,50 +188,6 @@ class SearchPage extends Component {
         {isSearchPeople
           ? this.renderSearchPeople()
           : this.renderSearchDistrict()}
-        {/* <ExpansionPanel
-          square
-          expanded={expanded === 'panel1'}
-          onChange={this.handleChange('panel1').bind(this)}
-        >
-          <ExpansionPanelSummary>
-            <Typography>Search Address</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <AddressSearcher
-              handleAddressSelected={this.handleAddressSelected}
-            />
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-
-        <ExpansionPanel
-          square
-          expanded={expanded === 'panel2'}
-          onChange={this.handleChange('panel2').bind(this)}
-        >
-          <ExpansionPanelSummary>
-            <Typography>Search People</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <Paper>
-              <PeopleSearcher
-                handlePeopleSelected={this.handlePeopleSelected}
-              />
-            </Paper>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-
-        <ExpansionPanel
-          square
-          expanded={expanded === 'panel3'}
-          onChange={this.handleChange('panel3').bind(this)}
-        >
-          <ExpansionPanelSummary>
-            <Typography> Region</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <DistrictSelector />
-          </ExpansionPanelDetails>
-        </ExpansionPanel> */}
       </Container>
     )
   }
