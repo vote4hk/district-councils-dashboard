@@ -9,8 +9,8 @@ const chartJSON = chartData => {
   const data = { male: [], female: [] }
 
   Object.values(chartData.data).map(value => {
-    data['male'].push((value['male'] / chartData.total) * 100)
-    data['female'].push((value['female'] / chartData.total) * 100)
+    data['male'].push(value['male'])
+    data['female'].push(value['female'])
   })
 
   const titles = Object.keys(chartData.data)
@@ -55,7 +55,7 @@ const chartJSON = chartData => {
             visible: 0,
           },
         ],
-        decimals: 1,
+        decimals: 0,
       },
     },
     'scale-x': {
