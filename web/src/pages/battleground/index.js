@@ -135,7 +135,7 @@ class BattleGroundPage extends Component {
   render() {
     const {
       match: {
-        params: { year, code },
+        params: { year = 2019, code },
       },
     } = this.props
 
