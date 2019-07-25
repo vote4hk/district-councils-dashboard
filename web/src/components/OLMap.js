@@ -6,7 +6,7 @@ import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import XYZ from 'ol/source/XYZ'
 import GeoJSON from 'ol/format/GeoJSON'
-import { Style, Stroke, Fill } from 'ol/style'
+import { Style, Stroke, Fill, Text } from 'ol/style'
 import Select from 'ol/interaction/Select'
 import styled from 'styled-components'
 
@@ -21,7 +21,50 @@ const MapContainer = styled.div`
   height: 100%;
 `
 
+const regionStyle = new Style({
+  fill: new Fill({
+    color: 'rgba(255, 255, 255, 0.2)',
+  }),
+  stroke: new Stroke({
+    color: '#319FD3',
+    width: 1,
+  }),
+  text: new Text({
+    font: '16px Calibri,sans-serif',
+    fill: new Fill({
+      color: '#000',
+    }),
+    stroke: new Stroke({
+      color: '#fff',
+      width: 2,
+    }),
+  }),
+})
+
+const highlightStyle = new Style({
+  stroke: new Stroke({
+    color: '#f00',
+    width: 1,
+  }),
+  fill: new Fill({
+    color: 'rgba(255,0,0,0.1)',
+  }),
+  text: new Text({
+    font: '16px Calibri,sans-serif',
+    fill: new Fill({
+      color: '#000',
+    }),
+    stroke: new Stroke({
+      color: '#f00',
+      width: 2,
+    }),
+  }),
+})
+
 class OLMap extends Component {
+  featureOverlay
+  highlightedFeature
+
   constructor(props) {
     super(props)
     this.state = {}
@@ -40,32 +83,12 @@ class OLMap extends Component {
         features: new GeoJSON().readFeatures(dc),
       })
 
-      const styleFunction = feature => {
-        if (feature.getProperties().CACODE === code) {
-          return new Style({
-            fill: new Fill({
-              color: 'rgba(74, 144, 226, 0.5)',
-            }),
-            stroke: new Stroke({
-              color: '#3e59ef',
-              width: 2,
-            }),
-          })
-        }
-        return new Style({
-          fill: new Fill({
-            color: 'rgba(74, 144, 226, 0.05)',
-          }),
-          stroke: new Stroke({
-            color: '#3e59ef',
-            width: 2,
-          }),
-        })
-      }
-
       featuresLayer = new VectorLayer({
         source: this.featureSource,
-        style: styleFunction,
+        style: feature => {
+          regionStyle.getText().setText(feature.getProperties().CACODE)
+          return regionStyle
+        },
       })
     }
 
@@ -94,6 +117,15 @@ class OLMap extends Component {
       }),
     })
 
+    this.featureOverlay = new VectorLayer({
+      source: new VectorSource(),
+      map: map,
+      style: function(feature) {
+        highlightStyle.getText().setText(feature.getProperties().CACODE)
+        return highlightStyle
+      },
+    })
+
     if (isDCDataExist) {
       // Fit to feature
       const features = this.featureSource.getFeatures()
@@ -104,6 +136,8 @@ class OLMap extends Component {
             size: map.getSize(),
             padding: [10, 10, 10, 10],
           })
+
+          this.highlightFeature(features[i])
           break
         }
       }
@@ -123,17 +157,25 @@ class OLMap extends Component {
     }
   }
 
+  highlightFeature(feature) {
+    if (this.highlightedFeature) {
+      this.featureOverlay.getSource().removeFeature(this.highlightedFeature)
+    }
+
+    this.featureOverlay.getSource().addFeature(feature)
+    this.highlightedFeature = feature
+  }
+
   handleMapClick = e => {
     const { year, changeDistrict } = this.props
-    const selectedFeature = e.target.getFeatures().getArray()
+    const selectedFeature = e.target.getFeatures().item(0)
 
-    if (selectedFeature.length > 0) {
-      changeDistrict(year, selectedFeature[0].get('CACODE'))
-      this.state.map
-        .getView()
-        .fit(selectedFeature[0].getGeometry().getExtent(), {
-          duration: 200,
-        })
+    if (selectedFeature) {
+      this.highlightFeature(selectedFeature)
+      changeDistrict(year, selectedFeature.get('CACODE'))
+      this.state.map.getView().fit(selectedFeature.getGeometry().getExtent(), {
+        duration: 200,
+      })
     }
   }
 
