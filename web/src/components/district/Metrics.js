@@ -18,7 +18,7 @@ const QUERY_FETCH_VOTES = gql`
           }
         }
       }
-      vote_stats {
+      station_stats {
         station_code
         name_en
         name_zh
@@ -56,7 +56,7 @@ class MainAreas extends Component {
           if (loading) return null
           if (error) return `Error! ${error}`
 
-          const stats = data.dc_constituencies[0].vote_stats
+          const stats = data.dc_constituencies[0].station_stats
 
           const barVote = { data: {} }
           barVote.total = stats.reduce((acc, cur) => {
@@ -79,7 +79,6 @@ class MainAreas extends Component {
           return (
             <Container>
               <Typography variant="h4">人口資料</Typography>
-              <Typography variant="h4">{expected_population}</Typography>
               <VoterTurnoutChart
                 id={`${year}_${code}_voter_turnout`}
                 data={barVote}

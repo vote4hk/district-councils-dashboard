@@ -13,8 +13,15 @@ const chartJSON = chartData => {
     data['female'].push(value['female'])
   })
 
-  const titles = Object.keys(chartData.data)
-
+  // TODO: replace this hacky code
+  const titles = Object.keys(chartData.data).map(
+    key =>
+      key
+        .split('_')
+        .filter(val => !isNaN(parseInt(val)))
+        .join('-') + '歲'
+  )
+  titles[titles.length - 1] += '及以上'
   // Demo
   // https://codepen.io/pen/?editors=1010
 
