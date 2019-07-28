@@ -7,6 +7,16 @@ const QUERY_GET_PEOPLE = `{
   }
 }`;
 
+const QUERY_GET_CONSTITUENCY = `
+query ($year: Int!, $code:String!) {
+  dc_constituencies(where: {
+    year: { _eq: $year }
+    code: { _eq: $code }
+  }) {
+    id    
+  }
+}`
+
 const QUERY_GET_CONSTITUENCIES = `{
   dc_constituencies(order_by: {
     year: asc
@@ -41,6 +51,8 @@ const QUERY_GET_CANDIDATES = `query {
 }`;
 
 
+
+
 const QUERY_UPSERT_DISTRICT_NAME = `
 mutation insert_dc_constituencies($objects: [dc_constituencies_insert_input!]!){
   insert_dc_constituencies(objects: $objects
@@ -52,7 +64,7 @@ mutation insert_dc_constituencies($objects: [dc_constituencies_insert_input!]!){
   }
 }`;
 
-const MUTATION_UPSERT_VOTE_DATA= `
+const MUTATION_UPSERT_VOTE_DATA = `
 mutation insert_dc_constituencies(
   $year: Int!
   $code: String!
@@ -76,10 +88,25 @@ mutation insert_dc_constituencies(
   }
 }`;
 
+const MUTATION_UPSERT_VOTE_STATS = `
+mutation insertStats($vote_stat:dc_constituency_vote_stats_insert_input!){
+  insert_dc_constituency_vote_stats(objects:[$vote_stat]
+  on_conflict: {
+    constraint: dc_constituency_vote_stats_constituency_id_key
+    update_columns: [total_votes]
+  }) {
+    returning {
+      id
+    }
+  }
+}`;
+
 module.exports = {
   QUERY_GET_PEOPLE,
   QUERY_UPSERT_DISTRICT_NAME,
   QUERY_GET_CONSTITUENCIES,
   QUERY_GET_CANDIDATES,
   MUTATION_UPSERT_VOTE_DATA,
+  MUTATION_UPSERT_VOTE_STATS,
+  QUERY_GET_CONSTITUENCY,
 };

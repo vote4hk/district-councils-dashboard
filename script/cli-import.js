@@ -1,13 +1,16 @@
 #!/usr/bin/env node
 
 const program = require('commander');
-const fs = require('fs');
 const chalk = require('chalk');
-const async = require('async');
 const csv2json = require('csvtojson');
 
 const { runQuery } = require('./lib/hasura');
-const { QUERY_UPSERT_DISTRICT_NAME, MUTATION_UPSERT_VOTE_DATA } = require('./lib/gql');
+const {
+  QUERY_UPSERT_DISTRICT_NAME,
+  MUTATION_UPSERT_VOTE_DATA,
+  MUTATION_UPSERT_VOTE_STATS,
+  QUERY_GET_CONSTITUENCY,
+} = require('./lib/gql');
 
 
 require('dotenv').config();
@@ -24,6 +27,10 @@ const log = {
  */
 function end() {
   process.exit(1);
+}
+
+function strToInt(val) {
+  return parseInt(val.replace(',', ''), 10);
 }
 
 
@@ -48,6 +55,45 @@ async function importDistrict(filePath, cmd) {
 
     log.info(`${districts.length} data imported successfully`);
   }
+}
+
+async function importVoteStats(year, filePath) {
+  log.info(`Trying to import the vote_stats from ${filePath}`);
+  const data = await csv2json().fromFile(filePath);
+  for (const {
+    CACODE,
+    population_exclude_foreign_worker_2016,
+    population_exclude_foreign_worker_lte_age15_2016,
+    population_exclude_foreign_worker_lte_age20_2016,
+    no_of_voters,
+    no_of_voted_voters,
+    total_votes,
+    // candi_1, candi_2, candi_3, candi_4, candi_5, candi_6
+  } of data) {
+    let res = await runQuery(QUERY_GET_CONSTITUENCY, {
+      year: parseInt(year, 10),
+      code: CACODE,
+    });
+    const constituencyId = res.body.data.dc_constituencies[0].id;
+
+    const voteStat = {
+      constituency_id: constituencyId,
+      population_excluded_foreign_worker: strToInt(population_exclude_foreign_worker_2016),
+      population_excluded_foreign_worker_lte_age_15:
+        strToInt(population_exclude_foreign_worker_lte_age15_2016),
+      population_excluded_foreign_worker_lte_age_20:
+        strToInt(population_exclude_foreign_worker_lte_age20_2016),
+      total_voters: strToInt(no_of_voters),
+      total_voted_voters: strToInt(no_of_voted_voters),
+      total_votes: strToInt(total_votes),
+    };
+    res = await runQuery(MUTATION_UPSERT_VOTE_STATS, { vote_stat: voteStat });
+    if (res.statusCode !== 200) {
+      log.error('Error when inserting data.');
+      console.error(res.body);
+    }
+  }
+  log.info(`${data.length} data imported successfully`);
 }
 
 async function importMetrics(year, filePath, cmd) {
@@ -93,7 +139,7 @@ async function importMetrics(year, filePath, cmd) {
     if (res.statusCode !== 200) {
       log.error('Error when inserting data.');
       console.error(res.body);
-      
+
     }
   }
 
@@ -117,6 +163,10 @@ program
   .description('import the votes data')
   .action(importMetrics);
 
+program
+  .command('vote_stats <year> <filePath>')
+  .description('import the vote_stats data')
+  .action(importVoteStats);
 
 program.parse(process.argv);
 
