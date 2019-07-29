@@ -149,7 +149,6 @@ class BattleGroundPage extends Component {
             width={{ sm: '100%', md: '960px' }}
             height={{ sm: '300px', md: '400px' }}
           >
-            This is the Page tailormade for 2019 District Councils Election
             <OLMap
               year={year}
               code={code}
