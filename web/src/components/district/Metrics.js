@@ -122,7 +122,7 @@ class MainAreas extends Component {
           if (loading) return null
           if (error) return `Error! ${error}`
           const { candidates, vote_stat } = data.dc_constituencies[0]
-          const voteStats = getDataFromWaffleChart(vote_stat, candidates)
+          // const voteStats = getDataFromWaffleChart(vote_stat, candidates)
 
           const stats = data.dc_constituencies[0].station_stats
           const barVote = { data: {} }
@@ -147,10 +147,10 @@ class MainAreas extends Component {
                 id={`${year}_${code}_voter_turnout`}
                 data={barVote}
               />
-              <WaffleChart
+              {/* <WaffleChart
                 id={`${year}_${code}_voter_treemap`}
                 data={voteStats}
-              />
+              /> */}
             </Container>
           )
         }}
