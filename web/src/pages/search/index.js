@@ -5,6 +5,7 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import AddressSearcher from '../../components/AddressSearcher'
+import PeopleSearcher from '../../components/PeopleSearcher'
 import Typography from '@material-ui/core/Typography'
 
 import styled from 'styled-components'
@@ -140,7 +141,7 @@ class SearchPage extends Component {
   }
 
   renderSearchPeople() {
-    return <></>
+    return <PeopleSearcher handlePeopleSelected={this.handlePeopleSelected} />
   }
   onTabSelected(tab) {
     return () => {
