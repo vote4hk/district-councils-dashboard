@@ -5,9 +5,11 @@ import Autosuggest from 'react-autosuggest'
 import TextField from '@material-ui/core/TextField'
 import Paper from '@material-ui/core/Paper'
 import MenuItem from '@material-ui/core/MenuItem'
-import Popper from '@material-ui/core/Popper'
 import Avatar from '@material-ui/core/Avatar'
 import { withStyles } from '@material-ui/core/styles'
+import IconButton from '@material-ui/core/IconButton'
+import SearchIcon from '@material-ui/icons/Search'
+import InputAdornment from '@material-ui/core/InputAdornment'
 import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
 
@@ -33,19 +35,30 @@ function renderInputComponent(inputProps) {
   const { classes, inputRef = () => {}, ref, ...other } = inputProps
 
   return (
-    <TextField
-      fullWidth
-      InputProps={{
-        inputRef: node => {
-          ref(node)
-          inputRef(node)
-        },
-        classes: {
-          input: classes.input,
-        },
-      }}
-      {...other}
-    />
+    <>
+      <TextField
+        fullWidth
+        InputProps={{
+          inputRef: node => {
+            ref(node)
+            inputRef(node)
+          },
+          classes: {
+            input: classes.input,
+          },
+          disableUnderline: true,
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton className={classes.searchButton} aria-label="Search">
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+        disableUnderline={true}
+        {...other}
+      />
+    </>
   )
 }
 
@@ -102,7 +115,7 @@ function getSuggestionValue(suggestion) {
 
 const styles = theme => ({
   root: {
-    height: 250,
+    height: 100,
     flexGrow: 1,
   },
   container: {
@@ -122,6 +135,19 @@ const styles = theme => ({
     margin: 0,
     padding: 0,
     listStyleType: 'none',
+  },
+  suggestInput: {
+    height: '60px',
+    borderRadius: '4px',
+    boxShadow: '0 2px 16px 0 rgba(0, 0, 0, 0.1)',
+    backgroundColor: '#ffffff',
+    padding: '10px 20px',
+  },
+  input: {
+    textDecoration: 'none',
+  },
+  searchButton: {
+    color: '#ffd731',
   },
 })
 
@@ -200,13 +226,12 @@ class PeopleSearcher extends React.Component {
     }
 
     return (
-      <div className={this.props.class}>
+      <div className={classes.root}>
         <Autosuggest
           {...autosuggestProps}
           inputProps={{
             classes,
-            label: '揾人',
-            placeholder: 'Please type a candidate name',
+            placeholder: '尋找議員...',
             value: this.state.popper,
             onChange: this.handleChange('popper'),
             inputRef: node => {
@@ -219,19 +244,18 @@ class PeopleSearcher extends React.Component {
           theme={{
             suggestionsList: classes.suggestionsList,
             suggestion: classes.suggestion,
+            input: classes.suggestInput,
           }}
           renderSuggestionsContainer={options => (
-            <Popper anchorEl={this.popperNode} open={Boolean(options.children)}>
-              <Paper
-                square
-                {...options.containerProps}
-                style={{
-                  width: this.popperNode ? this.popperNode.clientWidth : null,
-                }}
-              >
-                {options.children}
-              </Paper>
-            </Popper>
+            <Paper
+              square
+              {...options.containerProps}
+              style={{
+                width: '100%',
+              }}
+            >
+              {options.children}
+            </Paper>
           )}
         />
       </div>
