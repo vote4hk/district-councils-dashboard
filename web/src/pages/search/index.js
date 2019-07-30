@@ -141,7 +141,14 @@ class SearchPage extends Component {
   }
 
   renderSearchPeople() {
-    return <PeopleSearcher handlePeopleSelected={this.handlePeopleSelected} />
+    return (
+      <ContentRowContainer>
+        <ContentContainer>
+          <PeopleSearcher handlePeopleSelected={this.handlePeopleSelected} />
+        </ContentContainer>
+        <ContentContainer>{/* TODO */}</ContentContainer>
+      </ContentRowContainer>
+    )
   }
   onTabSelected(tab) {
     return () => {
