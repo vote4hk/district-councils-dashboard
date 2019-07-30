@@ -369,7 +369,7 @@ class ProfilePage extends Component {
                       </BasicInfoGridHeader>
                       <BasicInfoGridContent item xs={7}>
                         {person.gender
-                          ? person.gender == 'male'
+                          ? person.gender === 'male'
                             ? '男'
                             : '女'
                           : '-'}

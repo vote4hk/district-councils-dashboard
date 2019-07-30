@@ -180,7 +180,7 @@ class CandidateList extends Component {
   homeUrl = 'https://cswbrian.github.io/district-councils-dashboard/'
 
   render() {
-    const { candidates, year, code } = this.props
+    const { candidates } = this.props
 
     return (
       <Container maxWidth="lg">

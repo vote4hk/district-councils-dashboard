@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes, { instanceOf } from 'prop-types'
+import PropTypes from 'prop-types'
 import Autosuggest from 'react-autosuggest'
 import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'

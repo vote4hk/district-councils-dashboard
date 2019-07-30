@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import OLMap from '../../components/OLMap'
 import gql from 'graphql-tag'

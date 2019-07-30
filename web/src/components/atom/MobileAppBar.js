@@ -129,7 +129,6 @@ function MobileAppBar(props) {
             <ListItemLink
               key={i}
               component={RouterLink}
-              to="/"
               to={nav.url}
               onClick={handleClose}
             >
