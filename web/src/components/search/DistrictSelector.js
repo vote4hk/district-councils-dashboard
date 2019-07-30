@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Typography from '@material-ui/core/Typography'
 import styled from 'styled-components'
-import Paper from '@material-ui/core/Paper'
 import Box from '@material-ui/core/Box'
 import area from '../../data/area'
 import district from '../../data/district'

@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 import Typography from '@material-ui/core/Typography'
 import styled from 'styled-components'
-import Box from '@material-ui/core/Box'
 import PropTypes from 'prop-types'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import * as _ from 'lodash'
 import VoterTurnoutChart from './VoterTurnoutChart'
-import TreeMap from '../TreeMap'
 import WaffleChart from '../WaffleChart'
 
 const QUERY_FETCH_VOTES = gql`
@@ -54,7 +51,7 @@ const Container = styled.div`
   }
 `
 
-const getDataFromWaffleChart = (voteStat, candidates) => {
+const getDataForWaffleChart = (voteStat, candidates) => {
   const {
     total_votes,
     total_voters,
@@ -122,7 +119,12 @@ class MainAreas extends Component {
           if (loading) return null
           if (error) return `Error! ${error}`
           const { candidates, vote_stat } = data.dc_constituencies[0]
-          // const voteStats = getDataFromWaffleChart(vote_stat, candidates)
+
+          let voteStats = []
+          if (vote_stat) {
+            voteStats = getDataForWaffleChart(vote_stat, candidates)
+          }
+          console.log(voteStats.length)
 
           const stats = data.dc_constituencies[0].station_stats
           const barVote = { data: {} }
@@ -147,10 +149,14 @@ class MainAreas extends Component {
                 id={`${year}_${code}_voter_turnout`}
                 data={barVote}
               />
-              {/* <WaffleChart
-                id={`${year}_${code}_voter_treemap`}
-                data={voteStats}
-              /> */}
+              {voteStats.length > 0 ? (
+                <WaffleChart
+                  id={`${year}_${code}_voter_treemap`}
+                  data={voteStats}
+                />
+              ) : (
+                ''
+              )}
             </Container>
           )
         }}

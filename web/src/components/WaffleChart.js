@@ -47,8 +47,7 @@ class WaffleChart extends Component {
     })
     width = squareSize * widthSquares + widthSquares * gap + 25
     height = squareSize * heightSquares + heightSquares * gap + 25
-    var waffle = d3
-      .select('#waffle')
+    d3.select('#waffle')
       .append('svg')
       .attr('width', width)
       .attr('height', height)
