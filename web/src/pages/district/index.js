@@ -177,7 +177,7 @@ class DistrictPage extends Component {
                     <FlexRowContainer>
                       <FullWidthBox>
                         <Metrics
-                          year={year}
+                          year={parseInt(year, 10)}
                           code={code}
                           district={district}
                         ></Metrics>

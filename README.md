@@ -1,11 +1,19 @@
 # District Councils Dashboard
 
-> More transparency
-
-District Councils Dashboard:
+District Councils Dashboard
 https://cswbrian.github.io/district-councils-dashboard
 
-### Set-up
+## Stack
+
+- langauage: javascript
+- framework: react
+- chart: d3/zingchart
+- graphql: apollo
+
+And the web app requires a graphql backend to serve the data
+Now it is hosted at [https://gql.opencultures.life/graphql](https://gql.opencultures.life/graphql)
+
+## Development
 
 ```bash
 cd web
@@ -15,18 +23,13 @@ npm i
 npm start
 ```
 
-#### Convert people.csv to people.json
+## Deploy to github page
 
 ```bash
-cd web/src/data
-
-npm i
-
-node csv2json
+npm run deploy
 ```
 
-
-### Reference
+## Reference
 
 [立場區議會選舉專頁 - 2015](https://dce2015.thestandnews.com)  
 [Vote Taiwan 投票指南](https://councils.g0v.tw)  

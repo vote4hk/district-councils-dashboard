@@ -124,7 +124,6 @@ class MainAreas extends Component {
           if (vote_stat) {
             voteStats = getDataForWaffleChart(vote_stat, candidates)
           }
-          console.log(voteStats.length)
 
           const stats = data.dc_constituencies[0].station_stats
           const barVote = { data: {} }
@@ -141,7 +140,6 @@ class MainAreas extends Component {
             }, 0)
             return acc + sub_total
           }, 0)
-
           return (
             <Container>
               <Typography variant="h4">人口資料</Typography>
