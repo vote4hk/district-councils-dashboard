@@ -86,7 +86,7 @@ class OLMap extends Component {
       featuresLayer = new VectorLayer({
         source: this.featureSource,
         style: feature => {
-          regionStyle.getText().setText(feature.getProperties().CACODE)
+          regionStyle.getText().setText(feature.getProperties().CNAME)
           return regionStyle
         },
       })
@@ -121,7 +121,7 @@ class OLMap extends Component {
       source: new VectorSource(),
       map: map,
       style: function(feature) {
-        highlightStyle.getText().setText(feature.getProperties().CACODE)
+        highlightStyle.getText().setText(`${feature.getProperties().CNAME}`)
         return highlightStyle
       },
     })
