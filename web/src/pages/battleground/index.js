@@ -116,7 +116,7 @@ class BattleGroundPage extends Component {
   onPrevElection() {
     const {
       match: {
-        params: { year, code },
+        params: { year = 2019, code },
       },
     } = this.props
     this.props.history.push(`/district/${parseInt(year, 10) - 4}/${code}`)
