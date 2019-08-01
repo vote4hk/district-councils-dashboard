@@ -8,7 +8,7 @@ zingchart.MODULESDIR = 'https://cdn.zingchart.com/modules/'
 const chartJSON = chartData => {
   const data = { male: [], female: [] }
 
-  Object.values(chartData.data).array.forEach(value => {
+  Object.values(chartData.data).forEach(value => {
     data['male'].push(value['male'])
     data['female'].push(value['female'])
   })

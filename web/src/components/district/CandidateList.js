@@ -189,7 +189,7 @@ class CandidateList extends Component {
           {candidates
             .sort((a, b) => a.candidate_number - b.candidate_number)
             .map((candidate, index) => (
-              <>
+              <React.Fragment key={index}>
                 {index > 0 ? <StyledDivier /> : null}
                 <FlexRowContainer
                   style={{ width: '100%' }}
@@ -270,7 +270,7 @@ class CandidateList extends Component {
                     )}
                   </FlexColumn>
                 </FlexRowContainer>
-              </>
+              </React.Fragment>
             ))}
         </RowsContainer>
       </Container>

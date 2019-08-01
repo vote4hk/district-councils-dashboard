@@ -15,11 +15,11 @@ const BorderLinearProgress = withStyles({
   root: {
     height: 20,
     width: 100,
-    backgroundColor: props => lighten(props.bgColor, 0.5),
+    backgroundColor: props => lighten(props.bgcolor, 0.5),
   },
   bar: {
     borderRadius: 20,
-    backgroundColor: props => props.bgColor,
+    backgroundColor: props => props.bgcolor,
   },
 })(LinearProgress)
 
@@ -32,7 +32,7 @@ export default function CustomizedProgressBars(props) {
         variant="determinate"
         color="secondary"
         value={props.value}
-        bgColor={props.color}
+        bgcolor={props.color}
       />
     </React.Fragment>
   )
