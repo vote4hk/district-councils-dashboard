@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useReducer } from 'react'
 import styled from 'styled-components'
 import Box from '@material-ui/core/Box'
 import AddressSearcher from '../../components/AddressSearcher'
@@ -10,6 +10,8 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import { withRouter } from 'react-router-dom'
+import ContextStore from 'ContextStore'
+import { DRAWER_CLOSE } from 'reducers/drawer'
 
 const StyledDivier = styled(Divider)`
   && {
@@ -68,9 +70,13 @@ const TabButton = styled(Button)`
     padding-bottom: 15px;
 
     color: ${props =>
-      props.active ? props.theme.subtextColor : props.theme.main.color};
+      props.active === 'active'
+        ? props.theme.subtextColor
+        : props.theme.main.color};
     border-bottom: ${props =>
-      props.active ? `1px solid ${props.theme.subtextColor}` : 'none'};
+      props.active === 'active'
+        ? `1px solid ${props.theme.subtextColor}`
+        : 'none'};
   }
 `
 
@@ -83,21 +89,24 @@ const NavBarButton = styled(IconButton)`
 `
 
 function SearchDrawer(props) {
+  const {
+    drawer: { dispatch },
+  } = React.useContext(ContextStore)
   const [selectedTab, setSelectedTab] = React.useState(
     props.selectedTab || 'district'
   )
 
-  async function onAddressFieldChanged(evt) {
-    const { value } = evt.target
-    const records = await AddressParser.parse(value)
-    this.setState({
-      autoCompleteList: records,
-    })
-  }
+  // async function onAddressFieldChanged(evt) {
+  //   const { value } = evt.target
+  //   const records = await AddressParser.parse(value)
+  //   this.setState({
+  //     autoCompleteList: records,
+  //   })
+  // }
 
-  function handlePeopleSelected(result) {
-    props.history.push(`profile/${result.id}`)
-  }
+  // function handlePeopleSelected(result) {
+  //   props.history.push(`profile/${result.id}`)
+  // }
 
   function handleAddressSelected(result) {
     if (!result) return
@@ -127,9 +136,7 @@ function SearchDrawer(props) {
         <AddressSearchContainer>
           <AddressSearcher handleAddressSelected={handleAddressSelected} />
         </AddressSearchContainer>
-        <ContentContainer>
-          <DistrictSelector />
-        </ContentContainer>
+        <DistrictSelector />
       </ContentRowContainer>
     )
   }
@@ -153,19 +160,21 @@ function SearchDrawer(props) {
         color="inherit"
         component="span"
         aria-label="Menu"
-        onClick={props.onDrawerClose}
+        onClick={() => {
+          dispatch({ type: DRAWER_CLOSE })
+        }}
       >
         <CloseIcon fontSize="small" />
       </NavBarButton>
       <TabContainer>
         <TabButton
-          active={selectedTab === 'district'}
+          active={selectedTab === 'district' ? 'active' : 'inactive'}
           onClick={onTabSelected('district')}
         >
           <Typography variant="h3">找選區</Typography>
         </TabButton>
         <TabButton
-          active={selectedTab === 'people'}
+          active={selectedTab === 'people' ? 'active' : 'inactive'}
           onClick={onTabSelected('people')}
         >
           <Typography variant="h3">找候選人</Typography>

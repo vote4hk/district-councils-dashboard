@@ -8,6 +8,8 @@ import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Slide from '@material-ui/core/Slide'
+import { DRAWER_OPEN } from '../../reducers/drawer'
+import ContextStore from 'ContextStore'
 
 const StyledAppBar = styled(AppBar)`
   && {
@@ -42,6 +44,10 @@ const Transition = React.forwardRef((props, ref) => (
 Transition.displayName = 'Transition'
 
 function MobileAppBar(props) {
+  const {
+    drawer: { dispatch },
+  } = React.useContext(ContextStore)
+
   return (
     <>
       <StyledAppBar position="sticky" color="secondary">
@@ -51,7 +57,7 @@ function MobileAppBar(props) {
               color="inherit"
               component="span"
               aria-label="Search"
-              onClick={props.onDrawerOpen}
+              onClick={() => dispatch({ type: DRAWER_OPEN })}
             >
               <SearchIcon fontSize="small" />
             </IconButton>
@@ -60,7 +66,7 @@ function MobileAppBar(props) {
               color="inherit"
               component="span"
               aria-label="Menu"
-              onClick={props.onDrawerOpen}
+              onClick={() => dispatch({ type: DRAWER_OPEN })}
             >
               <MenuIcon fontSize="small" />
             </IconButton>
