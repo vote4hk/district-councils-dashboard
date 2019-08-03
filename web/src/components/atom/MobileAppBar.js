@@ -4,9 +4,10 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
+import SearchIcon from '@material-ui/icons/Search'
 import styled from 'styled-components'
-import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
 import Dialog from '@material-ui/core/Dialog'
 import Slide from '@material-ui/core/Slide'
 import CloseIcon from '@material-ui/icons/Close'
@@ -19,7 +20,6 @@ import { bps } from '../../utils/responsive'
 const StyledAppBar = styled(AppBar)`
   && {
     width: 100%;
-    background-color: white;
     box-shadow: none;
     ${bps.up('md')} {
       display: none;
@@ -33,11 +33,17 @@ const StyledToolbar = styled(Toolbar)`
   }
 `
 
-const AppBarTitle = styled(UnstyledLink)`
+const AppBarTitle = styled(Typography)`
   && {
-    font-weight: 700;
     flex-grow: 1;
     text-decoration: none;
+    text-align: center;
+  }
+`
+
+const Container = styled(Box)`
+  && {
+    margin-bottom: 16px;
   }
 `
 
@@ -66,7 +72,7 @@ const NavText = styled(Typography)`
   && {
     display: inline;
     font-weight: 700;
-    margin: 0 1.5rem -5px;
+    margin: 0 1.5rem 0;
     border-bottom: 5px solid #ffee4f;
 
     &:hover {
@@ -89,22 +95,28 @@ function MobileAppBar(props) {
 
   return (
     <>
-      <StyledAppBar position="sticky" color="default">
+      <StyledAppBar position="sticky" color="secondary">
         <Container>
           <StyledToolbar disableGutters>
-            <AppBarTitle component={RouterLink} to="/">
-              Vote for Hong Kong
-            </AppBarTitle>
             <IconButton
-              edge="end"
+              color="inherit"
               component="span"
-              color="default"
+              aria-label="Search"
+              onClick={handleClickOpen}
+            >
+              <SearchIcon fontSize="small" />
+            </IconButton>
+            <AppBarTitle variant="h4">Vote for Hong Kong</AppBarTitle>
+            <IconButton
+              color="inherit"
+              component="span"
               aria-label="Menu"
               onClick={handleClickOpen}
             >
-              <MenuIcon />
+              <MenuIcon fontSize="small" />
             </IconButton>
           </StyledToolbar>
+          <AppBarTitle variant="h2">了解香港議會，投出合適一票</AppBarTitle>
         </Container>
       </StyledAppBar>
       <Dialog
@@ -115,12 +127,7 @@ function MobileAppBar(props) {
       >
         <Toolbar>
           <div style={{ flexGrow: 1 }} />
-          <IconButton
-            edge="end"
-            color="inherit"
-            onClick={handleClose}
-            aria-label="Close"
-          >
+          <IconButton edge="end" onClick={handleClose} aria-label="Close">
             <CloseIcon />
           </IconButton>
         </Toolbar>
@@ -133,7 +140,11 @@ function MobileAppBar(props) {
               onClick={handleClose}
             >
               <ListItemText
-                primary={<NavText variant="h2">{nav.title}</NavText>}
+                primary={
+                  <NavText variant="h2" color="textSecondary">
+                    {nav.title}
+                  </NavText>
+                }
               />
             </ListItemLink>
           ))}

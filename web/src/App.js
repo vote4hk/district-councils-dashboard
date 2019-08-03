@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { withStyles } from '@material-ui/core/styles'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
+import { ThemeProvider } from 'styled-components/'
 import NavBar from './components/NavBar'
 import SearchPage from './pages/search'
 import ProfilePage from './pages/profile'
@@ -11,7 +12,7 @@ import BattleGroundPage from './pages/battleground'
 import NotfoundPage from './pages/notfound'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
-import theme from 'ui/theme'
+import theme, { styledComponentTheme } from 'ui/theme/main'
 import './App.css'
 
 const client = new ApolloClient({
@@ -30,19 +31,24 @@ class App extends Component {
   render() {
     return (
       <ApolloProvider client={client}>
-        <MuiThemeProvider theme={theme}>
-          <CssBaseline />
-          <NavBar />
-          <main>
-            <Switch>
-              <Route exact path="/" component={SearchPage} />
-              <Route path="/profile/:id" component={ProfilePage} />
-              <Route path="/district/2019/:code" component={BattleGroundPage} />
-              <Route path="/district/:year/:code" component={DistrictPage} />
-              <Route component={NotfoundPage} />
-            </Switch>
-          </main>
-        </MuiThemeProvider>
+        <ThemeProvider theme={styledComponentTheme}>
+          <MuiThemeProvider theme={theme}>
+            <CssBaseline />
+            <NavBar />
+            <main>
+              <Switch>
+                <Route exact path="/" component={SearchPage} />
+                <Route path="/profile/:id" component={ProfilePage} />
+                <Route
+                  path="/district/2019/:code"
+                  component={BattleGroundPage}
+                />
+                <Route path="/district/:year/:code" component={DistrictPage} />
+                <Route component={NotfoundPage} />
+              </Switch>
+            </main>
+          </MuiThemeProvider>
+        </ThemeProvider>
       </ApolloProvider>
     )
   }

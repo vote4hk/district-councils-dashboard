@@ -10,7 +10,6 @@ import UnstyledLink from './UnstyledLink'
 const StyledAppBar = styled(AppBar)`
   && {
     width: 100%;
-    background-color: white;
     box-shadow: none;
     ${bps.down('sm')} {
       display: none;
@@ -46,7 +45,7 @@ function DesktopAppBar(props) {
   const { navs } = props
   return (
     <>
-      <StyledAppBar position="sticky" color="default">
+      <StyledAppBar position="sticky">
         <Container maxWidth="lg">
           <Toolbar disableGutters>
             <AppBarTitle component={RouterLink} to="/">

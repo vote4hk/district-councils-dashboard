@@ -24,28 +24,23 @@ const StyledDivier = styled(Divider)`
 `
 
 const Container = styled.div`
-  ${bps.up('md')} {
-    width: 100%;
-  }
-
-  ${bps.up('lg')} {
-    width: 1440px;
-  }
-  padding-top: 50px;
+  width: 100%;
+  background-color: #f2f2f3;
+  padding-top: 30px;
   margin: auto;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: baseline;
-  padding-left: 32px;
-  padding-right: 32px;
+  padding-left: 16px;
+  padding-right: 16px;
   flex-grow: 1;
 `
 
 const RowContainer = styled(Box)`
   && {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     flex-grow: 1;
   }
 `
@@ -61,14 +56,12 @@ const ContentRowContainer = styled(RowContainer)`
 
 const TabButton = styled(Button)`
   && {
-    width: 200px;
-    margin-left: 30px;
-    margin-right: 30px;
-    padding-bottom: 30px;
+    width: 136px;
+    height: 52px;
+    border-radius: 2px;
+    box-shadow: 1px 1px 6px 1px rgba(51, 51, 51, 0.1);
+    background-color: ${props => props.theme.main.backgroundColor};
     text-align: center;
-    color: ${props => (props.active ? '#ffd731' : '#c2c2c2')};
-
-    border-bottom: ${props => (props.active ? '1px solid #ffd731' : 'none')};
 
     &:hover {
       text-decoration: none;
@@ -90,8 +83,6 @@ const LandingIcon = styled.div`
   margin-top: 70px;
   margin-left: auto;
   margin-right: auto;
-  width: 461px;
-  height: 295px;
 
   ${bps.down('md')} {
     width: 200px;
@@ -173,29 +164,18 @@ class SearchPage extends Component {
   }
 
   render() {
-    const { selectedTab } = this.state
-    const isSearchPeople = selectedTab === 'people'
-    console.log(selectedTab)
     return (
       <Container>
         <RowContainer>
-          <TabButton
-            active={!isSearchPeople}
-            onClick={this.onTabSelected('district').bind(this)}
-          >
-            <Typography variant="h2">找選區</Typography>
+          <TabButton onClick={this.onTabSelected('district').bind(this)}>
+            <Typography variant="h4">找選區</Typography>
           </TabButton>
-          <TabButton
-            active={isSearchPeople}
-            onClick={this.onTabSelected('people').bind(this)}
-          >
-            <Typography variant="h2">找議員</Typography>
+          <TabButton onClick={this.onTabSelected('people').bind(this)}>
+            <Typography variant="h4">找議員</Typography>
           </TabButton>
         </RowContainer>
+        <LandingIcon />
         <StyledDivier />
-        {isSearchPeople
-          ? this.renderSearchPeople()
-          : this.renderSearchDistrict()}
       </Container>
     )
   }
