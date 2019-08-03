@@ -13,6 +13,7 @@ import { bps } from 'utils/responsive'
 import DistrictSelector from 'components/search/DistrictSelector'
 
 import * as AddressParser from 'hk-address-parser-lib'
+import { TitleText, SubTitleText } from 'components/atom/Text'
 
 const styles = theme => ({})
 
@@ -20,12 +21,13 @@ const StyledDivier = styled(Divider)`
   && {
     background-color: #ececec;
     width: 100%;
+    margin-top: 30px;
+    margin-bottom: 20px;
   }
 `
 
 const Container = styled.div`
   width: 100%;
-  background-color: #f2f2f3;
   padding-top: 30px;
   margin: auto;
   display: flex;
@@ -37,15 +39,22 @@ const Container = styled.div`
   flex-grow: 1;
 `
 
-const RowContainer = styled(Box)`
+const TopSection = styled(Container)`
   && {
+    background-color: #f2f2f3;
+  }
+`
+
+const ExpandedRow = styled(Box)`
+  && {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     flex-grow: 1;
   }
 `
 
-const ContentRowContainer = styled(RowContainer)`
+const ContentRowContainer = styled(ExpandedRow)`
   && {
     flex-flow: row;
     ${bps.down('md')} {
@@ -92,6 +101,19 @@ const LandingIcon = styled.div`
   background-size: cover;
 `
 
+const NoteHeader = styled(TitleText)`
+  && {
+    text-align: center;
+    width: 100%;
+  }
+`
+
+const NoteContent = styled(Typography)`
+  && {
+    width: 100%;
+  }
+`
+
 class SearchPage extends Component {
   selectedTab
 
@@ -131,16 +153,6 @@ class SearchPage extends Component {
     this.props.history.push(`district/${lastest.year}/${lastest.CACODE}`)
   }
 
-  renderSearchPeople() {
-    return (
-      <ContentRowContainer>
-        <ContentContainer>
-          <PeopleSearcher handlePeopleSelected={this.handlePeopleSelected} />
-        </ContentContainer>
-        <ContentContainer>{/* TODO */}</ContentContainer>
-      </ContentRowContainer>
-    )
-  }
   onTabSelected(tab) {
     return () => {
       this.setState({
@@ -163,20 +175,50 @@ class SearchPage extends Component {
     )
   }
 
+  renderNote() {
+    return (
+      <>
+        <NoteHeader>為什麼你的一票很重要？</NoteHeader>
+        <NoteContent>
+          除非你有投票權、競選公職權，並且參與政治，否則政府不會回應你的利益。如果自己支持的人當選，即使自己的一票不會影響勝選結果，
+        </NoteContent>
+      </>
+    )
+  }
+
+  renderFooter() {
+    return <></>
+  }
+
   render() {
     return (
-      <Container>
-        <RowContainer>
-          <TabButton onClick={this.onTabSelected('district').bind(this)}>
-            <Typography variant="h4">找選區</Typography>
-          </TabButton>
-          <TabButton onClick={this.onTabSelected('people').bind(this)}>
-            <Typography variant="h4">找議員</Typography>
-          </TabButton>
-        </RowContainer>
-        <LandingIcon />
-        <StyledDivier />
-      </Container>
+      <>
+        <TopSection>
+          <ExpandedRow>
+            <TabButton onClick={this.onTabSelected('district').bind(this)}>
+              <Typography variant="h4">找選區</Typography>
+            </TabButton>
+            <TabButton onClick={this.onTabSelected('people').bind(this)}>
+              <Typography variant="h4">找議員</Typography>
+            </TabButton>
+          </ExpandedRow>
+          <LandingIcon />
+        </TopSection>
+        <Container>
+          <ExpandedRow>
+            <TitleText>議會觀測</TitleText>
+            <SubTitleText>了解更多</SubTitleText>
+          </ExpandedRow>
+          <StyledDivier />
+          <ExpandedRow>
+            <TitleText>熱門議題</TitleText>
+            <SubTitleText>所有議題</SubTitleText>
+          </ExpandedRow>
+          <StyledDivier />
+          {this.renderNote()}
+          {this.renderFooter()}
+        </Container>
+      </>
     )
   }
 }

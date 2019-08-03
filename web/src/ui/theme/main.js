@@ -26,21 +26,22 @@ export const typography = {
   },
   h3: {
     fontFamily: headingFontFamily,
-    fontSize: 40,
+    fontSize: 16,
     fontWeight: 500,
   },
   h4: {
     fontFamily: fontFamily,
     fontSize: 16,
+    fontWeight: 500,
   },
   h5: {
     fontFamily: headingFontFamily,
-    fontSize: 24,
+    fontSize: 14,
     fontWeight: 500,
   },
   h6: {
     fontFamily: headingFontFamily,
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: 500,
   },
   body1: {
@@ -75,5 +76,6 @@ export const styledComponentTheme = {
     backgroundColor: '#3e474f',
     color: 'white',
   },
-  secondaryBackgroundColor: '#f2f2f3',
+  secondaryBackgroundColor: '#f2f2f3', // grey
+  subtextColor: '#ffb500', // organe
 }

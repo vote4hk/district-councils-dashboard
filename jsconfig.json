@@ -3,6 +3,9 @@
     "baseUrl": ".",
     "paths": {
       "*": ["web/src/*"]
-    }
-  }
+    },
+    "disableSizeLimit": true
+  },
+  "exclude": ["node_modules"]
+  
 }

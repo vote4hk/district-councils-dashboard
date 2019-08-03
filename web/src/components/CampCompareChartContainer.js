@@ -6,9 +6,10 @@ import area from '../../data/area'
 import district from '../../data/district'
 import Button from '@material-ui/core/Button'
 import { NavLink } from 'react-router-dom'
+import { PropTypes } from 'prop-types'
 
 const Container = styled.div`
-   {
+  && {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -50,7 +51,7 @@ const DistrictContainer = styled(Button)`
   }
 `
 
-class DistrictSelector extends Component {
+class CampCompareChartContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -81,7 +82,7 @@ class DistrictSelector extends Component {
 
   render() {
     return (
-      <Container maxWidth="lg">
+      <Container>
         <SideBar>
           {area.map(a => (
             <SideBarItem
@@ -103,4 +104,8 @@ class DistrictSelector extends Component {
   }
 }
 
-export default DistrictSelector
+CampCompareChartContainer.propTypes = {
+  classes: PropTypes.object.isRequired,
+}
+
+export default CampCompareChartContainer
