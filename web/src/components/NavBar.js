@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import MobileAppBar from './atom/MobileAppBar'
-import DesktopAppBar from './atom/DesktopAppBar'
 
 const navs = [
   { url: '/', title: 'Search' },
@@ -13,7 +12,6 @@ class NavBar extends Component {
     return (
       <>
         <MobileAppBar navs={navs} />
-        <DesktopAppBar navs={navs} />
       </>
     )
   }

@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button'
 import { NavLink } from 'react-router-dom'
 
 const Container = styled.div`
-   {
+  && {
     width: 100%;
     display: flex;
     flex-direction: row;
