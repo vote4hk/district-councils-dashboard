@@ -1,46 +1,16 @@
 import React, { Component } from 'react'
-import Typography from '@material-ui/core/Typography'
 import styled from 'styled-components'
-import Box from '@material-ui/core/Box'
-import area from '../../data/area'
-import district from '../../data/district'
 import Button from '@material-ui/core/Button'
-import { NavLink } from 'react-router-dom'
 import { PropTypes } from 'prop-types'
+import gql from 'graphql-tag'
+import { Query } from 'react-apollo'
+import _ from 'lodash'
 
 const Container = styled.div`
   && {
     width: 100%;
     display: flex;
     flex-direction: row;
-  }
-`
-
-const SideBar = styled(Box)`
-  && {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    min-width: 200px;
-    max-width: 200px;
-  }
-`
-
-const MainContent = styled(Box)`
-  && {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: baseline;
-    padding-left: 32px;
-    padding-right: 32px;
-    flex-grow: 1;
-  }
-`
-
-const SideBarItem = styled(Button)`
-  && {
-    width: 100%;
   }
 `
 
@@ -51,61 +21,43 @@ const DistrictContainer = styled(Button)`
   }
 `
 
-class CampCompareChartContainer extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      selectedDistrict: null,
+const FETCH_CAMP_DATA = gql`
+  query fetch_camp_data($year: Int!) {
+    dc_candidates(where: { is_won: { _eq: true }, year: { _eq: $year } }) {
+      cacode
+      camp
+      person {
+        name_zh
+      }
     }
   }
-  renderDCCA = code => {
-    if (!code) return null
-    return (
-      <div>
-        {Object.keys(district['2019'][code]).map(dcca => {
-          return (
-            <DistrictContainer
-              component={NavLink}
-              to={`/district/2019/${dcca}`}
-              key={district['2019'][code][dcca].code}
-              color="secondary"
-            >
-              <Typography variant="h6">
-                {district['2019'][code][dcca].name}
-              </Typography>
-            </DistrictContainer>
-          )
-        })}
-      </div>
-    )
-  }
+`
 
-  render() {
-    return (
-      <Container>
-        <SideBar>
-          {area.map(a => (
-            <SideBarItem
-              key={a.dccode}
-              color="primary"
-              onClick={() => this.setState({ selectedDistrict: a.dccode })}
-            >
-              {a.dname_chi}
-            </SideBarItem>
-          ))}
-        </SideBar>
-        <MainContent>
-          <Typography variant="subtitle1">
-            {this.renderDCCA(this.state.selectedDistrict)}
-          </Typography>
-        </MainContent>
-      </Container>
-    )
-  }
+function groupDataByRegionAndCamp(candidates) {
+  const byCodes = _.groupBy(candidates, candidate => candidate.cacode[0])
+  return Object.keys(byCodes).map(code => ({
+    code,
+    count: byCodes[code]
+      .map(r => ({ [r.camp]: 1 }))
+      .reduce((p, c) => {
+        const val = Object.assign(p)
+        Object.keys(c).forEach(k => (val[k] = c[k] + (val[k] ? val[k] : 0)))
+        return val
+      }, {}),
+  }))
 }
 
-CampCompareChartContainer.propTypes = {
-  classes: PropTypes.object.isRequired,
+const CampCompareChartContainer = props => {
+  return (
+    <Query query={FETCH_CAMP_DATA} variables={{ year: 2015 }}>
+      {({ loading, error, data }) => {
+        if (loading) return null
+        if (error) return `Error! ${error}`
+        const dataFroGraph = groupDataByRegionAndCamp(data.dc_candidates)
+        console.log(dataFroGraph)
+        return <Container></Container>
+      }}
+    </Query>
+  )
 }
-
 export default CampCompareChartContainer

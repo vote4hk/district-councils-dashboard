@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
-
+import CampCompareChartContainer from 'components/CampCompareChartContainer'
 import styled from 'styled-components'
 
 import { TitleText, SubTitleText } from 'components/atom/Text'
@@ -133,6 +133,7 @@ class SearchPage extends Component {
             <TitleText>議會觀測</TitleText>
             <SubTitleText>了解更多</SubTitleText>
           </ExpandedRow>
+          <CampCompareChartContainer />
           <StyledDivier />
           <ExpandedRow>
             <TitleText>熱門議題</TitleText>
