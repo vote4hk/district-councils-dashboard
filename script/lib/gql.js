@@ -101,6 +101,20 @@ mutation insertStats($vote_stat:dc_constituency_vote_stats_insert_input!){
   }
 }`;
 
+const MUTATION_UPDATE_CANDIDATE_CAMP = `
+mutation updateCamp($year:Int!, $cacode:String!, $personCompare: dc_people_bool_exp, $camp:String){
+  update_dc_candidates(where:{
+    year: {_eq: $year},
+    cacode: {_eq: $cacode},
+    person: $personCompare
+  }, _set:{
+    camp: $camp
+  }) {
+    affected_rows
+  }
+}
+`
+
 module.exports = {
   QUERY_GET_PEOPLE,
   QUERY_UPSERT_DISTRICT_NAME,
@@ -108,5 +122,6 @@ module.exports = {
   QUERY_GET_CANDIDATES,
   MUTATION_UPSERT_VOTE_DATA,
   MUTATION_UPSERT_VOTE_STATS,
+  MUTATION_UPDATE_CANDIDATE_CAMP,
   QUERY_GET_CONSTITUENCY,
 };
