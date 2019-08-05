@@ -24,7 +24,6 @@ class WaffleChart extends Component {
     })
     //value of a square
     squareValue = total / (widthSquares * heightSquares)
-    console.log(squareValue)
     //remap data
     data.forEach(function(d, i) {
       d.population = +d.population

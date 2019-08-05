@@ -13,6 +13,5 @@ export const TitleText = props => {
 }
 
 export const SubTitleText = props => {
-  console.log(props)
   return <StyledSubtTitle variant="h3" {...props} />
 }
