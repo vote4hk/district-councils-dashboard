@@ -10,6 +10,7 @@ const {
   MUTATION_UPSERT_VOTE_DATA,
   MUTATION_UPSERT_VOTE_STATS,
   QUERY_GET_CONSTITUENCY,
+  MUTATION_UPDATE_CANDIDATE_CAMP,
 } = require('./lib/gql');
 
 
@@ -55,6 +56,46 @@ async function importDistrict(filePath, cmd) {
 
     log.info(`${districts.length} data imported successfully`);
   }
+}
+
+function mapCamp(camp) {
+  switch (camp) {
+    case "泛": return "泛民"
+    case "建": return "建制"
+    case "其他": return "其他"
+    default:
+      return null;
+  }
+}
+
+async function importCandidateCamp(filePath, cmd) {
+  log.info(`Trying to import the candidate camp data from ${filePath}`);
+  let candidates = await csv2json().fromFile(filePath);
+
+  for (const candidate of candidates) {
+    const { year, CACODE, name_chi, name_eng, camp } = candidate;
+    const personCompare = {}
+    if (name_chi && name_chi.length > 0) {
+      personCompare.name_zh = { _eq: name_chi}
+    } else {
+      personCompare.name_en = { _eq: name_eng.toUpperCase().replace("-", "")}
+    }
+
+
+    const res = await runQuery(MUTATION_UPDATE_CANDIDATE_CAMP, { 
+      year: parseInt(year, 10),
+      cacode: CACODE,
+      personCompare,
+      camp: mapCamp(camp)
+    });
+
+    if (res.statusCode !== 200 ||
+      res.body.data.update_dc_candidates.affected_rows !== 1) {
+      log.error(`Error when inserting data for ${name_chi}/${name_eng} at ${year}-${CACODE}`);
+      console.error(res.body);      
+    }
+  }
+  log.info(`${candidates.length} data imported successfully`);
 }
 
 async function importVoteStats(year, filePath) {
@@ -167,6 +208,11 @@ program
   .command('vote_stats <year> <filePath>')
   .description('import the vote_stats data')
   .action(importVoteStats);
+
+program
+  .command('camp <filePath>')
+  .description('import camp data from sheet `people`')
+  .action(importCandidateCamp);
 
 program.parse(process.argv);
 

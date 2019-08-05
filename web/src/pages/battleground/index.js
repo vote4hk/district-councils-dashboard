@@ -119,7 +119,7 @@ class BattleGroundPage extends Component {
         params: { year = 2019, code },
       },
     } = this.props
-    this.props.history.push(`/district/${parseInt(year, 10) - 4}/${code}`)
+    this.props.history.push(`/district/2015/${code}`)
   }
 
   onNextElection() {

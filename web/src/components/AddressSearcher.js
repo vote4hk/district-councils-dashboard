@@ -37,7 +37,6 @@ function renderInputComponent(inputProps) {
             </InputAdornment>
           ),
         }}
-        disableUnderline={true}
         {...other}
       />
     </>
@@ -71,7 +70,6 @@ function getSuggestionValue(suggestion) {
 
 const styles = theme => ({
   root: {
-    height: 100,
     flexGrow: 1,
   },
   container: {
@@ -80,7 +78,7 @@ const styles = theme => ({
   suggestionsContainerOpen: {
     position: 'absolute',
     zIndex: 1,
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing(1),
     // left: 0,
     // right: 0,
   },

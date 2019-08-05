@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import VoterTurnoutChart from './VoterTurnoutChart'
-import WaffleChart from '../WaffleChart'
+import WaffleChart from '../charts/WaffleChart'
 
 const QUERY_FETCH_VOTES = gql`
   query($year: Int!, $code: String!) {

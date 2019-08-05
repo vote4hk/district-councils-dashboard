@@ -256,7 +256,6 @@ class ProfilePage extends Component {
   }
 
   renderElectionInfoCard(election, yob) {
-    console.log(election)
     return (
       <Grid item xs={12} md={4}>
         <YearDiv>{`${election.year}年`}</YearDiv>
