@@ -13,7 +13,7 @@ import styled from 'styled-components'
 import dc2003 from '../data/DCCA_2003'
 import dc2007 from '../data/DCCA_2007'
 import dc2011 from '../data/DCCA_2011'
-import dc2015 from '../data/DCCA_2015'
+import dc2015 from '../data/dcca_2019_simplified'
 import dc2019 from '../data/DCCA_2019'
 
 const MapContainer = styled.div`
@@ -95,12 +95,6 @@ class OLMap extends Component {
     // create map object with feature layer
     const layers = [
       //default OSM layer
-      new TileLayer({
-        source: new XYZ({
-          url:
-            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
-        }),
-      }),
     ]
 
     if (isDCDataExist) {
