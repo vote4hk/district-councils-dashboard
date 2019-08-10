@@ -51,19 +51,18 @@ function groupDataByRegionAndCamp(candidates) {
 
 function convertToD3Compatible(data) {
   var res = data.map(d => {
-    var counts = Object.values(d.count)
     return {
       name: DCREGION[d.code].zh_hk,
-      建制: counts[0] || 0,
-      其他: counts[1] || 0,
-      泛民: counts[2] || 0,
-      total: counts.reduce((acc, c) => {
+      建制: d.count['建制'] || 0,
+      泛民: d.count['泛民'] || 0,
+      其他: d.count['其他'] || 0,
+      total: Object.values(d.count).reduce((acc, c) => {
         acc += c
         return acc
       }, 0),
     }
   })
-  res['columns'] = ['name', '建制', '其他', '泛民']
+  res['columns'] = ['name', '建制', '泛民', '其他']
   return res
 }
 

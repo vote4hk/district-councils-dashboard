@@ -32,9 +32,9 @@ class StackedNormalizedHorizontalBarChart extends Component {
       .scaleOrdinal()
       .domain(series.map(d => d.key))
       .range(
-        d3
-          .quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), series.length)
-          .reverse()
+        // d3
+        //   .quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), series.length)
+        ['#ea3c53', '#63b9e9', '#eeeeee']
       )
       .unknown('#ccc')
 
