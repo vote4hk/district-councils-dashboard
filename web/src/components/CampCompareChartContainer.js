@@ -5,6 +5,8 @@ import { PropTypes } from 'prop-types'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import _ from 'lodash'
+import { DCREGION } from '../constants/dcregion'
+import StackedNormalizedHorizontalBarChart from './StackedNormalizedHorizontalBarChart'
 
 const Container = styled.div`
   && {
@@ -47,6 +49,24 @@ function groupDataByRegionAndCamp(candidates) {
   }))
 }
 
+function convertToD3Compatible(data) {
+  var res = data.map(d => {
+    var counts = Object.values(d.count)
+    return {
+      name: DCREGION[d.code].zh_hk,
+      建制: counts[0] || 0,
+      其他: counts[1] || 0,
+      泛民: counts[2] || 0,
+      total: counts.reduce((acc, c) => {
+        acc += c
+        return acc
+      }, 0),
+    }
+  })
+  res['columns'] = ['name', '建制', '其他', '泛民']
+  return res
+}
+
 const CampCompareChartContainer = props => {
   return (
     <Query query={FETCH_CAMP_DATA} variables={{ year: 2015 }}>
@@ -54,8 +74,15 @@ const CampCompareChartContainer = props => {
         if (loading) return null
         if (error) return `Error! ${error}`
         const dataFroGraph = groupDataByRegionAndCamp(data.dc_candidates)
-        console.log(dataFroGraph)
-        return <Container></Container>
+        const dataForD3 = convertToD3Compatible(dataFroGraph)
+        console.log(dataForD3)
+        return (
+          <Container>
+            <StackedNormalizedHorizontalBarChart
+              data={dataForD3}
+            ></StackedNormalizedHorizontalBarChart>
+          </Container>
+        )
       }}
     </Query>
   )
