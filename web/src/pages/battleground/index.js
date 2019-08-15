@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
-import OLMap from '../../components/OLMap'
+import DCCACompareMap from '../../components/DCCACompareMap'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import DistrictCard from 'components/district/DistrictCard'
@@ -9,6 +9,9 @@ import CandidateList from 'components/district/CandidateList'
 import Metrics from 'components/district/Metrics'
 import styled from 'styled-components'
 import { bps } from 'utils/responsive'
+import Button from '@material-ui/core/Button'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import Collapse from '@material-ui/core/Collapse'
 
 const GET_DISTRICTS = gql`
   query($year: Int!, $code: String!, $electionYear: date) {
@@ -97,8 +100,14 @@ const DistrictCardContainer = styled(Box)`
     }
   }
 `
-
 class BattleGroundPage extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      showMap: false,
+    }
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     //  if (this.props.route.path === nextProps.route.path) return false;
     return true
@@ -132,6 +141,7 @@ class BattleGroundPage extends Component {
   }
 
   render() {
+    const { showMap } = this.state
     const {
       match: {
         params: { year = 2019, code },
@@ -144,16 +154,22 @@ class BattleGroundPage extends Component {
     return (
       <>
         <FlexRowContainer>
-          <Box
-            width={{ sm: '100%', md: '960px' }}
-            height={{ sm: '300px', md: '400px' }}
-          >
-            <OLMap
-              year={year}
-              code={code}
-              changeDistrict={this.handleChangeDistrict}
-            />
-          </Box>
+          <Button onClick={() => this.setState({ showMap: !showMap })}>
+            {showMap ? '隱藏地圖' : '顯示地圖'}
+            <ExpandMoreIcon />
+          </Button>
+          <Collapse in={showMap}>
+            <Box
+              width={{ sm: '100%', md: '960px' }}
+              height={{ sm: '300px', md: '400px' }}
+            >
+              <DCCACompareMap
+                year={year}
+                code={code}
+                changeDistrict={this.handleChangeDistrict}
+              />
+            </Box>
+          </Collapse>
           <Query query={GET_DISTRICTS} variables={{ year, code, electionYear }}>
             {({ loading, error, data }) => {
               if (loading) return null
