@@ -12,16 +12,40 @@ import { bps } from 'utils/responsive'
 import Button from '@material-ui/core/Button'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Collapse from '@material-ui/core/Collapse'
+import Typography from '@material-ui/core/Typography'
+import _ from 'lodash'
 
 const GET_DISTRICTS = gql`
-  query($year: Int!, $code: String!, $electionYear: date) {
+  query($year: Int!, $code: String!) {
     dcd_constituencies(where: { year: { _eq: $year }, code: { _eq: $code } }) {
       name_zh
       name_en
+      district {
+        dc_name_en
+        dc_name_zh
+        area_name_en
+        area_name_zh
+      }
       code
       deviation_percentage
       expected_population
       main_areas
+      vote_stats {
+        count
+        type
+        subtype
+        category_1
+        category_2
+      }
+      stations {
+        station_code
+        name_en
+        name_zh
+        location
+      }
+      tags {
+        tag
+      }
       candidates {
         candidate_number
         political_affiliation
@@ -86,6 +110,15 @@ const DistrictCardContainer = styled(Box)`
     }
   }
 `
+
+const groupVoteStat = voteStats => {
+  const data = _.groupBy(voteStats, stat => stat.subtype)
+  data.aggregations = {
+    all_voters: data.VOTERS.map(v => v.count).reduce((c, v) => c + v, 0),
+    new_voters: data.NEW_VOTERS.map(v => v.count).reduce((c, v) => c + v, 0),
+  }
+  return data
+}
 class BattleGroundPage extends Component {
   constructor(props) {
     super(props)
@@ -111,7 +144,7 @@ class BattleGroundPage extends Component {
   onPrevElection() {
     const {
       match: {
-        params: { year = 2019, code },
+        params: { code },
       },
     } = this.props
     this.props.history.push(`/district/2015/${code}`)
@@ -134,9 +167,6 @@ class BattleGroundPage extends Component {
       },
     } = this.props
 
-    // TODO: this should be the election date
-    const electionYear = `${year}-01-01`
-
     return (
       <>
         <FlexRowContainer>
@@ -156,13 +186,30 @@ class BattleGroundPage extends Component {
               />
             </Box>
           </Collapse>
-          <Query query={GET_DISTRICTS} variables={{ year, code, electionYear }}>
+          <Query query={GET_DISTRICTS} variables={{ year, code }}>
             {({ loading, error, data }) => {
               if (loading) return null
               if (error) return `Error! ${error}`
               const district = data.dcd_constituencies[0]
+              const voterData = groupVoteStat(district.vote_stats)
               return (
                 <>
+                  {/* TODO: */}
+                  <Typography>{district.name_zh}</Typography>
+                  <Typography>{district.district.dc_name_zh}</Typography>
+                  {district.tags.map((tag, index) => (
+                    <Typography key={index}>{tag.tag}</Typography>
+                  ))}
+                  <Typography>
+                    New voters: {voterData.aggregations.all_voters}
+                  </Typography>
+                  <Typography>
+                    Increased by:{' '}
+                    {(100 * voterData.aggregations.new_voters) /
+                      voterData.aggregations.all_voters}
+                    %
+                  </Typography>
+
                   <DistrictCardContainer>
                     <DistrictCard
                       {...district}
