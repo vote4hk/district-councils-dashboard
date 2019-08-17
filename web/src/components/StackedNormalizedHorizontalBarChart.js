@@ -31,11 +31,7 @@ class StackedNormalizedHorizontalBarChart extends Component {
     const color = d3
       .scaleOrdinal()
       .domain(series.map(d => d.key))
-      .range(
-        // d3
-        //   .quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), series.length)
-        ['#ea3c53', '#63b9e9', '#eeeeee']
-      )
+      .range(['#ea3c53', '#eeeeee', '#63b9e9'])
       .unknown('#ccc')
 
     const y = d3

@@ -6,7 +6,6 @@ import PropTypes from 'prop-types'
 import CustomizedProgressBars from '../../components/BorderLinearProgress'
 import Avatar from '@material-ui/core/Avatar'
 import { bps } from 'utils/responsive'
-import { getCamp, getPoliticalAffiliation } from 'helpers/candidate'
 
 const fontBoldStyle = css`
   font-family: 'PingFangTC-Medium';
@@ -200,7 +199,7 @@ class CandidateList extends Component {
                 >
                   <AvatarColumn>
                     <Avatar
-                      src={`${this.homeUrl}/static/images/avatar/${candidate.person.id}.jpg`}
+                      src={`${this.homeUrl}/static/images/avatar/${candidate.person.uuid}.jpg`}
                       imgProps={{
                         onError: e => {
                           e.target.src =
@@ -224,12 +223,12 @@ class CandidateList extends Component {
                   <PoliticalColumn>
                     <ContentHeader>陣營</ContentHeader>
                     {'\n'}
-                    <Content>{getCamp(candidate)}</Content>
+                    <Content>{candidate.camp}</Content>
                   </PoliticalColumn>
                   <PoliticalColumn>
                     <ContentHeader>政治聯繫</ContentHeader>
                     {'\n'}
-                    <Content>{getPoliticalAffiliation(candidate)}</Content>
+                    <Content>{candidate.political_affiliation}</Content>
                   </PoliticalColumn>
                   {candidate.candidate_number !== 0 && (
                     <>

@@ -1,7 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import Button from '@material-ui/core/Button'
-import { PropTypes } from 'prop-types'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import _ from 'lodash'
@@ -16,16 +14,9 @@ const Container = styled.div`
   }
 `
 
-const DistrictContainer = styled(Button)`
-  && {
-    width: 120px;
-    justify-content: left;
-  }
-`
-
 const FETCH_CAMP_DATA = gql`
   query fetch_camp_data($year: Int!) {
-    dc_candidates(where: { is_won: { _eq: true }, year: { _eq: $year } }) {
+    dcd_candidates(where: { is_won: { _eq: true }, year: { _eq: $year } }) {
       cacode
       camp
       person {
@@ -62,7 +53,7 @@ function convertToD3Compatible(data) {
       }, 0),
     }
   })
-  res['columns'] = ['name', '建制', '泛民', '其他']
+  res['columns'] = ['name', '建制', '其他', '泛民']
   return res
 }
 

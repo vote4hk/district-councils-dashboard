@@ -15,7 +15,7 @@ import gql from 'graphql-tag'
 
 const GET_PEOPLE = gql`
   query($nameRegex: String) {
-    dc_people(
+    dcd_people(
       where: {
         _or: [
           { name_zh: { _like: $nameRegex } }

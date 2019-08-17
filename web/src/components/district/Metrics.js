@@ -7,6 +7,7 @@ import { Query } from 'react-apollo'
 import VoterTurnoutChart from './VoterTurnoutChart'
 import WaffleChart from '../charts/WaffleChart'
 
+// TODO: change this to dcd data
 const QUERY_FETCH_VOTES = gql`
   query($year: Int!, $code: String!) {
     dc_constituencies(where: { year: { _eq: $year }, code: { _eq: $code } }) {

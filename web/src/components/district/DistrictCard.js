@@ -92,11 +92,7 @@ function getCouncillor(candidates) {
   if (electedCandidate) {
     councillor.name =
       electedCandidate.person.name_zh || electedCandidate.person.name_en
-    if (electedCandidate.person.political_affiliations.length) {
-      const political_affiliation =
-        electedCandidate.person.political_affiliations[0].political_affiliation
-      councillor.political_affiliation = political_affiliation.name_zh
-    }
+    councillor.political_affiliation = electedCandidate.political_affiliation
   }
 
   return councillor

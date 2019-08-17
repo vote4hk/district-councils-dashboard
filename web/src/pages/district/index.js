@@ -12,7 +12,7 @@ import { bps } from 'utils/responsive'
 
 const GET_DISTRICTS = gql`
   query($year: Int!, $code: String!, $electionYear: date) {
-    dc_constituencies(where: { year: { _eq: $year }, code: { _eq: $code } }) {
+    dcd_constituencies(where: { year: { _eq: $year }, code: { _eq: $code } }) {
       name_zh
       name_en
       code
@@ -21,26 +21,13 @@ const GET_DISTRICTS = gql`
       main_areas
       candidates {
         candidate_number
+        political_affiliation
+        camp
         person {
           id
+          uuid
           name_zh
           name_en
-          political_affiliations(
-            where: {
-              year_from: { _lte: $electionYear }
-              year_to: { _gte: $electionYear }
-            }
-          ) {
-            year_to
-            year_from
-            political_affiliation {
-              name_zh
-              id
-              camp {
-                name_zh
-              }
-            }
-          }
         }
         vote_percentage
         votes
@@ -158,7 +145,7 @@ class DistrictPage extends Component {
             {({ loading, error, data }) => {
               if (loading) return null
               if (error) return `Error! ${error}`
-              const district = data.dc_constituencies[0]
+              const district = data.dcd_constituencies[0]
               return (
                 <>
                   <DistrictCardContainer>

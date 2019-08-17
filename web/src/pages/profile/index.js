@@ -11,8 +11,8 @@ import { bps } from 'utils/responsive'
 
 // TODO: add age, camp & political_affiliation
 const GET_PEOPLE_PROFILE = gql`
-  query($id: uuid!) {
-    dc_people(
+  query($id: Int!) {
+    dcd_people(
       where: { id: { _eq: $id } }
       order_by: { elections_aggregate: { max: { year: asc } } }
     ) {
