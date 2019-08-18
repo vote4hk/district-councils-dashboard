@@ -1,3 +1,4 @@
+// deprecated. should use the data from server
 export const DCREGION = {
   A: {
     zh_hk: '中西區',

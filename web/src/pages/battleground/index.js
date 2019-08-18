@@ -1,67 +1,19 @@
 import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
 import DCCACompareMap from '../../components/DCCACompareMap'
-import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import DistrictCard from 'components/district/DistrictCard'
 import MainAreas from 'components/district/MainAreas'
 import CandidateList from 'components/district/CandidateList'
 import Metrics from 'components/district/Metrics'
 import styled from 'styled-components'
-import { bps } from 'utils/responsive'
+import { bps } from 'ui/responsive'
 import Button from '@material-ui/core/Button'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Collapse from '@material-ui/core/Collapse'
 import Typography from '@material-ui/core/Typography'
 import _ from 'lodash'
-
-const GET_DISTRICTS = gql`
-  query($year: Int!, $code: String!) {
-    dcd_constituencies(where: { year: { _eq: $year }, code: { _eq: $code } }) {
-      name_zh
-      name_en
-      district {
-        dc_name_en
-        dc_name_zh
-        area_name_en
-        area_name_zh
-      }
-      code
-      deviation_percentage
-      expected_population
-      main_areas
-      vote_stats {
-        count
-        type
-        subtype
-        category_1
-        category_2
-      }
-      stations {
-        station_code
-        name_en
-        name_zh
-        location
-      }
-      tags {
-        tag
-      }
-      candidates {
-        candidate_number
-        political_affiliation
-        camp
-        person {
-          id
-          name_zh
-          name_en
-        }
-        vote_percentage
-        votes
-        is_won
-      }
-    }
-  }
-`
+import { QUERY_CONSTITUENCIES } from 'queries/gql'
 
 const FullWidthBox = styled(Box)`
   && {
@@ -186,7 +138,7 @@ class BattleGroundPage extends Component {
               />
             </Box>
           </Collapse>
-          <Query query={GET_DISTRICTS} variables={{ year, code }}>
+          <Query query={QUERY_CONSTITUENCIES} variables={{ year, code }}>
             {({ loading, error, data }) => {
               if (loading) return null
               if (error) return `Error! ${error}`

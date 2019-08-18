@@ -1,41 +1,15 @@
 import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
 import OLMap from '../../components/OLMap'
-import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import DistrictCard from 'components/district/DistrictCard'
 import MainAreas from 'components/district/MainAreas'
 import CandidateList from 'components/district/CandidateList'
 import Metrics from 'components/district/Metrics'
 import styled from 'styled-components'
-import { bps } from 'utils/responsive'
+import { bps } from 'ui/responsive'
 
-const GET_DISTRICTS = gql`
-  query($year: Int!, $code: String!, $electionYear: date) {
-    dcd_constituencies(where: { year: { _eq: $year }, code: { _eq: $code } }) {
-      name_zh
-      name_en
-      code
-      deviation_percentage
-      expected_population
-      main_areas
-      candidates {
-        candidate_number
-        political_affiliation
-        camp
-        person {
-          id
-          uuid
-          name_zh
-          name_en
-        }
-        vote_percentage
-        votes
-        is_won
-      }
-    }
-  }
-`
+import { QUERY_CONSTITUENCIES } from 'queries/gql'
 
 const FullWidthBox = styled(Box)`
   && {
@@ -125,9 +99,6 @@ class DistrictPage extends Component {
       },
     } = this.props
 
-    // TODO: this should be the election date
-    const electionYear = `${year}-01-01`
-
     return (
       <>
         <FlexRowContainer>
@@ -141,7 +112,7 @@ class DistrictPage extends Component {
               changeDistrict={this.handleChangeDistrict}
             />
           </Box>
-          <Query query={GET_DISTRICTS} variables={{ year, code, electionYear }}>
+          <Query query={QUERY_CONSTITUENCIES} variables={{ year, code }}>
             {({ loading, error, data }) => {
               if (loading) return null
               if (error) return `Error! ${error}`

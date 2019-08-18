@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid'
 import moment from 'moment'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import { bps } from 'utils/responsive'
+import { bps } from 'ui/responsive'
 
 // TODO: add age, camp & political_affiliation
 const GET_PEOPLE_PROFILE = gql`

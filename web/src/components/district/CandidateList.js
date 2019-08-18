@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box'
 import PropTypes from 'prop-types'
 import CustomizedProgressBars from '../../components/BorderLinearProgress'
 import Avatar from '@material-ui/core/Avatar'
-import { bps } from 'utils/responsive'
+import { bps } from 'ui/responsive'
 
 const fontBoldStyle = css`
   font-family: 'PingFangTC-Medium';
