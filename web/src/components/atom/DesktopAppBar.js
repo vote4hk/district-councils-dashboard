@@ -4,7 +4,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import styled from 'styled-components'
 import Container from '@material-ui/core/Container'
-import { bps } from '../../utils/responsive'
+import { bps } from '../../ui/responsive'
 import UnstyledLink from './UnstyledLink'
 
 const StyledAppBar = styled(AppBar)`
