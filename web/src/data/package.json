@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "csvtojson": "^2.0.8"
+    "@turf/turf": "^5.1.6",
+    "csvtojson": "^2.0.8",
+    "jsts": "^2.0.8"
   }
 }
