@@ -11,6 +11,9 @@
   "dependencies": {
     "@turf/turf": "^5.1.6",
     "csvtojson": "^2.0.8",
-    "jsts": "^2.0.8"
+    "geojson-polygon-self-intersections": "^1.2.0",
+    "json2csv": "^4.5.2",
+    "jsts": "^2.0.8",
+    "simplepolygon": "^1.2.2"
   }
 }
