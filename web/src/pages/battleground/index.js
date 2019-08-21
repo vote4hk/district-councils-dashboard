@@ -138,7 +138,10 @@ class BattleGroundPage extends Component {
               />
             </Box>
           </Collapse>
-          <Query query={QUERY_CONSTITUENCIES} variables={{ year, code }}>
+          <Query
+            query={QUERY_CONSTITUENCIES}
+            variables={{ year, lastElectionYear: year - 4, code }}
+          >
             {({ loading, error, data }) => {
               if (loading) return null
               if (error) return `Error! ${error}`

@@ -112,11 +112,16 @@ class DistrictPage extends Component {
               changeDistrict={this.handleChangeDistrict}
             />
           </Box>
-          <Query query={QUERY_CONSTITUENCIES} variables={{ year, code }}>
+          <Query
+            query={QUERY_CONSTITUENCIES}
+            variables={{ year, lastElectionYear: year - 4, code }}
+          >
             {({ loading, error, data }) => {
               if (loading) return null
               if (error) return `Error! ${error}`
               const district = data.dcd_constituencies[0]
+              const lastDistrict = data.last_dcd_constituencies[0]
+              console.log(lastDistrict)
               return (
                 <>
                   <DistrictCardContainer>
