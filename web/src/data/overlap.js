@@ -29,49 +29,47 @@ const jsts_validate = function(geom) {
     return geom // In my case, I only care about polygon / multipolygon geometries
   }
 }
-
 const checkOverlap = (feature1, feature2) => {
-  if (feature1.properties.CACODE.substring(0, 3) === 'E08') {
-    // feature1.properties.CACODE === 'A01'
-    const result = []
-    let poly1 = turf.polygon(feature1.geometry.coordinates)
-    const kinks1 = turf.kinks(poly1)
-    poly1 = (typeof kinks1 !== 'undefined' && jsts_validate(poly1)) || poly1
-    feature2.features.forEach(feature2 => {
-      let poly2 = turf.polygon(feature2.geometry.coordinates)
-      const kinks2 = turf.kinks(poly2)
-      poly2 = (typeof kinks2 !== 'undefined' && jsts_validate(poly2)) || poly2
-      if (turf.booleanOverlap(poly1, poly2)) {
-        let intersection
-        try {
-          intersection = turf.intersect(poly1, poly2)
-        } catch (e) {
-          if (
-            e &&
-            e.message &&
-            e.message.includes('found non-noded intersection between')
-          ) {
-            console.log(`${feature1.properties.CACODE} |  ${e.message}`)
-          }
-        } finally {
-          if (intersection && intersection.geometry.coordinates) {
-            console.log(feature2.properties.CACODE)
-            console.log(intersection)
-            const area = turf.area(intersection)
-            if (area > 0) {
-              result.push({
-                code: feature2.properties.CACODE,
-                area,
-              })
-            }
+  console.log(feature1.properties.CACODE)
+  // if (feature1.properties.CACODE.substring(0, 3) === 'T09') {
+  // feature1.properties.CACODE === 'A01'
+  const result = []
+  let poly1 = turf.polygon(feature1.geometry.coordinates)
+  const kinks1 = turf.kinks(poly1)
+  poly1 = (typeof kinks1 !== 'undefined' && jsts_validate(poly1)) || poly1
+  feature2.features.forEach(feature2 => {
+    let poly2 = turf.polygon(feature2.geometry.coordinates)
+    const kinks2 = turf.kinks(poly2)
+    poly2 = (typeof kinks2 !== 'undefined' && jsts_validate(poly2)) || poly2
+    if (turf.booleanOverlap(poly1, poly2)) {
+      let intersection
+      try {
+        intersection = turf.intersect(poly1, poly2)
+      } catch (e) {
+        if (
+          e &&
+          e.message &&
+          e.message.includes('found non-noded intersection between')
+        ) {
+          console.log(`${feature1.properties.CACODE} ,self-intersection`)
+        }
+      } finally {
+        if (intersection && intersection.geometry.coordinates) {
+          const area = turf.area(intersection)
+          if (area > 0) {
+            result.push({
+              code: feature2.properties.CACODE,
+              area,
+            })
           }
         }
       }
-    })
+    }
+  })
 
-    result.sort((a, b) => b.area - a.area)
-    return result
-  }
+  result.sort((a, b) => b.area - a.area)
+  return result
+  // }
 }
 
 const enable_prev = curr_year === 2003 ? false : true
@@ -104,4 +102,4 @@ result.sort((a, b) => {
   if (Object.keys(b)[0] > Object.keys(a)[0]) return -1
 })
 const json = JSON.stringify(result, null, 2)
-fs.writeFile('overlap.json', json, (err, result) => {})
+fs.writeFile(`overlap_${curr_year}.json`, json, (err, result) => {})
