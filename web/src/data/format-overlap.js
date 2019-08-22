@@ -1,4 +1,3 @@
-const { Parser } = require('json2csv')
 const fs = require('fs')
 
 const rawdata = fs.readFileSync('overlap_2019.json')
