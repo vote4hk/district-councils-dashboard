@@ -7693,7 +7693,7 @@
         "DCCA2003_I": 264,
         "CACODE": "M25",
         "ENAME": "Fairview Park",
-        "CNAME": "錦?花園"
+        "CNAME": "錦繡花園"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -34182,7 +34182,7 @@
         "DCCA2003_I": 324,
         "CACODE": "R03",
         "ENAME": "Wo Che Estate",
-        "CNAME": "禾輋?"
+        "CNAME": "禾輋邨"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -41547,7 +41547,7 @@
         "DCCA2003_I": 363,
         "CACODE": "S05",
         "ENAME": "Kwai Chung Estate",
-        "CNAME": "葵涌?"
+        "CNAME": "葵涌邨"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -42911,7 +42911,7 @@
         "DCCA2003_I": 374,
         "CACODE": "S17",
         "ENAME": "Kwai Shing West Estate",
-        "CNAME": "葵盛西?"
+        "CNAME": "葵盛西邨"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -43081,7 +43081,7 @@
         "DCCA2003_I": 360,
         "CACODE": "S02",
         "ENAME": "Kwai Shing East Estate",
-        "CNAME": "葵盛東?"
+        "CNAME": "葵盛東邨"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -45557,7 +45557,7 @@
         "DCCA2003_I": 382,
         "CACODE": "S20",
         "ENAME": "Tsing Yi Estate",
-        "CNAME": "青衣?"
+        "CNAME": "青衣邨"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -48840,7 +48840,7 @@
         "DCCA2003_I": 163,
         "CACODE": "H12",
         "ENAME": "Tin Keung",
-        "CNAME": "天?"
+        "CNAME": "天強"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -63101,7 +63101,7 @@
         "DCCA2003_I": 174,
         "CACODE": "J19",
         "ENAME": "Hong Pak",
-        "CNAME": "康?"
+        "CNAME": "康柏"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -63522,7 +63522,7 @@
         "DCCA2003_I": 51,
         "CACODE": "C25",
         "ENAME": "Quarry Bay",
-        "CNAME": "?魚涌"
+        "CNAME": "鰂魚涌"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -68437,7 +68437,7 @@
         "DCCA2003_I": 32,
         "CACODE": "C07",
         "ENAME": "Heng Fa Chuen",
-        "CNAME": "杏花?"
+        "CNAME": "杏花邨"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -76545,7 +76545,7 @@
         "DCCA2003_I": 66,
         "CACODE": "D03",
         "ENAME": "Ap Lei Chau North",
-        "CNAME": "鴨?洲北"
+        "CNAME": "鴨脷洲北"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -76615,7 +76615,7 @@
         "DCCA2003_I": 65,
         "CACODE": "D02",
         "ENAME": "Ap Lei Chau Estate",
-        "CNAME": "鴨?洲?"
+        "CNAME": "鴨脷洲邨"
       },
       "geometry": {
         "type": "MultiPolygon",
