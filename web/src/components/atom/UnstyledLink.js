@@ -1,11 +1,17 @@
 import styled from 'styled-components'
+import { NavLink } from 'react-router-dom'
 import Link from '@material-ui/core/Link'
 
-const UnstyledLink = styled(Link)`
+export const UnstyledLink = styled(Link)`
   text-decoration: unset;
   color: unset;
   font-style: unset;
   cursor: pointer;
 `
 
-export default UnstyledLink
+export const UnstyledNavLink = styled(NavLink)`
+  text-decoration: unset;
+  color: unset;
+  font-style: unset;
+  cursor: pointer;
+`
