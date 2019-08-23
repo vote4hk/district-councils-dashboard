@@ -6,9 +6,7 @@ import PropTypes from 'prop-types'
 
 const Container = styled.div`
    {
-    width: 100%;
-    height: 220px;
-    padding: 0;
+    padding: 16px;
   }
 `
 
@@ -20,14 +18,16 @@ class MainAreas extends Component {
   render() {
     const { areas } = this.props
     return (
-      <Container maxWidth="lg">
+      <Container>
         <Typography variant="h6" gutterBottom>
           主要屋邨 / 地區
         </Typography>
         <Box display="flex" flexWrap="wrap" alignContent="flex-start">
           {areas.map((area, index) => (
             <Box mr={1} key={index}>
-              {`${Object.keys(area)[0]}. ${area[Object.keys(area)[0]]}`}
+              <Typography variant="body1">
+                {`${Object.keys(area)[0]} ${area[Object.keys(area)[0]]}`}
+              </Typography>
             </Box>
           ))}
         </Box>
