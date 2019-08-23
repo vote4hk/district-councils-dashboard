@@ -34,6 +34,7 @@ councilors {
   political_affiliation
   person {
     id
+    uuid
     name_zh
     name_en
   }
@@ -44,6 +45,7 @@ candidates {
   camp
   person {
     id
+    uuid
     name_zh
     name_en
   }

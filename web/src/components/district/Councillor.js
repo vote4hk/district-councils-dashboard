@@ -22,7 +22,7 @@ class Councillor extends Component {
     // areas: PropTypes.array.isRequired
   }
 
-  homeUrl = 'https://cswbrian.github.io/district-councils-dashboard/'
+  homeUrl = 'https://cswbrian.github.io/district-councils-dashboard'
 
   render() {
     const { councilor } = this.props
