@@ -313,7 +313,7 @@ class ProfilePage extends Component {
             },
           ]
 
-          if (lastElection.political_affiliation) {
+          if (lastElection && lastElection.political_affiliation) {
             personHighlight.push({
               title: '報稱政治聯繫',
               text: `${lastElection.political_affiliation} （${lastElection.camp}）`,
