@@ -94,7 +94,6 @@ const PersonName = styled.div`
     position: absolute;
     left: 116px;
     top: 32px;
-    color: white;
   }
 `
 
@@ -306,17 +305,26 @@ class ProfilePage extends Component {
             },
           ]
 
-          const personHighlight = [
-            {
+          const personHighlight = []
+
+          if (person.estimated_yob) {
+            personHighlight.push({
               title: '年齡',
               text: `${2019 - person.estimated_yob}歲`,
-            },
-          ]
+            })
+          }
 
-          if (lastElection && lastElection.political_affiliation) {
+          if (currentTerm && currentTerm.political_affiliation) {
             personHighlight.push({
               title: '報稱政治聯繫',
-              text: `${lastElection.political_affiliation} （${lastElection.camp}）`,
+              text: `${currentTerm.political_affiliation}`,
+            })
+          } else if (lastElection && lastElection.political_affiliation) {
+            personHighlight.push({
+              title: '報稱政治聯繫',
+              text:
+                `${lastElection.political_affiliation}` +
+                (lastElection.camp && `（${lastElection.camp}）`),
             })
           }
 
@@ -346,16 +354,24 @@ class ProfilePage extends Component {
                 </Box>
                 <Box>
                   <PersonName>
-                    <Typography variant="h3" style={{ marginBottom: '2px' }}>
+                    <Typography
+                      variant="h3"
+                      style={{ marginBottom: '2px', color: 'white' }}
+                    >
                       {person.name_zh || ''}
                     </Typography>
-                    <Typography variant="h5" style={{ marginBottom: '8px' }}>
+                    <Typography
+                      variant="h5"
+                      style={{ marginBottom: '8px', color: 'white' }}
+                    >
                       {person.name_en || ''}
                     </Typography>
                     {currentTerm && (
-                      <Typography variant="h6">{`現任${currentTerm.district.dc_name_zh}區議員（${currentTerm.constituency.name_zh}）`}</Typography>
+                      <Typography
+                        variant="h6"
+                        style={{ marginBottom: '8px', color: 'black' }}
+                      >{`現任${currentTerm.district.dc_name_zh}區議員（${currentTerm.constituency.name_zh}）`}</Typography>
                     )}
-                    <DistrictName>{/* TODO */}-</DistrictName>
                   </PersonName>
                 </Box>
               </CandidateHeaderContainer>
