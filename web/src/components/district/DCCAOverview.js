@@ -12,6 +12,7 @@ const Container = styled(Paper)`
   && {
     width: 100%;
     padding: 16px;
+    box-shadow: none;
   }
 `
 
