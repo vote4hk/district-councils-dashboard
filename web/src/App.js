@@ -35,6 +35,7 @@ const ContentContainer = styled(Box)`
   && {
     display: flex;
     flex-direction: column;
+    width: 100%;
   }
 `
 
