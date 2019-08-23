@@ -43,7 +43,7 @@ function MobileAppBar(props) {
 
   return (
     <>
-      <StyledAppBar position="sticky" color="secondary">
+      <StyledAppBar position="sticky" color="primary">
         <StyledToolbar disableGutters>
           <IconButton
             color="inherit"
