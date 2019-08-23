@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import CampCompareChartContainer from 'components/CampCompareChartContainer'
 import styled from 'styled-components'
 
-import { TitleText, SubTitleText } from 'components/atom/Text'
+import { TitleText, SubTitleText } from 'components/atoms/Text'
 
 const styles = theme => ({})
 

@@ -6,7 +6,7 @@ import Paper from '@material-ui/core/Paper'
 import IconButton from '@material-ui/core/IconButton'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
-import { Tag } from '../atom/Tag'
+import { Tag } from '../atoms/Tag'
 
 const Container = styled(Paper)`
   && {

@@ -6,8 +6,8 @@ import Box from '@material-ui/core/Box'
 import PropTypes from 'prop-types'
 import Avatar from '@material-ui/core/Avatar'
 import { PlainCard } from '../molecules/Card'
-import { Tag } from '../atom/Tag'
-import { UnstyledNavLink } from '../atom/UnstyledLink'
+import { Tag } from '../atoms/Tag'
+import { UnstyledNavLink } from '../atoms/UnstyledLink'
 
 const StyledAvatar = styled(Avatar)`
   && {
