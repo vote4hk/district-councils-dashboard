@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
 import styled, { css } from 'styled-components'
+import Typography from '@material-ui/core/Typography'
 import Avatar from '@material-ui/core/Avatar'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
-import moment from 'moment'
+import ScrollableTabsButtonAuto from '../../components/molecules/ScollableTabs'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import { bps } from 'ui/responsive'
@@ -12,63 +13,44 @@ import { bps } from 'ui/responsive'
 // TODO: add age, camp & political_affiliation
 const GET_PEOPLE_PROFILE = gql`
   query($id: Int!) {
-    dcd_people(
-      where: { id: { _eq: $id } }
-      order_by: { elections_aggregate: { max: { year: asc } } }
-    ) {
+    dcd_people(where: { id: { _eq: $id } }) {
       id
-      name_en
+      uuid
       name_zh
-      estimated_yob
+      name_en
       gender
-      elections {
-        occupation
-        cacode
+      estimated_yob
+      councilors {
         year
-        votes
-        vote_percentage
-        is_won
+        cacode
+        career
+        district {
+          dc_name_zh
+        }
+        political_affiliation
+        post
         constituency {
+          id
           name_zh
-          expected_population
-          deviation_percentage
         }
       }
-    }
-  }
-`
-
-const commonFontStyle = css`
-  font-family: 'PingFangTC-Light';
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-`
-
-const CandidateName = styled.div`
-   {
-    ${commonFontStyle}
-    margin: 20px;
-    font-size: 24px;
-    font-weight: 600;
-    color: #ffffff;
-    ${bps.up('sm')} {
-      margin: 0px;
-      margin-top: 50px;
-      font-size: 30px;
-    }
-
-    ${bps.up('md')} {
-      margin-top: 50px;
-      font-size: 48px;
+      candidates {
+        candidate_number
+        is_won
+        occupation
+        political_affiliation
+        age
+        cacode
+        camp
+        election_type
+        year
+      }
     }
   }
 `
 
 const DistrictName = styled.div`
    {
-    ${commonFontStyle}
     font-size: 14px;
     font-weight: 600;
     color: #ffffff;
@@ -84,48 +66,40 @@ const DistrictName = styled.div`
 
 const FlexRowContainer = styled(Box)`
   && {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    margin: auto;
-
-    ${bps.up('md')} {
-      width: 100%;
-    }
-
-    ${bps.up('lg')} {
-      width: 1440px;
-    }
+    width: 100%;
   }
 `
 
 const CandidateHeaderContainer = styled(FlexRowContainer)`
   && {
-    opacity: 0.95;
+    height: 84px;
+    position: relative;
+    display: flex;
     background-color: #f6416e;
   }
 `
 
 const CandidateAvatar = styled(Avatar)`
   && {
-    width: 153px;
-    height: 180px;
-    border-radius: 0;
+    position: absolute;
+    left: 16px;
+    bottom: -16px;
+    width: 84px;
+    height: 84px;
+  }
+`
 
-    ${bps.up('sm')} {
-      margin-top: 40px;
-      margin-left: 60px;
-    }
-
-    ${bps.up('md')} {
-      margin-left: 120px;
-    }
+const PersonName = styled.div`
+   {
+    position: absolute;
+    left: 116px;
+    top: 32px;
+    color: white;
   }
 `
 
 const BasicInfoHeader = styled.div`
   && {
-    ${commonFontStyle}
     font-size: 32px;
     font-weight: 600;
     width: 100%;
@@ -151,7 +125,6 @@ const ElectionHistoryContainer = styled(FlexRowContainer)`
 `
 const ElectionHistoryHeader = styled.div`
   && {
-    ${commonFontStyle}
     font-size: 32px;
     font-weight: 600;
     color: #333333;
@@ -168,6 +141,12 @@ const YearDiv = styled.div`
   }
 `
 
+const PersonHighlight = styled.div`
+  && {
+    margin-top: 24px;
+    display: flex;
+  }
+`
 const ElectionHistoryPaper = styled(Paper)`
   && {
     padding: 20px;
@@ -182,7 +161,6 @@ const ElectionHistoryContentGrid = styled(Grid)`
 
 const ElectionHistoryContentSpan = styled(Grid)`
   && {
-    ${commonFontStyle}
     font-size: 18px;
     color: #4a4a4a;
   }
@@ -195,7 +173,6 @@ const ElectionHistoryContentHeaderSpan = styled(ElectionHistoryContentSpan)`
 `
 const ElectionDetailButton = styled.div`
   && {
-    ${commonFontStyle}
     padding: 15px;
     font-weight: 600;
     color: #ffb700;
@@ -207,28 +184,8 @@ const ElectionDetailButton = styled.div`
   }
 `
 
-const BasicInfoGridContainer = styled(FlexRowContainer)`
-  && {
-    margin-top: 40px;
-    margin-left: 20px;
-    margin-bottom: 40px;
-
-    ${bps.up('sm')} {
-      padding-left: 40px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    ${bps.up('md')} {
-      padding-left: 55px;
-      height: 100%;
-    }
-  }
-`
-
 const BasicInfoGridHeader = styled(Grid)`
   && {
-    ${commonFontStyle}
     font-weight: 600;
     color: #4a4a4a;
     font-size: 18px;
@@ -237,12 +194,10 @@ const BasicInfoGridHeader = styled(Grid)`
 
 const BasicInfoGridContent = styled(Grid)`
   && {
-    ${commonFontStyle}
     color: #4a4a4a;
     font-size: 18px;
   }
 `
-
 class ProfilePage extends Component {
   constructor(props) {
     super(props)
@@ -329,100 +284,93 @@ class ProfilePage extends Component {
         {({ loading, error, data }) => {
           if (loading) return null
           if (error) return `Error! ${error}`
-          const person = data.dc_people[0]
+          const person = data.dcd_people[0]
+
+          const currentTerm =
+            person.councilors && person.councilors[person.councilors.length - 1]
+          const lastElection =
+            person.candidates && person.candidates[person.candidates.length - 1]
+
+          const tabs = [
+            {
+              label: '履歷',
+              content: '123',
+            },
+            {
+              label: '立場',
+              content: '123',
+            },
+            {
+              label: '利益申報',
+              content: '123',
+            },
+          ]
+
+          const personHighlight = [
+            {
+              title: '年齡',
+              text: `${2019 - person.estimated_yob}歲`,
+            },
+          ]
+
+          if (lastElection.political_affiliation) {
+            personHighlight.push({
+              title: '報稱政治聯繫',
+              text: `${lastElection.political_affiliation} （${lastElection.camp}）`,
+            })
+          }
+
+          personHighlight.push({
+            title: '職業',
+            text:
+              (currentTerm && currentTerm.career) || lastElection.occupation,
+          })
+
+          console.log(person)
 
           return (
             <>
               <CandidateHeaderContainer>
                 <Box
                   width={{ sm: '250px', md: '300px' }}
-                  height={{ sm: '200px' }}
+                  height={{ sm: '300px' }}
                 >
                   <CandidateAvatar
-                    src={`${homeUrl}/static/images/avatar/${person.id}.jpg`}
+                    src={`${homeUrl}/static/images/avatar/${person.uuid}.jpg`}
                     imgProps={{
                       onError: e => {
                         e.target.src = `${homeUrl}/static/images/avatar/default.png`
                       },
                     }}
-                  ></CandidateAvatar>
+                  />
                 </Box>
                 <Box>
-                  <CandidateName>
-                    {person.name_zh ? person.name_zh : ''}{' '}
-                    {person.name_zh ? person.name_en : ''}
+                  <PersonName>
+                    <Typography variant="h3" style={{ marginBottom: '2px' }}>
+                      {person.name_zh || ''}
+                    </Typography>
+                    <Typography variant="h5" style={{ marginBottom: '8px' }}>
+                      {person.name_en || ''}
+                    </Typography>
+                    {currentTerm && (
+                      <Typography variant="h6">{`現任${currentTerm.district.dc_name_zh}區議員（${currentTerm.constituency.name_zh}）`}</Typography>
+                    )}
                     <DistrictName>{/* TODO */}-</DistrictName>
-                  </CandidateName>
+                  </PersonName>
                 </Box>
               </CandidateHeaderContainer>
 
-              <BasicInfoGridContainer>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} md={3}>
-                    <BasicInfoHeader>基本資料</BasicInfoHeader>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Grid container spacing={3}>
-                      <BasicInfoGridHeader item xs={5}>
-                        性別
-                      </BasicInfoGridHeader>
-                      <BasicInfoGridContent item xs={7}>
-                        {person.gender
-                          ? person.gender === 'male'
-                            ? '男'
-                            : '女'
-                          : '-'}
-                      </BasicInfoGridContent>
+              <PersonHighlight>
+                {personHighlight.map((highlight, index) => (
+                  <Box key={index} p={2}>
+                    <Typography variant="h5">{highlight.text}</Typography>
+                    <Typography variant="h6">{highlight.title}</Typography>
+                  </Box>
+                ))}
+              </PersonHighlight>
 
-                      <BasicInfoGridHeader item xs={5}>
-                        年齡
-                      </BasicInfoGridHeader>
-                      <BasicInfoGridContent item xs={7}>
-                        {person.estimated_yob
-                          ? `${moment().year() - person.estimated_yob}歲`
-                          : '-'}
-                      </BasicInfoGridContent>
-
-                      <BasicInfoGridHeader item xs={5}>
-                        出生年份
-                      </BasicInfoGridHeader>
-                      <BasicInfoGridContent item xs={7}>
-                        {person.estimated_yob ? person.estimated_yob : '-'}
-                      </BasicInfoGridContent>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Grid container spacing={3}>
-                      <BasicInfoGridHeader item xs={5}>
-                        職業
-                      </BasicInfoGridHeader>
-                      <BasicInfoGridContent item xs={7}>
-                        {person.elections[person.elections.length - 1]
-                          .occupation
-                          ? person.elections[person.elections.length - 1]
-                              .occupation
-                          : '-'}
-                      </BasicInfoGridContent>
-
-                      <BasicInfoGridHeader item xs={5}>
-                        陣營
-                      </BasicInfoGridHeader>
-                      <BasicInfoGridContent item xs={7}>
-                        {/* TODO */}-
-                      </BasicInfoGridContent>
-
-                      <BasicInfoGridHeader item xs={5}>
-                        所屬政治聯繫
-                      </BasicInfoGridHeader>
-                      <BasicInfoGridContent item xs={7}>
-                        {/* TODO */}-
-                      </BasicInfoGridContent>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </BasicInfoGridContainer>
-
-              <ElectionHistoryContainer>
+              <ScrollableTabsButtonAuto />
+              {/* <ElectionHistoryContainer>
                 <Grid container spacing={3}>
                   <Grid item xs={12}>
                     <ElectionHistoryHeader>區議會選舉</ElectionHistoryHeader>
@@ -437,7 +385,7 @@ class ProfilePage extends Component {
                       )
                     )}
                 </Grid>
-              </ElectionHistoryContainer>
+              </ElectionHistoryContainer> */}
             </>
           )
         }}
