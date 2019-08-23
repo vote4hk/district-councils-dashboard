@@ -7,7 +7,6 @@ const StyledCard = styled(Card)`
     padding: 16px;
     margin: 16px;
     background-color: #fafafa;
-    border: black 1px solid;
   }
 `
 
