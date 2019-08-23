@@ -2,22 +2,21 @@ import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
 import DCCACompareMap from '../../components/DCCACompareMap'
 import { Query } from 'react-apollo'
-import DistrictCard from 'components/district/DistrictCard'
 import MainAreas from 'components/district/MainAreas'
+import Councillor from 'components/district/Councillor'
+import CouncillorSelection from 'components/district/CouncillorSelection'
 import CandidateList from 'components/district/CandidateList'
-import Metrics from 'components/district/Metrics'
+import DCCAOverview from 'components/district/DCCAOverview'
 import styled from 'styled-components'
 import { bps } from 'ui/responsive'
 import Button from '@material-ui/core/Button'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Collapse from '@material-ui/core/Collapse'
-import Typography from '@material-ui/core/Typography'
 import _ from 'lodash'
 import { QUERY_CONSTITUENCIES } from 'queries/gql'
 
 const FullWidthBox = styled(Box)`
   && {
-    padding-top: 4rem;
     width: 100%;
   }
 `
@@ -47,22 +46,6 @@ const FlexRowContainer = styled(Box)`
     margin: auto;
   }
 `
-
-const DistrictCardContainer = styled(Box)`
-  && {
-    padding-left: 30px;
-    margin: 0px;
-    width: 400px;
-    height: 400px;
-
-    ${bps.down('md')} {
-      margin: 10px;
-      width: 100%;
-      padding: 0px;
-    }
-  }
-`
-
 const groupVoteStat = voteStats => {
   const data = _.groupBy(voteStats, stat => stat.subtype)
   data.aggregations = {
@@ -121,68 +104,52 @@ class BattleGroundPage extends Component {
 
     return (
       <>
-        <FlexRowContainer>
-          <Button onClick={() => this.setState({ showMap: !showMap })}>
-            {showMap ? '隱藏地圖' : '顯示地圖'}
-            <ExpandMoreIcon />
-          </Button>
-          <Collapse in={showMap}>
-            <Box
-              width={{ sm: '100%', md: '960px' }}
-              height={{ sm: '300px', md: '400px' }}
-            >
-              <DCCACompareMap
-                year={year}
-                code={code}
-                changeDistrict={this.handleChangeDistrict}
-              />
-            </Box>
-          </Collapse>
-          <Query query={QUERY_CONSTITUENCIES} variables={{ year, code }}>
-            {({ loading, error, data }) => {
-              if (loading) return null
-              if (error) return `Error! ${error}`
-              const district = data.dcd_constituencies[0]
-              const voterData = groupVoteStat(district.vote_stats)
-              return (
-                <>
-                  {/* TODO: */}
-                  <Typography>{district.name_zh}</Typography>
-                  <Typography>{district.district.dc_name_zh}</Typography>
-                  {district.tags.map((tag, index) => (
-                    <Typography key={index}>{tag.tag}</Typography>
-                  ))}
-                  <Typography>
-                    New voters: {voterData.aggregations.all_voters}
-                  </Typography>
-                  <Typography>
-                    Increased by:{' '}
-                    {(100 * voterData.aggregations.new_voters) /
-                      voterData.aggregations.all_voters}
-                    %
-                  </Typography>
+        <Query
+          query={QUERY_CONSTITUENCIES}
+          variables={{ year, lastElectionYear: year - 4, code }}
+        >
+          {({ loading, error, data }) => {
+            if (loading) return null
+            if (error) return `Error! ${error}`
+            const district = data.dcd_constituencies[0]
+            const last_district = data.last_dcd_constituencies[0]
 
-                  <DistrictCardContainer>
-                    <DistrictCard
-                      {...district}
-                      year={parseInt(year, 10)}
+            console.log(data)
+
+            return (
+              <>
+                <DCCAOverview
+                  year={year}
+                  name_zh={district.name_zh}
+                  dc_name_zh={district.district.dc_name_zh}
+                  code={district.code}
+                  tags={district.tags}
+                  voterData={groupVoteStat(district.vote_stats)}
+                />
+                <Button onClick={() => this.setState({ showMap: !showMap })}>
+                  {showMap ? '隱藏地圖' : '顯示地圖'}
+                  <ExpandMoreIcon />
+                </Button>
+                <Collapse in={showMap}>
+                  <Box
+                    width={{ sm: '100%', md: '960px' }}
+                    height={{ sm: '300px', md: '400px' }}
+                  >
+                    <DCCACompareMap
+                      year={year}
                       code={code}
-                      onNextElection={this.onNextElection.bind(this)}
-                      onPrevElection={this.onPrevElection.bind(this)}
+                      changeDistrict={this.handleChangeDistrict}
                     />
-                  </DistrictCardContainer>
-                  <FullWidthBox>
-                    <MainAreas areas={district.main_areas || []} />
-                  </FullWidthBox>
-                  <LowerBackgroundContainer>
-                    <FlexRowContainer>
-                      <FullWidthBox>
-                        <Metrics
-                          year={year}
-                          code={code}
-                          district={district}
-                        ></Metrics>
-                      </FullWidthBox>
+                  </Box>
+                </Collapse>
+                <MainAreas areas={district.main_areas || []} />
+                {last_district.councilors &&
+                last_district.councilors.length === 1 ? (
+                  <Councillor councilor={last_district.councilors[0]} />
+                ) : (
+                  <CouncillorSelection />
+                )}
+                {/* <LowerBackgroundContainer>
                       <FullWidthBox>
                         <CandidateList
                           candidates={district.candidates}
@@ -191,13 +158,11 @@ class BattleGroundPage extends Component {
                           handleCandidateSelected={this.handleCandidateSelected}
                         />
                       </FullWidthBox>
-                    </FlexRowContainer>
-                  </LowerBackgroundContainer>
-                </>
-              )
-            }}
-          </Query>
-        </FlexRowContainer>
+                  </LowerBackgroundContainer> */}
+              </>
+            )
+          }}
+        </Query>
       </>
     )
   }
