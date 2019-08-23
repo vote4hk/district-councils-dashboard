@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import MobileAppBar from './atoms/MobileAppBar'
+import MobileAppBar from './molecules/MobileAppBar'
 
 const navs = [
   { url: '/', title: 'Search' },
