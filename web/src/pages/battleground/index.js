@@ -1,61 +1,22 @@
 import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
 import DCCACompareMap from '../../components/DCCACompareMap'
-import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import DistrictCard from 'components/district/DistrictCard'
 import MainAreas from 'components/district/MainAreas'
+import Councillor from 'components/district/Councillor'
+import CouncillorSelection from 'components/district/CouncillorSelection'
 import CandidateList from 'components/district/CandidateList'
-import Metrics from 'components/district/Metrics'
+import DCCAOverview from 'components/district/DCCAOverview'
 import styled from 'styled-components'
-import { bps } from 'utils/responsive'
+import { bps } from 'ui/responsive'
 import Button from '@material-ui/core/Button'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Collapse from '@material-ui/core/Collapse'
-
-const GET_DISTRICTS = gql`
-  query($year: Int!, $code: String!, $electionYear: date) {
-    dc_constituencies(where: { year: { _eq: $year }, code: { _eq: $code } }) {
-      name_zh
-      name_en
-      code
-      deviation_percentage
-      expected_population
-      main_areas
-      candidates {
-        candidate_number
-        person {
-          id
-          name_zh
-          name_en
-          political_affiliations(
-            where: {
-              year_from: { _lte: $electionYear }
-              year_to: { _gte: $electionYear }
-            }
-          ) {
-            year_to
-            year_from
-            political_affiliation {
-              name_zh
-              id
-              camp {
-                name_zh
-              }
-            }
-          }
-        }
-        vote_percentage
-        votes
-        is_won
-      }
-    }
-  }
-`
+import _ from 'lodash'
+import { QUERY_CONSTITUENCIES } from 'queries/gql'
 
 const FullWidthBox = styled(Box)`
   && {
-    padding-top: 4rem;
     width: 100%;
   }
 `
@@ -85,21 +46,14 @@ const FlexRowContainer = styled(Box)`
     margin: auto;
   }
 `
-
-const DistrictCardContainer = styled(Box)`
-  && {
-    padding-left: 30px;
-    margin: 0px;
-    width: 400px;
-    height: 400px;
-
-    ${bps.down('md')} {
-      margin: 10px;
-      width: 100%;
-      padding: 0px;
-    }
+const groupVoteStat = voteStats => {
+  const data = _.groupBy(voteStats, stat => stat.subtype)
+  data.aggregations = {
+    all_voters: data.VOTERS.map(v => v.count).reduce((c, v) => c + v, 0),
+    new_voters: data.NEW_VOTERS.map(v => v.count).reduce((c, v) => c + v, 0),
   }
-`
+  return data
+}
 class BattleGroundPage extends Component {
   constructor(props) {
     super(props)
@@ -125,7 +79,7 @@ class BattleGroundPage extends Component {
   onPrevElection() {
     const {
       match: {
-        params: { year = 2019, code },
+        params: { code },
       },
     } = this.props
     this.props.history.push(`/district/2015/${code}`)
@@ -148,56 +102,54 @@ class BattleGroundPage extends Component {
       },
     } = this.props
 
-    // TODO: this should be the election date
-    const electionYear = `${year}-01-01`
-
     return (
       <>
-        <FlexRowContainer>
-          <Button onClick={() => this.setState({ showMap: !showMap })}>
-            {showMap ? '隱藏地圖' : '顯示地圖'}
-            <ExpandMoreIcon />
-          </Button>
-          <Collapse in={showMap}>
-            <Box
-              width={{ sm: '100%', md: '960px' }}
-              height={{ sm: '300px', md: '400px' }}
-            >
-              <DCCACompareMap
-                year={year}
-                code={code}
-                changeDistrict={this.handleChangeDistrict}
-              />
-            </Box>
-          </Collapse>
-          <Query query={GET_DISTRICTS} variables={{ year, code, electionYear }}>
-            {({ loading, error, data }) => {
-              if (loading) return null
-              if (error) return `Error! ${error}`
-              const district = data.dc_constituencies[0]
-              return (
-                <>
-                  <DistrictCardContainer>
-                    <DistrictCard
-                      {...district}
-                      year={parseInt(year, 10)}
+        <Query
+          query={QUERY_CONSTITUENCIES}
+          variables={{ year, lastElectionYear: year - 4, code }}
+        >
+          {({ loading, error, data }) => {
+            if (loading) return null
+            if (error) return `Error! ${error}`
+            const district = data.dcd_constituencies[0]
+            const last_district = data.last_dcd_constituencies[0]
+
+            console.log(data)
+
+            return (
+              <>
+                <DCCAOverview
+                  year={year}
+                  name_zh={district.name_zh}
+                  dc_name_zh={district.district.dc_name_zh}
+                  code={district.code}
+                  tags={district.tags}
+                  voterData={groupVoteStat(district.vote_stats)}
+                />
+                <Button onClick={() => this.setState({ showMap: !showMap })}>
+                  {showMap ? '隱藏地圖' : '顯示地圖'}
+                  <ExpandMoreIcon />
+                </Button>
+                <Collapse in={showMap}>
+                  <Box
+                    width={{ sm: '100%', md: '960px' }}
+                    height={{ sm: '300px', md: '400px' }}
+                  >
+                    <DCCACompareMap
+                      year={year}
                       code={code}
-                      onNextElection={this.onNextElection.bind(this)}
-                      onPrevElection={this.onPrevElection.bind(this)}
+                      changeDistrict={this.handleChangeDistrict}
                     />
-                  </DistrictCardContainer>
-                  <FullWidthBox>
-                    <MainAreas areas={district.main_areas || []} />
-                  </FullWidthBox>
-                  <LowerBackgroundContainer>
-                    <FlexRowContainer>
-                      <FullWidthBox>
-                        <Metrics
-                          year={year}
-                          code={code}
-                          district={district}
-                        ></Metrics>
-                      </FullWidthBox>
+                  </Box>
+                </Collapse>
+                <MainAreas areas={district.main_areas || []} />
+                {last_district.councilors &&
+                last_district.councilors.length === 1 ? (
+                  <Councillor councilor={last_district.councilors[0]} />
+                ) : (
+                  <CouncillorSelection />
+                )}
+                {/* <LowerBackgroundContainer>
                       <FullWidthBox>
                         <CandidateList
                           candidates={district.candidates}
@@ -206,13 +158,11 @@ class BattleGroundPage extends Component {
                           handleCandidateSelected={this.handleCandidateSelected}
                         />
                       </FullWidthBox>
-                    </FlexRowContainer>
-                  </LowerBackgroundContainer>
-                </>
-              )
-            }}
-          </Query>
-        </FlexRowContainer>
+                  </LowerBackgroundContainer> */}
+              </>
+            )
+          }}
+        </Query>
       </>
     )
   }

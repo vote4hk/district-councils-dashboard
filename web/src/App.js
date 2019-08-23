@@ -41,7 +41,6 @@ const ContentContainer = styled(Box)`
 const Root = styled(Box)`
   && {
     display: flex;
-    max-width: 600px;
     margin: auto;
     overflow: hidden;
   }

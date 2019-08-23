@@ -8,7 +8,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import Divider from '@material-ui/core/Divider'
 import Box from '@material-ui/core/Box'
 import PropTypes from 'prop-types'
-import { bps } from 'utils/responsive'
+import { bps } from 'ui/responsive'
 
 const Container = styled(Paper)`
   && {
@@ -82,26 +82,6 @@ const SeperatedRow = styled(Box)`
   }
 `
 
-function getCouncillor(candidates) {
-  const councillor = {
-    name: '',
-    politicalAffiliation: '',
-  }
-
-  const electedCandidate = candidates.find(candidate => candidate.is_won)
-  if (electedCandidate) {
-    councillor.name =
-      electedCandidate.person.name_zh || electedCandidate.person.name_en
-    if (electedCandidate.person.political_affiliations.length) {
-      const political_affiliation =
-        electedCandidate.person.political_affiliations[0].political_affiliation
-      councillor.political_affiliation = political_affiliation.name_zh
-    }
-  }
-
-  return councillor
-}
-
 class DistrictCard extends Component {
   static propTypes = {
     year: PropTypes.number.isRequired,
@@ -110,7 +90,8 @@ class DistrictCard extends Component {
     name_en: PropTypes.string.isRequired,
     onPrevElection: PropTypes.func.isRequired,
     onNextElection: PropTypes.func.isRequired,
-    candidates: PropTypes.array.isRequired,
+    councilors: PropTypes.array.isRequired,
+    district: PropTypes.object.isRequired,
   }
 
   renderPrevElectionButton(year) {
@@ -141,8 +122,8 @@ class DistrictCard extends Component {
   }
 
   render() {
-    const { name_zh, year, code, candidates } = this.props
-    const councillor = getCouncillor(candidates)
+    const { name_zh, year, code, councilors, district, stations } = this.props
+    const councilor = councilors.length > 0 ? councilors[0] : {}
     return (
       <Container>
         <InnerContainer border={0} color="primary.minor">
@@ -153,21 +134,27 @@ class DistrictCard extends Component {
             </YearText>
             {this.renderNextElectionButton(year)}
           </SeperatedRow>
-          <RegionText>--區</RegionText>
+          <RegionText>{district.dc_name_zh}</RegionText>
           <Typography variant="h3">{name_zh}</Typography>
           <CodeText>{code}</CodeText>
           <StyledDivier />
           <SeperatedRow>
             <Typography variant="h6">區議員</Typography>
-            <Typography>{councillor.name}</Typography>
+            <Typography>
+              {councilor.person ? councilor.person.name_zh : '-'}
+            </Typography>
           </SeperatedRow>
           <SeperatedRow>
             <Typography variant="h6">政治聯繫</Typography>
-            <Typography>{councillor.political_affiliation}</Typography>
+            <Typography>{councilor.political_affiliation || '-'}</Typography>
           </SeperatedRow>
           <SeperatedRow>
             <Typography variant="h6">投票站</Typography>
-            <Typography variant="subtitle2">-</Typography>
+            {stations.map((station, index) => (
+              <Typography key={index} variant="subtitle2">
+                {station.name_zh}
+              </Typography>
+            ))}
           </SeperatedRow>
         </InnerContainer>
       </Container>
