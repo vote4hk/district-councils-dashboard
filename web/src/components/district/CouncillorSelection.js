@@ -25,7 +25,7 @@ export default function CustomizedDialogs() {
             </Typography>
 
             <Typography variant="h6">
-              此為新增選區，按址選擇現任區議員
+              此為新設選區，按此選擇現任區議員
             </Typography>
           </Box>
           <Box>

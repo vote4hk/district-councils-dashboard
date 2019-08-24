@@ -23,6 +23,8 @@ const GET_PEOPLE_PROFILE = gql`
       councilors {
         year
         cacode
+        term_from
+        term_to
         career
         district {
           dc_name_zh
@@ -83,10 +85,10 @@ const FlexRowContainer = styled(Box)`
 
 const CandidateHeaderContainer = styled(FlexRowContainer)`
   && {
-    height: 84px;
+    height: 116px;
     position: relative;
     display: flex;
-    background-color: #f6416e;
+    background: linear-gradient(#f6416e 84px, rgba(255, 255, 255, 0) 32px);
   }
 `
 
@@ -94,7 +96,7 @@ const CandidateAvatar = styled(Avatar)`
   && {
     position: absolute;
     left: 16px;
-    bottom: -16px;
+    bottom: 8px;
     width: 84px;
     height: 84px;
   }
@@ -153,7 +155,6 @@ const YearDiv = styled.div`
 
 const PersonHighlight = styled.div`
   && {
-    margin-top: 24px;
     display: flex;
   }
 `
@@ -333,10 +334,7 @@ class ProfilePage extends Component {
           return (
             <>
               <CandidateHeaderContainer>
-                <Box
-                  width={{ sm: '250px', md: '300px' }}
-                  height={{ sm: '300px' }}
-                >
+                <Box>
                   <CandidateAvatar
                     src={`${homeUrl}/static/images/avatar/${person.uuid}.jpg`}
                     imgProps={{
@@ -360,12 +358,15 @@ class ProfilePage extends Component {
                     >
                       {person.name_en || ''}
                     </Typography>
-                    {currentTerm && (
-                      <Typography
-                        variant="h6"
-                        style={{ marginBottom: '8px', color: 'black' }}
-                      >{`現任${currentTerm.district.dc_name_zh}區議員（${currentTerm.constituency.name_zh}）`}</Typography>
-                    )}
+                    {currentTerm &&
+                      currentTerm.term_to &&
+                      Date.parse(new Date()) <
+                        Date.parse(currentTerm.term_to) && (
+                        <Typography
+                          variant="h6"
+                          color="secondary"
+                        >{`現任${currentTerm.district.dc_name_zh}區議員（${currentTerm.constituency.name_zh}）`}</Typography>
+                      )}
                   </PersonName>
                 </Box>
               </CandidateHeaderContainer>

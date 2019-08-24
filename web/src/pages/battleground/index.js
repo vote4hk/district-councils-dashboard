@@ -140,11 +140,16 @@ class BattleGroundPage extends Component {
                   </Box>
                 </Collapse>
                 <MainAreas areas={district.main_areas || []} />
-                {last_district.councilors &&
-                last_district.councilors.length === 1 ? (
-                  <Councillor councilor={last_district.councilors[0]} />
+                {district.predecessors && district.predecessors.length === 1 ? (
+                  <Councillor
+                    councilor={
+                      district.predecessors[0].predecessor.councilors[0]
+                    }
+                  />
                 ) : (
-                  <CouncillorSelection />
+                  <CouncillorSelection
+                    suggestDistricts={district.predecessors}
+                  />
                 )}
                 {/* <LowerBackgroundContainer>
                       <FullWidthBox>
