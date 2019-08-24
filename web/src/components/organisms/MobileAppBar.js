@@ -32,11 +32,6 @@ const AppBarTitle = styled(UnstyledNavLink)`
   }
 `
 
-const Transition = React.forwardRef((props, ref) => (
-  <Slide direction="left" ref={ref} {...props} />
-))
-Transition.displayName = 'Transition'
-
 function MobileAppBar(props) {
   const {
     drawer: { dispatch },
@@ -62,7 +57,7 @@ function MobileAppBar(props) {
             color="inherit"
             component="span"
             aria-label="Menu"
-            onClick={() => dispatch({ type: DRAWER_OPEN })}
+            // onClick={() => dispatch({ type: DRAWER_OPEN })}
           >
             <MenuIcon />
           </IconButton>

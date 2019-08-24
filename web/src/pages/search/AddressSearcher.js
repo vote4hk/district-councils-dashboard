@@ -11,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/Search'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import * as AddressParser from 'hk-address-parser-lib'
-import { getAllFeaturesFromPoint } from '../utils/features'
+import { getAllFeaturesFromPoint } from '../../utils/features'
 
 function renderInputComponent(inputProps) {
   const { classes, inputRef = () => {}, ref, ...other } = inputProps

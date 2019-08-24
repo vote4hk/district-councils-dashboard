@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import Box from '@material-ui/core/Box'
-import AddressSearcher from '../../components/AddressSearcher'
-import DistrictSelector from 'components/search/DistrictSelector'
+import AddressSearcher from './AddressSearcher'
+import DistrictSelector from './DistrictSelector'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import Button from '@material-ui/core/Button'
@@ -87,7 +87,7 @@ const NavBarButton = styled(IconButton)`
   }
 `
 
-function SearchDrawer(props) {
+function SearchPage(props) {
   const {
     drawer: { dispatch },
   } = React.useContext(ContextStore)
@@ -187,4 +187,4 @@ function SearchDrawer(props) {
   )
 }
 
-export default withRouter(SearchDrawer)
+export default withRouter(SearchPage)

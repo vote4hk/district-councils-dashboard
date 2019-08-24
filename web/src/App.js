@@ -4,6 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import { ThemeProvider } from 'styled-components/'
 import IndexPage from './pages'
+import SearchPage from './pages/search'
 import ProfilePage from './pages/profile'
 import DistrictPage from './pages/district'
 import BattleGroundPage from './pages/battleground'
@@ -14,7 +15,6 @@ import theme, { styledComponentTheme } from 'ui/theme/main'
 import './App.css'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
-import SearchDrawer from 'components/search/SearchDrawer'
 import Drawer from '@material-ui/core/Drawer'
 import MobileAppBar from './components/organisms/MobileAppBar'
 import { makeStyles } from '@material-ui/core/styles'
@@ -88,14 +88,14 @@ const App = props => {
                 </main>
               </ContentContainer>
               <Drawer
-                anchor="right"
+                anchor="left"
                 open={drawerState.open}
                 variant="persistent"
                 classes={{
                   paper: classes.paper,
                 }}
               >
-                <SearchDrawer />
+                <SearchPage />
               </Drawer>
             </Root>
           </ContextStore.Provider>
