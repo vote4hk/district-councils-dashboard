@@ -33,6 +33,17 @@ const GET_PEOPLE_PROFILE = gql`
           id
           name_zh
         }
+        meeting_attendances(
+          order_by: { meeting: { meet_year: desc }, total: desc }
+        ) {
+          meeting {
+            meet_name
+            meet_type
+            meet_year
+          }
+          attended
+          total
+        }
       }
       candidates {
         candidate_number
@@ -290,21 +301,6 @@ class ProfilePage extends Component {
           const lastElection =
             person.candidates && person.candidates[person.candidates.length - 1]
 
-          const tabs = [
-            {
-              label: '履歷',
-              content: '123',
-            },
-            {
-              label: '立場',
-              content: '123',
-            },
-            {
-              label: '利益申報',
-              content: '123',
-            },
-          ]
-
           const personHighlight = []
 
           if (person.estimated_yob) {
@@ -333,8 +329,6 @@ class ProfilePage extends Component {
             text:
               (currentTerm && currentTerm.career) || lastElection.occupation,
           })
-
-          console.log(person)
 
           return (
             <>
@@ -385,7 +379,7 @@ class ProfilePage extends Component {
                 ))}
               </PersonHighlight>
 
-              <ScrollableTabsButtonAuto />
+              <ScrollableTabsButtonAuto person={person} />
               {/* <ElectionHistoryContainer>
                 <Grid container spacing={3}>
                   <Grid item xs={12}>
