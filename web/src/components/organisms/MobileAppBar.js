@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import Slide from '@material-ui/core/Slide'
 import { DRAWER_OPEN } from '../../reducers/drawer'
 import ContextStore from 'ContextStore'
+import { UnstyledNavLink } from '../atoms/UnstyledLink'
 
 const StyledAppBar = styled(AppBar)`
   && {
@@ -20,12 +21,12 @@ const StyledAppBar = styled(AppBar)`
 const StyledToolbar = styled(Toolbar)`
   && {
     display: flex;
+    justify-content: space-between;
   }
 `
 
-const AppBarTitle = styled(Typography)`
+const AppBarTitle = styled(UnstyledNavLink)`
   && {
-    flex-grow: 1;
     text-decoration: none;
     text-align: center;
   }
@@ -53,7 +54,10 @@ function MobileAppBar(props) {
           >
             <SearchIcon />
           </IconButton>
-          <AppBarTitle variant="h3">✋🧡⚡</AppBarTitle>
+
+          <AppBarTitle to={'/'}>
+            <Typography variant="h3">✋🧡⚡</Typography>
+          </AppBarTitle>
           <IconButton
             color="inherit"
             component="span"

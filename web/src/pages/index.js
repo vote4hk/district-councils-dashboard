@@ -87,7 +87,7 @@ const NoteContent = styled(Typography)`
   }
 `
 
-class SearchPage extends Component {
+class IndexPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -148,4 +148,4 @@ class SearchPage extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(SearchPage)
+export default withStyles(styles, { withTheme: true })(IndexPage)

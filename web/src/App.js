@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import { ThemeProvider } from 'styled-components/'
-import SearchPage from './pages/search'
+import IndexPage from './pages'
 import ProfilePage from './pages/profile'
 import DistrictPage from './pages/district'
 import BattleGroundPage from './pages/battleground'
@@ -73,7 +73,7 @@ const App = props => {
                 <MobileAppBar />
                 <main>
                   <Switch>
-                    <Route exact path="/" component={SearchPage} />
+                    <Route exact path="/" component={IndexPage} />
                     <Route path="/profile/:id" component={ProfilePage} />
                     <Route
                       path="/district/2019/:code"
