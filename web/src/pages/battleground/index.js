@@ -5,47 +5,14 @@ import { Query } from 'react-apollo'
 import MainAreas from 'components/district/MainAreas'
 import Councillor from 'components/district/Councillor'
 import CouncillorSelection from 'components/district/CouncillorSelection'
-import CandidateList from 'components/district/CandidateList'
 import DCCAOverview from 'components/district/DCCAOverview'
-import styled from 'styled-components'
-import { bps } from 'ui/responsive'
 import Button from '@material-ui/core/Button'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Collapse from '@material-ui/core/Collapse'
 import _ from 'lodash'
 import { QUERY_CONSTITUENCIES } from 'queries/gql'
+import DistrictNewVoterChartContainer from 'components/DistrictNewVoterChartContainer'
 
-const FullWidthBox = styled(Box)`
-  && {
-    width: 100%;
-  }
-`
-
-const LowerBackgroundContainer = styled(Box)`
-  && {
-    width: 100vw;
-    position: relative;
-    margin-left: -50vw;
-    left: 50%;
-    background-color: #fafafa;
-  }
-`
-
-const FlexRowContainer = styled(Box)`
-  && {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    ${bps.up('md')} {
-      width: 100%;
-    }
-
-    ${bps.up('lg')} {
-      width: 1440px;
-    }
-    margin: auto;
-  }
-`
 const groupVoteStat = voteStats => {
   const data = _.groupBy(voteStats, stat => stat.subtype)
   data.aggregations = {
@@ -151,6 +118,8 @@ class BattleGroundPage extends Component {
                     suggestDistricts={district.predecessors}
                   />
                 )}
+                {/* Should show as a popup */}
+                <DistrictNewVoterChartContainer code={code} />
                 {/* <LowerBackgroundContainer>
                       <FullWidthBox>
                         <CandidateList
