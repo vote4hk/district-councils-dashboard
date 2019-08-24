@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
@@ -8,6 +8,7 @@ import ProfilePage from './pages/profile'
 import DistrictPage from './pages/district'
 import BattleGroundPage from './pages/battleground'
 import NotfoundPage from './pages/notfound'
+import TestPage from 'pages/test'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 import theme, { styledComponentTheme } from 'ui/theme/main'
@@ -75,6 +76,7 @@ const App = props => {
                   <Switch>
                     <Route exact path="/" component={SearchPage} />
                     <Route path="/profile/:id" component={ProfilePage} />
+                    <Route path="/test" component={TestPage} />
                     <Route
                       path="/district/2019/:code"
                       component={BattleGroundPage}

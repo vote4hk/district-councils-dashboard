@@ -67,3 +67,17 @@ query($year: Int!, $code: String!) {
   }  
 }
 `
+
+export const QUERY_CONSTITUENCY_STATS = gql`
+  query($year: Int!, $code: String!) {
+    dcd_constituencies(where: { year: { _eq: $year }, code: { _eq: $code } }) {
+      vote_stats {
+        count
+        type
+        subtype
+        category_1
+        category_2
+      }
+    }
+  }
+`
