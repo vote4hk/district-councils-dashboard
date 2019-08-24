@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useLayoutEffect } from 'react'
+import React from 'react'
 import GroupedBarChart from 'components/charts/GroupedBarChart'
 import { Query } from 'react-apollo'
 import _ from 'lodash'
@@ -21,7 +21,8 @@ export default props => {
       row.values = _.values(_.groupBy(row, r => r.subtype)).map(r =>
         r.map(v => v.count).reduce((c, v) => c + v, 0)
       )
-      row.values[1] = row.values[0] - row.values[1]
+      row.values = [row.values[0] - row.values[1], row.values[0]]
+      row.labels = ['2018', '2019']
     })
 
     /**

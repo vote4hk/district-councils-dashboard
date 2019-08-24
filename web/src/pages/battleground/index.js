@@ -6,14 +6,12 @@ import MainAreas from 'components/district/MainAreas'
 import Councillor from 'components/district/Councillor'
 import CouncillorSelection from 'components/district/CouncillorSelection'
 import DCCAOverview from 'components/district/DCCAOverview'
-import styled from 'styled-components'
-import { bps } from 'ui/responsive'
 import Button from '@material-ui/core/Button'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Collapse from '@material-ui/core/Collapse'
 import _ from 'lodash'
 import { QUERY_CONSTITUENCIES } from 'queries/gql'
-import GroupedBarChart from 'components/charts/GroupedBarChart'
+import DistrictNewVoterChartContainer from 'components/DistrictNewVoterChartContainer'
 
 const groupVoteStat = voteStats => {
   const data = _.groupBy(voteStats, stat => stat.subtype)
@@ -115,6 +113,8 @@ class BattleGroundPage extends Component {
                 ) : (
                   <CouncillorSelection />
                 )}
+                {/* Should show as a popup */}
+                <DistrictNewVoterChartContainer code={code} />
                 {/* <LowerBackgroundContainer>
                       <FullWidthBox>
                         <CandidateList
