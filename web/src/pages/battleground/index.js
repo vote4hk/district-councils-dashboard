@@ -104,15 +104,12 @@ class BattleGroundPage extends Component {
 
     return (
       <>
-        <Query
-          query={QUERY_CONSTITUENCIES}
-          variables={{ year, lastElectionYear: year - 4, code }}
-        >
+        <Query query={QUERY_CONSTITUENCIES} variables={{ year, code }}>
           {({ loading, error, data }) => {
             if (loading) return null
             if (error) return `Error! ${error}`
             const district = data.dcd_constituencies[0]
-            const last_district = data.last_dcd_constituencies[0]
+            const last_district = district.predecessors[0].predecessor
 
             console.log(data)
 

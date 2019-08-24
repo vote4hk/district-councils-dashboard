@@ -56,12 +56,14 @@ candidates {
 `
 
 export const QUERY_CONSTITUENCIES = gql`
-query($year: Int!, $lastElectionYear:Int!, $code: String!) {
+query($year: Int!, $code: String!) {
   dcd_constituencies(where: { year: { _eq: $year }, code: { _eq: $code } }) {
     ${CONSTITUENCIES_DATA}
-  }
-  last_dcd_constituencies: dcd_constituencies(where: { year: { _eq: $lastElectionYear }, code: { _eq: $code } }) {
-    ${CONSTITUENCIES_DATA}
-  }
+    predecessors {
+      predecessor {
+        ${CONSTITUENCIES_DATA}
+      }
+    }
+  }  
 }
 `
