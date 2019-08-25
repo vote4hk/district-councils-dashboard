@@ -53,8 +53,8 @@ class Councillor extends Component {
     return (
       <PlainCard>
         <Typography variant="h6">現任區議員</Typography>
-        {districts.length > 1 && (
-          <Typography variant="h6">{`此區與上屆${districts.length}個選區重疊`}</Typography>
+        {filteredDistricts.length > 1 && (
+          <Typography variant="h6">{`此區與上屆${filteredDistricts.length}個選區重疊`}</Typography>
         )}
         {councillors.map(councillor => (
           <UnstyledNavLink
