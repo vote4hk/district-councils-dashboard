@@ -1,32 +1,22 @@
-import React, { useState } from 'react'
-import Typography from '@material-ui/core/Typography'
+import React from 'react'
+import { Typography, Button } from '@material-ui/core'
 import styled from 'styled-components'
-import Box from '@material-ui/core/Box'
-import area from '../../data/area'
-import district from '../../data/district'
-import Button from '@material-ui/core/Button'
-import ExpansionPanel from '@material-ui/core/ExpansionPanel'
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import {
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
+} from '@material-ui/core'
 import { DRAWER_CLOSE } from 'reducers/drawer'
 import ContextStore from 'ContextStore'
 import { withRouter } from 'react-router-dom'
+import { Query } from 'react-apollo'
+import { QUERY_GET_AREA } from 'queries/gql'
 
 const Container = styled.div`
   && {
     width: 100%;
     display: flex;
     flex-direction: column;
-  }
-`
-
-const SideBar = styled(Box)`
-  && {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    min-width: 200px;
-    max-width: 200px;
   }
 `
 
@@ -41,23 +31,20 @@ const DistrictSelector = props => {
   const {
     drawer: { dispatch },
   } = React.useContext(ContextStore)
-  const renderDCCA = code => {
-    if (!code) return null
+  const renderDCCA = district => {
     return (
       <div>
-        {Object.keys(district['2019'][code]).map(dcca => {
+        {district.constituencies.map(c => {
           return (
             <DistrictContainer
-              key={district['2019'][code][dcca].code}
+              key={c.code}
               onClick={() => {
                 dispatch({ type: DRAWER_CLOSE })
-                props.history.push(`/district/2019/${dcca}`)
+                props.history.push(`/district/2019/${c.code}`)
               }}
               color="secondary"
             >
-              <Typography variant="h6">
-                {district['2019'][code][dcca].name}
-              </Typography>
+              <Typography variant="h6">{c.name_zh}</Typography>
             </DistrictContainer>
           )
         })}
@@ -67,17 +54,28 @@ const DistrictSelector = props => {
 
   return (
     <Container>
-      {area.map(a => (
-        <ExpansionPanel key={a.dccode}>
-          <ExpansionPanelSummary
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography>{a.dname_chi}</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>{renderDCCA(a.dccode)}</ExpansionPanelDetails>
-        </ExpansionPanel>
-      ))}
+      <Query query={QUERY_GET_AREA}>
+        {({ loading, error, data }) => {
+          if (loading) return null
+          if (error) return `Error! ${error}`
+
+          return (
+            <>
+              {data.dcd_districts.map(d => (
+                <ExpansionPanel key={d.dc_code}>
+                  <ExpansionPanelSummary
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>{d.dc_name_zh}</Typography>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>{renderDCCA(d)}</ExpansionPanelDetails>
+                </ExpansionPanel>
+              ))}
+            </>
+          )
+        }}
+      </Query>
     </Container>
   )
 }
