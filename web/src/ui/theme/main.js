@@ -46,6 +46,7 @@ export const typography = {
   body1: {
     fontFamily: bodyFontFamily,
     fontSize: 14,
+    lineHeight: 1.4,
   },
   body2: {
     fontFamily: bodyFontFamily,
