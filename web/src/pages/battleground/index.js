@@ -104,13 +104,8 @@ class BattleGroundPage extends Component {
                   </Box>
                 </Collapse>
                 <MainAreas areas={district.main_areas || []} />
-                {last_districts.length === 1 ? (
-                  <Councillor
-                    councillor={last_districts[0].predecessor.councillors[0]}
-                  />
-                ) : (
-                  <CouncillorSelection suggestDistricts={last_districts} />
-                )}
+                <Councillor districts={last_districts} />
+
                 {/* Should show as a popup */}
                 {/* <LowerBackgroundContainer>
                       <FullWidthBox>

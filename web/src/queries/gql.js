@@ -97,6 +97,7 @@ query($year: Int!, $code: String!) {
   dcd_constituencies(where: { year: { _eq: $year }, code: { _eq: $code } }) {
     ${CONSTITUENCIES_DATA}
     predecessors {
+      intersect_area
       predecessor {
         ${CONSTITUENCIES_DATA}
       }
