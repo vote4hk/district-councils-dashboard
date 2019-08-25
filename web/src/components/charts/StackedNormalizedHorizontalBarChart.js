@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
 import * as d3 from 'd3'
-
+import {
+  COLOR_CAMP_PAN_DEMO,
+  COLOR_CAMP_PAN_EST,
+  COLOR_CAMP_OTHER,
+  FONT_FAMILY,
+} from 'ui/theme/main'
 const ROW_HEIGHT = 50
 
 class StackedNormalizedHorizontalBarChart extends Component {
   drawChart(data) {
-    const margin = { top: 30, right: 10, bottom: 0, left: 50 }
+    const margin = { top: 50, right: 20, bottom: 50, left: 80 }
     const height = data.length * ROW_HEIGHT + margin.top + margin.bottom
     const width = 1000
 
@@ -16,14 +21,14 @@ class StackedNormalizedHorizontalBarChart extends Component {
 
     const yAxis = g =>
       g
-        .style('font', '24px times')
+        .style('font', `24px ${FONT_FAMILY}`)
         .attr('transform', `translate(${margin.left},0)`)
         .call(d3.axisLeft(y).tickSizeOuter(0))
         .call(g => g.selectAll('.domain').remove())
 
     const xAxis = g =>
       g
-        .style('font', '24px times')
+        .style('font', `24px ${FONT_FAMILY}`)
         .attr('transform', `translate(0,${margin.top})`)
         .call(d3.axisTop(x).ticks(width / 100, '%'))
         .call(g => g.selectAll('.domain').remove())
@@ -64,8 +69,18 @@ class StackedNormalizedHorizontalBarChart extends Component {
       .attr('height', y.bandwidth())
 
     svg.append('g').call(xAxis)
-
     svg.append('g').call(yAxis)
+
+    const middle = (width + margin.left - margin.right) / 2
+    svg
+      .append('line')
+      .attr('x1', middle + 1)
+      .attr('y1', margin.top)
+      .attr('x2', middle + 1)
+      .attr('y2', height - margin.bottom)
+      .attr('stroke-width', 3)
+      .attr('stroke', '#3a3a3a')
+      .style('stroke-dasharray', '10, 10')
   }
 
   componentDidMount() {

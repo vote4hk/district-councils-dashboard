@@ -3,7 +3,7 @@ import { createMuiTheme } from '@material-ui/core/styles'
 export const headingFontFamily = 'PingFangTC-Medium, sans-serif'
 export const bodyFontFamily = 'PT Serif, sans-serif'
 
-export const fontFamily = [
+export const FONT_FAMILY = [
   'PingFangTC',
   'Noto Sans TC',
   'sans-serif',
@@ -15,7 +15,7 @@ export const fontFamily = [
 export const typography = {
   useNextVariants: true,
   fontSize: 16,
-  fontFamily: fontFamily.join(','),
+  fontFamily: FONT_FAMILY.join(','),
   h1: {
     fontFamily: headingFontFamily,
   },

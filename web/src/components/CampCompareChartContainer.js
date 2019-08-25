@@ -66,7 +66,6 @@ const CampCompareChartContainer = props => {
 
         const dataFroGraph = groupDataByRegionAndCamp(data.dcd_candidates)
         const dataForD3 = convertToD3Compatible(dataFroGraph)
-        console.log(dataForD3)
         return (
           <Container>
             <StackedNormalizedHorizontalBarChart
