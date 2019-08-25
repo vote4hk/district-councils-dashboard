@@ -11,7 +11,8 @@ import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/Search'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import * as AddressParser from 'hk-address-parser-lib'
-import { getAllFeaturesFromPoint } from '../../utils/features'
+import { getAllFeaturesFromPoint } from 'utils/features'
+import _ from 'lodash'
 
 function renderInputComponent(inputProps) {
   const { classes, inputRef = () => {}, ref, ...other } = inputProps
@@ -111,6 +112,8 @@ class IntegrationAutosuggest extends React.Component {
     suggestions: [],
   }
 
+  debounced = null
+
   async getSuggestions(value) {
     const inputValue = value.trim().toLowerCase()
     const inputLength = inputValue.length
@@ -131,11 +134,17 @@ class IntegrationAutosuggest extends React.Component {
   }
 
   handleSuggestionsFetchRequested = ({ value }) => {
-    this.getSuggestions(value).then(result => {
-      this.setState({
-        suggestions: result,
+    if (this.debounced) {
+      this.debounced.cancel()
+    }
+    this.debounced = _.debounce(() => {
+      this.getSuggestions(value).then(result => {
+        this.setState({
+          suggestions: result,
+        })
       })
-    })
+    }, 300)
+    this.debounced()
   }
 
   handleSuggestionsClearRequested = () => {
@@ -154,9 +163,13 @@ class IntegrationAutosuggest extends React.Component {
     event,
     { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }
   ) => {
-    this.props.handleAddressSelected(
-      getAllFeaturesFromPoint(suggestion.coordinate)
-    )
+    const constituency = getAllFeaturesFromPoint(suggestion.coordinate)
+    // TODO: better to use action to dispatch this event
+    this.props.handleAddressSelected(constituency)
+
+    this.setState({
+      value: '',
+    })
   }
 
   render() {

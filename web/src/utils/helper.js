@@ -34,7 +34,6 @@ export const getTagsForPerson = person => {
 
     const lastElection = sortedElections[0]
 
-    console.log(lastElection.constituency)
     if (lastElection.constituency.candidates.length === 1) {
       tags.push(`自動當選`)
     }
