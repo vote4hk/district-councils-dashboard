@@ -64,3 +64,50 @@ export const getTagsForPerson = person => {
 
   return tags
 }
+
+export const getElectionResults = person => {
+  const result = {}
+  if (!person.candidates && !person.councillors) {
+    return result
+  }
+
+  if (person.candidates) {
+    const sortedElections = person.candidates.sort((a, b) => b.year - a.year)
+    result.lastParticipatedYear = sortedElections[0].year
+    result.participationCount = sortedElections.length
+
+    let relectedCount = 0
+    for (let i = 0; i < sortedElections.length; i++) {
+      const { is_won } = sortedElections[i]
+      if (!is_won) {
+        break
+      }
+      relectedCount++
+    }
+
+    result.relectedCount = relectedCount - 1
+
+    sortedElections.forEach(election => {
+      const year = election.constituency.year
+      const yearResult = {}
+
+      yearResult.uncontested =
+        election.constituency.candidates.length === 1 ? true : false
+
+      const myVotes = election.constituency.candidates.find(
+        c => c.person_id === person.id
+      ).votes
+      const highestVotes = election.constituency.candidates
+        .filter(c => c.person_id !== person.id)
+        .map(c => c.votes)
+        .reduce((c, v) => Math.max(c, v), 0)
+
+      yearResult.votes = myVotes
+      yearResult.diff = myVotes - highestVotes
+
+      result[year] = yearResult
+    })
+  }
+
+  return result
+}

@@ -7,7 +7,7 @@ import Avatar from '@material-ui/core/Avatar'
 import { PlainCard } from '../molecules/Card'
 import { Tag } from '../atoms/Tag'
 import { UnstyledNavLink } from '../atoms/UnstyledLink'
-import { getTagsForPerson } from 'utils/helper'
+import { getTagsForPerson, getElectionResults } from 'utils/helper'
 
 const StyledAvatar = styled(Avatar)`
   && {
@@ -26,20 +26,33 @@ class Councillor extends Component {
 
   render() {
     const { councillor } = this.props
-    const tags = getTagsForPerson(councillor.person)
+    const tags = [] //getTagsForPerson(councillor.person)
+    const electionResults = getElectionResults(councillor.person)
+    const lastElectionResult =
+      electionResults[electionResults.lastParticipatedYear]
+    console.log(councillor)
     return (
       <UnstyledNavLink to={`/profile/${councillor.person.id}`}>
         <PlainCard>
           <Box display="flex">
             <Box flexGrow={1}>
+              <Typography variant="h6">現任區議員</Typography>
               <Typography variant="h6" gutterBottom>
-                現任區議員
+                2015{' '}
+                {`${
+                  councillor.person.councillors.find(
+                    c => c.year === electionResults.lastParticipatedYear
+                  ).constituency.name_zh
+                }（${
+                  councillor.person.councillors.find(
+                    c => c.year === electionResults.lastParticipatedYear
+                  ).constituency.code
+                }）`}
               </Typography>
             </Box>
             <Box>
-              {tags.map((tag, index) => (
-                <Tag value={tag} key={index} />
-              ))}
+              {tags.length > 0 &&
+                tags.map((tag, index) => <Tag value={tag} key={index} />)}
             </Box>
           </Box>
 
@@ -66,6 +79,28 @@ class Councillor extends Component {
                 <Box>
                   <Typography variant="body1">
                     {councillor.political_affiliation}
+                  </Typography>
+                </Box>
+              </Box>
+
+              <Box display="flex">
+                <Box pr={1} alignSelf="flex-end">
+                  <Typography variant="body2">
+                    {electionResults.lastParticipatedYear}選舉結果
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography variant="body1">
+                    {lastElectionResult.diff === 0 && '自動當選'}
+                    {lastElectionResult.diff > 0 &&
+                      `${
+                        lastElectionResult.diff / lastElectionResult.votes > 0.2
+                          ? '大'
+                          : lastElectionResult.diff / lastElectionResult.votes <
+                            0.05
+                          ? '險'
+                          : ''
+                      }勝${lastElectionResult.diff}票`}
                   </Typography>
                 </Box>
               </Box>

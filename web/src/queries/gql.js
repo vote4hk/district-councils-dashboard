@@ -53,6 +53,7 @@ councillors {
       year
       constituency {
         code
+        name_zh
       }
     } 
   }
