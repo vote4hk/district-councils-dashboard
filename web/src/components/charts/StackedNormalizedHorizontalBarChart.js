@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useRef, useState, useEffect, useLayoutEffect } from 'react'
 import * as d3 from 'd3'
 import {
   COLOR_CAMP_PAN_DEMO,
@@ -8,12 +8,21 @@ import {
 } from 'ui/theme/main'
 const ROW_HEIGHT = 50
 
-class StackedNormalizedHorizontalBarChart extends Component {
-  drawChart(data) {
-    const margin = { top: 50, right: 20, bottom: 50, left: 80 }
-    const height = data.length * ROW_HEIGHT + margin.top + margin.bottom
-    const width = 1000
+export default props => {
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
 
+  const d3Container = useRef(null)
+
+  const drawChart = data => {
+    if (dimensions.width === 0) {
+      return
+    }
+
+    const margin = { top: 110, right: 50, bottom: 50, left: 80 }
+    const width = dimensions.width
+    const height = data.length * ROW_HEIGHT + margin.top + margin.bottom
+
+    const labels = ['建制', '其他', '泛民']
     const series = d3
       .stack()
       .keys(data.columns.slice(1))
@@ -48,10 +57,12 @@ class StackedNormalizedHorizontalBarChart extends Component {
     const x = d3.scaleLinear().range([margin.left, width - margin.right])
 
     const svg = d3
-      .select('#stacked')
+      .select(d3Container.current)
       .append('svg')
-      .attr('viewBox', [0, 0, width, height])
-      .style('overflow', 'visible')
+      .attr('width', width)
+      .attr('height', height)
+    // .attr('viewBox', [0, 0, width, height])
+    // .style('overflow', 'visible')
 
     svg
       .append('g')
@@ -81,20 +92,51 @@ class StackedNormalizedHorizontalBarChart extends Component {
       .attr('stroke-width', 3)
       .attr('stroke', '#3a3a3a')
       .style('stroke-dasharray', '10, 10')
+
+    //Legend
+    const legend = svg
+      .selectAll('.legend')
+      .data(labels)
+      .enter()
+      .append('g')
+      .attr('class', 'legend')
+      .attr('transform', (d, i) => `translate(0, ${10 + i * 20})`)
+
+    legend
+      .append('rect')
+      .attr('x', width - margin.right - 50)
+      .attr('width', 18)
+      .attr('height', 18)
+      .style('fill', function(d) {
+        return color(d)
+      })
+
+    legend
+      .append('text')
+      .attr('x', width - margin.right - 20)
+      .attr('y', 9)
+      .attr('dy', '.35em')
+      .style('text-anchor', 'start')
+      .text(function(d) {
+        return d
+      })
   }
 
-  componentDidMount() {
-    const { data } = this.props
-    this.drawChart(data)
-  }
+  useEffect(() => {
+    drawChart(props.data)
+  })
 
-  render() {
-    return (
-      <>
-        <div id="stacked" style={{ height: 'auto', width: '100%' }}></div>
-      </>
-    )
-  }
+  useLayoutEffect(() => {
+    if (d3Container.current) {
+      setDimensions({
+        width: d3Container.current.clientWidth,
+      })
+    }
+  }, [])
+
+  return (
+    <>
+      <div ref={d3Container} style={{ height: 'auto', width: '100%' }}></div>
+    </>
+  )
 }
-
-export default StackedNormalizedHorizontalBarChart
