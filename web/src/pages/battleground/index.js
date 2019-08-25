@@ -109,8 +109,8 @@ class BattleGroundPage extends Component {
                 <MainAreas areas={district.main_areas || []} />
                 {district.predecessors && district.predecessors.length === 1 ? (
                   <Councillor
-                    councilor={
-                      district.predecessors[0].predecessor.councilors[0]
+                    councillor={
+                      district.predecessors[0].predecessor.councillors[0]
                     }
                   />
                 ) : (

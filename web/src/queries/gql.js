@@ -30,13 +30,31 @@ stations {
 tags {
   tag
 }
-councilors {
+councillors {
   political_affiliation
   person {
     id
     uuid
     name_zh
     name_en
+    candidates { # to get the tags for the councilors
+      year
+      is_won
+      votes
+      constituency {
+        year
+        candidates {
+          person_id
+          votes
+        }
+      }
+    }
+    councillors { # to get the tags for the councilors
+      year
+      constituency {
+        code
+      }
+    } 
   }
 }
 candidates {
@@ -48,6 +66,24 @@ candidates {
     uuid
     name_zh
     name_en
+    candidates { # to get the tags for the councilors
+      year
+      is_won
+      votes
+      constituency {
+        year
+        candidates {
+          person_id
+          votes
+        }
+      }
+    }
+    councillors { # to get the tags for the councilors
+      year
+      constituency {
+        code
+      }
+    } 
   }
   vote_percentage
   votes

@@ -8,6 +8,7 @@ import Avatar from '@material-ui/core/Avatar'
 import { PlainCard } from '../molecules/Card'
 import { Tag } from '../atoms/Tag'
 import { UnstyledNavLink } from '../atoms/UnstyledLink'
+import { getTagsForPerson } from 'utils/helper'
 
 const StyledAvatar = styled(Avatar)`
   && {
@@ -25,9 +26,10 @@ class Councillor extends Component {
   homeUrl = 'https://cswbrian.github.io/district-councils-dashboard'
 
   render() {
-    const { councilor } = this.props
+    const { councillor } = this.props
+    const tags = getTagsForPerson(councillor.person)
     return (
-      <UnstyledNavLink to={`/profile/${councilor.person.id}`}>
+      <UnstyledNavLink to={`/profile/${councillor.person.id}`}>
         <PlainCard>
           <Box display="flex">
             <Box flexGrow={1}>
@@ -36,14 +38,16 @@ class Councillor extends Component {
               </Typography>
             </Box>
             <Box>
-              <Tag value="自動當選" />
+              {tags.map(tag => (
+                <Tag value={tag} />
+              ))}
             </Box>
           </Box>
 
           <Grid container wrap="nowrap" spacing={0}>
             <Grid item>
               <StyledAvatar
-                src={`${this.homeUrl}/static/images/avatar/${councilor.person.uuid}.jpg`}
+                src={`${this.homeUrl}/static/images/avatar/${councillor.person.uuid}.jpg`}
                 imgProps={{
                   onError: e => {
                     e.target.src =
@@ -54,7 +58,7 @@ class Councillor extends Component {
             </Grid>
             <Grid item xs>
               <Typography variant="h4" gutterBottom>
-                {councilor.person.name_zh}
+                {councillor.person.name_zh}
               </Typography>
               <Box display="flex">
                 <Box pr={1} alignSelf="flex-end">
@@ -62,7 +66,7 @@ class Councillor extends Component {
                 </Box>
                 <Box>
                   <Typography variant="body1">
-                    {councilor.political_affiliation}
+                    {councillor.political_affiliation}
                   </Typography>
                 </Box>
               </Box>

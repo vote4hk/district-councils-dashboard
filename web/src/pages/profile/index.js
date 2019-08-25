@@ -20,7 +20,7 @@ const GET_PEOPLE_PROFILE = gql`
       name_en
       gender
       estimated_yob
-      councilors {
+      councillors {
         year
         cacode
         term_from
@@ -298,7 +298,8 @@ class ProfilePage extends Component {
           const person = data.dcd_people[0]
 
           const currentTerm =
-            person.councilors && person.councilors[person.councilors.length - 1]
+            person.councillors &&
+            person.councillors[person.councillors.length - 1]
           const lastElection =
             person.candidates && person.candidates[person.candidates.length - 1]
 

@@ -90,7 +90,7 @@ class DistrictCard extends Component {
     name_en: PropTypes.string.isRequired,
     onPrevElection: PropTypes.func.isRequired,
     onNextElection: PropTypes.func.isRequired,
-    councilors: PropTypes.array.isRequired,
+    councillors: PropTypes.array.isRequired,
     district: PropTypes.object.isRequired,
   }
 
@@ -122,8 +122,8 @@ class DistrictCard extends Component {
   }
 
   render() {
-    const { name_zh, year, code, councilors, district, stations } = this.props
-    const councilor = councilors.length > 0 ? councilors[0] : {}
+    const { name_zh, year, code, councillors, district, stations } = this.props
+    const councillor = councillors.length > 0 ? councillors[0] : {}
     return (
       <Container>
         <InnerContainer border={0} color="primary.minor">
@@ -141,12 +141,12 @@ class DistrictCard extends Component {
           <SeperatedRow>
             <Typography variant="h6">區議員</Typography>
             <Typography>
-              {councilor.person ? councilor.person.name_zh : '-'}
+              {councillor.person ? councillor.person.name_zh : '-'}
             </Typography>
           </SeperatedRow>
           <SeperatedRow>
             <Typography variant="h6">政治聯繫</Typography>
-            <Typography>{councilor.political_affiliation || '-'}</Typography>
+            <Typography>{councillor.political_affiliation || '-'}</Typography>
           </SeperatedRow>
           <SeperatedRow>
             <Typography variant="h6">投票站</Typography>

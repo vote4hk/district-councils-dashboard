@@ -48,7 +48,7 @@ export default function ScrollableTabsButtonAuto(props) {
 
   // Get all the me
   const allMeetings = _.flatten(
-    person.councilors.map(c => c.meeting_attendances)
+    person.councillors.map(c => c.meeting_attendances)
   )
   function handleChange(event, newValue) {
     setValue(newValue)
