@@ -75,7 +75,7 @@ class BattleGroundPage extends Component {
             if (loading) return null
             if (error) return `Error! ${error}`
             const district = data.dcd_constituencies[0]
-            const last_district = district.predecessors[0].predecessor
+            const last_districts = district.predecessors
 
             return (
               <>
@@ -104,16 +104,12 @@ class BattleGroundPage extends Component {
                   </Box>
                 </Collapse>
                 <MainAreas areas={district.main_areas || []} />
-                {district.predecessors && district.predecessors.length > 0 ? (
+                {last_districts.length === 1 ? (
                   <Councillor
-                    councillor={
-                      district.predecessors[0].predecessor.councillors[0]
-                    }
+                    councillor={last_districts[0].predecessor.councillors[0]}
                   />
                 ) : (
-                  <CouncillorSelection
-                    suggestDistricts={district.predecessors}
-                  />
+                  <CouncillorSelection suggestDistricts={last_districts} />
                 )}
                 {/* Should show as a popup */}
                 {/* <LowerBackgroundContainer>
