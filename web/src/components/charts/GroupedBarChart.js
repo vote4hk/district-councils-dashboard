@@ -14,7 +14,7 @@ export default props => {
 
     const color = d3.scaleOrdinal().range(['#ca0020', '#f4a582'])
 
-    const margin = { top: 20, right: 20, bottom: 30, left: 40 }
+    const margin = { top: 50, right: 20, bottom: 30, left: 40 }
 
     const width = dimensions.width - margin.left - margin.right
     const height = dimensions.width - margin.top - margin.bottom
@@ -34,9 +34,7 @@ export default props => {
     const yScale = d3
       .scaleLinear()
       .range([height, 0])
-      .domain([0, max + 100]) // space for showing legend
-
-    chart.append('g').call(d3.axisLeft(yScale))
+      .domain([0, max]) // space for showing legend
 
     const x0 = d3
       .scaleBand()
@@ -48,23 +46,31 @@ export default props => {
       .scaleBand()
       .domain(d3.range(2))
       .range([0, x0.bandwidth() - 10])
-
-    chart
-      .append('g')
-      .attr('transform', `translate(0, ${height})`)
-      .call(d3.axisBottom(x0))
+    // y axis
+    chart.append('g').call(d3.axisLeft(yScale))
 
     // draw the lines
     chart
       .append('g')
-      .attr('class', 'grid')
+      .style('color', 'lightgrey')
+      .style('stroke-opacity', '0.7')
       .call(
         d3
-          .axisLeft()
-          .scale(yScale)
-          .tickSize(-width, 0, 0)
+          .axisLeft(yScale)
+          .tickSizeOuter(0)
+          .tickSizeInner(-width)
           .tickFormat('')
       )
+
+    // x axis
+    chart
+      .append('g')
+      .attr('transform', `translate(0, ${height})`)
+      .call(d3.axisBottom(x0))
+      .selectAll('text')
+      .attr('transform', 'translate(0,0)rotate(-45)')
+      .style('text-anchor', 'end')
+      .style('fill', '#69a3b2')
 
     const slice = svg
       .selectAll('.slice')
@@ -74,7 +80,7 @@ export default props => {
       .attr('class', 'g')
       .attr(
         'transform',
-        d => `translate(${x0(d.label) + margin.left},${margin.top})`
+        d => `translate(${x0(d.label) + margin.left + 5},${margin.top})`
       )
 
     slice
@@ -84,9 +90,19 @@ export default props => {
       .append('rect')
       .attr('width', x1.bandwidth())
       .attr('x', (d, i) => x1(i))
+      .attr('y', d => yScale(0))
+      .attr('height', d => height - yScale(0))
+      .style('fill', (d, i) => color(i))
+
+    slice
+      .selectAll('rect')
+      .transition()
+      .delay(function(d) {
+        return Math.random() * 1000
+      })
+      .duration(1000)
       .attr('y', d => yScale(d))
       .attr('height', d => height - yScale(d))
-      .style('fill', (d, i) => color(i))
 
     //Legend
     const legend = svg
@@ -99,19 +115,19 @@ export default props => {
 
     legend
       .append('rect')
-      .attr('x', width)
-      .attr('width', 18)
-      .attr('height', 18)
+      .attr('x', width - 20)
+      .attr('width', 14)
+      .attr('height', 14)
       .style('fill', function(d) {
         return color(d)
       })
 
     legend
       .append('text')
-      .attr('x', width - 6)
-      .attr('y', 9)
+      .attr('x', width)
+      .attr('y', 7)
       .attr('dy', '.35em')
-      .style('text-anchor', 'end')
+      .style('text-anchor', 'start')
       .text(function(d) {
         return d
       })

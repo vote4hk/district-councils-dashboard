@@ -6,7 +6,6 @@ export const getTagsForPerson = person => {
   // TODO: remove this if he is not attending the 2019 election
   const attending2019Election = true
 
-  console.log(person)
   if (person.councillors) {
     const current = person.councillors.find(c => c.year === 2015)
     if (current && attending2019Election) {
@@ -17,7 +16,7 @@ export const getTagsForPerson = person => {
   if (person.candidates) {
     const sortedElections = person.candidates.sort((a, b) => b.year - a.year)
     if (attending2019Election) {
-      tags.push(`第${sortedElections.length + 1}屆參選`)
+      tags.push(`曾參選${sortedElections.length}屆`)
     }
 
     let electedCount = 0
@@ -34,7 +33,8 @@ export const getTagsForPerson = person => {
     }
 
     const lastElection = sortedElections[0]
-    console.log(lastElection)
+
+    console.log(lastElection.constituency)
     if (lastElection.constituency.candidates.length === 1) {
       tags.push(`自動當選`)
     }

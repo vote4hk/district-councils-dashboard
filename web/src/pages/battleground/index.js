@@ -11,7 +11,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Collapse from '@material-ui/core/Collapse'
 import _ from 'lodash'
 import { QUERY_CONSTITUENCIES } from 'queries/gql'
-import DistrictNewVoterChartContainer from 'components/DistrictNewVoterChartContainer'
 
 const groupVoteStat = voteStats => {
   const data = _.groupBy(voteStats, stat => stat.subtype)
@@ -78,8 +77,6 @@ class BattleGroundPage extends Component {
             const district = data.dcd_constituencies[0]
             const last_district = district.predecessors[0].predecessor
 
-            console.log(data)
-
             return (
               <>
                 <DCCAOverview
@@ -107,7 +104,7 @@ class BattleGroundPage extends Component {
                   </Box>
                 </Collapse>
                 <MainAreas areas={district.main_areas || []} />
-                {district.predecessors && district.predecessors.length === 1 ? (
+                {district.predecessors && district.predecessors.length > 0 ? (
                   <Councillor
                     councillor={
                       district.predecessors[0].predecessor.councillors[0]
@@ -119,7 +116,6 @@ class BattleGroundPage extends Component {
                   />
                 )}
                 {/* Should show as a popup */}
-                <DistrictNewVoterChartContainer code={code} />
                 {/* <LowerBackgroundContainer>
                       <FullWidthBox>
                         <CandidateList
