@@ -94,33 +94,15 @@ function SearchPage(props) {
   const [selectedTab, setSelectedTab] = React.useState(
     props.selectedTab || 'district'
   )
-
-  // async function onAddressFieldChanged(evt) {
-  //   const { value } = evt.target
-  //   const records = await AddressParser.parse(value)
-  //   this.setState({
-  //     autoCompleteList: records,
-  //   })
-  // }
-
-  // function handlePeopleSelected(result) {
-  //   props.history.push(`profile/${result.id}`)
-  // }
-
   function handleAddressSelected(result) {
-    if (!result) return
-
-    const lastest = result.pop()
-
     /* TODO: 
       Use context (?) to store the Global district result array
       When user select click previous button in district page, 
       the CACODE should follow follow the above result
     */
 
-    props.history.push(`/district/${lastest.year}/${lastest.CACODE}`)
-
-    props.onDrawerClose()
+    props.history.push(`/district/${result.year}/${result.code}`)
+    dispatch({ type: DRAWER_CLOSE })
   }
 
   function onTabSelected(tab) {

@@ -1,12 +1,7 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from 'react'
 import * as d3 from 'd3'
-import {
-  COLOR_CAMP_PAN_DEMO,
-  COLOR_CAMP_PAN_EST,
-  COLOR_CAMP_OTHER,
-  FONT_FAMILY,
-} from 'ui/theme/main'
-const ROW_HEIGHT = 50
+import { FONT_FAMILY } from 'ui/theme/main'
+const ROW_HEIGHT = 20
 
 export default props => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
@@ -18,7 +13,7 @@ export default props => {
       return
     }
 
-    const margin = { top: 110, right: 50, bottom: 50, left: 80 }
+    const margin = { top: 110, right: 15, bottom: 20, left: 50 }
     const width = dimensions.width
     const height = data.length * ROW_HEIGHT + margin.top + margin.bottom
 
@@ -30,14 +25,14 @@ export default props => {
 
     const yAxis = g =>
       g
-        .style('font', `24px ${FONT_FAMILY}`)
+        .style('font', `12px ${FONT_FAMILY}`)
         .attr('transform', `translate(${margin.left},0)`)
         .call(d3.axisLeft(y).tickSizeOuter(0))
         .call(g => g.selectAll('.domain').remove())
 
     const xAxis = g =>
       g
-        .style('font', `24px ${FONT_FAMILY}`)
+        .style('font', `12px ${FONT_FAMILY}`)
         .attr('transform', `translate(0,${margin.top})`)
         .call(d3.axisTop(x).ticks(width / 100, '%'))
         .call(g => g.selectAll('.domain').remove())
@@ -89,9 +84,10 @@ export default props => {
       .attr('y1', margin.top)
       .attr('x2', middle + 1)
       .attr('y2', height - margin.bottom)
-      .attr('stroke-width', 3)
+      .attr('stroke-width', 1)
       .attr('stroke', '#3a3a3a')
-      .style('stroke-dasharray', '10, 10')
+      .attr('opacity', '0.6')
+      .style('stroke-dasharray', '10, 4')
 
     //Legend
     const legend = svg
@@ -100,7 +96,7 @@ export default props => {
       .enter()
       .append('g')
       .attr('class', 'legend')
-      .attr('transform', (d, i) => `translate(0, ${10 + i * 20})`)
+      .attr('transform', (d, i) => `translate(0, ${10 + i * 23})`)
 
     legend
       .append('rect')

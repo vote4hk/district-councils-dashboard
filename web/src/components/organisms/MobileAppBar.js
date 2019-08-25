@@ -18,17 +18,12 @@ const StyledAppBar = styled(AppBar)`
   }
 `
 
-const StyledToolbar = styled(Toolbar)`
-  && {
-    display: flex;
-    justify-content: space-between;
-  }
-`
-
 const AppBarTitle = styled(UnstyledNavLink)`
   && {
-    text-decoration: none;
-    text-align: center;
+    left: auto;
+    right: auto;
+    width: 100%;
+    position: absolute;
   }
 `
 
@@ -40,7 +35,13 @@ function MobileAppBar(props) {
   return (
     <>
       <StyledAppBar position="sticky" color="primary">
-        <StyledToolbar disableGutters>
+        <Toolbar disableGutters>
+          <AppBarTitle to={'/'}>
+            <Typography variant="h3" align="center">
+              ✋🧡⚡
+            </Typography>
+          </AppBarTitle>
+
           <IconButton
             color="inherit"
             component="span"
@@ -49,19 +50,7 @@ function MobileAppBar(props) {
           >
             <SearchIcon />
           </IconButton>
-
-          <AppBarTitle to={'/'}>
-            <Typography variant="h3">✋🧡⚡</Typography>
-          </AppBarTitle>
-          <IconButton
-            color="inherit"
-            component="span"
-            aria-label="Menu"
-            // onClick={() => dispatch({ type: DRAWER_OPEN })}
-          >
-            <MenuIcon />
-          </IconButton>
-        </StyledToolbar>
+        </Toolbar>
       </StyledAppBar>
     </>
   )
