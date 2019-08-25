@@ -3,7 +3,7 @@ import { createMuiTheme } from '@material-ui/core/styles'
 export const headingFontFamily = 'Noto Sans TC, sans-serif'
 export const bodyFontFamily = 'Noto Sans TC, sans-serif'
 
-export const fontFamily = [
+export const FONT_FAMILY = [
   'Noto Sans TC',
   'sans-serif',
   '-apple-system',
@@ -14,7 +14,7 @@ export const fontFamily = [
 export const typography = {
   useNextVariants: true,
   fontSize: 16,
-  fontFamily: fontFamily.join(','),
+  fontFamily: FONT_FAMILY.join(','),
   h1: {
     fontFamily: headingFontFamily,
   },
@@ -29,7 +29,7 @@ export const typography = {
     fontWeight: 500,
   },
   h4: {
-    fontFamily: fontFamily,
+    fontFamily: FONT_FAMILY,
     fontSize: 18,
     fontWeight: 500,
   },
@@ -83,3 +83,14 @@ export const styledComponentTheme = {
   secondaryBackgroundColor: '#f2f2f3', // grey
   subtextColor: '#ffb500', // organe
 }
+
+/**
+ * 泛民 - green #00e676
+建制 - red #e64a19
+本土 - yellow #ffc400
+其他  - blue #4fc3f7
+不明 - grey #999999
+ */
+export const COLOR_CAMP_PAN_DEMO = '#00e676'
+export const COLOR_CAMP_PAN_EST = '#e64a19'
+export const COLOR_CAMP_OTHER = '#999999'
