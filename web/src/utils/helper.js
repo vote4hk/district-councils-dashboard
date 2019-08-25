@@ -53,11 +53,11 @@ export const getTagsForPerson = person => {
         if (diff < 100) {
           tags.push(`險勝${diff}票`)
         } else {
-          tags.push(`以${diff}票勝出`)
+          tags.push(`贏${diff}票`)
         }
       } else {
         // lose
-        tags.push(`以${-diff}票落敗`)
+        tags.push(`輸${-diff}票`)
       }
     }
   }

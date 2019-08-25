@@ -123,16 +123,7 @@ function SearchPage(props) {
   }
 
   function renderSearchPeople() {
-    return (
-      <ContentRowContainer>
-        <AddressSearchContainer>
-          <AddressSearcher handleAddressSelected={handleAddressSelected} />
-        </AddressSearchContainer>
-        <ContentContainer>
-          <DistrictSelector />
-        </ContentContainer>
-      </ContentRowContainer>
-    )
+    return <ContentRowContainer></ContentRowContainer>
   }
 
   return (
