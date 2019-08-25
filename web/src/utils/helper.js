@@ -9,7 +9,7 @@ export const getTagsForPerson = person => {
   if (person.councillors) {
     const current = person.councillors.find(c => c.year === 2015)
     if (current && attending2019Election) {
-      tags.push('爭取連任')
+      tags.push('競逐連任')
     }
   }
 
@@ -51,12 +51,12 @@ export const getTagsForPerson = person => {
       const diff = myVotes - highestVotes
       if (diff > 0) {
         // win
-        if (diff < 100) {
+        if (diff <= 50 && highestVotes > 1000) {
           tags.push(`險勝${diff}票`)
         } else {
           tags.push(`以${diff}票勝出`)
         }
-      } else {
+      } else if (diff < 0) {
         // lose
         tags.push(`以${-diff}票落敗`)
       }
