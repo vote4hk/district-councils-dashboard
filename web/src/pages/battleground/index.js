@@ -4,7 +4,7 @@ import DCCACompareMap from '../../components/DCCACompareMap'
 import { Query } from 'react-apollo'
 import MainAreas from 'components/district/MainAreas'
 import Councillor from 'components/district/Councillor'
-import CouncillorSelection from 'components/district/CouncillorSelection'
+import CandidateList from 'components/district/CandidateList'
 import DCCAOverview from 'components/district/DCCAOverview'
 import Button from '@material-ui/core/Button'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
@@ -105,18 +105,12 @@ class BattleGroundPage extends Component {
                 </Collapse>
                 <MainAreas areas={district.main_areas || []} />
                 <Councillor districts={last_districts} />
-
-                {/* Should show as a popup */}
-                {/* <LowerBackgroundContainer>
-                      <FullWidthBox>
-                        <CandidateList
-                          candidates={district.candidates}
-                          year={parseInt(year, 10)}
-                          code={code}
-                          handleCandidateSelected={this.handleCandidateSelected}
-                        />
-                      </FullWidthBox>
-                  </LowerBackgroundContainer> */}
+                <CandidateList
+                  candidates={district.candidates}
+                  // year={parseInt(year, 10)}
+                  // code={code}
+                  // handleCandidateSelected={this.handleCandidateSelected}
+                />
               </>
             )
           }}
