@@ -131,13 +131,13 @@ export default props => {
           return (
             <>
               <Typography variant="h2">
-                選民增加{meta.increased * 100}%
+                選民增加{_.round(meta.increased * 100, 2)}%
               </Typography>
               <Typography variant="h4">
                 {meta.mostIncreasedGroup.age}歲的
                 {meta.mostIncreasedGroup.gender === 'MALE' ? '男' : '女'}
                 性選民增加了
-                {meta.mostIncreasedGroup.max * 100}%
+                {_.round(meta.mostIncreasedGroup.max * 100, 2)}%
               </Typography>
               <Button onClick={changeFilter}>
                 {filterIndex === 0

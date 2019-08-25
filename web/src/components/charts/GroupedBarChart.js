@@ -19,7 +19,7 @@ export default props => {
     const width = dimensions.width - margin.left - margin.right
     const height = dimensions.width - margin.top - margin.bottom
 
-    const max = _.maxBy(data, r => _.max(r.values)).values[0]
+    const max = _.max(_.maxBy(data, r => _.max(r.values)).values)
 
     const svg = d3
       .select(d3Container.current)
