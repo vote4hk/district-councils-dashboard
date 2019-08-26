@@ -21,9 +21,10 @@ import MobileAppBar from './components/organisms/MobileAppBar'
 import { makeStyles } from '@material-ui/core/styles'
 import drawerReducer from 'reducers/drawer'
 import ContextStore, { drawerInitialState } from 'ContextStore'
+import ReactGA from 'react-ga'
 
 const client = new ApolloClient({
-  uri: 'https://gql.opencultures.life/graphql',
+  uri: process.env.REACT_APP_GRAPHQL_URI,
 })
 
 const useStyles = makeStyles({
@@ -49,6 +50,21 @@ const Root = styled(Box)`
 `
 
 const App = props => {
+  const trackingId = process.env.REACT_APP_GA_TRACKING_ID
+  if (!trackingId) {
+    throw new Error(
+      'Invalid google tracking ID. or set to UA-000000-01 if you dont have any'
+    )
+  }
+
+  if (!process.env.REACT_APP_GRAPHQL_URI) {
+    throw new Error('Graphql host not yet set')
+  }
+
+  console.log(trackingId)
+  ReactGA.initialize(trackingId)
+  ReactGA.pageview(window.location.pathname + window.location.search)
+
   const [drawerState, drawerDispatch] = React.useReducer(
     drawerReducer,
     drawerInitialState
