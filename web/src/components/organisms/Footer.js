@@ -38,13 +38,28 @@ function Footer(props) {
         <StyledDivider />
         <Box display="flex" alignContent="flex-start">
           <Box pr={3}>
-            <StyledFooterLink>關於g0vhk</StyledFooterLink>
+            <StyledFooterLink
+              target="_blank"
+              href="https://www.facebook.com/g0vhk.io"
+            >
+              關於g0vhk.io
+            </StyledFooterLink>
           </Box>
           <Box pr={3}>
-            <StyledFooterLink>反映意見</StyledFooterLink>
+            <StyledFooterLink
+              target="_blank"
+              href="hhttps://forms.gle/irD6tEznWPNda6w59"
+            >
+              反映意見
+            </StyledFooterLink>
           </Box>
           <Box>
-            <StyledFooterLink>GitHub</StyledFooterLink>
+            <StyledFooterLink
+              target="_blank"
+              href="https://github.com/cswbrian/district-councils-dashboard"
+            >
+              GitHub
+            </StyledFooterLink>
           </Box>
         </Box>
       </StyledFooter>
