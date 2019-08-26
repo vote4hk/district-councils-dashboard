@@ -21,7 +21,7 @@ import MobileAppBar from './components/organisms/MobileAppBar'
 import { makeStyles } from '@material-ui/core/styles'
 import drawerReducer from 'reducers/drawer'
 import ContextStore, { drawerInitialState } from 'ContextStore'
-import ReactGA from 'react-ga'
+import withTracker from './WithTracker'
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_URI,
@@ -50,20 +50,9 @@ const Root = styled(Box)`
 `
 
 const App = props => {
-  const trackingId = process.env.REACT_APP_GA_TRACKING_ID
-  if (!trackingId) {
-    throw new Error(
-      'Invalid google tracking ID. or set to UA-000000-01 if you dont have any'
-    )
-  }
-
   if (!process.env.REACT_APP_GRAPHQL_URI) {
     throw new Error('Graphql host not yet set')
   }
-
-  console.log(trackingId)
-  ReactGA.initialize(trackingId)
-  ReactGA.pageview(window.location.pathname + window.location.search)
 
   const [drawerState, drawerDispatch] = React.useReducer(
     drawerReducer,
@@ -90,18 +79,20 @@ const App = props => {
                 <MobileAppBar />
                 <main>
                   <Switch>
-                    <Route exact path="/" component={IndexPage} />
-                    <Route path="/profile/:id" component={ProfilePage} />
-                    <Route path="/test" component={TestPage} />
+                    <Route exact path="/" component={withTracker(IndexPage)} />
+                    <Route
+                      path="/profile/:id"
+                      component={withTracker(ProfilePage)}
+                    />
                     <Route
                       path="/district/2019/:code"
-                      component={BattleGroundPage}
+                      component={withTracker(BattleGroundPage)}
                     />
                     <Route
                       path="/district/:year/:code"
-                      component={DistrictPage}
+                      component={withTracker(DistrictPage)}
                     />
-                    <Route component={NotfoundPage} />
+                    <Route component={withTracker(NotfoundPage)} />
                   </Switch>
                 </main>
               </ContentContainer>
