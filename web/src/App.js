@@ -18,7 +18,7 @@ import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
 import Drawer from '@material-ui/core/Drawer'
 import MobileAppBar from './components/organisms/MobileAppBar'
-import { makeStyles } from '@material-ui/core/styles'
+import Footer from './components/organisms/Footer'
 import drawerReducer from 'reducers/drawer'
 import ContextStore, { drawerInitialState } from 'ContextStore'
 
@@ -26,25 +26,29 @@ const client = new ApolloClient({
   uri: 'https://gql.opencultures.life/graphql',
 })
 
-const useStyles = makeStyles({
-  paper: {
-    width: '100%',
-  },
-})
-
-const ContentContainer = styled(Box)`
-  && {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-`
-
 const Root = styled(Box)`
   && {
+    height: 100%;
     display: flex;
     margin: auto;
     overflow: hidden;
+    background-color: white;
+  }
+`
+
+const ContentContainer = styled(Box)`
+  && {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: auto;
+  }
+`
+
+const Wrapper = styled(Box)`
+  && {
+    flex: 1;
   }
 `
 
@@ -53,8 +57,6 @@ const App = props => {
     drawerReducer,
     drawerInitialState
   )
-
-  const classes = useStyles()
 
   return (
     <ApolloProvider client={client}>
@@ -71,31 +73,31 @@ const App = props => {
             <Root>
               <ContentContainer>
                 <CssBaseline />
-                <MobileAppBar />
-                <main>
-                  <Switch>
-                    <Route exact path="/" component={IndexPage} />
-                    <Route path="/profile/:id" component={ProfilePage} />
-                    <Route path="/test" component={TestPage} />
-                    <Route
-                      path="/district/2019/:code"
-                      component={BattleGroundPage}
-                    />
-                    <Route
-                      path="/district/:year/:code"
-                      component={DistrictPage}
-                    />
-                    <Route component={NotfoundPage} />
-                  </Switch>
-                </main>
+                <Wrapper>
+                  <MobileAppBar />
+                  <main>
+                    <Switch>
+                      <Route exact path="/" component={IndexPage} />
+                      <Route path="/profile/:id" component={ProfilePage} />
+                      <Route path="/test" component={TestPage} />
+                      <Route
+                        path="/district/2019/:code"
+                        component={BattleGroundPage}
+                      />
+                      <Route
+                        path="/district/:year/:code"
+                        component={DistrictPage}
+                      />
+                      <Route component={NotfoundPage} />
+                    </Switch>
+                  </main>
+                </Wrapper>
+                <Footer />
               </ContentContainer>
               <Drawer
                 anchor="left"
                 open={drawerState.open}
                 variant="persistent"
-                classes={{
-                  paper: classes.paper,
-                }}
               >
                 <SearchPage />
               </Drawer>
