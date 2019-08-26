@@ -21,9 +21,10 @@ import MobileAppBar from './components/organisms/MobileAppBar'
 import Footer from './components/organisms/Footer'
 import drawerReducer from 'reducers/drawer'
 import ContextStore, { drawerInitialState } from 'ContextStore'
+import withTracker from './WithTracker'
 
 const client = new ApolloClient({
-  uri: 'https://gql.opencultures.life/graphql',
+  uri: process.env.REACT_APP_GRAPHQL_URI,
 })
 
 const Root = styled(Box)`
@@ -53,6 +54,10 @@ const Wrapper = styled(Box)`
 `
 
 const App = props => {
+  if (!process.env.REACT_APP_GRAPHQL_URI) {
+    throw new Error('Graphql host not yet set')
+  }
+
   const [drawerState, drawerDispatch] = React.useReducer(
     drawerReducer,
     drawerInitialState
@@ -77,18 +82,25 @@ const App = props => {
                   <MobileAppBar />
                   <main>
                     <Switch>
-                      <Route exact path="/" component={IndexPage} />
-                      <Route path="/profile/:id" component={ProfilePage} />
-                      <Route path="/test" component={TestPage} />
+                      <Route
+                        exact
+                        path="/"
+                        component={withTracker(IndexPage)}
+                      />
+                      <Route
+                        path="/profile/:id"
+                        component={withTracker(ProfilePage)}
+                      />
+                      <Route path="/test" component={withTracker(TestPage)} />
                       <Route
                         path="/district/2019/:code"
-                        component={BattleGroundPage}
+                        component={withTracker(BattleGroundPage)}
                       />
                       <Route
                         path="/district/:year/:code"
-                        component={DistrictPage}
+                        component={withTracker(DistrictPage)}
                       />
-                      <Route component={NotfoundPage} />
+                      <Route component={withTracker(NotfoundPage)} />
                     </Switch>
                   </main>
                 </Wrapper>
