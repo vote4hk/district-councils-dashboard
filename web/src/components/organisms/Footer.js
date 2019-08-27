@@ -48,7 +48,7 @@ function Footer(props) {
           <Box pr={3}>
             <StyledFooterLink
               target="_blank"
-              href="hhttps://forms.gle/irD6tEznWPNda6w59"
+              href="https://forms.gle/irD6tEznWPNda6w59"
             >
               反映意見
             </StyledFooterLink>
