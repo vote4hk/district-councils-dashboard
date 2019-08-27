@@ -12,9 +12,9 @@ const Container = styled.div`
 
 class CandidateList extends Component {
   static propTypes = {
-    candidates: PropTypes.array.isRequired,
-    year: PropTypes.number.isRequired,
-    code: PropTypes.string.isRequired,
+    // candidates: PropTypes.array.isRequired,
+    // year: PropTypes.number.isRequired,
+    // code: PropTypes.string.isRequired,
   }
 
   // todo: use ENV_VAR
