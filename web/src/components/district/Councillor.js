@@ -7,13 +7,17 @@ import Avatar from '@material-ui/core/Avatar'
 import { UnStyledPlainCard, PlainCard } from '../molecules/Card'
 import { Tag } from '../atoms/Tag'
 import { UnstyledNavLink } from '../atoms/UnstyledLink'
-import { getTagsForPerson, getElectionResults } from 'utils/helper'
+import {
+  getColorFromPoliticalAffiliation,
+  getElectionResults,
+} from 'utils/helper'
 
 const StyledAvatar = styled(Avatar)`
   && {
     margin: 10px;
     width: 60px;
     height: 60px;
+    border: 3px ${props => props.theme.camp[props.camp]} solid;
   }
 `
 class Councillor extends Component {
@@ -90,6 +94,9 @@ class Councillor extends Component {
               <Grid container wrap="nowrap" spacing={0}>
                 <Grid item>
                   <StyledAvatar
+                    camp={getColorFromPoliticalAffiliation(
+                      councillor.political_affiliation
+                    )}
                     src={`${this.homeUrl}/static/images/avatar/${councillor.person.uuid}.jpg`}
                     imgProps={{
                       onError: e => {

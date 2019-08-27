@@ -81,17 +81,13 @@ export const styledComponentTheme = {
     backgroundColor: '#3e474f',
     color: 'white',
   },
+  camp: {
+    democracy: '#00c376',
+    establishment: '#ff6779',
+    localist: '#ffcd00',
+    other: '#45b6ff',
+    uncertain: '#a8a8ad',
+  },
   secondaryBackgroundColor: '#f2f2f3', // grey
   subtextColor: '#ffb500', // organe
 }
-
-/**
- * 泛民 - green #00e676
-建制 - red #e64a19
-本土 - yellow #ffc400
-其他  - blue #4fc3f7
-不明 - grey #999999
- */
-export const COLOR_CAMP_PAN_DEMO = '#00e676'
-export const COLOR_CAMP_PAN_EST = '#e64a19'
-export const COLOR_CAMP_OTHER = '#999999'

@@ -111,3 +111,87 @@ export const getElectionResults = person => {
 
   return result
 }
+
+export const getColorFromCamp = camp => {
+  if (!camp) return 'uncertain'
+  const mapping = {
+    泛民: 'democracy',
+    建制: 'establishment',
+    本土: 'localist',
+    傘兵: 'localist',
+    自決: 'localist',
+    其他: 'other',
+    不明: 'uncertain',
+  }
+
+  return mapping[camp] || 'uncertain'
+}
+
+export const getColorFromPoliticalAffiliation = pa => {
+  if (!pa) return 'uncertain'
+
+  const mapping = {
+    democracy: [
+      '民主黨',
+      '公民黨',
+      '香港民主民生協進會',
+      '民協',
+      '社會民主連線',
+      '支聯會',
+      '民主動力',
+      '街坊工友服務處',
+      '街工',
+      '工黨',
+      '職工盟',
+      '新民主同盟',
+      '香港本土',
+      '獨立民主派',
+    ],
+    establishment: [
+      '民主建港協進聯盟',
+      '民建聯',
+      '新界社團聯會',
+      '新社聯',
+      '香港工會聯合會',
+      '工聯會',
+      '港九勞工社團聯會',
+      '香港經濟民生聯盟',
+      '西九新動力',
+      '自由黨',
+      '新民黨',
+      '新世紀論壇',
+    ],
+    localist: [
+      '香港眾志',
+      '青年新政',
+      '本土民主前線',
+      '東九龍社區關注組',
+      '天水圍民生關注平台',
+      '慈雲山建設力量',
+      '屯門社區關注組',
+      '長沙灣社區發展力量',
+      '社區網絡聯盟',
+      '沙田社區網絡',
+      '荃灣社區網絡',
+      '天水圍社區發展網絡',
+      '屯門社區網絡',
+      '葵青連結動力',
+      '藍田社區網絡',
+      '埔向晴天',
+      '荃灣民生動力',
+      '北區動源',
+      '維多利亞社區協會',
+    ],
+    other: ['民主思路', '新思維'],
+  }
+
+  for (let camp of Object.keys(mapping)) {
+    for (let party of mapping[camp]) {
+      if (pa.includes(party)) {
+        return camp
+      }
+    }
+  }
+
+  return 'uncertain'
+}

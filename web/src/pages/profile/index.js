@@ -9,6 +9,7 @@ import ScrollableTabsButtonAuto from '../../components/molecules/ScrollableTabs'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import { bps } from 'ui/responsive'
+import { getColorFromCamp } from 'utils/helper'
 
 // TODO: add age, camp & political_affiliation
 const GET_PEOPLE_PROFILE = gql`
@@ -88,7 +89,10 @@ const CandidateHeaderContainer = styled(FlexRowContainer)`
     height: 116px;
     position: relative;
     display: flex;
-    background: linear-gradient(#f6416e 84px, rgba(255, 255, 255, 0) 32px);
+    background: linear-gradient(
+      ${props => props.theme.camp[props.camp]} 84px,
+      rgba(255, 255, 255, 0) 32px
+    );
   }
 `
 
@@ -334,7 +338,9 @@ class ProfilePage extends Component {
 
           return (
             <>
-              <CandidateHeaderContainer>
+              <CandidateHeaderContainer
+                camp={getColorFromCamp(lastElection.camp)}
+              >
                 <Box>
                   <CandidateAvatar
                     src={`${homeUrl}/static/images/avatar/${person.uuid}.jpg`}
