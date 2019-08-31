@@ -30,7 +30,12 @@ npm start
 ## Deploy to github page
 
 ```bash
+cd web
+
+# Make sure .env.production is setup correctly
 npm run deploy
+
+# this will build the project and publish to https://github.com/hkvoteguide/hkvoteguide.github.io.git
 ```
 
 ## Reference

@@ -30,7 +30,7 @@
     "zingchart": "^2.8.6"
   },
   "scripts": {
-    "deploy": "npm run build && gh-pages -d build",
+    "deploy": "npm run build && gh-pages -d build -b master -r https://github.com/hkvoteguide/hkvoteguide.github.io.git",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
