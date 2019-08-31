@@ -100,6 +100,10 @@ class IndexPage extends Component {
   renderNote() {
     return (
       <>
+        <ExpandedRow>
+          <TitleText>現屆區議會勢力分布</TitleText>
+          <SubTitleText>了解更多</SubTitleText>
+        </ExpandedRow>
         <NoteHeader>為什麼你的一票很重要？</NoteHeader>
         <NoteContent>
           除非你有投票權、競選公職權，並且參與政治，否則政府不會回應你的利益。如果自己支持的人當選，即使自己的一票不會影響勝選結果，
@@ -111,7 +115,13 @@ class IndexPage extends Component {
   onTabSelected(type) {}
 
   renderFooter() {
-    return <></>
+    return (
+      <>
+        <NoteContent>
+          本網站所刊載資訊全為公開資料，歸納自選舉管理委員會丶選舉事務處丶政府統計處丶各區區議會網站及端傳媒，刊載前已盡力確保資料真確性，如有建議或錯漏，請按下方連結回報。
+        </NoteContent>
+      </>
+    )
   }
 
   render() {
@@ -122,17 +132,11 @@ class IndexPage extends Component {
         </TopSection>
         <Container>
           <ExpandedRow>
-            <TitleText>議會觀測</TitleText>
+            <TitleText>現屆區議會勢力分布</TitleText>
             <SubTitleText>了解更多</SubTitleText>
           </ExpandedRow>
           <CampCompareChartContainer />
           <StyledDivier />
-          <ExpandedRow>
-            <TitleText>熱門議題</TitleText>
-            <SubTitleText>所有議題</SubTitleText>
-          </ExpandedRow>
-          <StyledDivier />
-          {this.renderNote()}
           {this.renderFooter()}
         </Container>
       </>
