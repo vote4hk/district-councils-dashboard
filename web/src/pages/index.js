@@ -118,14 +118,6 @@ class IndexPage extends Component {
     return (
       <>
         <TopSection>
-          <ExpandedRow>
-            <TabButton onClick={this.onTabSelected('district')}>
-              <Typography variant="h4">找選區</Typography>
-            </TabButton>
-            <TabButton onClick={this.onTabSelected('people')}>
-              <Typography variant="h4">找議員</Typography>
-            </TabButton>
-          </ExpandedRow>
           <LandingIcon />
         </TopSection>
         <Container>
