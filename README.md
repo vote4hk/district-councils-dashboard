@@ -18,6 +18,10 @@ Now it is hosted at [https://gql.opencultures.life/graphql](https://gql.opencult
 ```bash
 cd web
 
+cp .env-sample .env
+
+# Modify the content of .env if you want to override the configuration
+
 npm i
 
 npm start
