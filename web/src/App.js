@@ -87,7 +87,7 @@ const App = props => {
                         component={withTracker(IndexPage)}
                       />
                       <Route
-                        path="/profile/:id"
+                        path="/profile/:name/:uuid"
                         component={withTracker(ProfilePage)}
                       />
                       <Route

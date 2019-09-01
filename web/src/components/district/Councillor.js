@@ -63,7 +63,8 @@ class Councillor extends Component {
         {councillors.map(councillor => (
           <UnstyledNavLink
             key={councillor.code}
-            to={`/profile/${councillor.person.id}`}
+            to={`/profile/${councillor.person.name_zh ||
+              councillor.person.name_en}/${councillor.person.uuid}`}
           >
             <Box>
               <Box display="flex">
