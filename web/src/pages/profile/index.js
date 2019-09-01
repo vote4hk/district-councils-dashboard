@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import Avatar from '@material-ui/core/Avatar'
 import Paper from '@material-ui/core/Paper'
@@ -8,7 +8,6 @@ import Grid from '@material-ui/core/Grid'
 import ScrollableTabsButtonAuto from '../../components/molecules/ScrollableTabs'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import { bps } from 'ui/responsive'
 import { getColorFromCamp } from 'utils/helper'
 
 // TODO: add age, camp & political_affiliation
