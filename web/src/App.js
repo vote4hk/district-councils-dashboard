@@ -9,7 +9,6 @@ import ProfilePage from './pages/profile'
 import DistrictPage from './pages/district'
 import BattleGroundPage from './pages/battleground'
 import NotfoundPage from './pages/notfound'
-import TestPage from 'pages/test'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 import theme, { styledComponentTheme } from 'ui/theme/main'
@@ -91,7 +90,6 @@ const App = props => {
                         path="/profile/:id"
                         component={withTracker(ProfilePage)}
                       />
-                      <Route path="/test" component={withTracker(TestPage)} />
                       <Route
                         path="/district/2019/:code"
                         component={withTracker(BattleGroundPage)}

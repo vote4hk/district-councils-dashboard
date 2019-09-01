@@ -18,6 +18,10 @@ Now it is hosted at [https://gql.opencultures.life/graphql](https://gql.opencult
 ```bash
 cd web
 
+cp .env-sample .env
+
+# Modify the content of .env if you want to override the configuration
+
 npm i
 
 npm start
@@ -26,7 +30,12 @@ npm start
 ## Deploy to github page
 
 ```bash
+cd web
+
+# Make sure .env.production is setup correctly
 npm run deploy
+
+# this will build the project and publish to https://github.com/hkvoteguide/hkvoteguide.github.io.git
 ```
 
 ## Reference
