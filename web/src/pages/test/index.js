@@ -1,4 +1,4 @@
-import DistrictNewVoterChartContainer from 'components/DistrictNewVoterChartContainer'
+import DistrictNewVoterChartContainer from 'components/containers/DistrictNewVoterChartContainer'
 import React from 'react'
 import styled from 'styled-components'
 import Box from '@material-ui/core/Box'

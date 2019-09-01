@@ -13,8 +13,8 @@ import { getColorFromCamp } from 'utils/helper'
 
 // TODO: add age, camp & political_affiliation
 const GET_PEOPLE_PROFILE = gql`
-  query($id: Int!) {
-    dcd_people(where: { id: { _eq: $id } }) {
+  query($uuid: uuid!) {
+    dcd_people(where: { uuid: { _eq: $uuid } }) {
       id
       uuid
       name_zh
@@ -63,21 +63,6 @@ const GET_PEOPLE_PROFILE = gql`
   }
 `
 
-const DistrictName = styled.div`
-   {
-    font-size: 14px;
-    font-weight: 600;
-    color: #ffffff;
-    ${bps.up('sm')} {
-      font-size: 20px;
-    }
-
-    ${bps.up('md')} {
-      font-size: 36px;
-    }
-  }
-`
-
 const FlexRowContainer = styled(Box)`
   && {
     width: 100%;
@@ -107,44 +92,10 @@ const CandidateAvatar = styled(Avatar)`
 `
 
 const PersonName = styled.div`
-   {
+  && {
     position: absolute;
     left: 116px;
     top: 32px;
-  }
-`
-
-const BasicInfoHeader = styled.div`
-  && {
-    font-size: 32px;
-    font-weight: 600;
-    width: 100%;
-
-    ${bps.up('md')} {
-      margin-left: 65px;
-    }
-  }
-`
-const ElectionHistoryContainer = styled(FlexRowContainer)`
-  && {
-    padding: 20px;
-    background-color: #fafafa;
-    ${bps.up('sm')} {
-      padding-left: 40px;
-    }
-
-    ${bps.up('md')} {
-      padding-left: 120px;
-      height: 100%;
-    }
-  }
-`
-const ElectionHistoryHeader = styled.div`
-  && {
-    font-size: 32px;
-    font-weight: 600;
-    color: #333333;
-    margin-top: 4px;
   }
 `
 
@@ -199,20 +150,6 @@ const ElectionDetailButton = styled.div`
   }
 `
 
-const BasicInfoGridHeader = styled(Grid)`
-  && {
-    font-weight: 600;
-    color: #4a4a4a;
-    font-size: 18px;
-  }
-`
-
-const BasicInfoGridContent = styled(Grid)`
-  && {
-    color: #4a4a4a;
-    font-size: 18px;
-  }
-`
 class ProfilePage extends Component {
   constructor(props) {
     super(props)
@@ -287,7 +224,7 @@ class ProfilePage extends Component {
   render() {
     const {
       match: {
-        params: { id },
+        params: { uuid },
       },
     } = this.props
 
@@ -295,7 +232,7 @@ class ProfilePage extends Component {
     const homeUrl = 'https://cswbrian.github.io/district-councils-dashboard/'
 
     return (
-      <Query query={GET_PEOPLE_PROFILE} variables={{ id }}>
+      <Query query={GET_PEOPLE_PROFILE} variables={{ uuid }}>
         {({ loading, error, data }) => {
           if (loading) return null
           if (error) return `Error! ${error}`
