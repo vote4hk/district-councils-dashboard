@@ -4,6 +4,7 @@ import Box from '@material-ui/core/Box'
 export default styled(Box)`
   && {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     align-content: flex-start;
     width: 100%;

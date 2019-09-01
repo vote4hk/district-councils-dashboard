@@ -5,10 +5,12 @@ import Typography from '@material-ui/core/Typography'
 import Avatar from '@material-ui/core/Avatar'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
-import ScrollableTabsButtonAuto from '../../components/molecules/ScrollableTabs'
+import ScrollableTabs from 'components/organisms/ScrollableTabs'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import { getColorFromCamp } from 'utils/helper'
+import CouncillorMeetingAttendaceContainer from 'components/containers/CouncillorMeetingAttendanceContainer'
+import PersonElectionHistoriesContainer from 'components/containers/PersonElectionHistoriesContainer'
 
 // TODO: add age, camp & political_affiliation
 const GET_PEOPLE_PROFILE = gql`
@@ -34,17 +36,6 @@ const GET_PEOPLE_PROFILE = gql`
         constituency {
           id
           name_zh
-        }
-        meeting_attendances(
-          order_by: { meeting: { meet_year: desc }, total: desc }
-        ) {
-          meeting {
-            meet_name
-            meet_type
-            meet_year
-          }
-          attended
-          total
         }
       }
       candidates {
@@ -322,24 +313,10 @@ class ProfilePage extends Component {
                   </Box>
                 ))}
               </PersonHighlight>
-
-              <ScrollableTabsButtonAuto person={person} />
-              {/* <ElectionHistoryContainer>
-                <Grid container spacing={3}>
-                  <Grid item xs={12}>
-                    <ElectionHistoryHeader>區議會選舉</ElectionHistoryHeader>
-                  </Grid>
-
-                  {person.elections
-                    .sort((a, b) => b.year - a.year)
-                    .map(election =>
-                      this.renderElectionInfoCard(
-                        election,
-                        person.estimated_yob
-                      )
-                    )}
-                </Grid>
-              </ElectionHistoryContainer> */}
+              <ScrollableTabs titles={['參選紀錄', '會議出席率']}>
+                <PersonElectionHistoriesContainer personId={person.id} />
+                <CouncillorMeetingAttendaceContainer personId={person.id} />
+              </ScrollableTabs>
             </>
           )
         }}
