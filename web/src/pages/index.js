@@ -76,7 +76,7 @@ class IndexPage extends Component {
         <Container>
           <ExpandedRow>
             <TitleText>現屆區議會勢力分布</TitleText>
-            <SubTitleText>了解更多</SubTitleText>
+            {/* <SubTitleText>了解更多</SubTitleText> */}
           </ExpandedRow>
           <CampCompareChartContainer />
         </Container>
