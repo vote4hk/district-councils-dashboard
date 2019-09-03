@@ -132,3 +132,53 @@ export const QUERY_GET_AREA = gql`
     }
   }
 `
+
+export const QUERY_GET_PERSON_ELECTIONS = gql`
+  query get_person_elections($person_id: Int!) {
+    dcd_people_by_pk(id: $person_id) {
+      candidates(order_by: { year: desc }) {
+        year
+        constituency {
+          name_zh
+          code
+        }
+        camp
+        political_affiliation
+        votes
+        is_won
+      }
+    }
+  }
+`
+
+export const QUERY_GET_PERSON_MEETING_ATTENDANCES = gql`
+  query get_meeting_attendance($person_id: Int!) {
+    dcd_councillors(where: { person: { id: { _eq: $person_id } } }) {
+      year
+      cacode
+      term_from
+      term_to
+      career
+      district {
+        dc_name_zh
+      }
+      political_affiliation
+      post
+      constituency {
+        id
+        name_zh
+      }
+      meeting_attendances(
+        order_by: { meeting: { meet_year: desc }, total: desc }
+      ) {
+        meeting {
+          meet_name
+          meet_type
+          meet_year
+        }
+        attended
+        total
+      }
+    }
+  }
+`

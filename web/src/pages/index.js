@@ -2,22 +2,12 @@ import React, { Component } from 'react'
 
 import { withStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
-import Divider from '@material-ui/core/Divider'
-import CampCompareChartContainer from 'components/CampCompareChartContainer'
+import CampCompareChartContainer from 'components/containers/CampCompareChartContainer'
 import styled from 'styled-components'
 
 import { TitleText, SubTitleText } from 'components/atoms/Text'
 
 const styles = theme => ({})
-
-const StyledDivier = styled(Divider)`
-  && {
-    background-color: #ececec;
-    width: 100%;
-    margin-top: 30px;
-    margin-bottom: 20px;
-  }
-`
 
 const Container = styled.div`
   width: 100%;

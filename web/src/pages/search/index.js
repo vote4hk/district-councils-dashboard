@@ -40,13 +40,6 @@ const ContentRowContainer = styled(ExpandedRow)`
   }
 `
 
-const ContentContainer = styled(Box)`
-  && {
-    width: 100%;
-    justify-content: center;
-  }
-`
-
 const AddressSearchContainer = styled(Box)`
   && {
     width: 100%;

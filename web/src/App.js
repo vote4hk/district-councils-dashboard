@@ -42,6 +42,8 @@ const ContentContainer = styled(Box)`
     display: flex;
     flex-direction: column;
     width: 100%;
+    max-width: 1024px;
+    margin: auto;
     overflow: auto;
   }
 `
@@ -87,7 +89,7 @@ const App = props => {
                         component={withTracker(IndexPage)}
                       />
                       <Route
-                        path="/profile/:id"
+                        path="/profile/:name/:uuid"
                         component={withTracker(ProfilePage)}
                       />
                       <Route

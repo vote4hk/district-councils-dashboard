@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Avatar from '@material-ui/core/Avatar'
-import { UnStyledPlainCard, PlainCard } from '../molecules/Card'
+import { PlainCard } from '../molecules/Card'
 import { Tag } from '../atoms/Tag'
 import { UnstyledNavLink } from '../atoms/UnstyledLink'
 import {
@@ -63,7 +63,8 @@ class Councillor extends Component {
         {councillors.map(councillor => (
           <UnstyledNavLink
             key={councillor.code}
-            to={`/profile/${councillor.person.id}`}
+            to={`/profile/${councillor.person.name_zh ||
+              councillor.person.name_en}/${councillor.person.uuid}`}
           >
             <Box>
               <Box display="flex">
