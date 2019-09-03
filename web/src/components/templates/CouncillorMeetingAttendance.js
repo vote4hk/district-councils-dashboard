@@ -5,6 +5,13 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
+import styled from 'styled-components'
+
+const MobileTableCell = styled(TableCell)`
+  && {
+    padding: 8px 10px;
+  }
+`
 
 const CouncillorMeetingAttendace = props => {
   const { meetings } = props
@@ -13,23 +20,27 @@ const CouncillorMeetingAttendace = props => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell align="left">會議</TableCell>
-          <TableCell align="left">性質</TableCell>
-          <TableCell align="left">年份</TableCell>
-          <TableCell align="left">與席</TableCell>
+          <MobileTableCell align="left">會議</MobileTableCell>
+          <MobileTableCell align="left">性質</MobileTableCell>
+          <MobileTableCell align="left">年份</MobileTableCell>
+          <MobileTableCell align="left">與席</MobileTableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         {meetings.map((m, index) => (
           <TableRow key={index}>
-            <TableCell component="th" scope="row">
+            <MobileTableCell component="th" scope="row">
               {m.meeting.meet_name}
-            </TableCell>
-            <TableCell align="left">{m.meeting.meet_type}</TableCell>
-            <TableCell align="left">{m.meeting.meet_year}</TableCell>
-            <TableCell align="left">
+            </MobileTableCell>
+            <MobileTableCell align="left">
+              {m.meeting.meet_type}
+            </MobileTableCell>
+            <MobileTableCell align="left">
+              {m.meeting.meet_year}
+            </MobileTableCell>
+            <MobileTableCell align="left">
               {m.attended}/{m.total}
-            </TableCell>
+            </MobileTableCell>
           </TableRow>
         ))}
       </TableBody>
