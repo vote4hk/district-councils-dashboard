@@ -65,8 +65,10 @@ class DistrictPage extends Component {
     return true
   }
 
-  handleCandidateSelected = candidateId => {
-    this.props.history.push(`/profile/${candidateId}`)
+  handleCandidateSelected = person => {
+    this.props.history.push(
+      `/profile/${person.name_zh || person.name_en}/${person.uuid}`
+    )
   }
 
   handleChangeDistrict = (year, code) => {

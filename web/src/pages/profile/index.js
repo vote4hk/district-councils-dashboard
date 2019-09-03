@@ -1,20 +1,21 @@
 import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import Avatar from '@material-ui/core/Avatar'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
-import ScrollableTabsButtonAuto from '../../components/molecules/ScrollableTabs'
+import ScrollableTabs from 'components/organisms/ScrollableTabs'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import { bps } from 'ui/responsive'
 import { getColorFromCamp } from 'utils/helper'
+import CouncillorMeetingAttendaceContainer from 'components/containers/CouncillorMeetingAttendanceContainer'
+import PersonElectionHistoriesContainer from 'components/containers/PersonElectionHistoriesContainer'
 
 // TODO: add age, camp & political_affiliation
 const GET_PEOPLE_PROFILE = gql`
-  query($id: Int!) {
-    dcd_people(where: { id: { _eq: $id } }) {
+  query($uuid: uuid!) {
+    dcd_people(where: { uuid: { _eq: $uuid } }) {
       id
       uuid
       name_zh
@@ -36,17 +37,6 @@ const GET_PEOPLE_PROFILE = gql`
           id
           name_zh
         }
-        meeting_attendances(
-          order_by: { meeting: { meet_year: desc }, total: desc }
-        ) {
-          meeting {
-            meet_name
-            meet_type
-            meet_year
-          }
-          attended
-          total
-        }
       }
       candidates {
         candidate_number
@@ -59,21 +49,6 @@ const GET_PEOPLE_PROFILE = gql`
         election_type
         year
       }
-    }
-  }
-`
-
-const DistrictName = styled.div`
-   {
-    font-size: 14px;
-    font-weight: 600;
-    color: #ffffff;
-    ${bps.up('sm')} {
-      font-size: 20px;
-    }
-
-    ${bps.up('md')} {
-      font-size: 36px;
     }
   }
 `
@@ -107,44 +82,10 @@ const CandidateAvatar = styled(Avatar)`
 `
 
 const PersonName = styled.div`
-   {
+  && {
     position: absolute;
     left: 116px;
     top: 32px;
-  }
-`
-
-const BasicInfoHeader = styled.div`
-  && {
-    font-size: 32px;
-    font-weight: 600;
-    width: 100%;
-
-    ${bps.up('md')} {
-      margin-left: 65px;
-    }
-  }
-`
-const ElectionHistoryContainer = styled(FlexRowContainer)`
-  && {
-    padding: 20px;
-    background-color: #fafafa;
-    ${bps.up('sm')} {
-      padding-left: 40px;
-    }
-
-    ${bps.up('md')} {
-      padding-left: 120px;
-      height: 100%;
-    }
-  }
-`
-const ElectionHistoryHeader = styled.div`
-  && {
-    font-size: 32px;
-    font-weight: 600;
-    color: #333333;
-    margin-top: 4px;
   }
 `
 
@@ -199,20 +140,6 @@ const ElectionDetailButton = styled.div`
   }
 `
 
-const BasicInfoGridHeader = styled(Grid)`
-  && {
-    font-weight: 600;
-    color: #4a4a4a;
-    font-size: 18px;
-  }
-`
-
-const BasicInfoGridContent = styled(Grid)`
-  && {
-    color: #4a4a4a;
-    font-size: 18px;
-  }
-`
 class ProfilePage extends Component {
   constructor(props) {
     super(props)
@@ -287,7 +214,7 @@ class ProfilePage extends Component {
   render() {
     const {
       match: {
-        params: { id },
+        params: { uuid },
       },
     } = this.props
 
@@ -295,7 +222,7 @@ class ProfilePage extends Component {
     const homeUrl = 'https://cswbrian.github.io/district-councils-dashboard/'
 
     return (
-      <Query query={GET_PEOPLE_PROFILE} variables={{ id }}>
+      <Query query={GET_PEOPLE_PROFILE} variables={{ uuid }}>
         {({ loading, error, data }) => {
           if (loading) return null
           if (error) return `Error! ${error}`
@@ -386,24 +313,10 @@ class ProfilePage extends Component {
                   </Box>
                 ))}
               </PersonHighlight>
-
-              <ScrollableTabsButtonAuto person={person} />
-              {/* <ElectionHistoryContainer>
-                <Grid container spacing={3}>
-                  <Grid item xs={12}>
-                    <ElectionHistoryHeader>區議會選舉</ElectionHistoryHeader>
-                  </Grid>
-
-                  {person.elections
-                    .sort((a, b) => b.year - a.year)
-                    .map(election =>
-                      this.renderElectionInfoCard(
-                        election,
-                        person.estimated_yob
-                      )
-                    )}
-                </Grid>
-              </ElectionHistoryContainer> */}
+              <ScrollableTabs titles={['參選紀錄', '會議出席率']}>
+                <PersonElectionHistoriesContainer personId={person.id} />
+                <CouncillorMeetingAttendaceContainer personId={person.id} />
+              </ScrollableTabs>
             </>
           )
         }}
