@@ -9,7 +9,7 @@ import ScrollableTabs from 'components/organisms/ScrollableTabs'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import { getColorFromCamp } from 'utils/helper'
-import CouncillorMeetingAttendaceContainer from 'components/containers/CouncillorMeetingAttendanceContainer'
+import CouncillorMeetingAttendanceContainer from 'components/containers/CouncillorMeetingAttendanceContainer'
 import PersonElectionHistoriesContainer from 'components/containers/PersonElectionHistoriesContainer'
 
 // TODO: add age, camp & political_affiliation
@@ -315,7 +315,7 @@ class ProfilePage extends Component {
               </PersonHighlight>
               <ScrollableTabs titles={['參選紀錄', '會議出席率']}>
                 <PersonElectionHistoriesContainer personId={person.id} />
-                <CouncillorMeetingAttendaceContainer personId={person.id} />
+                <CouncillorMeetingAttendanceContainer personId={person.id} />
               </ScrollableTabs>
             </>
           )
