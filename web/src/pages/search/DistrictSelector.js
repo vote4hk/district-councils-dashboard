@@ -24,6 +24,24 @@ const DistrictContainer = styled(Button)`
   && {
     width: 120px;
     justify-content: left;
+    text-align: left;
+  }
+`
+
+const DistrictExpansionPanel = styled(ExpansionPanel)`
+  && {
+    margin: 0;
+  }
+`
+
+const DistrictExpansionPanelSummary = styled(ExpansionPanelSummary)`
+  && {
+  }
+`
+
+const DistrictExpansionPanelDetails = styled(ExpansionPanelDetails)`
+  && {
+    padding: 16px;
   }
 `
 
@@ -44,7 +62,7 @@ const DistrictSelector = props => {
               }}
               color="secondary"
             >
-              <Typography variant="h6">{c.name_zh}</Typography>
+              <Typography variant="h5">{c.name_zh}</Typography>
             </DistrictContainer>
           )
         })}
@@ -62,15 +80,17 @@ const DistrictSelector = props => {
           return (
             <>
               {data.dcd_districts.map(d => (
-                <ExpansionPanel key={d.dc_code}>
-                  <ExpansionPanelSummary
+                <DistrictExpansionPanel key={d.dc_code}>
+                  <DistrictExpansionPanelSummary
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                   >
-                    <Typography>{d.dc_name_zh}</Typography>
-                  </ExpansionPanelSummary>
-                  <ExpansionPanelDetails>{renderDCCA(d)}</ExpansionPanelDetails>
-                </ExpansionPanel>
+                    <Typography variant="h5">{d.dc_name_zh}</Typography>
+                  </DistrictExpansionPanelSummary>
+                  <DistrictExpansionPanelDetails>
+                    {renderDCCA(d)}
+                  </DistrictExpansionPanelDetails>
+                </DistrictExpansionPanel>
               ))}
             </>
           )
