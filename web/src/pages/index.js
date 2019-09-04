@@ -1,24 +1,19 @@
 import React, { Component } from 'react'
-
-import { withStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import CampCompareChartContainer from 'components/containers/CampCompareChartContainer'
+import Countdown from 'components/atoms/Countdown'
 import styled from 'styled-components'
-
 import { TitleText, SubTitleText } from 'components/atoms/Text'
-
-const styles = theme => ({})
+import { Typography } from '@material-ui/core'
 
 const Container = styled.div`
   width: 100%;
-  padding-top: 30px;
+  padding: 16px;
   margin: auto;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: baseline;
-  padding-left: 16px;
-  padding-right: 16px;
   flex-grow: 1;
 `
 
@@ -36,9 +31,13 @@ const ExpandedRow = styled(Box)`
     flex-grow: 1;
   }
 `
+const CountdownContainer = styled.div`
+&& {
+  width: 100%;
+  margin: 0 auto 16px;
+`
 
 const LandingIcon = styled.div`
-  margin-top: 70px;
   margin-left: auto;
   margin-right: auto;
   width: 200px;
@@ -46,6 +45,8 @@ const LandingIcon = styled.div`
   background: url('/static/images/landingIcon.svg') no-repeat;
   background-size: cover;
 `
+
+const electionDate = 'Nov 24, 2019 07:30:00'
 class IndexPage extends Component {
   constructor(props) {
     super(props)
@@ -61,11 +62,23 @@ class IndexPage extends Component {
     return (
       <>
         <TopSection>
+          {Date.parse(new Date(electionDate)) > Date.parse(new Date()) && (
+            <CountdownContainer>
+              <Typography
+                variant="h5"
+                style={{ textAlign: 'center' }}
+                gutterBottom
+              >
+                距離投票日
+              </Typography>
+              <Countdown date={electionDate} />
+            </CountdownContainer>
+          )}
           <LandingIcon />
         </TopSection>
         <Container>
           <ExpandedRow>
-            <TitleText>現屆區議會勢力分布</TitleText>
+            <Typography variant="h5">現屆區議會勢力分布</Typography>
             {/* <SubTitleText>了解更多</SubTitleText> */}
           </ExpandedRow>
           <CampCompareChartContainer />
@@ -75,4 +88,4 @@ class IndexPage extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(IndexPage)
+export default IndexPage
