@@ -98,11 +98,12 @@ const YearDiv = styled.div`
   }
 `
 
-const PersonHighlight = styled.div`
+const PersonHighlightContainer = styled(FlexRowContainer)`
   && {
-    display: flex;
+    padding: 16px;
   }
 `
+
 const ElectionHistoryPaper = styled(Paper)`
   && {
     padding: 20px;
@@ -238,6 +239,7 @@ class ProfilePage extends Component {
 
           if (person.estimated_yob) {
             personHighlight.push({
+              xs: 2,
               title: '年齡',
               text: `${2019 - person.estimated_yob}歲`,
             })
@@ -245,11 +247,13 @@ class ProfilePage extends Component {
 
           if (currentTerm && currentTerm.political_affiliation) {
             personHighlight.push({
+              xs: 5,
               title: '報稱政治聯繫',
               text: `${currentTerm.political_affiliation}`,
             })
           } else if (lastElection && lastElection.political_affiliation) {
             personHighlight.push({
+              xs: 5,
               title: '報稱政治聯繫',
               text:
                 `${lastElection.political_affiliation}` +
@@ -258,6 +262,7 @@ class ProfilePage extends Component {
           }
 
           personHighlight.push({
+            xs: 5,
             title: '職業',
             text:
               (currentTerm && currentTerm.career) || lastElection.occupation,
@@ -305,14 +310,22 @@ class ProfilePage extends Component {
                 </Box>
               </CandidateHeaderContainer>
 
-              <PersonHighlight>
-                {personHighlight.map((highlight, index) => (
-                  <Box key={index} p={2}>
-                    <Typography variant="h5">{highlight.text}</Typography>
-                    <Typography variant="h6">{highlight.title}</Typography>
-                  </Box>
-                ))}
-              </PersonHighlight>
+              <PersonHighlightContainer>
+                <Grid container>
+                  {personHighlight.map((highlight, index) => (
+                    <Grid item key={index} xs={highlight.xs} pr={1}>
+                      <Typography variant="h5">{highlight.text}</Typography>
+                    </Grid>
+                  ))}
+                </Grid>
+                <Grid container>
+                  {personHighlight.map((highlight, index) => (
+                    <Grid item key={index} xs={highlight.xs} pr={1}>
+                      <Typography variant="h6">{highlight.title}</Typography>
+                    </Grid>
+                  ))}
+                </Grid>
+              </PersonHighlightContainer>
               <ScrollableTabs titles={['參選紀錄', '會議出席率']}>
                 <PersonElectionHistoriesContainer personId={person.id} />
                 <CouncillorMeetingAttendanceContainer personId={person.id} />
