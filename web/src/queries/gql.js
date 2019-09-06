@@ -30,71 +30,6 @@ stations {
 tags {
   tag
 }
-councillors {
-  political_affiliation
-  person {
-    id
-    uuid
-    name_zh
-    name_en
-    candidates { # to get the tags for the councilors
-      year
-      is_won
-      votes
-      constituency {
-        year
-        candidates {
-          person_id
-          votes
-        }
-      }
-    }
-    councillors { # to get the tags for the councilors
-      year
-      term_from
-      term_to
-      constituency {
-        code
-        name_zh
-        year
-      }
-    } 
-  }
-}
-candidates {
-  candidate_number
-  political_affiliation
-  camp
-  person {
-    id
-    uuid
-    name_zh
-    name_en
-    candidates { # to get the tags for the councilors
-      year
-      is_won
-      votes
-      constituency {
-        year
-        candidates {
-          person_id
-          votes
-        }
-      }
-    }
-    councillors { # to get the tags for the councilors
-      year
-      term_from
-      term_to
-      constituency {
-        code
-      }
-    } 
-  }
-  vote_percentage
-  votes
-  is_won
-}
 `
 
 export const QUERY_CONSTITUENCIES = gql`
@@ -184,6 +119,54 @@ export const QUERY_GET_PERSON_MEETING_ATTENDANCES = gql`
         }
         attended
         total
+      }
+    }
+  }
+`
+
+export const QUERY_GET_COUNCILLOR_AND_CANDIDATES = gql`
+  query fetch_councillors($year: Int!, $code: String!) {
+    dcd_councillors(
+      where: { cacode: { _eq: $code }, year: { _eq: $year } }
+      order_by: { term_to: desc }
+    ) {
+      year
+      term_to
+      term_from
+      political_affiliation
+      constituency {
+        name_zh
+        name_en
+        code
+      }
+      person {
+        id
+        name_en
+        name_zh
+        uuid
+        candidates(order_by: { year: desc }) {
+          votes
+          is_won
+          year
+          cacode
+          election_type
+          constituency {
+            year
+            name_en
+            name_zh
+            candidates {
+              person {
+                id
+                name_en
+                name_zh
+              }
+              year
+              election_type
+              votes
+              political_affiliation
+            }
+          }
+        }
       }
     }
   }

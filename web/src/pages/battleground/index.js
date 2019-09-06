@@ -3,7 +3,7 @@ import Box from '@material-ui/core/Box'
 import DCCACompareMap from '../../components/DCCACompareMap'
 import { Query } from 'react-apollo'
 import MainAreas from 'components/district/MainAreas'
-import Councillor from 'components/district/Councillor'
+import CouncillorContainer from 'components/containers/CouncillorContainer'
 import CandidateList from 'components/district/CandidateList'
 import DCCAOverview from 'components/district/DCCAOverview'
 import Button from '@material-ui/core/Button'
@@ -11,6 +11,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Collapse from '@material-ui/core/Collapse'
 import _ from 'lodash'
 import { QUERY_CONSTITUENCIES } from 'queries/gql'
+import { Typography } from '@material-ui/core'
+import { PlainCard } from '../../components/molecules/Card'
 
 const groupVoteStat = voteStats => {
   const data = _.groupBy(voteStats, stat => stat.subtype)
@@ -75,7 +77,11 @@ class BattleGroundPage extends Component {
             if (loading) return null
             if (error) return `Error! ${error}`
             const district = data.dcd_constituencies[0]
-            const last_districts = district.predecessors
+            const previousDistricts = district.predecessors.filter(
+              district =>
+                district.intersect_area === null ||
+                district.intersect_area > 1000
+            )
 
             return (
               <>
@@ -104,7 +110,19 @@ class BattleGroundPage extends Component {
                   </Box>
                 </Collapse>
                 <MainAreas areas={district.main_areas || []} />
-                <Councillor districts={last_districts} year={2015} />
+                <PlainCard>
+                  <Typography variant="h6">現任區議員</Typography>
+                  {previousDistricts.length > 1 && (
+                    <Typography variant="h6">{`此區與上屆${previousDistricts.length}個選區重疊`}</Typography>
+                  )}
+                  {previousDistricts.map((d, index) => (
+                    <CouncillorContainer
+                      key={index}
+                      year={2015}
+                      code={d.predecessor.code}
+                    />
+                  ))}
+                </PlainCard>
                 <CandidateList
                   candidates={district.candidates}
                   // year={parseInt(year, 10)}
