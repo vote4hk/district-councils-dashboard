@@ -51,9 +51,12 @@ councillors {
     }
     councillors { # to get the tags for the councilors
       year
+      term_from
+      term_to
       constituency {
         code
         name_zh
+        year
       }
     } 
   }
@@ -81,6 +84,8 @@ candidates {
     }
     councillors { # to get the tags for the councilors
       year
+      term_from
+      term_to
       constituency {
         code
       }
@@ -142,6 +147,7 @@ export const QUERY_GET_PERSON_ELECTIONS = gql`
           name_zh
           code
         }
+        election_type
         camp
         political_affiliation
         votes

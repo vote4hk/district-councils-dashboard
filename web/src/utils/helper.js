@@ -88,7 +88,7 @@ export const getElectionResults = person => {
     result.relectedCount = relectedCount - 1
 
     sortedElections.forEach(election => {
-      const year = election.constituency.year
+      const year = election.year
       const yearResult = {}
 
       yearResult.uncontested =
@@ -109,6 +109,7 @@ export const getElectionResults = person => {
     })
   }
 
+  console.log(result)
   return result
 }
 

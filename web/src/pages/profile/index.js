@@ -35,6 +35,7 @@ const GET_PEOPLE_PROFILE = gql`
         post
         constituency {
           id
+          year
           name_zh
         }
       }

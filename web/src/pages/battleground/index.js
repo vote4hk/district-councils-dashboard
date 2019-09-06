@@ -104,7 +104,7 @@ class BattleGroundPage extends Component {
                   </Box>
                 </Collapse>
                 <MainAreas areas={district.main_areas || []} />
-                <Councillor districts={last_districts} />
+                <Councillor districts={last_districts} year={2015} />
                 <CandidateList
                   candidates={district.candidates}
                   // year={parseInt(year, 10)}
