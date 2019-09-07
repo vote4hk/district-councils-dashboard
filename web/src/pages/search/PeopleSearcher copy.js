@@ -1,18 +1,35 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import deburr from 'lodash/deburr'
 import Autosuggest from 'react-autosuggest'
-import match from 'autosuggest-highlight/match'
-import parse from 'autosuggest-highlight/parse'
 import TextField from '@material-ui/core/TextField'
 import Paper from '@material-ui/core/Paper'
 import MenuItem from '@material-ui/core/MenuItem'
+import Avatar from '@material-ui/core/Avatar'
 import { withStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/Search'
 import InputAdornment from '@material-ui/core/InputAdornment'
-import * as AddressParser from 'hk-address-parser-lib'
-import { getAllFeaturesFromPoint } from 'utils/features'
-import _ from 'lodash'
+import { withApollo } from 'react-apollo'
+import gql from 'graphql-tag'
+
+const GET_PEOPLE = gql`
+  query($nameRegex: String) {
+    dcd_people(
+      where: {
+        _or: [
+          { name_zh: { _like: $nameRegex } }
+          { name_en: { _like: $nameRegex } }
+        ]
+      }
+      limit: 50
+    ) {
+      id
+      name_zh
+      name_en
+    }
+  }
+`
 
 function renderInputComponent(inputProps) {
   const { classes, inputRef = () => {}, ref, ...other } = inputProps
@@ -38,6 +55,7 @@ function renderInputComponent(inputProps) {
             </InputAdornment>
           ),
         }}
+        disableUnderline={true}
         {...other}
       />
     </>
@@ -45,32 +63,59 @@ function renderInputComponent(inputProps) {
 }
 
 function renderSuggestion(suggestion, { query, isHighlighted }) {
-  const matches = match(suggestion.label, query)
-  const parts = parse(suggestion.label, matches)
+  // todo: use ENV_VAR
+  const homeUrl = 'https://cswbrian.github.io/district-councils-dashboard/'
+  const { id, name_zh, name_en } = suggestion
+  const avatarPath = id
+    ? `${homeUrl}/static/images/avatar/${id}.jpg`
+    : `${homeUrl}/static/images/avatar/default.png`
+
+  // keyword this is not accessible here. so define the style here
+  const suggestionNameStyle = {
+    marginLeft: '20px',
+    lineHeight: '45px',
+  }
+  const boldStyle = {
+    fontWeight: '800',
+  }
+  const selectedSuggestionNameStyle = {
+    ...suggestionNameStyle,
+    ...boldStyle,
+  }
 
   return (
     <MenuItem selected={isHighlighted} component="div">
-      {parts.map((part, index) =>
-        part.highlight ? (
-          <span key={String(index)} style={{ fontWeight: 500 }}>
-            {part.text}
-          </span>
-        ) : (
-          <strong key={String(index)} style={{ fontWeight: 300 }}>
-            {part.text}
-          </strong>
-        )
-      )}
+      <Avatar
+        src={avatarPath}
+        imgProps={{
+          onError: e => {
+            e.target.src = `${homeUrl}/static/images/avatar/default.png`
+          },
+        }}
+        style={{
+          width: '48px',
+          height: '48px',
+          borderRadius: 0,
+        }}
+      />
+      <span
+        style={
+          isHighlighted ? suggestionNameStyle : selectedSuggestionNameStyle
+        }
+      >
+        {name_zh ? name_zh : name_en}
+      </span>
     </MenuItem>
   )
 }
 
 function getSuggestionValue(suggestion) {
-  return suggestion.label
+  return suggestion.name_zh ? suggestion.name_zh : suggestion.name_en
 }
 
 const styles = theme => ({
   root: {
+    height: 100,
     flexGrow: 1,
   },
   container: {
@@ -79,7 +124,7 @@ const styles = theme => ({
   suggestionsContainerOpen: {
     position: 'absolute',
     zIndex: 1,
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing.unit,
     // left: 0,
     // right: 0,
   },
@@ -106,45 +151,32 @@ const styles = theme => ({
   },
 })
 
-class IntegrationAutosuggest extends React.Component {
+class PeopleSearcher extends React.Component {
   state = {
-    value: '',
+    single: '',
+    popper: '',
     suggestions: [],
   }
 
-  debounced = null
-
-  async getSuggestions(value) {
-    const inputValue = value.trim().toLowerCase()
+  getSuggestions(value) {
+    const inputValue = deburr(value.trim()).toLowerCase()
     const inputLength = inputValue.length
 
-    if (inputLength > 0) {
-      const records = await AddressParser.parse(inputValue)
-      const result = records
-        .filter((_, index) => index < 10)
-        .map(record => ({
-          coordinate: record.coordinate(),
-          label: record.fullAddress(AddressParser.Address.LANG_ZH),
-        }))
-
-      return result
-    }
-
-    return []
+    return inputLength === 0
+      ? []
+      : this.state.suggestions.filter(
+          suggestion => suggestion.name && suggestion.name.includes(value)
+        )
   }
 
-  handleSuggestionsFetchRequested = ({ value }) => {
-    if (this.debounced) {
-      this.debounced.cancel()
-    }
-    this.debounced = _.debounce(() => {
-      this.getSuggestions(value).then(result => {
-        this.setState({
-          suggestions: result,
-        })
-      })
-    }, 300)
-    this.debounced()
+  async componentDidMount() {
+    const { data } = await this.props.client.query({
+      query: GET_PEOPLE,
+      variables: {
+        nameRegex: '%',
+      },
+    })
+    this.setState({ suggestions: data.dc_people })
   }
 
   handleSuggestionsClearRequested = () => {
@@ -163,13 +195,21 @@ class IntegrationAutosuggest extends React.Component {
     event,
     { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }
   ) => {
-    const constituency = getAllFeaturesFromPoint(suggestion.coordinate)
-    // TODO: better to use action to dispatch this event
-    this.props.handleAddressSelected(constituency)
+    this.props.handlePeopleSelected(suggestion)
+  }
 
-    this.setState({
-      value: '',
-    })
+  // Autosuggest will call this function every time you need to update suggestions.
+  // You already implemented this logic above, so just use it.
+  onSuggestionsFetchRequested = async ({ value, reason }) => {
+    if (true) {
+      const { data } = await this.props.client.query({
+        query: GET_PEOPLE,
+        variables: {
+          nameRegex: `%${value}%`,
+        },
+      })
+      this.setState({ suggestions: data.dc_people })
+    }
   }
 
   render() {
@@ -178,7 +218,7 @@ class IntegrationAutosuggest extends React.Component {
     const autosuggestProps = {
       renderInputComponent,
       suggestions: this.state.suggestions,
-      onSuggestionsFetchRequested: this.handleSuggestionsFetchRequested,
+      onSuggestionsFetchRequested: this.onSuggestionsFetchRequested,
       onSuggestionsClearRequested: this.handleSuggestionsClearRequested,
       onSuggestionSelected: this.handleSuggestionSelected,
       getSuggestionValue,
@@ -191,9 +231,12 @@ class IntegrationAutosuggest extends React.Component {
           {...autosuggestProps}
           inputProps={{
             classes,
-            placeholder: '尋找選區...',
-            value: this.state.value,
-            onChange: this.handleChange('value'),
+            placeholder: '尋找議員...',
+            value: this.state.popper,
+            onChange: this.handleChange('popper'),
+            inputRef: node => {
+              this.popperNode = node
+            },
             InputLabelProps: {
               shrink: true,
             },
@@ -220,8 +263,8 @@ class IntegrationAutosuggest extends React.Component {
   }
 }
 
-IntegrationAutosuggest.propTypes = {
+PeopleSearcher.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(IntegrationAutosuggest)
+export default withApollo(withStyles(styles)(PeopleSearcher))
