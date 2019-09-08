@@ -194,9 +194,6 @@ class IntegrationAutosuggest extends React.Component {
             placeholder: '尋找選區...',
             value: this.state.value,
             onChange: this.handleChange('value'),
-            inputRef: node => {
-              this.popperNode = node
-            },
             InputLabelProps: {
               shrink: true,
             },

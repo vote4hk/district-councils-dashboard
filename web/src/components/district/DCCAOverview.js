@@ -12,6 +12,9 @@ import Columns from 'components/atoms/Columns'
 import Rows from 'components/atoms/Rows'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
+import { getDistrictListUriFromTag } from 'utils/helper'
+import { withRouter } from 'react-router-dom'
+
 const Container = styled(Paper)`
   && {
     width: 100%;
@@ -63,7 +66,9 @@ class DCCAOverview extends Component {
 
   render() {
     const { name_zh, year, code, dc_name_zh, tags, voterData } = this.props
-
+    const sortedTags = tags.sort((a, b) =>
+      a.type === 'boundary' ? -1 : a.type === b.type ? 0 : 1
+    )
     const new_voters_percentage = (
       (100 * voterData.aggregations.new_voters) /
       voterData.aggregations.all_voters
@@ -75,8 +80,15 @@ class DCCAOverview extends Component {
             <Typography variant="h6" gutterBottom>
               {year} {dc_name_zh}
             </Typography>
-            {tags.map((tag, index) => (
-              <Tag key={index} value={tag.tag} />
+            {sortedTags.map((tag, index) => (
+              <Tag
+                key={index}
+                value={tag.tag}
+                variant={tag.type === 'boundary' ? 'default' : 'outlined'}
+                handleClick={() => {
+                  this.props.history.push(getDistrictListUriFromTag(tag.tag))
+                }}
+              />
             ))}
           </Columns>
 
@@ -114,4 +126,4 @@ class DCCAOverview extends Component {
   }
 }
 
-export default DCCAOverview
+export default withRouter(DCCAOverview)

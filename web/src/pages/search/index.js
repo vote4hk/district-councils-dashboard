@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Box from '@material-ui/core/Box'
 import AddressSearcher from './AddressSearcher'
+import PeopleSearcher from './PeopleSearcher'
 import DistrictSelector from './DistrictSelector'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
@@ -43,6 +44,9 @@ const ContentRowContainer = styled(ExpandedRow)`
 const AddressSearchContainer = styled(Box)`
   && {
     width: 100%;
+    position: relative;
+    left: 0;
+    right: 0;
     padding: 21px 16px 21px 16px;
     background-color: ${props => props.theme.secondaryBackgroundColor};
   }
@@ -98,6 +102,13 @@ function SearchPage(props) {
     dispatch({ type: DRAWER_CLOSE })
   }
 
+  function handlePeopleSelected(person) {
+    // TODO: move to helper
+    const path = `/profile/${person.name_zh || person.name_en}/${person.uuid}`
+    props.history.push(path)
+    dispatch({ type: DRAWER_CLOSE })
+  }
+
   function onTabSelected(tab) {
     return () => {
       setSelectedTab(tab)
@@ -116,7 +127,13 @@ function SearchPage(props) {
   }
 
   function renderSearchPeople() {
-    return <ContentRowContainer></ContentRowContainer>
+    return (
+      <ContentRowContainer>
+        <AddressSearchContainer>
+          <PeopleSearcher handlePeopleSelected={handlePeopleSelected} />
+        </AddressSearchContainer>
+      </ContentRowContainer>
+    )
   }
 
   return (

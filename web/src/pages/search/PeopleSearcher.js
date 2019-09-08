@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import deburr from 'lodash/deburr'
 import Autosuggest from 'react-autosuggest'
-import TextField from '@material-ui/core/TextField'
+import { Box, TextField } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
 import MenuItem from '@material-ui/core/MenuItem'
 import Avatar from '@material-ui/core/Avatar'
@@ -12,6 +11,8 @@ import SearchIcon from '@material-ui/icons/Search'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
+import _ from 'lodash'
+import styled from 'styled-components'
 
 const GET_PEOPLE = gql`
   query($nameRegex: String) {
@@ -25,9 +26,16 @@ const GET_PEOPLE = gql`
       limit: 50
     ) {
       id
+      uuid
       name_zh
       name_en
     }
+  }
+`
+
+const Container = styled(Box)`
+  && {
+    width: 100%;
   }
 `
 
@@ -43,74 +51,19 @@ function renderInputComponent(inputProps) {
             ref(node)
             inputRef(node)
           },
-          classes: {
-            input: classes.input,
-          },
           disableUnderline: true,
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton className={classes.searchButton} aria-label="Search">
+              <IconButton aria-label="Search">
                 <SearchIcon />
               </IconButton>
             </InputAdornment>
           ),
         }}
-        disableUnderline={true}
         {...other}
       />
     </>
   )
-}
-
-function renderSuggestion(suggestion, { query, isHighlighted }) {
-  // todo: use ENV_VAR
-  const homeUrl = 'https://cswbrian.github.io/district-councils-dashboard/'
-  const { id, name_zh, name_en } = suggestion
-  const avatarPath = id
-    ? `${homeUrl}/static/images/avatar/${id}.jpg`
-    : `${homeUrl}/static/images/avatar/default.png`
-
-  // keyword this is not accessible here. so define the style here
-  const suggestionNameStyle = {
-    marginLeft: '20px',
-    lineHeight: '45px',
-  }
-  const boldStyle = {
-    fontWeight: '800',
-  }
-  const selectedSuggestionNameStyle = {
-    ...suggestionNameStyle,
-    ...boldStyle,
-  }
-
-  return (
-    <MenuItem selected={isHighlighted} component="div">
-      <Avatar
-        src={avatarPath}
-        imgProps={{
-          onError: e => {
-            e.target.src = `${homeUrl}/static/images/avatar/default.png`
-          },
-        }}
-        style={{
-          width: '48px',
-          height: '48px',
-          borderRadius: 0,
-        }}
-      />
-      <span
-        style={
-          isHighlighted ? suggestionNameStyle : selectedSuggestionNameStyle
-        }
-      >
-        {name_zh ? name_zh : name_en}
-      </span>
-    </MenuItem>
-  )
-}
-
-function getSuggestionValue(suggestion) {
-  return suggestion.name_zh ? suggestion.name_zh : suggestion.name_en
 }
 
 const styles = theme => ({
@@ -151,116 +104,141 @@ const styles = theme => ({
   },
 })
 
-class PeopleSearcher extends React.Component {
-  state = {
-    single: '',
-    popper: '',
-    suggestions: [],
+const PeopleSearcher = props => {
+  const { classes, handlePeopleSelected } = props
+  const [value, setValue] = useState('')
+  const [suggestions, setSuggestions] = useState([])
+  let debounced = null
+
+  const onChange = (event, { newValue }) => {
+    setValue(newValue)
   }
 
-  getSuggestions(value) {
-    const inputValue = deburr(value.trim()).toLowerCase()
-    const inputLength = inputValue.length
-
-    return inputLength === 0
-      ? []
-      : this.state.suggestions.filter(
-          suggestion => suggestion.name && suggestion.name.includes(value)
-        )
-  }
-
-  async componentDidMount() {
-    const { data } = await this.props.client.query({
+  const fetchUsers = async keyword => {
+    const { data } = await props.client.query({
       query: GET_PEOPLE,
       variables: {
-        nameRegex: '%',
+        nameRegex: `%${keyword}%`,
       },
     })
-    this.setState({ suggestions: data.dc_people })
+    return data.dcd_people
   }
 
-  handleSuggestionsClearRequested = () => {
-    this.setState({
-      suggestions: [],
-    })
-  }
-
-  handleChange = name => (event, { newValue }) => {
-    this.setState({
-      [name]: newValue,
-    })
-  }
-
-  handleSuggestionSelected = (
-    event,
-    { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }
-  ) => {
-    this.props.handlePeopleSelected(suggestion)
-  }
-
-  // Autosuggest will call this function every time you need to update suggestions.
-  // You already implemented this logic above, so just use it.
-  onSuggestionsFetchRequested = async ({ value, reason }) => {
-    if (true) {
-      const { data } = await this.props.client.query({
-        query: GET_PEOPLE,
-        variables: {
-          nameRegex: `%${value}%`,
-        },
-      })
-      this.setState({ suggestions: data.dc_people })
+  const onSuggestionsFetchRequested = ({ value }) => {
+    if (debounced) {
+      debounced.cancel()
     }
+    debounced = _.debounce(() => {
+      fetchUsers(value).then(result => {
+        setSuggestions(result)
+      })
+    }, 500)
+    debounced()
   }
 
-  render() {
-    const { classes } = this.props
+  const onSuggestionsClearRequested = () => {
+    setSuggestions([])
+  }
 
-    const autosuggestProps = {
-      renderInputComponent,
-      suggestions: this.state.suggestions,
-      onSuggestionsFetchRequested: this.onSuggestionsFetchRequested,
-      onSuggestionsClearRequested: this.handleSuggestionsClearRequested,
-      onSuggestionSelected: this.handleSuggestionSelected,
-      getSuggestionValue,
-      renderSuggestion,
+  const getSuggestionValue = suggestion => {
+    return suggestion.name_zh ? suggestion.name_zh : suggestion.name_en
+  }
+
+  const renderSuggestion = (suggestion, { query, isHighlighted }) => {
+    // todo: use ENV_VAR
+    const homeUrl = 'https://cswbrian.github.io/district-councils-dashboard/'
+    const { uuid, name_zh, name_en } = suggestion
+    const avatarPath = uuid
+      ? `${homeUrl}/static/images/avatar/${uuid}.jpg`
+      : `${homeUrl}/static/images/avatar/default.png`
+
+    // keyword this is not accessible here. so define the style here
+    const suggestionNameStyle = {
+      marginLeft: '20px',
+      lineHeight: '45px',
+    }
+    const boldStyle = {
+      fontWeight: '800',
+    }
+    const selectedSuggestionNameStyle = {
+      ...suggestionNameStyle,
+      ...boldStyle,
     }
 
     return (
-      <div className={classes.root}>
-        <Autosuggest
-          {...autosuggestProps}
-          inputProps={{
-            classes,
-            placeholder: '尋找議員...',
-            value: this.state.popper,
-            onChange: this.handleChange('popper'),
-            inputRef: node => {
-              this.popperNode = node
-            },
-            InputLabelProps: {
-              shrink: true,
+      <MenuItem selected={isHighlighted} component="div">
+        <Avatar
+          src={avatarPath}
+          imgProps={{
+            onError: e => {
+              e.target.src = `${homeUrl}/static/images/avatar/default.png`
             },
           }}
-          theme={{
-            suggestionsList: classes.suggestionsList,
-            suggestion: classes.suggestion,
-            input: classes.suggestInput,
+          style={{
+            width: '48px',
+            height: '48px',
+            borderRadius: 0,
           }}
-          renderSuggestionsContainer={options => (
-            <Paper
-              square
-              {...options.containerProps}
-              style={{
-                width: '100%',
-              }}
-            >
-              {options.children}
-            </Paper>
-          )}
         />
-      </div>
+        <span
+          style={
+            isHighlighted ? suggestionNameStyle : selectedSuggestionNameStyle
+          }
+        >
+          {name_zh ? name_zh : name_en}
+        </span>
+      </MenuItem>
     )
   }
+
+  const renderSuggestionsContainer = options => (
+    <Paper
+      square
+      {...options.containerProps}
+      style={{
+        width: '100%',
+      }}
+    >
+      {options.children}
+    </Paper>
+  )
+
+  const onSuggestionSelected = (evt, { suggestion }) => {
+    handlePeopleSelected(suggestion)
+  }
+
+  // Autosuggest will pass through all these props to the input.
+  const inputProps = {
+    classes,
+    placeholder: '尋找議員...',
+    value,
+    onChange,
+    InputLabelProps: {
+      shrink: true,
+    },
+  }
+
+  // Finally, render it!
+  return (
+    <Container>
+      <Autosuggest
+        suggestions={suggestions}
+        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={onSuggestionsClearRequested}
+        onSuggestionSelected={onSuggestionSelected}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={renderSuggestion}
+        renderSuggestionsContainer={renderSuggestionsContainer}
+        inputProps={inputProps}
+        renderInputComponent={renderInputComponent}
+        theme={{
+          suggestionsList: classes.suggestionsList,
+          suggestion: classes.suggestion,
+          input: classes.suggestInput,
+        }}
+      />
+    </Container>
+  )
 }
 
 PeopleSearcher.propTypes = {

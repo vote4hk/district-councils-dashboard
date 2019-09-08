@@ -21,6 +21,7 @@ import Footer from './components/organisms/Footer'
 import drawerReducer from 'reducers/drawer'
 import ContextStore, { drawerInitialState } from 'ContextStore'
 import withTracker from './WithTracker'
+import DistrictListPage from 'components/pages/DistrictListPage'
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_URI,
@@ -93,6 +94,10 @@ const App = props => {
                         component={withTracker(ProfilePage)}
                       />
                       <Route
+                        path="/district/2019/tags/:tag"
+                        component={withTracker(DistrictListPage)}
+                      />
+                      <Route
                         path="/district/2019/:code"
                         component={withTracker(BattleGroundPage)}
                       />
@@ -100,6 +105,7 @@ const App = props => {
                         path="/district/:year/:code"
                         component={withTracker(DistrictPage)}
                       />
+
                       <Route component={withTracker(NotfoundPage)} />
                     </Switch>
                   </main>

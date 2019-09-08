@@ -11,6 +11,7 @@ import {
   getColorFromPoliticalAffiliation,
   getElectionResults,
 } from 'utils/helper'
+import moment from 'moment'
 
 const StyledAvatar = styled(Avatar)`
   && {
@@ -20,6 +21,9 @@ const StyledAvatar = styled(Avatar)`
     border: 3px ${props => props.theme.camp[props.camp]} solid;
   }
 `
+
+// TODO: refactor this component with a container
+// the logic here is too messy
 class Councillor extends Component {
   static propTypes = {
     // areas: PropTypes.array.isRequired
@@ -53,6 +57,13 @@ class Councillor extends Component {
       }
     })
 
+    const isWithinTerm = ({ term_from, term_to }, year) => {
+      return moment(year, 'YYYY')
+        .add(1, 'year')
+        .add(1, 'day')
+        .isBetween(moment(term_from), moment(term_to))
+    }
+
     const tags = ['競逐連任'] //getTagsForPerson(councillor.person)
     return (
       <PlainCard>
@@ -70,18 +81,20 @@ class Councillor extends Component {
               <Box display="flex">
                 <Box flexGrow={1}>
                   <Typography variant="h6" gutterBottom>
-                    2015{' '}
+                    {`${councillor.electionResults.lastParticipatedYear} `}
                     {`${
-                      councillor.person.councillors.find(
-                        c =>
-                          c.year ===
+                      councillor.person.councillors.find(c =>
+                        isWithinTerm(
+                          c,
                           councillor.electionResults.lastParticipatedYear
+                        )
                       ).constituency.name_zh
                     }（${
-                      councillor.person.councillors.find(
-                        c =>
-                          c.year ===
+                      councillor.person.councillors.find(c =>
+                        isWithinTerm(
+                          c,
                           councillor.electionResults.lastParticipatedYear
+                        )
                       ).constituency.code
                     }）`}
                   </Typography>

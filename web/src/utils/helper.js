@@ -1,114 +1,91 @@
-export const getTagsForPerson = person => {
-  const tags = []
-  if (!person.candidates && !person.councillors) {
-    return tags
-  }
-  // TODO: remove this if he is not attending the 2019 election
-  const attending2019Election = true
+export const getDistrictListUriFromTag = tag => `/district/2019/tags/${tag}`
 
-  if (person.councillors) {
-    const current = person.councillors.find(c => c.year === 2015)
-    if (current && attending2019Election) {
-      tags.push('競逐連任')
-    }
-  }
-
-  if (person.candidates) {
-    const sortedElections = person.candidates.sort((a, b) => b.year - a.year)
-    if (attending2019Election) {
-      tags.push(`曾參選${sortedElections.length}屆`)
-    }
-
-    let electedCount = 0
-    for (let i = 0; i < sortedElections.length; i++) {
-      const { is_won } = sortedElections[i]
-      if (!is_won) {
-        break
-      }
-      electedCount++
-    }
-
-    if (electedCount > 1) {
-      tags.push(`連任${electedCount}屆`)
-    }
-
-    const lastElection = sortedElections[0]
-
-    if (lastElection.constituency.candidates.length === 1) {
-      tags.push(`自動當選`)
-    }
-
-    if (lastElection.constituency.year === 2015) {
-      const myVotes = lastElection.constituency.candidates.find(
-        c => c.person_id === person.id
-      ).votes
-      const highestVotes = lastElection.constituency.candidates
-        .filter(c => c.person_id !== person.id)
-        .map(c => c.votes)
-        .reduce((c, v) => Math.max(c, v), 0)
-
-      const diff = myVotes - highestVotes
-      if (diff > 0) {
-        // win
-        if (diff <= 50 && highestVotes > 1000) {
-          tags.push(`險勝${diff}票`)
-        } else {
-          tags.push(`贏${diff}票`)
-        }
-      } else if (diff < 0) {
-        // lose
-        tags.push(`輸${-diff}票`)
-      }
-    }
+/**
+ * Passing a councillor object and get the meta data for it
+ * (By QUERY_GET_COUNCILLOR_AND_CANDIDATES query)
+ */
+export const getCouncillorMeta = councillor => {
+  const result = {
+    participatedOrdinary: 0,
+    participatedByElection: 0,
+    lastParticipated: {
+      year: 2019,
+      type: 'ordinary',
+      votesDiff: 0,
+      votes: 0,
+      isWon: false,
+    },
   }
 
-  return tags
-}
+  // should already sorted from query
+  const participatedElections = councillor.person.candidates || []
+  result.participatedByElection = participatedElections.filter(
+    c => c.election_type === 'by-election'
+  ).length
+  result.participatedOrdinary = participatedElections.filter(
+    c => c.election_type === 'ordinary'
+  ).length
 
-export const getElectionResults = person => {
-  const result = {}
-  if (!person.candidates && !person.councillors) {
-    return result
-  }
+  if (participatedElections.length > 0) {
+    const e = participatedElections[0]
+    const electionYear = e.year
 
-  if (person.candidates) {
-    const sortedElections = person.candidates.sort((a, b) => b.year - a.year)
-    result.lastParticipatedYear = sortedElections[0].year
-    result.participationCount = sortedElections.length
-
-    let relectedCount = 0
-    for (let i = 0; i < sortedElections.length; i++) {
-      const { is_won } = sortedElections[i]
-      if (!is_won) {
-        break
-      }
-      relectedCount++
+    const myVotes = e.constituency.candidates.find(
+      c => c.person.id === councillor.person.id && c.year === electionYear
+    ).votes
+    const highestVotes = e.constituency.candidates
+      .filter(
+        c => c.person.id !== councillor.person.id && c.year === electionYear
+      )
+      .map(c => c.votes)
+      .reduce((c, v) => Math.max(c, v), 0)
+    result.lastParticipated = {
+      year: e.year,
+      isWon: e.is_won,
+      votesDiff: myVotes - highestVotes,
+      votes: myVotes,
+      type: e.election_type,
     }
-
-    result.relectedCount = relectedCount - 1
-
-    sortedElections.forEach(election => {
-      const year = election.constituency.year
-      const yearResult = {}
-
-      yearResult.uncontested =
-        election.constituency.candidates.length === 1 ? true : false
-
-      const myVotes = election.constituency.candidates.find(
-        c => c.person_id === person.id
-      ).votes
-      const highestVotes = election.constituency.candidates
-        .filter(c => c.person_id !== person.id)
-        .map(c => c.votes)
-        .reduce((c, v) => Math.max(c, v), 0)
-
-      yearResult.votes = myVotes
-      yearResult.diff = myVotes - highestVotes
-
-      result[year] = yearResult
-    })
   }
+  // if (person.candidates) {
+  //   const sortedElections = person.candidates.sort((a, b) => b.year - a.year)
+  //   result.lastParticipatedYear = sortedElections[0].year
+  //   result.participationCount = sortedElections.length
 
+  //   let relectedCount = 0
+  //   for (let i = 0; i < sortedElections.length; i++) {
+  //     const { is_won } = sortedElections[i]
+  //     if (!is_won) {
+  //       break
+  //     }
+  //     relectedCount++
+  //   }
+
+  //   result.relectedCount = relectedCount - 1
+
+  //   sortedElections.forEach(election => {
+  //     const year = election.year
+  //     const yearResult = {}
+
+  //     yearResult.uncontested =
+  //       election.constituency.candidates.length === 1 ? true : false
+
+  //     const myVotes = election.constituency.candidates.find(
+  //       c => c.person_id === person.id
+  //     ).votes
+  //     const highestVotes = election.constituency.candidates
+  //       .filter(c => c.person_id !== person.id)
+  //       .map(c => c.votes)
+  //       .reduce((c, v) => Math.max(c, v), 0)
+
+  //     yearResult.votes = myVotes
+  //     yearResult.diff = myVotes - highestVotes
+
+  //     result[year] = yearResult
+  //   })
+  // }
+
+  // console.log(result)
   return result
 }
 

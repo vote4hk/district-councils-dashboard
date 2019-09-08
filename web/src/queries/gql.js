@@ -2,6 +2,7 @@
 import gql from 'graphql-tag'
 
 const CONSTITUENCIES_DATA = `
+id
 name_zh
 name_en
 district {
@@ -29,66 +30,7 @@ stations {
 }
 tags {
   tag
-}
-councillors {
-  political_affiliation
-  person {
-    id
-    uuid
-    name_zh
-    name_en
-    candidates { # to get the tags for the councilors
-      year
-      is_won
-      votes
-      constituency {
-        year
-        candidates {
-          person_id
-          votes
-        }
-      }
-    }
-    councillors { # to get the tags for the councilors
-      year
-      constituency {
-        code
-        name_zh
-      }
-    } 
-  }
-}
-candidates {
-  candidate_number
-  political_affiliation
-  camp
-  person {
-    id
-    uuid
-    name_zh
-    name_en
-    candidates { # to get the tags for the councilors
-      year
-      is_won
-      votes
-      constituency {
-        year
-        candidates {
-          person_id
-          votes
-        }
-      }
-    }
-    councillors { # to get the tags for the councilors
-      year
-      constituency {
-        code
-      }
-    } 
-  }
-  vote_percentage
-  votes
-  is_won
+  type
 }
 `
 
@@ -102,6 +44,17 @@ query($year: Int!, $code: String!) {
         ${CONSTITUENCIES_DATA}
       }
     }
+  }  
+}
+`
+
+export const QUERY_GET_CONSTITUENCIES_BY_TAG = gql`
+query($year: Int!, $tag: String!) {
+  dcd_constituencies(
+    where: { year: { _eq: $year }, tags: { tag: {_eq: $tag} } }
+    order_by: {code: asc }
+  ) {
+    ${CONSTITUENCIES_DATA}
   }  
 }
 `
@@ -142,6 +95,7 @@ export const QUERY_GET_PERSON_ELECTIONS = gql`
           name_zh
           code
         }
+        election_type
         camp
         political_affiliation
         votes
@@ -178,6 +132,54 @@ export const QUERY_GET_PERSON_MEETING_ATTENDANCES = gql`
         }
         attended
         total
+      }
+    }
+  }
+`
+
+export const QUERY_GET_COUNCILLOR_AND_CANDIDATES = gql`
+  query fetch_councillors($year: Int!, $code: String!) {
+    dcd_councillors(
+      where: { cacode: { _eq: $code }, year: { _eq: $year } }
+      order_by: { term_to: desc }
+    ) {
+      year
+      term_to
+      term_from
+      political_affiliation
+      constituency {
+        name_zh
+        name_en
+        code
+      }
+      person {
+        id
+        name_en
+        name_zh
+        uuid
+        candidates(order_by: { year: desc }) {
+          votes
+          is_won
+          year
+          cacode
+          election_type
+          constituency {
+            year
+            name_en
+            name_zh
+            candidates {
+              person {
+                id
+                name_en
+                name_zh
+              }
+              year
+              election_type
+              votes
+              political_affiliation
+            }
+          }
+        }
       }
     }
   }
