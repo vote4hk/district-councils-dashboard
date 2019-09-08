@@ -10,6 +10,7 @@ import { Button } from '@material-ui/core'
 import DistrictNewVoterChartContainer from 'components/containers/DistrictNewVoterChartContainer'
 import Columns from 'components/atoms/Columns'
 import Rows from 'components/atoms/Rows'
+import Box from '@material-ui/core/Box'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
 import { getDistrictListUriFromTag } from 'utils/helper'
@@ -77,21 +78,28 @@ class DCCAOverview extends Component {
       <Container>
         <Rows>
           <Columns>
-            <Typography variant="h6" gutterBottom>
-              {year} {dc_name_zh}
-            </Typography>
-            {sortedTags.map((tag, index) => (
-              <Tag
-                key={index}
-                value={tag.tag}
-                variant={tag.type === 'boundary' ? 'default' : 'outlined'}
-                handleClick={() => {
-                  this.props.history.push(getDistrictListUriFromTag(tag.tag))
-                }}
-              />
-            ))}
+            <Box flexGrow={1}>
+              <Typography variant="h6" gutterBottom>
+                {year} {dc_name_zh}
+              </Typography>
+            </Box>
+            <Box>
+              {sortedTags
+                .filter(tag => tag.type === 'boundary')
+                .map((tag, index) => (
+                  <Tag
+                    key={index}
+                    value={tag.tag}
+                    variant="default"
+                    handleClick={() => {
+                      this.props.history.push(
+                        getDistrictListUriFromTag(tag.tag)
+                      )
+                    }}
+                  />
+                ))}
+            </Box>
           </Columns>
-
           <Columns>
             <Typography variant="h3" style={{ display: 'inline-block' }}>
               {name_zh}
@@ -121,6 +129,19 @@ class DCCAOverview extends Component {
             <DistrictNewVoterChartContainer code={code} />
           )}
         </Rows>
+
+        {sortedTags
+          .filter(tag => tag.type !== 'boundary')
+          .map((tag, index) => (
+            <Tag
+              key={index}
+              value={tag.tag}
+              variant="outlined"
+              handleClick={() => {
+                this.props.history.push(getDistrictListUriFromTag(tag.tag))
+              }}
+            />
+          ))}
       </Container>
     )
   }

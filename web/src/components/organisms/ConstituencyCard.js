@@ -7,9 +7,9 @@ import { getDistrictListUriFromTag } from 'utils/helper'
 
 const StyledCard = styled(Card)`
   && {
-    margin: 5px;
-    width: 100%;
-    height: 60px;
+    margin: 16px;
+    padding: 16px;
+    height: auto;
   }
 `
 
@@ -26,8 +26,8 @@ const ConstituencyCard = props => {
         props.history.push(`/district/2019/${constituency.code}`)
       }}
     >
-      {constituency.code}
-      {constituency.name_zh}
+      <Typography variant="h6">{constituency.code}</Typography>
+      <Typography variant="h5">{constituency.name_zh}</Typography>
       {sortedTags.map((tag, index) => (
         <Tag
           key={index}
