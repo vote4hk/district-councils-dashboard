@@ -16,7 +16,7 @@ class CandidateList extends Component {
           候選人
         </Typography>
         <Typography variant="body1">
-          2019年區議會提名期為10月2日至15日，稍後會更新潛在候選人
+          2019年區議會提名期為10月4日至17日，稍後會更新潛在候選人
         </Typography>
       </Container>
     )
