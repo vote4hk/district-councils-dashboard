@@ -7,6 +7,7 @@ import IndexPage from './pages'
 import SearchPage from './pages/search'
 import ProfilePage from './pages/profile'
 import DistrictPage from './pages/district'
+import DistrictListPage from './pages/district/list'
 import BattleGroundPage from './pages/battleground'
 import NotfoundPage from './pages/notfound'
 import ApolloClient from 'apollo-boost'
@@ -21,7 +22,6 @@ import Footer from './components/organisms/Footer'
 import drawerReducer from 'reducers/drawer'
 import ContextStore, { drawerInitialState } from 'ContextStore'
 import withTracker from './WithTracker'
-import DistrictListPage from 'components/pages/DistrictListPage'
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_URI,

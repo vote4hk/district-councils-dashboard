@@ -2,6 +2,7 @@ import React from 'react'
 import { Query } from 'react-apollo'
 import { QUERY_GET_CONSTITUENCIES_BY_TAG } from 'queries/gql'
 import ConstituencyCard from 'components/organisms/ConstituencyCard'
+import { Typography } from '@material-ui/core';
 
 const DistrictListPage = props => {
   const {
