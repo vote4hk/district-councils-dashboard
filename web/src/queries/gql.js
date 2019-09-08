@@ -29,6 +29,7 @@ stations {
 }
 tags {
   tag
+  type
 }
 `
 

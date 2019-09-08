@@ -4,17 +4,19 @@ import React from 'react'
 
 const StyledChip = styled(Chip)`
   && {
-    color: ${props => props.color};
+    font-size: 12px;
+    margin-top: 2px;
+    margin-left: 3px;
   }
 `
 
 export const Tag = props => {
   return (
     <StyledChip
+      color={props.color}
       label={props.value}
-      variant="outlined"
-      color="secondary"
-      // avatar={<Avatar>MB</Avatar>}
+      variant={props.variant || 'outlined'}
+      size="small"
       onClick={props.handleClick}
     />
   )
