@@ -58,7 +58,6 @@ class Councillor extends Component {
     })
 
     const isWithinTerm = ({ term_from, term_to }, year) => {
-      console.log(`${term_from} - ${term_to}: ${year}`)
       return moment(year, 'YYYY')
         .add(1, 'year')
         .add(1, 'day')

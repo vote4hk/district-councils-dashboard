@@ -12,6 +12,8 @@ import Columns from 'components/atoms/Columns'
 import Rows from 'components/atoms/Rows'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
+import { getDistrictListUriFromTag } from 'utils/helper'
+import { withRouter } from 'react-router-dom'
 
 const Container = styled(Paper)`
   && {
@@ -83,6 +85,9 @@ class DCCAOverview extends Component {
                 key={index}
                 value={tag.tag}
                 variant={tag.type === 'boundary' ? 'default' : 'outlined'}
+                handleClick={() => {
+                  this.props.history.push(getDistrictListUriFromTag(tag.tag))
+                }}
               />
             ))}
           </Columns>
@@ -121,4 +126,4 @@ class DCCAOverview extends Component {
   }
 }
 
-export default DCCAOverview
+export default withRouter(DCCAOverview)

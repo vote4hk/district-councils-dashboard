@@ -2,6 +2,7 @@
 import gql from 'graphql-tag'
 
 const CONSTITUENCIES_DATA = `
+id
 name_zh
 name_en
 district {
@@ -43,6 +44,17 @@ query($year: Int!, $code: String!) {
         ${CONSTITUENCIES_DATA}
       }
     }
+  }  
+}
+`
+
+export const QUERY_GET_CONSTITUENCIES_BY_TAG = gql`
+query($year: Int!, $tag: String!) {
+  dcd_constituencies(
+    where: { year: { _eq: $year }, tags: { tag: {_eq: $tag} } }
+    order_by: {code: asc }
+  ) {
+    ${CONSTITUENCIES_DATA}
   }  
 }
 `
