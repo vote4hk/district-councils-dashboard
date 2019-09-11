@@ -11,6 +11,7 @@ import { Query } from 'react-apollo'
 import { getColorFromCamp } from 'utils/helper'
 import CouncillorMeetingAttendanceContainer from 'components/containers/CouncillorMeetingAttendanceContainer'
 import PersonElectionHistoriesContainer from 'components/containers/PersonElectionHistoriesContainer'
+import FCPersonData from 'components/templates/FCPersonData'
 
 // TODO: add age, camp & political_affiliation
 const GET_PEOPLE_PROFILE = gql`
@@ -18,6 +19,7 @@ const GET_PEOPLE_PROFILE = gql`
     dcd_people(where: { uuid: { _eq: $uuid } }) {
       id
       uuid
+      fc_uuid
       name_zh
       name_en
       gender
@@ -327,9 +329,13 @@ class ProfilePage extends Component {
                   ))}
                 </Grid>
               </PersonHighlightContainer>
-              <ScrollableTabs titles={['參選紀錄', '會議出席率']}>
+              <ScrollableTabs titles={['參選紀錄', '會議出席率', '個人立場']}>
                 <PersonElectionHistoriesContainer personId={person.id} />
                 <CouncillorMeetingAttendanceContainer personId={person.id} />
+                <FCPersonData
+                  fcUuid={person.fc_uuid}
+                  name={person.name_zh || person.name_en}
+                />
               </ScrollableTabs>
             </>
           )
