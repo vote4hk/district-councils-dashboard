@@ -64,7 +64,7 @@ class Councillor extends Component {
         .isBetween(moment(term_from), moment(term_to))
     }
 
-    const tags = ['競逐連任'] //getTagsForPerson(councillor.person)
+    const tags = [] // ['競逐連任'] //getTagsForPerson(councillor.person)
     return (
       <PlainCard>
         <Typography variant="h6">現任區議員</Typography>

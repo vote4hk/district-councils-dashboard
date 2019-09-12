@@ -30,7 +30,7 @@ const Councillor = props => {
   }
   // we just get the latest councillor from the dc
   const councillor = councillors[0]
-  const tags = ['競逐連任']
+  const tags = [] //['競逐連任']
   const IMAGE_HOST_URI =
     process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'
   const meta = getCouncillorMeta(councillor)
@@ -47,7 +47,7 @@ const Councillor = props => {
           <Box flexGrow={1}>
             <Typography variant="h6" gutterBottom>
               {`${councillor.term_from.substring(0, 4)} `}
-              {`${councillor.constituency.name_zh}${councillor.constituency.code}`}
+              {`${councillor.constituency.name_zh} （${councillor.constituency.code}）`}
             </Typography>
           </Box>
           <Box>
