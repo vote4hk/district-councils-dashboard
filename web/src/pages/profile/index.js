@@ -228,7 +228,7 @@ class ProfilePage extends Component {
     } = this.props
 
     // todo: use ENV_VAR
-    const homeUrl = 'https://cswbrian.github.io/district-councils-dashboard/'
+    const homeUrl = 'https://dc2019.g0vhk.io/'
 
     return (
       <Query query={GET_PEOPLE_PROFILE} variables={{ uuid }}>
