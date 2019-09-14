@@ -56,7 +56,6 @@ function convertToD3Compatible(data) {
     })
     .sort((a, b) => b['建制'] / b.total - a['建制'] / a.total)
   res['columns'] = ['name', '建制', '其他', '非建制']
-  console.log(res)
   return res
 }
 
