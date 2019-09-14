@@ -42,7 +42,7 @@ export default props => {
     const color = d3
       .scaleOrdinal()
       .domain(series.map(d => d.key))
-      .range(['#ea3c53', '#eeeeee', '#63b9e9'])
+      .range(['#ff6779', '#eeeeee', '#00c376'])
       .unknown('#ccc')
 
     const y = d3
