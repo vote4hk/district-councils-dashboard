@@ -11,6 +11,7 @@ const StyledSubtTitle = styled(Typography)`
 export const SuccessText = styled(Typography)`
   && {
     && {
+      font-weight: 500;
       color: ${styledComponentTheme.common.success};
     }
   }
@@ -19,6 +20,7 @@ export const SuccessText = styled(Typography)`
 export const FailureText = styled(Typography)`
   && {
     && {
+      font-weight: 500;
       color: ${styledComponentTheme.common.failure};
     }
   }

@@ -28,11 +28,15 @@ const PersonElectionHistories = props => {
             </Grid>
             {m.votes > 0 ? (
               <Grid item xs={3}>
-                <Typography variant="h5">{`${m.votes}票`}</Typography>
+                {m.is_won ? (
+                  <SuccessText>{`${m.votes}票`}</SuccessText>
+                ) : (
+                  <FailureText>{`${m.votes}票`}</FailureText>
+                )}
               </Grid>
             ) : (
               <Grid item xs={3}>
-                <Typography variant="h5">自動當選</Typography>
+                <SuccessText>自動當選</SuccessText>
               </Grid>
             )}
           </Grid>

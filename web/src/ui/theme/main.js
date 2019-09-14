@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles'
-import { red, lightGreen } from '@material-ui/core/colors'
+import { red, green } from '@material-ui/core/colors'
 export const headingFontFamily = 'Noto Sans TC, sans-serif'
 export const bodyFontFamily = 'Noto Sans TC, sans-serif'
 
@@ -91,8 +91,8 @@ export const styledComponentTheme = {
     uncertain: '#a8a8ad',
   },
   common: {
-    success: lightGreen[400],
-    failure: red[400],
+    success: green[800],
+    failure: red[800],
   },
   secondaryBackgroundColor: '#f2f2f3', // grey
   subtextColor: '#ffb500', // organe
