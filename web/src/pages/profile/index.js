@@ -276,6 +276,10 @@ class ProfilePage extends Component {
               (currentTerm && currentTerm.career) || lastElection.occupation,
           })
 
+          const titles = ['參選紀錄', '會議出席率']
+
+          if (person.fc_uuid) titles.push('個人立場')
+
           return (
             <>
               <CandidateHeaderContainer
@@ -334,13 +338,15 @@ class ProfilePage extends Component {
                   ))}
                 </Grid>
               </PersonHighlightContainer>
-              <ScrollableTabs titles={['參選紀錄', '會議出席率', '個人立場']}>
+              <ScrollableTabs titles={titles}>
                 <PersonElectionHistoriesContainer personId={person.id} />
                 <CouncillorMeetingAttendanceContainer personId={person.id} />
-                <FCPersonData
-                  fcUuid={person.fc_uuid}
-                  name={person.name_zh || person.name_en}
-                />
+                {person.fc_uuid && (
+                  <FCPersonData
+                    fcUuid={person.fc_uuid}
+                    name={person.name_zh || person.name_en}
+                  />
+                )}
               </ScrollableTabs>
             </>
           )
