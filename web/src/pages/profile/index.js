@@ -12,6 +12,7 @@ import { getColorFromCamp } from 'utils/helper'
 import CouncillorMeetingAttendanceContainer from 'components/containers/CouncillorMeetingAttendanceContainer'
 import PersonElectionHistoriesContainer from 'components/containers/PersonElectionHistoriesContainer'
 import FCPersonData from 'components/templates/FCPersonData'
+import { SuccessText, FailureText } from 'components/atoms/Text'
 
 // TODO: add age, camp & political_affiliation
 const GET_PEOPLE_PROFILE = gql`
@@ -197,7 +198,11 @@ class ProfilePage extends Component {
             </ElectionHistoryContentHeaderSpan>
             <ElectionHistoryContentSpan item xs={12} md={8}>
               {`${election.vote_percentage}% （${
-                election.is_won ? '當選' : '落敗'
+                election.is_won ? (
+                  <SuccessText>當選</SuccessText>
+                ) : (
+                  <FailureText>落敗</FailureText>
+                )
               }）`}
             </ElectionHistoryContentSpan>
           </ElectionHistoryContentGrid>
