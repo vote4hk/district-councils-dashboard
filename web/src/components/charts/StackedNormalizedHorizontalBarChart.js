@@ -19,7 +19,7 @@ export default props => {
     const width = dimensions.width
     const height = data.length * ROW_HEIGHT + margin.top + margin.bottom
 
-    const labels = ['建制', '其他', '泛民']
+    const labels = ['建制', '其他', '非建制']
     const series = d3
       .stack()
       .keys(data.columns.slice(1))
