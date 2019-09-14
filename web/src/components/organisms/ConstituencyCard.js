@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Card, Typography } from '@material-ui/core'
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'

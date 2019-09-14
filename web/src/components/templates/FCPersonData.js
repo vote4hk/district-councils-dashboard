@@ -2,11 +2,7 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Table } from '@material-ui/core'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
+import { Button } from '@material-ui/core'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -29,7 +25,7 @@ const StyledButton = styled(Button)`
 `
 
 const FCPersonData = props => {
-  const { uuid, fcUuid, name } = props
+  const { fcUuid, name } = props
 
   const fcUri = `https://hkfactcheck.github.io/person/${fcUuid}/${name}`
 

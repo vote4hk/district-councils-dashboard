@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { PlainCard } from 'components/molecules/Card'
 import Typography from '@material-ui/core/Typography'
 import { Box, Grid } from '@material-ui/core'
+import { SuccessText, FailureText } from '../atoms/Text'
 
 const PersonElectionHistories = props => {
   const { histories } = props
@@ -44,9 +45,11 @@ const PersonElectionHistories = props => {
             </Grid>
             {m.votes > 0 ? (
               <Grid item xs={3}>
-                <Typography variant="h6">
-                  {m.is_won ? '當選' : '落敗'}
-                </Typography>
+                {m.is_won ? (
+                  <SuccessText>當選</SuccessText>
+                ) : (
+                  <FailureText>落敗</FailureText>
+                )}
               </Grid>
             ) : (
               <Grid item xs={3}></Grid>

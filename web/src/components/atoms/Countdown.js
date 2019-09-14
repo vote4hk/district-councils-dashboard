@@ -100,30 +100,30 @@ class Countdown extends Component {
     return (
       <>
         <Grid container>
-          <TimeGrid xs={3}>
+          <TimeGrid item xs={3}>
             <Time variant="h1">{this.addLeadingZeros(countDown.days)}</Time>
           </TimeGrid>
-          <TimeGrid xs={3}>
+          <TimeGrid item xs={3}>
             <Time variant="h1">{this.addLeadingZeros(countDown.hours)}</Time>
           </TimeGrid>
-          <TimeGrid xs={3}>
+          <TimeGrid item xs={3}>
             <Time variant="h1">{this.addLeadingZeros(countDown.min)}</Time>
           </TimeGrid>
-          <TimeGrid xs={3}>
+          <TimeGrid item xs={3}>
             <Time variant="h1">{this.addLeadingZeros(countDown.sec)}</Time>
           </TimeGrid>
         </Grid>
         <Grid container>
-          <TimeGrid xs={3}>
+          <TimeGrid item xs={3}>
             <Unit variant="h6">天</Unit>
           </TimeGrid>
-          <TimeGrid xs={3}>
+          <TimeGrid item xs={3}>
             <Unit variant="h6">小時</Unit>
           </TimeGrid>
-          <TimeGrid xs={3}>
+          <TimeGrid item xs={3}>
             <Unit variant="h6">分鐘</Unit>
           </TimeGrid>
-          <TimeGrid xs={3}>
+          <TimeGrid item xs={3}>
             <Unit variant="h6">秒</Unit>
           </TimeGrid>
         </Grid>

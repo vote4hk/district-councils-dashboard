@@ -3,7 +3,6 @@ import Box from '@material-ui/core/Box'
 import CampCompareChartContainer from 'components/containers/CampCompareChartContainer'
 import Countdown from 'components/atoms/Countdown'
 import styled from 'styled-components'
-import { TitleText, SubTitleText } from 'components/atoms/Text'
 import { Typography } from '@material-ui/core'
 
 const Container = styled.div`

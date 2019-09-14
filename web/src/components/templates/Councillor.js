@@ -1,18 +1,15 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import styled from 'styled-components'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Avatar from '@material-ui/core/Avatar'
-import { PlainCard } from '../molecules/Card'
 import { Tag } from '../atoms/Tag'
 import { UnstyledNavLink } from '../atoms/UnstyledLink'
 import {
   getColorFromPoliticalAffiliation,
   getCouncillorMeta,
 } from 'utils/helper'
-import moment from 'moment'
-import PropTypes from 'prop-types'
 
 const StyledAvatar = styled(Avatar)`
   && {

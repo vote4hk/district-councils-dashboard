@@ -3,7 +3,6 @@ import { Query } from 'react-apollo'
 import { QUERY_GET_COUNCILLOR_AND_CANDIDATES } from 'queries/gql'
 import PropTypes from 'prop-types'
 import Councillor from 'components/templates/Councillor'
-import _ from 'lodash'
 
 const CouncillorContainer = props => {
   const { code, year } = props
