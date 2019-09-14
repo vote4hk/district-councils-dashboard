@@ -9,9 +9,22 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import styled from 'styled-components'
 
-const MobileTableCell = styled(TableCell)`
+const Container = styled.div`
   && {
-    padding: 8px 10px;
+    width: 100%;
+    margin-top: 32px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+`
+
+const StyledButton = styled(Button)`
+  && {
+    border: 1px black solid;
+    height: 48px;
+    padding: 0 32px;
   }
 `
 
@@ -22,25 +35,16 @@ const FCPersonData = props => {
 
   return (
     <>
-      <Button
-        onClick={() => {
-          const win = window.open(fcUri, '_blank')
-          win.focus()
-        }}
-      >
-        HK Fact Check
-      </Button>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <MobileTableCell align="left">會議</MobileTableCell>
-            <MobileTableCell align="left">性質</MobileTableCell>
-            <MobileTableCell align="left">年份</MobileTableCell>
-            <MobileTableCell align="left">與席</MobileTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody></TableBody>
-      </Table>
+      <Container>
+        <StyledButton
+          onClick={() => {
+            const win = window.open(fcUri, '_blank')
+            win.focus()
+          }}
+        >
+          更多資料及往績
+        </StyledButton>
+      </Container>
     </>
   )
 }
