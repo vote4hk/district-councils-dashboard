@@ -5,6 +5,7 @@ import { QUERY_GET_CONSTITUENCIES_BY_TAG } from 'queries/gql'
 import ConstituencyCard from 'components/organisms/ConstituencyCard'
 import { Typography } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
+import { Loading } from 'components/atoms/Loading'
 
 const Container = styled(Paper)`
   && {
@@ -27,7 +28,7 @@ const DistrictListPage = props => {
       variables={{ tag, year: 2019 }}
     >
       {({ loading, error, data }) => {
-        if (loading) return null
+        if (loading) return <Loading />
         if (error) return `Error! ${error}`
 
         return (

@@ -82,7 +82,7 @@ const App = props => {
                 <CssBaseline />
                 <Wrapper>
                   <MobileAppBar />
-                  <main>
+                  <main style={{ height: '100%' }}>
                     <Switch>
                       <Route
                         exact
