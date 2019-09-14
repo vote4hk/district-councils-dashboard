@@ -13,8 +13,6 @@ export default props => {
       return
     }
 
-    data.sort((a, b) => a['建制'] / a['total'] - b['建制'] / b['total'])
-
     const margin = { top: 110, right: 15, bottom: 20, left: 50 }
     const width = dimensions.width
     const height = data.length * ROW_HEIGHT + margin.top + margin.bottom
