@@ -4,6 +4,7 @@ import CampCompareChartContainer from 'components/containers/CampCompareChartCon
 import Countdown from 'components/atoms/Countdown'
 import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
+import SearchTab from 'components/organisms/SearchTab'
 
 const Container = styled.div`
   width: 100%;
@@ -31,18 +32,27 @@ const ExpandedRow = styled(Box)`
   }
 `
 const CountdownContainer = styled.div`
-&& {
-  width: 100%;
-  margin: 0 auto 16px;
+  && {
+    width: 100%;
+    margin: 0 auto 16px;
+  }
 `
 
 const LandingIcon = styled.div`
-  margin-left: auto;
-  margin-right: auto;
-  width: 200px;
-  height: 128px;
-  background: url('/static/images/landingIcon.svg') no-repeat;
-  background-size: cover;
+  && {
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+    height: 128px;
+    background: url('/static/images/landingIcon.svg') no-repeat;
+    background-size: cover;
+  }
+`
+
+const StyledSearchTab = styled(SearchTab)`
+  && {
+    padding: 100px;
+  }
 `
 
 const electionDate = 'Nov 24, 2019 07:30:00'
@@ -76,10 +86,11 @@ class IndexPage extends Component {
           <LandingIcon />
         </TopSection>
         <Container>
+          <StyledSearchTab />
           <ExpandedRow>
             <Typography variant="h5">現屆區議會勢力分布</Typography>
-            {/* <SubTitleText>了解更多</SubTitleText> */}
           </ExpandedRow>
+
           <CampCompareChartContainer />
         </Container>
       </>
