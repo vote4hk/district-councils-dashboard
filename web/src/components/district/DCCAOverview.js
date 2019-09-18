@@ -138,7 +138,7 @@ class DCCAOverview extends Component {
           )}
         </Rows>
 
-        {sortedTags
+        {/* {sortedTags
           .filter(tag => tag.type !== 'boundary')
           .map((tag, index) => (
             <Tag
@@ -149,7 +149,7 @@ class DCCAOverview extends Component {
                 this.props.history.push(getDistrictListUriFromTag(tag.tag))
               }}
             />
-          ))}
+          ))} */}
       </Container>
     )
   }
