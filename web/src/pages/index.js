@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
+import HexMapContainer from 'components/containers/HexMapContainer'
 import CampCompareChartContainer from 'components/containers/CampCompareChartContainer'
 import Countdown from 'components/atoms/Countdown'
 import styled from 'styled-components'
@@ -90,8 +91,12 @@ class IndexPage extends Component {
           <ExpandedRow>
             <Typography variant="h5">現屆區議會勢力分布</Typography>
           </ExpandedRow>
-
           <CampCompareChartContainer />
+          <HexMapContainer
+            onHexClick={code =>
+              this.props.history.push(`/district/2019/${code}`)
+            }
+          />
         </Container>
       </>
     )
