@@ -2,9 +2,9 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from 'styled-components/'
 import IndexPage from './pages'
-import SearchPage from './pages/search'
 import ProfilePage from './pages/profile'
 import DistrictPage from './pages/district'
 import DistrictListPage from './pages/district/list'
@@ -22,10 +22,17 @@ import Footer from './components/organisms/Footer'
 import drawerReducer from 'reducers/drawer'
 import ContextStore, { drawerInitialState } from 'ContextStore'
 import withTracker from './WithTracker'
+import SearchDrawer from 'components/pages/SearchDrawer'
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_URI,
 })
+
+const useStyles = makeStyles(theme => ({
+  drawerPaper: {
+    width: '100%',
+  },
+}))
 
 const Root = styled(Box)`
   && {
@@ -59,6 +66,7 @@ const App = props => {
   if (!process.env.REACT_APP_GRAPHQL_URI) {
     throw new Error('Graphql host not yet set')
   }
+  const classes = useStyles()
 
   const [drawerState, drawerDispatch] = React.useReducer(
     drawerReducer,
@@ -113,11 +121,14 @@ const App = props => {
                 <Footer />
               </ContentContainer>
               <Drawer
+                classes={{
+                  paper: classes.drawerPaper,
+                }}
                 anchor="left"
                 open={drawerState.open}
                 variant="persistent"
               >
-                <SearchPage />
+                <SearchDrawer />
               </Drawer>
             </Root>
           </ContextStore.Provider>
