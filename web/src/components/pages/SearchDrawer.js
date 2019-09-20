@@ -12,6 +12,7 @@ import Divider from '@material-ui/core/Divider'
 import { withRouter } from 'react-router-dom'
 import ContextStore from 'ContextStore'
 import { DRAWER_CLOSE } from 'reducers/drawer'
+import { UnstyledNavLink } from 'components/atoms/UnstyledLink'
 import {
   ExpansionPanel,
   ExpansionPanelSummary,
@@ -20,7 +21,7 @@ import {
 
 const StyledExpansionPanel = styled(ExpansionPanel)`
   && {
-    margin: 0;
+    margin: 0 !important;
     .Mui-expanded {
       margin: 0;
     }
@@ -80,8 +81,6 @@ const AddressSearchContainer = styled(Box)`
     position: relative;
     left: 0;
     right: 0;
-    padding: 21px 16px 21px 16px;
-    background-color: ${props => props.theme.secondaryBackgroundColor};
   }
 `
 
@@ -99,6 +98,15 @@ const NavBarButton = styled(IconButton)`
     position: fixed;
     top: 0px;
     right: 0px;
+  }
+`
+
+const AppBarTitle = styled(UnstyledNavLink)`
+  && {
+    left: auto;
+    right: auto;
+    width: 100%;
+    position: absolute;
   }
 `
 
@@ -134,10 +142,9 @@ function AppDrawer(props) {
     dispatch({ type: DRAWER_CLOSE })
   }
 
-  function onTabSelected(tab) {
-    return () => {
-      setSelectedTab(tab)
-    }
+  function goToHomePage() {
+    props.history.push('/')
+    dispatch({ type: DRAWER_CLOSE })
   }
 
   function renderSearchDistrict() {
@@ -173,6 +180,11 @@ function AppDrawer(props) {
       >
         <CloseIcon fontSize="small" />
       </NavBarButton>
+      <AppBarTitle onClick={goToHomePage}>
+        <Typography variant="h3" align="center">
+          <span role="img">區議會 2019 ✋🧡⚡</span>
+        </Typography>
+      </AppBarTitle>
       <ContentContainer>
         <StyledExpansionPanel
           square
@@ -213,17 +225,11 @@ function AppDrawer(props) {
             aria-controls="panel3d-content"
             id="panel3d-header"
           >
-            <Typography>Collapsible Group Item #3</Typography>
+            <Typography variant="h3">選擇選區</Typography>
           </StyledExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
-          </ExpansionPanelDetails>
+          <StyledExpansionPanelDetail>
+            <DistrictSelector />
+          </StyledExpansionPanelDetail>
         </StyledExpansionPanel>
       </ContentContainer>
       <StyledDivier />
