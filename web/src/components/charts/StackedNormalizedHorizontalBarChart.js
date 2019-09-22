@@ -51,6 +51,10 @@ export default props => {
 
     const x = d3.scaleLinear().range([margin.left, width - margin.right])
 
+    d3.select(d3Container.current)
+      .select('svg')
+      .remove()
+
     const svg = d3
       .select(d3Container.current)
       .append('svg')
@@ -118,16 +122,21 @@ export default props => {
       })
   }
 
-  useEffect(() => {
-    drawChart(props.data)
-  })
-
-  useLayoutEffect(() => {
+  const updateWindowSize = () => {
     if (d3Container.current) {
       setDimensions({
         width: d3Container.current.clientWidth,
       })
     }
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', updateWindowSize)
+    drawChart(props.data)
+  })
+
+  useLayoutEffect(() => {
+    updateWindowSize()
   }, [])
 
   return (
