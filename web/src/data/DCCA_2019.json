@@ -25125,7 +25125,7 @@
       },
       "properties": {
         "fid": 356,
-        "CACODE": "P02",
+        "CACODE": "P03",
         "ENAME": "Tai Po Central",
         "CNAME": "大埔中",
         "Shape_Leng": 1953.45265014,
@@ -25345,7 +25345,7 @@
       },
       "properties": {
         "fid": 360,
-        "CACODE": "P03",
+        "CACODE": "P02",
         "ENAME": "Chung Ting",
         "CNAME": "頌汀",
         "Shape_Leng": 3850.89648325,
