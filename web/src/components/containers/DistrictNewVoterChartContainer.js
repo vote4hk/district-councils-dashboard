@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import GroupedBarChart from 'components/charts/GroupedBarChart'
+import GroupedBarChart from 'components/atoms/charts/GroupedBarChart'
 import { Query } from 'react-apollo'
 import _ from 'lodash'
 import { QUERY_CONSTITUENCY_STATS } from 'queries/gql'
