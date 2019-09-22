@@ -28,7 +28,7 @@ const NavBarButton = styled(IconButton)`
   && {
     position: fixed;
     top: 0px;
-    right: 0px;
+    left: 0px;
   }
 `
 
