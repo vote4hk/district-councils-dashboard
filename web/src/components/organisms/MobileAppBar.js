@@ -2,7 +2,7 @@ import React from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
-import SearchIcon from '@material-ui/icons/Search'
+import MenuIcon from '@material-ui/icons/Menu'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import { DRAWER_OPEN } from '../../reducers/drawer'
@@ -46,7 +46,7 @@ function MobileAppBar(props) {
             aria-label="Search"
             onClick={() => dispatch({ type: DRAWER_OPEN })}
           >
-            <SearchIcon />
+            <MenuIcon />
           </IconButton>
         </Toolbar>
       </StyledAppBar>

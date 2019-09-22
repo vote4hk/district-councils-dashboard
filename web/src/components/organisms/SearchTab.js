@@ -47,7 +47,6 @@ const AddressSearchContainer = styled(Box)`
     left: 0;
     right: 0;
     padding: 21px 16px 21px 16px;
-    background-color: ${props => props.theme.secondaryBackgroundColor};
   }
 `
 
@@ -160,7 +159,6 @@ function SearchTab(props) {
           <Typography variant="h3">找候選人</Typography>
         </TabButton>
       </TabContainer>
-      <StyledDivier />
       {selectedTab === 'district'
         ? renderSearchDistrict()
         : renderSearchPeople()}
