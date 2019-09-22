@@ -7,17 +7,10 @@ import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import Divider from '@material-ui/core/Divider'
+import { COLORS } from 'ui/theme'
 import { withRouter } from 'react-router-dom'
 import ContextStore from 'ContextStore'
 import { DRAWER_CLOSE } from 'reducers/drawer'
-
-const StyledDivier = styled(Divider)`
-  && {
-    background-color: #ececec;
-    width: 100%;
-  }
-`
 
 const Container = styled(Box)`
   && {
@@ -65,11 +58,11 @@ const TabButton = styled(Button)`
 
     color: ${props =>
       props.active === 'active'
-        ? props.theme.subtextColor
-        : props.theme.main.color};
+        ? COLORS.main.highlightedText
+        : COLORS.main.text};
     border-bottom: ${props =>
       props.active === 'active'
-        ? `1px solid ${props.theme.subtextColor}`
+        ? `1px solid ${COLORS.main.highlightedText}`
         : 'none'};
   }
 `

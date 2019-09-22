@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import React from 'react'
-import { styledComponentTheme } from 'ui/theme/main'
+import { COLORS } from 'ui/theme'
 const StyledSubtTitle = styled(Typography)`
   && {
-    color: ${props => props.theme.subtextColor};
+    color: ${COLORS.highlightedText};
   }
 `
 
@@ -12,7 +12,7 @@ export const SuccessText = styled(Typography)`
   && {
     && {
       font-weight: 500;
-      color: ${styledComponentTheme.common.success};
+      color: ${COLORS.common.success};
     }
   }
 `
@@ -21,7 +21,7 @@ export const FailureText = styled(Typography)`
   && {
     && {
       font-weight: 500;
-      color: ${styledComponentTheme.common.failure};
+      color: ${COLORS.common.failure};
     }
   }
 `

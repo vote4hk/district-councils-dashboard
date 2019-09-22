@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
-import DCCACompareMap from '../../components/DCCACompareMap'
+import DCCACompareMap from '../../DCCACompareMap'
 import { Query } from 'react-apollo'
 import MainAreas from 'components/district/MainAreas'
 import CouncillorContainer from 'components/containers/CouncillorContainer'
@@ -12,7 +12,7 @@ import Collapse from '@material-ui/core/Collapse'
 import _ from 'lodash'
 import { QUERY_CONSTITUENCIES } from 'queries/gql'
 import { Typography } from '@material-ui/core'
-import { PlainCard } from '../../components/molecules/Card'
+import { PlainCard } from '../../molecules/Card'
 
 const groupVoteStat = voteStats => {
   const data = _.groupBy(voteStats, stat => stat.subtype)
