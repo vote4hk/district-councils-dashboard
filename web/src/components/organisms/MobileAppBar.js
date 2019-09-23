@@ -37,7 +37,7 @@ function MobileAppBar(props) {
           <AppBarTitle to={'/'}>
             <Typography variant="h3" align="center">
               <span role="img" aria-label="區議會 2019">
-                區議會 2019 ✋🧡⚡
+                區議會 2019 ✋🏻🧡⚡
               </span>
             </Typography>
           </AppBarTitle>
