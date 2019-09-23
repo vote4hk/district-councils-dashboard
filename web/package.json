@@ -82,6 +82,8 @@
     "lint:fix": "eslint src/*.js --fix",
     "lint": "eslint src/*.js",
     "prettier": "prettier --write \"src/**/*.js\""
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -93,6 +95,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@storybook/addon-actions": "^5.2.1",
+    "@storybook/addon-links": "^5.2.1",
+    "@storybook/addons": "^5.2.1",
+    "@storybook/react": "^5.2.1",
     "husky": ">=1",
     "lint-staged": ">=8",
     "prettier": "1.18.2"
