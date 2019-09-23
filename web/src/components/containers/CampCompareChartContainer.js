@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import _ from 'lodash'
 import { DCREGION } from 'constants/dcregion'
-import StackedNormalizedHorizontalBarChart from 'components/charts/StackedNormalizedHorizontalBarChart'
+import StackedNormalizedHorizontalBarChart from 'components/atoms/charts/StackedNormalizedHorizontalBarChart'
 
 const Container = styled.div`
   && {

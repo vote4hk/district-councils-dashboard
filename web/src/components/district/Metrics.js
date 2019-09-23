@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import VoterTurnoutChart from './VoterTurnoutChart'
-import WaffleChart from '../charts/WaffleChart'
+import WaffleChart from 'components/atoms/charts/WaffleChart'
 
 // TODO: change this to dcd data
 const QUERY_FETCH_VOTES = gql`

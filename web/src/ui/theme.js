@@ -56,29 +56,14 @@ export const typography = {
   },
 }
 
-export default createMuiTheme({
-  typography,
-  palette: {
-    primary: {
-      main: '#fff',
-      contrastText: '#000',
-    },
-    secondary: {
-      main: '#3e474f',
-      contrastText: '#fff',
-    },
-    button: {
-      primary: '#ffd731',
-      secondary: '#ffd731',
-    },
-  },
-})
-
-export const styledComponentTheme = {
+export const COLORS = {
   main: {
-    backgroundColor: 'white',
-    color: 'black',
+    text: '#000',
+    highlightedText: '#ffb500', // organe
+    background: '#fff'
   },
+  mainText: 'black',
+  
   dark: {
     backgroundColor: '#3e474f',
     color: 'white',
@@ -94,6 +79,21 @@ export const styledComponentTheme = {
     success: green[800],
     failure: red[800],
   },
-  secondaryBackgroundColor: '#f2f2f3', // grey
-  subtextColor: '#ffb500', // organe
+  secondaryBackgroundColor: '#f2f2f3', // grey  
 }
+
+export default createMuiTheme({
+  typography,
+  palette: {
+    primary: {
+      main: COLORS.main.background,
+      contrastText: COLORS.main.text,
+    },
+    secondary: {
+      main: '#3e474f',
+      contrastText: '#fff',
+    }
+  },
+})
+
+

@@ -13,6 +13,7 @@ import CouncillorMeetingAttendanceContainer from 'components/containers/Councill
 import PersonElectionHistoriesContainer from 'components/containers/PersonElectionHistoriesContainer'
 import FCPersonData from 'components/templates/FCPersonData'
 import { SuccessText, FailureText } from 'components/atoms/Text'
+import { COLORS } from 'ui/theme'
 
 // TODO: add age, camp & political_affiliation
 const GET_PEOPLE_PROFILE = gql`
@@ -69,7 +70,7 @@ const CandidateHeaderContainer = styled(FlexRowContainer)`
     position: relative;
     display: flex;
     background: linear-gradient(
-      ${props => props.theme.camp[props.camp]} 84px,
+      ${props => COLORS.camp[props.camp]} 84px,
       rgba(255, 255, 255, 0) 32px
     );
   }

@@ -2,23 +2,22 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { ThemeProvider } from 'styled-components/'
-import IndexPage from './pages'
-import ProfilePage from './pages/profile'
-import DistrictPage from './pages/district'
-import DistrictListPage from './pages/district/list'
-import BattleGroundPage from './pages/battleground'
-import NotfoundPage from './pages/notfound'
+import { makeStyles } from '@material-ui/core/styles'
+import IndexPage from 'components/pages/landing'
+import ProfilePage from 'components/pages/profile'
+import DistrictPage from 'components/pages/district'
+import DistrictListPage from 'components/pages/district/list'
+import BattleGroundPage from 'components/pages/battleground'
+import NotfoundPage from 'components/pages/notfound'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
-import theme, { styledComponentTheme } from 'ui/theme/main'
+import theme from 'ui/theme'
 import './App.css'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
 import Drawer from '@material-ui/core/Drawer'
-import MobileAppBar from './components/organisms/MobileAppBar'
-import Footer from './components/organisms/Footer'
+import MobileAppBar from 'components/organisms/MobileAppBar'
+import Footer from 'components/organisms/Footer'
 import drawerReducer from 'reducers/drawer'
 import ContextStore, { drawerInitialState } from 'ContextStore'
 import withTracker from './WithTracker'
@@ -75,65 +74,59 @@ const App = props => {
 
   return (
     <ApolloProvider client={client}>
-      <ThemeProvider theme={styledComponentTheme}>
-        <MuiThemeProvider theme={theme}>
-          <ContextStore.Provider
-            value={{
-              drawer: {
-                state: drawerState,
-                dispatch: drawerDispatch,
-              },
-            }}
-          >
-            <Root>
-              <ContentContainer>
-                <CssBaseline />
-                <Wrapper>
-                  <MobileAppBar />
-                  <main>
-                    <Switch>
-                      <Route
-                        exact
-                        path="/"
-                        component={withTracker(IndexPage)}
-                      />
-                      <Route
-                        path="/profile/:name/:uuid"
-                        component={withTracker(ProfilePage)}
-                      />
-                      <Route
-                        path="/district/2019/tags/:tag"
-                        component={withTracker(DistrictListPage)}
-                      />
-                      <Route
-                        path="/district/2019/:code"
-                        component={withTracker(BattleGroundPage)}
-                      />
-                      <Route
-                        path="/district/:year/:code"
-                        component={withTracker(DistrictPage)}
-                      />
+      <MuiThemeProvider theme={theme}>
+        <ContextStore.Provider
+          value={{
+            drawer: {
+              state: drawerState,
+              dispatch: drawerDispatch,
+            },
+          }}
+        >
+          <Root>
+            <ContentContainer>
+              <CssBaseline />
+              <Wrapper>
+                <MobileAppBar />
+                <main>
+                  <Switch>
+                    <Route exact path="/" component={withTracker(IndexPage)} />
+                    <Route
+                      path="/profile/:name/:uuid"
+                      component={withTracker(ProfilePage)}
+                    />
+                    <Route
+                      path="/district/2019/tags/:tag"
+                      component={withTracker(DistrictListPage)}
+                    />
+                    <Route
+                      path="/district/2019/:code"
+                      component={withTracker(BattleGroundPage)}
+                    />
+                    <Route
+                      path="/district/:year/:code"
+                      component={withTracker(DistrictPage)}
+                    />
 
-                      <Route component={withTracker(NotfoundPage)} />
-                    </Switch>
-                  </main>
-                </Wrapper>
-                <Footer />
-              </ContentContainer>
-              <Drawer
-                classes={{
-                  paper: classes.drawerPaper,
-                }}
-                anchor="left"
-                open={drawerState.open}
-                variant="persistent"
-              >
-                <SearchDrawer />
-              </Drawer>
-            </Root>
-          </ContextStore.Provider>
-        </MuiThemeProvider>
-      </ThemeProvider>
+                    <Route component={withTracker(NotfoundPage)} />
+                  </Switch>
+                </main>
+              </Wrapper>
+              <Footer />
+            </ContentContainer>
+            <Drawer
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              anchor="left"
+              open={drawerState.open}
+              variant="persistent"
+            >
+              <SearchDrawer />
+            </Drawer>
+          </Root>
+        </ContextStore.Provider>
+      </MuiThemeProvider>
     </ApolloProvider>
   )
 }

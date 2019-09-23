@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Avatar from '@material-ui/core/Avatar'
 import { Tag } from '../atoms/Tag'
+import { COLORS } from 'ui/theme'
 import { UnstyledNavLink } from '../atoms/UnstyledLink'
 import {
   getColorFromPoliticalAffiliation,
@@ -16,7 +17,7 @@ const StyledAvatar = styled(Avatar)`
     margin: 10px;
     width: 60px;
     height: 60px;
-    border: 3px ${props => props.theme.camp[props.camp]} solid;
+    border: 3px ${props => COLORS.camp[props.camp]} solid;
   }
 `
 

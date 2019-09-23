@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from 'react'
 import * as d3 from 'd3'
-import { FONT_FAMILY } from 'ui/theme/main'
+import { FONT_FAMILY } from 'ui/theme'
 const ROW_HEIGHT = 20
 
 export default props => {

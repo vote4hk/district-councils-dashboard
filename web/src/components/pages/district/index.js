@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
-import OLMap from '../../components/OLMap'
+import OLMap from '../../OLMap'
 import { Query } from 'react-apollo'
 import DistrictCard from 'components/district/DistrictCard'
 import MainAreas from 'components/district/MainAreas'

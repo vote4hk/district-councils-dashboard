@@ -12,6 +12,7 @@ import Divider from '@material-ui/core/Divider'
 import { withRouter } from 'react-router-dom'
 import ContextStore from 'ContextStore'
 import { DRAWER_CLOSE } from 'reducers/drawer'
+import { COLORS } from 'ui/theme'
 
 const StyledDivier = styled(Divider)`
   && {
@@ -48,7 +49,6 @@ const AddressSearchContainer = styled(Box)`
     left: 0;
     right: 0;
     padding: 21px 16px 21px 16px;
-    background-color: ${props => props.theme.secondaryBackgroundColor};
   }
 `
 
@@ -67,11 +67,11 @@ const TabButton = styled(Button)`
 
     color: ${props =>
       props.active === 'active'
-        ? props.theme.subtextColor
-        : props.theme.main.color};
+        ? COLORS.main.highlightedText
+        : COLORS.main.text };
     border-bottom: ${props =>
       props.active === 'active'
-        ? `1px solid ${props.theme.subtextColor}`
+        ? `1px solid ${COLORS.main.highlightedText}`
         : 'none'};
   }
 `
