@@ -144,10 +144,10 @@ class MainAreas extends Component {
           return (
             <Container>
               <Typography variant="h4">人口資料</Typography>
-              <VoterTurnoutChart
+              {/* <VoterTurnoutChart
                 id={`${year}_${code}_voter_turnout`}
                 data={barVote}
-              />
+              /> */}
               {voteStats.length > 0 ? (
                 <WaffleChart
                   id={`${year}_${code}_voter_treemap`}
