@@ -54,6 +54,7 @@ const LeftMargin = styled(ExpandedRow)`
     min-height: 48px;
     align-items: center;
     padding: 0 24px 0 24px;
+    cursor: pointer;
   }
 `
 
