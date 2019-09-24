@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import VoterTurnoutChart from './VoterTurnoutChart'
+// import VoterTurnoutChart from './VoterTurnoutChart'
 import WaffleChart from 'components/atoms/charts/WaffleChart'
 
 // TODO: change this to dcd data
