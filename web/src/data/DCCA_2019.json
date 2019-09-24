@@ -23762,7 +23762,7 @@
         "fid": 334,
         "CACODE": "G06",
         "ENAME": "Sheung Lok",
-        "CNAME": "何文田",
+        "CNAME": "常樂",
         "Shape_Leng": 2892.32981737,
         "Shape_Area": 378819.902006
       }
@@ -23796,7 +23796,7 @@
         "fid": 335,
         "CACODE": "G04",
         "ENAME": "Ma Tau Kok",
-        "CNAME": "樂民",
+        "CNAME": "馬頭角",
         "Shape_Leng": 2186.65867062,
         "Shape_Area": 182495.869884
       }
@@ -23838,7 +23838,7 @@
         "fid": 336,
         "CACODE": "G05",
         "ENAME": "Lok Man",
-        "CNAME": "常樂",
+        "CNAME": "樂民",
         "Shape_Leng": 2612.98037357,
         "Shape_Area": 150950.012068
       }
@@ -23875,7 +23875,7 @@
         "fid": 337,
         "CACODE": "G03",
         "ENAME": "Ma Hang Chung",
-        "CNAME": "馬頭角",
+        "CNAME": "馬坑涌",
         "Shape_Leng": 2554.47662367,
         "Shape_Area": 142808.444369
       }
@@ -23942,7 +23942,7 @@
         "fid": 338,
         "CACODE": "G07",
         "ENAME": "Ho Man Tin",
-        "CNAME": "嘉道理",
+        "CNAME": "何文田",
         "Shape_Leng": 3983.46965622,
         "Shape_Area": 511424.509914
       }
@@ -23979,7 +23979,7 @@
         "fid": 339,
         "CACODE": "G02",
         "ENAME": "Sung Wong Toi",
-        "CNAME": "馬坑涌",
+        "CNAME": "宋皇臺",
         "Shape_Leng": 2121.03431473,
         "Shape_Area": 175627.02422
       }
@@ -24019,7 +24019,7 @@
         "fid": 340,
         "CACODE": "G08",
         "ENAME": "Kadoorie",
-        "CNAME": "太子",
+        "CNAME": "嘉道理",
         "Shape_Leng": 2814.45400636,
         "Shape_Area": 432875.764867
       }
@@ -24118,7 +24118,7 @@
         "fid": 342,
         "CACODE": "G09",
         "ENAME": "Prince",
-        "CNAME": "九龍塘",
+        "CNAME": "太子",
         "Shape_Leng": 4950.23885713,
         "Shape_Area": 756917.826124
       }
@@ -24159,7 +24159,7 @@
         "fid": 343,
         "CACODE": "G11",
         "ENAME": "Lung Shing",
-        "CNAME": "宋皇臺",
+        "CNAME": "龍城",
         "Shape_Leng": 2536.57234005,
         "Shape_Area": 303891.917038
       }
@@ -24373,7 +24373,7 @@
         "fid": 345,
         "CACODE": "G10",
         "ENAME": "Kowloon Tong",
-        "CNAME": "龍城",
+        "CNAME": "九龍塘",
         "Shape_Leng": 7292.09749937,
         "Shape_Area": 2037595.26844
       }
@@ -27128,7 +27128,7 @@
         "fid": 370,
         "CACODE": "N08",
         "ENAME": "Shing Fuk",
-        "CNAME": "粉嶺南",
+        "CNAME": "盛福",
         "Shape_Leng": 1738.89535551,
         "Shape_Area": 142999.692778
       }
@@ -27276,7 +27276,7 @@
         "fid": 372,
         "CACODE": "N07",
         "ENAME": "Fanling South",
-        "CNAME": "盛福",
+        "CNAME": "粉嶺南",
         "Shape_Leng": 6038.83546351,
         "Shape_Area": 679538.786911
       }
@@ -31253,7 +31253,7 @@
         "fid": 404,
         "CACODE": "M26",
         "ENAME": "Chung Pak",
-        "CNAME": "頌柏",
+        "CNAME": "頌栢",
         "Shape_Leng": 1523.35299882,
         "Shape_Area": 119256.085936
       }
