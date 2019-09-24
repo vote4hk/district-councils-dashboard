@@ -14,23 +14,24 @@ cache: npm
 
 before_install:
   - cd web
-  - npm install
 
 jobs:
   include:
     - stage: build
       script:
+        - npm install
         - npm run build
     - stage: deploy
       script:
-        - npm run deploy
-
-      # deploy:
-      #   provider: pages
-      #   skip-cleanup: true
-      #   github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
-      #   keep-history: true
-      #   local-dir: web/dist # the local dir is relative to root and ignoring the one set with before_install
-      #   on:
-      #     tags: true
-      #     all_branches: true
+        - echo "skipping tests"
+      deploy:
+        provider: pages
+        skip-cleanup: true
+        repo: hkvoteguide/hkvoteguide.github.io
+        fqdn: dc2019.g0vhk.io
+        github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+        keep-history: true
+        committer_from_gh: true
+        local-dir: web/build # the local dir is relative to root and ignoring the one set with before_install
+        on:
+          branch: master
