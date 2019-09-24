@@ -32,6 +32,7 @@ jobs:
         github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
         keep-history: true
         committer_from_gh: true
+        target_branch: master
         local-dir: web/build # the local dir is relative to root and ignoring the one set with before_install
         on:
           branch: master
