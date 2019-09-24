@@ -13,6 +13,7 @@ import {
   ExpansionPanelSummary,
   ExpansionPanelDetails,
 } from '@material-ui/core/'
+import { getProfilePath } from 'utils/helper'
 
 const StyledExpansionPanel = styled(ExpansionPanel)`
   && {
@@ -88,8 +89,7 @@ const SearchMenu = props => {
   }
 
   function handlePeopleSelected(person) {
-    // TODO: move to helper
-    const path = `/profile/${person.name_zh || person.name_en}/${person.uuid}`
+    const path = getProfilePath(person)
     props.history.push(path)
     dispatch({ type: DRAWER_CLOSE })
   }

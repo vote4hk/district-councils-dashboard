@@ -13,6 +13,7 @@ import { withRouter } from 'react-router-dom'
 import ContextStore from 'ContextStore'
 import { DRAWER_CLOSE } from 'reducers/drawer'
 import { COLORS } from 'ui/theme'
+import { getProfilePath } from 'utils/helper'
 
 const StyledDivier = styled(Divider)`
   && {
@@ -68,7 +69,7 @@ const TabButton = styled(Button)`
     color: ${props =>
       props.active === 'active'
         ? COLORS.main.highlightedText
-        : COLORS.main.text };
+        : COLORS.main.text};
     border-bottom: ${props =>
       props.active === 'active'
         ? `1px solid ${COLORS.main.highlightedText}`
@@ -103,8 +104,7 @@ function SearchPage(props) {
   }
 
   function handlePeopleSelected(person) {
-    // TODO: move to helper
-    const path = `/profile/${person.name_zh || person.name_en}/${person.uuid}`
+    const path = getProfilePath(person)
     props.history.push(path)
     dispatch({ type: DRAWER_CLOSE })
   }
