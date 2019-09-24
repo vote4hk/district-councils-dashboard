@@ -145,8 +145,7 @@ const PeopleSearcher = props => {
   }
 
   const renderSuggestion = (suggestion, { query, isHighlighted }) => {
-    // todo: use ENV_VAR
-    const homeUrl = 'https://dc2019.g0vhk.io/'
+    const homeUrl = process.env.REACT_APP_HOST_URI
     const { uuid, name_zh, name_en } = suggestion
     const avatarPath = uuid
       ? `${homeUrl}/static/images/avatar/${uuid}.jpg`

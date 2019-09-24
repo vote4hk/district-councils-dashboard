@@ -228,8 +228,7 @@ class ProfilePage extends Component {
       },
     } = this.props
 
-    // todo: use ENV_VAR
-    const homeUrl = 'https://dc2019.g0vhk.io/'
+    const homeUrl = process.env.REACT_APP_HOST_URI
 
     return (
       <Query query={GET_PEOPLE_PROFILE} variables={{ uuid }}>

@@ -30,10 +30,9 @@ class Councillor extends Component {
     // areas: PropTypes.array.isRequired
   }
 
-  homeUrl = 'https://cswbrian.github.io/district-councils-dashboard'
-
   render() {
     const { districts } = this.props
+    const homeUrl = process.env.REACT_APP_HOST_URI
 
     // Filter out small intersect area
     const filteredDistricts = districts.filter(
@@ -112,11 +111,11 @@ class Councillor extends Component {
                     camp={getColorFromPoliticalAffiliation(
                       councillor.political_affiliation
                     )}
-                    src={`${this.homeUrl}/static/images/avatar/${councillor.person.uuid}.jpg`}
+                    src={`${homeUrl}/static/images/avatar/${councillor.person.uuid}.jpg`}
                     imgProps={{
                       onError: e => {
                         e.target.src =
-                          this.homeUrl + '/static/images/avatar/default.png'
+                          homeUrl + '/static/images/avatar/default.png'
                       },
                     }}
                   />

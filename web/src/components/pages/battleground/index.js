@@ -8,6 +8,7 @@ import CandidateList from 'components/district/CandidateList'
 import DCCAOverview from 'components/district/DCCAOverview'
 import Button from '@material-ui/core/Button'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 import Collapse from '@material-ui/core/Collapse'
 import _ from 'lodash'
 import { QUERY_CONSTITUENCIES } from 'queries/gql'
@@ -95,7 +96,7 @@ class BattleGroundPage extends Component {
                 />
                 <Button onClick={() => this.setState({ showMap: !showMap })}>
                   {showMap ? '隱藏地圖' : '顯示地圖'}
-                  <ExpandMoreIcon />
+                  {showMap ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                 </Button>
                 <Collapse in={showMap}>
                   <Box
