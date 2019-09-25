@@ -11,6 +11,7 @@ import { COLORS } from 'ui/theme'
 import { withRouter } from 'react-router-dom'
 import ContextStore from 'ContextStore'
 import { DRAWER_CLOSE } from 'reducers/drawer'
+import { getProfilePath } from 'utils/helper'
 
 const Container = styled(Box)`
   && {
@@ -94,8 +95,7 @@ function SearchTab(props) {
   }
 
   function handlePeopleSelected(person) {
-    // TODO: move to helper
-    const path = `/profile/${person.name_zh || person.name_en}/${person.uuid}`
+    const path = getProfilePath(person)
     props.history.push(path)
     dispatch({ type: DRAWER_CLOSE })
   }

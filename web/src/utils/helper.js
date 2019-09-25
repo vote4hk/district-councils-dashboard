@@ -172,3 +172,8 @@ export const getColorFromPoliticalAffiliation = pa => {
 
   return 'uncertain'
 }
+
+export const getProfilePath = person => {
+  const { name_en, name_zh, uuid } = person
+  return `/profile/${name_zh || name_en}/${uuid}`
+}

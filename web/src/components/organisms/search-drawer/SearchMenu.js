@@ -13,6 +13,7 @@ import {
   ExpansionPanelSummary,
   ExpansionPanelDetails,
 } from '@material-ui/core/'
+import { getProfilePath } from 'utils/helper'
 
 const StyledExpansionPanel = styled(ExpansionPanel)`
   && {
@@ -53,6 +54,7 @@ const LeftMargin = styled(ExpandedRow)`
     min-height: 48px;
     align-items: center;
     padding: 0 24px 0 24px;
+    cursor: pointer;
   }
 `
 
@@ -88,8 +90,7 @@ const SearchMenu = props => {
   }
 
   function handlePeopleSelected(person) {
-    // TODO: move to helper
-    const path = `/profile/${person.name_zh || person.name_en}/${person.uuid}`
+    const path = getProfilePath(person)
     props.history.push(path)
     dispatch({ type: DRAWER_CLOSE })
   }
