@@ -135,9 +135,7 @@ function SearchTab(props) {
         onClick={() => {
           dispatch({ type: DRAWER_CLOSE })
         }}
-      >
-        <CloseIcon fontSize="small" />
-      </NavBarButton>
+      ></NavBarButton>
       <TabContainer>
         <TabButton
           active={selectedTab === 'district' ? 'active' : 'inactive'}
