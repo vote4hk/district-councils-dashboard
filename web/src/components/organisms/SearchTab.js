@@ -4,7 +4,6 @@ import Box from '@material-ui/core/Box'
 import AddressSearcher from 'components/molecules/AddressSearcher'
 import PeopleSearcher from 'components/molecules/PeopleSearcher'
 import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { COLORS } from 'ui/theme'
@@ -64,14 +63,6 @@ const TabButton = styled(Button)`
       props.active === 'active'
         ? `1px solid ${COLORS.main.highlightedText}`
         : 'none'};
-  }
-`
-
-const NavBarButton = styled(IconButton)`
-  && {
-    position: fixed;
-    top: 0px;
-    right: 0px;
   }
 `
 
