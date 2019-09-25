@@ -191,7 +191,7 @@ class IntegrationAutosuggest extends React.Component {
           {...autosuggestProps}
           inputProps={{
             classes,
-            placeholder: '尋找選區...',
+            placeholder: '輸入屋苑自動搜尋 !',
             value: this.state.value,
             onChange: this.handleChange('value'),
             InputLabelProps: {

@@ -209,7 +209,7 @@ const PeopleSearcher = props => {
   // Autosuggest will pass through all these props to the input.
   const inputProps = {
     classes,
-    placeholder: '尋找議員...',
+    placeholder: '輸入候選人姓名...',
     value,
     onChange,
     InputLabelProps: {
