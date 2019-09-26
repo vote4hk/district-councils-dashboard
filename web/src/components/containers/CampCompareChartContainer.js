@@ -5,7 +5,8 @@ import { Query } from 'react-apollo'
 import _ from 'lodash'
 import { DCREGION } from 'constants/dcregion'
 import StackedNormalizedHorizontalBarChart from 'components/atoms/charts/StackedNormalizedHorizontalBarChart'
-
+// TODO: load from db
+import historyData from 'data/test_constituency_data.json'
 const Container = styled.div`
   && {
     width: 100%;
