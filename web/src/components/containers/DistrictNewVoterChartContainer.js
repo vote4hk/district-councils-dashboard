@@ -103,7 +103,7 @@ export default props => {
     //     }
     //   }
     // })
-    meta.increased = _.round(newVotes / total, 4)
+    meta.increased = _.round(newVotes / (total - newVotes), 4)
 
     return meta
   }

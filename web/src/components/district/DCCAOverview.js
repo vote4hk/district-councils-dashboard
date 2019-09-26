@@ -73,7 +73,7 @@ class DCCAOverview extends Component {
     )
     const new_voters_percentage = (
       (100 * voterData.aggregations.new_voters) /
-      voterData.aggregations.all_voters
+      (voterData.aggregations.all_voters - voterData.aggregations.new_voters)
     ).toFixed(2)
     return (
       <Container>
