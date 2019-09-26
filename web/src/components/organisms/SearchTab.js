@@ -4,7 +4,6 @@ import Box from '@material-ui/core/Box'
 import AddressSearcher from 'components/molecules/AddressSearcher'
 import PeopleSearcher from 'components/molecules/PeopleSearcher'
 import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { COLORS } from 'ui/theme'
@@ -68,14 +67,6 @@ const TabButton = styled(Button)`
   }
 `
 
-const NavBarButton = styled(IconButton)`
-  && {
-    position: fixed;
-    top: 0px;
-    right: 0px;
-  }
-`
-
 function SearchTab(props) {
   const {
     drawer: { dispatch },
@@ -84,9 +75,9 @@ function SearchTab(props) {
     props.selectedTab || 'district'
   )
   function handleAddressSelected(result) {
-    /* TODO: 
+    /* TODO:
       Use context (?) to store the Global district result array
-      When user select click previous button in district page, 
+      When user select click previous button in district page,
       the CACODE should follow follow the above result
     */
 
@@ -128,14 +119,6 @@ function SearchTab(props) {
 
   return (
     <Container>
-      <NavBarButton
-        color="inherit"
-        component="span"
-        aria-label="Menu"
-        onClick={() => {
-          dispatch({ type: DRAWER_CLOSE })
-        }}
-      ></NavBarButton>
       <TabContainer>
         <TabButton
           active={selectedTab === 'district' ? 'active' : 'inactive'}
