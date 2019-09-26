@@ -76,6 +76,8 @@ export const QUERY_CONSTITUENCY_STATS = gql`
 export const QUERY_GET_AREA = gql`
   query {
     dcd_districts {
+      area_code
+      area_name_zh
       dc_code
       dc_name_zh
       constituencies(where: { year: { _eq: 2019 } }) {

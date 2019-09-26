@@ -5,6 +5,7 @@ import Countdown from 'components/atoms/Countdown'
 import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
 import SearchTab from 'components/organisms/SearchTab'
+import DistrictSelector from 'components/molecules/DistrictSelector'
 
 const Container = styled.div`
   width: 100%;
