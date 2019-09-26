@@ -81,8 +81,8 @@ const DistrictSelector = props => {
   }
 
   // TODO Change to use 2 columns design
-  const renderArea = districts => {
-    return _.chunk(districts, 1).map((row, index) => (
+  const renderArea = area => {
+    return _.chunk(area.districts, 1).map((row, index) => (
       <Grid container wrap="nowrap" key={`districts-row-${index}`}>
         {row.map(d => (
           <DistrictGrid item xs={12} key={`district-item-${d.dc_code}`}>
@@ -110,14 +110,27 @@ const DistrictSelector = props => {
           if (loading) return null
           if (error) return `Error! ${error}`
 
-          const areas = _.uniq(data.dcd_districts.map(d => d.area_name_zh))
+          const areas = _.uniqBy(
+            data.dcd_districts.map(d => ({
+              area_code: d.area_code,
+              area_name_zh: d.area_name_zh,
+            })),
+            'area_code'
+          )
+
+          const areasWithDistricts = areas.map(a => ({
+            ...a,
+            districts: data.dcd_districts.filter(
+              d => d.area_name_zh === a.area_name_zh
+            ),
+          }))
+
+          const areaNames = areas.map(a => a.area_name_zh)
 
           return (
-            <AreaTabs titles={areas}>
-              {areas.map(areaName => {
-                return renderArea(
-                  data.dcd_districts.filter(d => d.area_name_zh === areaName)
-                )
+            <AreaTabs titles={areaNames}>
+              {areasWithDistricts.map(a => {
+                return renderArea(a)
               })}
             </AreaTabs>
           )
