@@ -49,8 +49,6 @@ const ContentContainer = styled(Box)`
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 1024px;
-    margin: auto;
     overflow: auto;
   }
 `
@@ -58,6 +56,9 @@ const ContentContainer = styled(Box)`
 const Wrapper = styled(Box)`
   && {
     flex: 1;
+    width: 100%;
+    max-width: 1024px;
+    margin: auto;
   }
 `
 

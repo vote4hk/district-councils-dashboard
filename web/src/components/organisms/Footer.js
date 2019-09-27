@@ -8,7 +8,9 @@ import { Typography } from '@material-ui/core'
 const StyledFooter = styled(Box)`
   && {
     border-top: 1px rgba(0, 0, 0, 0.12) solid;
-    margin: 16px 16px 0;
+    width: 100%;
+    max-width: 1024px;
+    margin: auto;
     padding: 16px 0;
   }
 `
