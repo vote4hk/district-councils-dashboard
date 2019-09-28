@@ -72,16 +72,16 @@ const SearchMenu = props => {
     drawer: { dispatch },
   } = React.useContext(ContextStore)
 
-  const [expanded, setExpanded] = React.useState('panel1')
+  const [expanded, setExpanded] = React.useState('panel3')
 
   const handleChange = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false)
   }
 
   function handleAddressSelected(result) {
-    /* TODO: 
+    /* TODO:
       Use context (?) to store the Global district result array
-      When user select click previous button in district page, 
+      When user select click previous button in district page,
       the CACODE should follow follow the above result
     */
 
@@ -114,6 +114,10 @@ const SearchMenu = props => {
         <PeopleSearcher handlePeopleSelected={handlePeopleSelected} />
       </AddressSearchContainer>
     )
+  }
+
+  function renderDistrictSelector() {
+    return <DistrictSelector />
   }
 
   return (
@@ -172,7 +176,7 @@ const SearchMenu = props => {
           </Typography>
         </StyledExpansionPanelSummary>
         <StyledExpansionPanelDetail>
-          <DistrictSelector />
+          {renderDistrictSelector()}
         </StyledExpansionPanelDetail>
       </StyledExpansionPanel>
     </>
