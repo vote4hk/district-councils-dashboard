@@ -2,7 +2,7 @@ language: node_js
 node_js:
     - "8"
 stages:
-  - name: build
+  # - name: build
   # Build the docker image only on master branch
   - name: deploy
 
@@ -17,13 +17,10 @@ before_install:
 
 jobs:
   include:
-    - stage: build
+    - stage: deploy
       script:
         - npm install
         - npm run build
-    - stage: deploy
-      script:
-        - echo "skipping tests"
       deploy:
         provider: pages
         skip-cleanup: true
