@@ -15,6 +15,10 @@ const SliderContainer = styled(Box)`
   }
 `
 
+const Label = styled(Text)` && {
+  min-width: 60px;
+}`
+
 export const ValueSlider = props => {
   const [value, setValue] = React.useState(30)
 
@@ -22,19 +26,21 @@ export const ValueSlider = props => {
     setValue(newValue)
   }
 
-  const { label } = props
+  const { label, className } = props
   return (
-    <Columns>
-      <Text>{label}</Text>
-      <SliderContainer>
-        <Slider
-          defaultValue={props.defaultValue || 0}
-          value={typeof value === 'number' ? value : 0}
-          onChange={handleSliderChange}
-        />
-      </SliderContainer>
-      <Text>{value}%</Text>
-    </Columns>
+    <div className={className}>
+      <Columns>
+        <Label>{label}</Label>
+        <SliderContainer>
+          <Slider
+            defaultValue={props.defaultValue || 0}
+            value={typeof value === 'number' ? value : 0}
+            onChange={handleSliderChange}
+          />
+        </SliderContainer>
+        <Text>{value}%</Text>
+      </Columns>
+    </div>
   )
 }
 
