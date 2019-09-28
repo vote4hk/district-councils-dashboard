@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import Divider from '@material-ui/core/Divider'
 import { UnstyledLink } from 'components/atoms/UnstyledLink'
 import { Typography } from '@material-ui/core'
+import Columns from 'components/atoms/Columns'
 
 const StyledFooter = styled(Box)`
   && {
@@ -17,13 +18,21 @@ const StyledFooter = styled(Box)`
 
 const StyledDivider = styled(Divider)`
   && {
-    margin: 16px 0;
+    margin-top: 16px;
   }
 `
 
 const StyledFooterLink = styled(UnstyledLink)`
   && {
     color: rgba(0, 0, 0, 0.87);
+  }
+`
+
+const LinkBox = styled(Box)`
+  && {
+    margin-left: 16px;
+    margin-top: 16px;
+    word-break: keep-all;
   }
 `
 
@@ -42,32 +51,44 @@ function Footer(props) {
           本網站與任何2019年區議會選舉候選人或其助選成員無關，刊載資料目的非為促使或阻礙任何候選人在選舉中當選。
         </Typography>
         <StyledDivider />
-        <Box display="flex" alignContent="flex-start">
-          <Box pr={3}>
+        <Columns>
+          <LinkBox>
             <StyledFooterLink
               target="_blank"
               href="https://www.facebook.com/g0vhk.io"
             >
               關於g0vhk.io
             </StyledFooterLink>
-          </Box>
-          <Box pr={3}>
+          </LinkBox>
+          <LinkBox>
             <StyledFooterLink
               target="_blank"
               href="https://forms.gle/irD6tEznWPNda6w59"
             >
               反映意見
             </StyledFooterLink>
-          </Box>
-          <Box>
+          </LinkBox>
+          <LinkBox>
             <StyledFooterLink
               target="_blank"
               href="https://github.com/cswbrian/district-councils-dashboard"
             >
               GitHub
             </StyledFooterLink>
-          </Box>
-        </Box>
+          </LinkBox>
+          <LinkBox>
+            <div
+              class="fb-like"
+              data-href="https://dc2019.g0vhk.io"
+              data-width=""
+              data-layout="standard"
+              data-action="like"
+              data-size="small"
+              data-show-faces="true"
+              data-share="true"
+            ></div>
+          </LinkBox>
+        </Columns>
       </StyledFooter>
     </>
   )
