@@ -3,16 +3,17 @@ import styled from 'styled-components'
 import Box from '@material-ui/core/Box'
 import AddressSearcher from 'components/molecules/AddressSearcher'
 import PeopleSearcher from 'components/molecules/PeopleSearcher'
-import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
+import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import { COLORS } from 'ui/theme'
 import { withRouter } from 'react-router-dom'
 import ContextStore from 'ContextStore'
 import { DRAWER_CLOSE } from 'reducers/drawer'
 import { getProfilePath } from 'utils/helper'
+import DistrictSelector from 'components/molecules/DistrictSelector'
 
-const Container = styled(Box)`
+const Container = styled(Paper)`
   && {
     width: 100%;
   }
@@ -53,7 +54,7 @@ const TabContainer = styled(Box)`
 
 const TabButton = styled(Button)`
   && {
-    margin: 10px 10px 0px 10px;
+    margin: 10px 10px 15px 10px;
     padding-bottom: 15px;
 
     color: ${props =>
@@ -100,6 +101,7 @@ function SearchTab(props) {
   function renderSearchDistrict() {
     return (
       <ContentRowContainer>
+        <DistrictSelector />
         <AddressSearchContainer>
           <AddressSearcher handleAddressSelected={handleAddressSelected} />
         </AddressSearchContainer>

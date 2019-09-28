@@ -6,11 +6,14 @@ import {
   ExpansionPanelSummary,
   ExpansionPanelDetails,
 } from '@material-ui/core'
+import _ from 'lodash'
 import { DRAWER_CLOSE } from 'reducers/drawer'
 import ContextStore from 'ContextStore'
 import { withRouter } from 'react-router-dom'
 import { Query } from 'react-apollo'
 import { QUERY_GET_AREA } from 'queries/gql'
+import Grid from '@material-ui/core/Grid'
+import AreaTabs from 'components/organisms/AreaTabs'
 
 const Container = styled.div`
   && {
@@ -45,10 +48,17 @@ const DistrictExpansionPanelDetails = styled(ExpansionPanelDetails)`
   }
 `
 
+const DistrictGrid = styled(Grid)`
+  && {
+    margin: 5px;
+  }
+`
+
 const DistrictSelector = props => {
   const {
     drawer: { dispatch },
   } = React.useContext(ContextStore)
+
   const renderDCCA = district => {
     return (
       <div>
@@ -70,6 +80,29 @@ const DistrictSelector = props => {
     )
   }
 
+  // TODO Change to use 2 columns design
+  const renderArea = area => {
+    return _.chunk(area.districts, 1).map((row, index) => (
+      <Grid container wrap="nowrap" key={`districts-row-${index}`}>
+        {row.map(d => (
+          <DistrictGrid item xs={12} key={`district-item-${d.dc_code}`}>
+            <DistrictExpansionPanel key={`district-panel-${d.dc_code}`}>
+              <DistrictExpansionPanelSummary
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography variant="h5">{d.dc_name_zh}</Typography>
+              </DistrictExpansionPanelSummary>
+              <DistrictExpansionPanelDetails>
+                {renderDCCA(d)}
+              </DistrictExpansionPanelDetails>
+            </DistrictExpansionPanel>
+          </DistrictGrid>
+        ))}
+      </Grid>
+    ))
+  }
+
   return (
     <Container>
       <Query query={QUERY_GET_AREA}>
@@ -77,22 +110,29 @@ const DistrictSelector = props => {
           if (loading) return null
           if (error) return `Error! ${error}`
 
+          const areas = _.uniqBy(
+            data.dcd_districts.map(d => ({
+              area_code: d.area_code,
+              area_name_zh: d.area_name_zh,
+            })),
+            'area_code'
+          )
+
+          const areasWithDistricts = areas.map(a => ({
+            ...a,
+            districts: data.dcd_districts.filter(
+              d => d.area_name_zh === a.area_name_zh
+            ),
+          }))
+
+          const areaNames = areas.map(a => a.area_name_zh)
+
           return (
-            <>
-              {data.dcd_districts.map(d => (
-                <DistrictExpansionPanel key={d.dc_code}>
-                  <DistrictExpansionPanelSummary
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography variant="h5">{d.dc_name_zh}</Typography>
-                  </DistrictExpansionPanelSummary>
-                  <DistrictExpansionPanelDetails>
-                    {renderDCCA(d)}
-                  </DistrictExpansionPanelDetails>
-                </DistrictExpansionPanel>
-              ))}
-            </>
+            <AreaTabs titles={areaNames}>
+              {areasWithDistricts.map(a => {
+                return renderArea(a)
+              })}
+            </AreaTabs>
           )
         }}
       </Query>
