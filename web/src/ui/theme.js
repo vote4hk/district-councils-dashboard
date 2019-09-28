@@ -17,7 +17,7 @@ export const typography = {
   fontFamily: FONT_FAMILY.join(','),
   h1: {
     fontFamily: headingFontFamily,
-    fontSize: 40,
+    fontSize: 24,
     fontWeight: 700,
   },
   h2: {
@@ -60,10 +60,10 @@ export const COLORS = {
   main: {
     text: '#000',
     highlightedText: '#ffb500', // organe
-    background: '#fff'
+    background: '#fff',
   },
   mainText: 'black',
-  
+
   dark: {
     backgroundColor: '#3e474f',
     color: 'white',
@@ -79,7 +79,7 @@ export const COLORS = {
     success: green[800],
     failure: red[800],
   },
-  secondaryBackgroundColor: '#f2f2f3', // grey  
+  secondaryBackgroundColor: '#f2f2f3', // grey
 }
 
 export default createMuiTheme({
@@ -92,8 +92,6 @@ export default createMuiTheme({
     secondary: {
       main: '#3e474f',
       contrastText: '#fff',
-    }
+    },
   },
 })
-
-

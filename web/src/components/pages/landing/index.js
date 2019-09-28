@@ -25,6 +25,7 @@ const TopSection = styled(Container)`
 
 const ExpandedRow = styled(Box)`
   && {
+    margin-top: 8px;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -88,7 +89,7 @@ class IndexPage extends Component {
         <Container>
           <StyledSearchTab />
           <ExpandedRow>
-            <Typography variant="h5">現屆區議會勢力分布</Typography>
+            <Typography variant="h4">現屆區議會勢力分布</Typography>
           </ExpandedRow>
 
           <CampCompareChartContainer />

@@ -78,7 +78,7 @@ function Footer(props) {
           </LinkBox>
           <LinkBox>
             <div
-              class="fb-like"
+              className="fb-like"
               data-href="https://dc2019.g0vhk.io"
               data-width=""
               data-layout="standard"
