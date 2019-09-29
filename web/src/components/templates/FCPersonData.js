@@ -27,7 +27,7 @@ const StyledButton = styled(Button)`
 const FCPersonData = props => {
   const { fcUuid, name } = props
 
-  const fcUri = `https://hkfactcheck.github.io/person/${fcUuid}/${name}`
+  const fcUri = `https://hkfactcheck.io/person/${fcUuid}/${name}`
 
   return (
     <>
