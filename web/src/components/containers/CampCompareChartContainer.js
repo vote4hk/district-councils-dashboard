@@ -8,6 +8,8 @@ import StackedNormalizedHorizontalBarChart from 'components/atoms/charts/Stacked
 // TODO: load from db
 import historyData from 'data/test_constituency_data.json'
 import PredictionChartPanel from 'components/organisms/PredictionChartPanel'
+import { QUERY_GET_CONSTITUENCY_CAMP_DATA } from 'queries/gql'
+
 const Container = styled.div`
   && {
     width: 100%;
@@ -233,30 +235,40 @@ const CampCompareChartContainer = props => {
         const dataFroGraph = groupDataByRegionAndCamp(data.dcd_candidates)
         const dataForD3 = convertToD3Compatible(dataFroGraph)
 
-        // TODO: add a toggle to enable the panel
-        const expectedDataForGraph = groupExpectDataByRegionAndCamp(
-          historyData.data.dcd_constituencies,
-          settings
-        )
-        const expectedDataForD3 = convertToD3Compatible(
-          expectedDataForGraph,
-          sortByDefaultChartOrderFunc(dataForD3)
-        )
-
         return (
-          <Container>
-            <StackedNormalizedHorizontalBarChart
-              data={dataForD3}
-            ></StackedNormalizedHorizontalBarChart>
+          <Query
+            query={QUERY_GET_CONSTITUENCY_CAMP_DATA}
+            variables={{ year: 2019 }}
+          >
+            {({ loading, error, data }) => {
+              let d3Data = dataForD3
 
-            <StackedNormalizedHorizontalBarChart
-              data={expectedDataForD3}
-            ></StackedNormalizedHorizontalBarChart>
-            <PredictionChartPanel
-              settings={settings}
-              setSettings={setSettings}
-            />
-          </Container>
+              if (!loading) {
+                const expectedDataForGraph = groupExpectDataByRegionAndCamp(
+                  data.dcd_constituencies,
+                  settings
+                )
+                d3Data = convertToD3Compatible(
+                  expectedDataForGraph,
+                  sortByDefaultChartOrderFunc(dataForD3)
+                )
+              }
+
+              return (
+                <Container>
+                  <StackedNormalizedHorizontalBarChart
+                    data={d3Data}
+                  ></StackedNormalizedHorizontalBarChart>
+                  {!loading && (
+                    <PredictionChartPanel
+                      settings={settings}
+                      setSettings={setSettings}
+                    />
+                  )}
+                </Container>
+              )
+            }}
+          </Query>
         )
       }}
     </Query>

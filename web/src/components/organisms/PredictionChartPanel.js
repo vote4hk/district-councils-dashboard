@@ -61,7 +61,7 @@ function PredictionChartPanel(props) {
     })
   return (
     <div>
-      <Tabs titles={['IF...', '投票取向', '投票率']} buttonLayout="centered">
+      <Tabs titles={['預測', '投票取向', '投票率']} buttonLayout="centered">
         <TabSection>
           <Text variant="h5">2019區議會議席分佈預測</Text>
           <Rows>
