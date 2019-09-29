@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles'
-import { red, green } from '@material-ui/core/colors'
+import { red, green, cyan } from '@material-ui/core/colors'
 export const headingFontFamily = 'Noto Sans TC, sans-serif'
 export const bodyFontFamily = 'Noto Sans TC, sans-serif'
 
@@ -63,7 +63,9 @@ export const COLORS = {
     background: '#fff',
   },
   mainText: 'black',
-
+  slider: {
+    bar: cyan[500],
+  },
   dark: {
     backgroundColor: '#3e474f',
     color: 'white',
