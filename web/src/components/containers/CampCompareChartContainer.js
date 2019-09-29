@@ -7,11 +7,12 @@ import { DCREGION } from 'constants/dcregion'
 import StackedNormalizedHorizontalBarChart from 'components/atoms/charts/StackedNormalizedHorizontalBarChart'
 // TODO: load from db
 import historyData from 'data/test_constituency_data.json'
+import PredictionChartPanel from 'components/organisms/PredictionChartPanel'
 const Container = styled.div`
   && {
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
   }
 `
 
@@ -61,6 +62,7 @@ function convertToD3Compatible(data) {
 }
 
 const CampCompareChartContainer = props => {
+  const [settings, setSettings] = React.useState([[0, 0, 0], [0, 0, 0]])
   return (
     <Query query={FETCH_CAMP_DATA} variables={{ year: 2015 }}>
       {({ loading, error, data }) => {
@@ -69,11 +71,16 @@ const CampCompareChartContainer = props => {
 
         const dataFroGraph = groupDataByRegionAndCamp(data.dcd_candidates)
         const dataForD3 = convertToD3Compatible(dataFroGraph)
+        console.log(settings)
         return (
           <Container>
             <StackedNormalizedHorizontalBarChart
               data={dataForD3}
             ></StackedNormalizedHorizontalBarChart>
+            <PredictionChartPanel
+              settings={settings}
+              setSettings={setSettings}
+            />
           </Container>
         )
       }}
