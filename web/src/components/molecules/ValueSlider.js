@@ -23,13 +23,8 @@ const Label = styled(Text)`
 
 export const ValueSlider = props => {
   const { value, setValue } = props
-  const [localV, setLocalV] = React.useState(30)
   const handleSliderChange = (event, newValue) => {
-    if (setValue) {
-      setValue(newValue)
-    } else {
-      setLocalV(newValue)
-    }
+    setValue(newValue)
   }
 
   const { label, className, color } = props
@@ -38,13 +33,9 @@ export const ValueSlider = props => {
       <Columns>
         <Label>{label}</Label>
         <SliderContainer>
-          <Slider
-            value={value || localV}
-            onChange={handleSliderChange}
-            color={color}
-          />
+          <Slider value={value} onChange={handleSliderChange} color={color} />
         </SliderContainer>
-        <Text>{value || localV}%</Text>
+        <Text>{value}%</Text>
       </Columns>
     </div>
   )
@@ -52,7 +43,8 @@ export const ValueSlider = props => {
 
 ValueSlider.propTypes = {
   label: PropTypes.string.isRequired,
-  shouldShowValue: PropTypes.bool,
+  value: PropTypes.number.isRequired,
+  setValue: PropTypes.func.isRequired,
 }
 
 export default ValueSlider

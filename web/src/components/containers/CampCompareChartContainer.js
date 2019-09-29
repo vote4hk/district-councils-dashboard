@@ -61,8 +61,147 @@ function convertToD3Compatible(data) {
   return res
 }
 
+const AGE_GROUP_YOUNG = ['18-20', '21-25', '26-30']
+const AGE_GROUP_MIDDLE = ['31-35', '36-40', '41-45', '46-50', '51-55', '56-60']
+const AGE_GROUP_OLD = ['61-65', '66-70', '71+']
+
+const STAT_TYPE_NEW_VOTERS = 'NEW_VOTERS'
+const STAT_TYPE_ALL_VOTERS = 'VOTERS'
+
+const groupExpectDataByRegionAndCamp = (constituencies, settings) => {
+  const getVoteCountBySetting = (stat, camp, settings) => {
+    let settingIndex = 0
+    if (AGE_GROUP_MIDDLE.indexOf(stat.category_2) >= 0) {
+      settingIndex = 1
+    } else if (AGE_GROUP_OLD.indexOf(stat.category_2) >= 0) {
+      settingIndex = 2
+    }
+
+    const votePercentage = settings.vote_rate[settingIndex] / 100.0
+    let yellowPercentage = settings.camp_rate[settingIndex] / 100.0
+    if (camp === '建制') {
+      yellowPercentage = 1 - yellowPercentage
+    } else if (camp === '其他') {
+      yellowPercentage = 0 // TODO: how to calculate this?
+    }
+
+    return stat.count * yellowPercentage * votePercentage
+  }
+  const getProjectedVotes = (type, camp, settings, voteStats) => {
+    return voteStats
+      .filter(s => s.subtype === type)
+      .map(s => getVoteCountBySetting(s, camp, settings))
+      .reduce((c, v) => c + v, 0)
+  }
+  // First calculate the winner
+  const expectedResult = constituencies.map(constituency => {
+    let camp = '建制' // default camp = 建制 is this good?
+
+    if (
+      constituency.predecessors &&
+      constituency.predecessors.length > 0 &&
+      settings.config.reference_last_election
+    ) {
+      // if there is predecessor, we use only the new voters
+
+      if (
+        constituency.predecessors[0].predecessor.candidates.length === 1 &&
+        settings.config.auto_won_add_components
+      ) {
+        const camps = ['泛民', '建制', '其他']
+        const onlyCandidate =
+          constituency.predecessors[0].predecessor.candidates[0]
+        camps.forEach(camp => {
+          // mock the votes for the last election
+          const votes =
+            getProjectedVotes(
+              STAT_TYPE_ALL_VOTERS,
+              camp,
+              settings,
+              constituency.vote_stats
+            ) -
+            getProjectedVotes(
+              STAT_TYPE_NEW_VOTERS,
+              camp,
+              settings,
+              constituency.vote_stats
+            )
+
+          if (onlyCandidate.camp !== camp) {
+            constituency.predecessors[0].predecessor.candidates.push({
+              camp,
+              votes,
+              mock: true,
+            })
+          } else {
+            onlyCandidate.votes = votes
+          }
+        })
+      }
+      let maxVote = 0
+      constituency.predecessors[0].predecessor.candidates.forEach(c => {
+        const projectedVotes =
+          c.votes +
+          getProjectedVotes(
+            STAT_TYPE_NEW_VOTERS,
+            c.camp,
+            settings,
+            constituency.vote_stats
+          )
+        if (
+          projectedVotes >= maxVote &&
+          (!c.mock || settings.config.auto_won_add_components)
+        ) {
+          camp = c.camp
+          maxVote = projectedVotes
+        }
+      })
+    } else {
+      // else we calculate from all voters
+      const establishCount = getProjectedVotes(
+        STAT_TYPE_ALL_VOTERS,
+        '建制',
+        settings,
+        constituency.vote_stats
+      )
+      const democracyCount = getProjectedVotes(
+        STAT_TYPE_ALL_VOTERS,
+        '泛民',
+        settings,
+        constituency.vote_stats
+      )
+      if (democracyCount > establishCount) {
+        camp = '泛民'
+      }
+    }
+
+    return {
+      cacode: constituency.code,
+      camp,
+    }
+  })
+  const byCodes = _.groupBy(expectedResult, c => c.cacode[0])
+  return Object.keys(byCodes).map(code => ({
+    code,
+    count: byCodes[code]
+      .map(r => ({ [r.camp]: 1 }))
+      .reduce((p, c) => {
+        const val = Object.assign(p)
+        Object.keys(c).forEach(k => (val[k] = c[k] + (val[k] ? val[k] : 0)))
+        return val
+      }, {}),
+  }))
+}
+
 const CampCompareChartContainer = props => {
-  const [settings, setSettings] = React.useState([[0, 0, 0], [0, 0, 0]])
+  const [settings, setSettings] = React.useState({
+    config: {
+      auto_won_add_components: false,
+      reference_last_election: false,
+    },
+    camp_rate: [0, 0, 0],
+    vote_rate: [0, 0, 0],
+  })
   return (
     <Query query={FETCH_CAMP_DATA} variables={{ year: 2015 }}>
       {({ loading, error, data }) => {
@@ -71,11 +210,21 @@ const CampCompareChartContainer = props => {
 
         const dataFroGraph = groupDataByRegionAndCamp(data.dcd_candidates)
         const dataForD3 = convertToD3Compatible(dataFroGraph)
-        console.log(settings)
+        // TODO: add a toggle to enable the panel
+        const dataForExpectedGraph = groupExpectDataByRegionAndCamp(
+          historyData.data.dcd_constituencies,
+          settings
+        )
+        const dataForExpectedD3 = convertToD3Compatible(dataForExpectedGraph)
+
         return (
           <Container>
             <StackedNormalizedHorizontalBarChart
               data={dataForD3}
+            ></StackedNormalizedHorizontalBarChart>
+
+            <StackedNormalizedHorizontalBarChart
+              data={dataForExpectedD3}
             ></StackedNormalizedHorizontalBarChart>
             <PredictionChartPanel
               settings={settings}
