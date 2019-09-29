@@ -8,7 +8,8 @@ export default props => {
 
   const d3Container = useRef(null)
 
-  const drawChart = data => {
+  const drawChart = res => {
+    const { columns, data } = res
     if (dimensions.width === 0) {
       return
     }
@@ -20,8 +21,15 @@ export default props => {
     const labels = ['建制', '其他', '非建制']
     const series = d3
       .stack()
-      .keys(data.columns.slice(1))
+      .keys(columns.slice(1))
       .offset(d3.stackOffsetExpand)(data)
+
+    series.forEach((s, index) => {
+      s.forEach((d, y) => {
+        d.count = data[y][labels[index]]
+        d.index = index
+      })
+    })
 
     const yAxis = g =>
       g
@@ -63,12 +71,14 @@ export default props => {
     // .attr('viewBox', [0, 0, width, height])
     // .style('overflow', 'visible')
 
-    svg
+    const bar = svg
       .append('g')
       .selectAll('g')
       .data(series)
       .enter()
       .append('g')
+
+    bar
       .attr('fill', d => color(d.key))
       .selectAll('rect')
       .data(d => d)
@@ -78,9 +88,77 @@ export default props => {
       .attr('width', d => x(d[1]) - x(d[0]))
       .attr('height', y.bandwidth())
 
+    bar
+      .selectAll('text')
+      .data(d => d)
+      .join('text')
+      .text(function(d, i, groups, f) {
+        return d.count === 0 ? '' : d.count + '席'
+      })
+      .attr('x', d => {
+        switch (d.index) {
+          case 0:
+            return x(d[0]) + 8
+          case 2:
+            return x(d[1]) - 8
+          default:
+            return x(d[0]) + (x(d[1]) - x(d[0])) / 2
+        }
+      })
+      .attr('y', (d, i) => y(d.data.name) + y.bandwidth() / 2)
+      .attr('alignment-baseline', 'central')
+      .attr('text-anchor', d => {
+        switch (d.index) {
+          case 0:
+            return 'start'
+          case 2:
+            return 'end'
+          default:
+            return 'middle'
+        }
+      })
+
+      .attr('font-family', 'sans-serif')
+      .attr('font-size', '12px')
+      .attr('fill', d => {
+        switch (d.index) {
+          case 0:
+          case 2:
+            return 'white'
+          default:
+            return 'black'
+        }
+      })
+    // svg
+    //   .append("g")
+    //   .selectAll("g")
+    //   .data(series)
+    //   .enter()
+    //   .data(d => d)
+    //   .append("g")
+    //   .append("rect")
+    //   .attr('x', d => x(d[0]))
+    //   .attr('y', (d, i) => y(d))
+    //   .attr('width', d => x(d[1]) - x(d[0]))
+    //   .attr('height', y.bandwidth())
+    //   .attr("fill", function (d) {
+    //     return "rgb(0, 0, " + (d * 10) + ")";
+    //   })
+    //   .append("text")
+    //   .text(function (d) {
+    //     return "testst";
+    //   })
+    //   .attr("text-anchor", "middle")
+    //   .attr('x', d => x(d[0]))
+    //   // .attr('y', (d, i) => y(d.data.name))
+    //   .attr("font-family", "sans-serif")
+    //   .attr("font-size", "11px")
+    //   .attr("fill", "black");
+
     svg.append('g').call(xAxis)
     svg.append('g').call(yAxis)
 
+    // middle line
     const middle = (width + margin.left - margin.right) / 2
     svg
       .append('line')

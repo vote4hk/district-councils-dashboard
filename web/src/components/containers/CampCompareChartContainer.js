@@ -43,30 +43,34 @@ function groupDataByRegionAndCamp(candidates) {
 }
 
 function convertToD3Compatible(data, sortFunc) {
-  const res = data
-    .map(d => {
-      return {
-        name: DCREGION[d.code].zh_hk,
-        建制: d.count['建制'] || 0,
-        非建制: d.count['泛民'] || 0,
-        其他: d.count['其他'] || 0,
-        total: Object.values(d.count).reduce((acc, c) => {
-          acc += c
-          return acc
-        }, 0),
-      }
-    })
-    .sort(
-      sortFunc ? sortFunc : (a, b) => b['建制'] / b.total - a['建制'] / a.total
-    ) // default sort by established count
-  res['columns'] = ['name', '建制', '其他', '非建制']
+  const res = {
+    data: data
+      .map(d => {
+        return {
+          name: DCREGION[d.code].zh_hk,
+          建制: d.count['建制'] || 0,
+          非建制: d.count['泛民'] || 0,
+          其他: d.count['其他'] || 0,
+          total: Object.values(d.count).reduce((acc, c) => {
+            acc += c
+            return acc
+          }, 0),
+        }
+      })
+      .sort(
+        sortFunc
+          ? sortFunc
+          : (a, b) => b['建制'] / b.total - a['建制'] / a.total
+      ), // default sort by established count
+    columns: ['name', '建制', '其他', '非建制'],
+  }
   return res
 }
 
-const sortByOriginalOrderFunc = originalChartData => (a, b) => {
+const sortByDefaultChartOrderFunc = defaultChartData => (a, b) => {
   const indexFromOriginalChartData = record => {
-    let index = originalChartData.length
-    originalChartData.forEach((v, i) => {
+    let index = defaultChartData.length
+    defaultChartData.data.forEach((v, i) => {
       if (v.name === record.name) {
         index = i
         return i
@@ -155,7 +159,6 @@ const groupExpectDataByRegionAndCamp = (constituencies, settings) => {
             onlyCandidate.votes = votes
           }
         })
-        console.log(constituency.predecessors[0].predecessor.candidates)
       }
       let maxVote = 0
       constituency.predecessors[0].predecessor.candidates.forEach(c => {
@@ -229,14 +232,15 @@ const CampCompareChartContainer = props => {
 
         const dataFroGraph = groupDataByRegionAndCamp(data.dcd_candidates)
         const dataForD3 = convertToD3Compatible(dataFroGraph)
+
         // TODO: add a toggle to enable the panel
-        const dataForExpectedGraph = groupExpectDataByRegionAndCamp(
+        const expectedDataForGraph = groupExpectDataByRegionAndCamp(
           historyData.data.dcd_constituencies,
           settings
         )
-        const dataForExpectedD3 = convertToD3Compatible(
-          dataForExpectedGraph,
-          sortByOriginalOrderFunc(dataForD3)
+        const expectedDataForD3 = convertToD3Compatible(
+          expectedDataForGraph,
+          sortByDefaultChartOrderFunc(dataForD3)
         )
 
         return (
@@ -246,7 +250,7 @@ const CampCompareChartContainer = props => {
             ></StackedNormalizedHorizontalBarChart>
 
             <StackedNormalizedHorizontalBarChart
-              data={dataForExpectedD3}
+              data={expectedDataForD3}
             ></StackedNormalizedHorizontalBarChart>
             <PredictionChartPanel
               settings={settings}
