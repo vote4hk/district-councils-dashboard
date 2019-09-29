@@ -5,10 +5,9 @@ import { Query } from 'react-apollo'
 import _ from 'lodash'
 import { DCREGION } from 'constants/dcregion'
 import StackedNormalizedHorizontalBarChart from 'components/atoms/charts/StackedNormalizedHorizontalBarChart'
-// TODO: load from db
-import historyData from 'data/test_constituency_data.json'
 import PredictionChartPanel from 'components/organisms/PredictionChartPanel'
 import { QUERY_GET_CONSTITUENCY_CAMP_DATA } from 'queries/gql'
+import LoadingButton from 'components/molecules/LoadingButton'
 
 const Container = styled.div`
   && {
@@ -83,7 +82,7 @@ const sortByDefaultChartOrderFunc = defaultChartData => (a, b) => {
   return indexFromOriginalChartData(a) - indexFromOriginalChartData(b)
 }
 
-const AGE_GROUP_YOUNG = ['18-20', '21-25', '26-30']
+// const AGE_GROUP_YOUNG = ['18-20', '21-25', '26-30']
 const AGE_GROUP_MIDDLE = ['31-35', '36-40', '41-45', '46-50', '51-55', '56-60']
 const AGE_GROUP_OLD = ['61-65', '66-70', '71+']
 
@@ -218,13 +217,14 @@ const groupExpectDataByRegionAndCamp = (constituencies, settings) => {
 }
 
 const CampCompareChartContainer = props => {
+  const [predictEnabled, setPredictEnabled] = React.useState(false)
   const [settings, setSettings] = React.useState({
     config: {
-      auto_won_add_components: false,
-      reference_last_election: false,
+      auto_won_add_components: true,
+      reference_last_election: true,
     },
-    camp_rate: [0, 0, 0],
-    vote_rate: [0, 0, 0],
+    camp_rate: [60, 50, 40],
+    vote_rate: [40, 40, 40],
   })
   return (
     <Query query={FETCH_CAMP_DATA} variables={{ year: 2015 }}>
@@ -243,7 +243,7 @@ const CampCompareChartContainer = props => {
             {({ loading, error, data }) => {
               let d3Data = dataForD3
 
-              if (!loading) {
+              if (!loading && predictEnabled) {
                 const expectedDataForGraph = groupExpectDataByRegionAndCamp(
                   data.dcd_constituencies,
                   settings
@@ -259,7 +259,14 @@ const CampCompareChartContainer = props => {
                   <StackedNormalizedHorizontalBarChart
                     data={d3Data}
                   ></StackedNormalizedHorizontalBarChart>
-                  {!loading && (
+                  {!predictEnabled && (
+                    <LoadingButton
+                      isLoading={loading}
+                      onClick={() => setPredictEnabled(true)}
+                      label="2019議席分佈預測"
+                    />
+                  )}
+                  {!loading && predictEnabled && (
                     <PredictionChartPanel
                       settings={settings}
                       setSettings={setSettings}

@@ -1,6 +1,7 @@
 import React from 'react'
 import DCCheckBox from 'components/molecules/CheckBox'
 
+import DCLoadingButton from 'components/molecules/LoadingButton'
 export default { title: 'Form' }
 
 export const CheckBox = props => {
@@ -11,5 +12,17 @@ export const CheckBox = props => {
       checked={checked}
       setChecked={setChecked}
     ></DCCheckBox>
+  )
+}
+
+export const LoadingButton = props => {
+  return (
+    <>
+      <DCLoadingButton label={'Loading'} isLoading={true}></DCLoadingButton>
+      <DCLoadingButton
+        label={'Not Loading'}
+        isLoading={false}
+      ></DCLoadingButton>
+    </>
   )
 }
