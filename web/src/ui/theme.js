@@ -63,6 +63,9 @@ export const COLORS = {
     background: '#fff',
   },
   mainText: 'black',
+  checkbox: {
+    box: cyan[500],
+  },
   slider: {
     bar: cyan[500],
   },
