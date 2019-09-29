@@ -42,8 +42,8 @@ function groupDataByRegionAndCamp(candidates) {
   }))
 }
 
-function convertToD3Compatible(data) {
-  var res = data
+function convertToD3Compatible(data, sortFunc) {
+  const res = data
     .map(d => {
       return {
         name: DCREGION[d.code].zh_hk,
@@ -56,9 +56,25 @@ function convertToD3Compatible(data) {
         }, 0),
       }
     })
-    .sort((a, b) => b['建制'] / b.total - a['建制'] / a.total)
+    .sort(
+      sortFunc ? sortFunc : (a, b) => b['建制'] / b.total - a['建制'] / a.total
+    ) // default sort by established count
   res['columns'] = ['name', '建制', '其他', '非建制']
   return res
+}
+
+const sortByOriginalOrderFunc = originalChartData => (a, b) => {
+  const indexFromOriginalChartData = record => {
+    let index = originalChartData.length
+    originalChartData.forEach((v, i) => {
+      if (v.name === record.name) {
+        index = i
+        return i
+      }
+    })
+    return index
+  }
+  return indexFromOriginalChartData(a) - indexFromOriginalChartData(b)
 }
 
 const AGE_GROUP_YOUNG = ['18-20', '21-25', '26-30']
@@ -127,6 +143,8 @@ const groupExpectDataByRegionAndCamp = (constituencies, settings) => {
               constituency.vote_stats
             )
 
+          console.log(votes)
+
           if (onlyCandidate.camp !== camp) {
             constituency.predecessors[0].predecessor.candidates.push({
               camp,
@@ -137,6 +155,7 @@ const groupExpectDataByRegionAndCamp = (constituencies, settings) => {
             onlyCandidate.votes = votes
           }
         })
+        console.log(constituency.predecessors[0].predecessor.candidates)
       }
       let maxVote = 0
       constituency.predecessors[0].predecessor.candidates.forEach(c => {
@@ -215,7 +234,10 @@ const CampCompareChartContainer = props => {
           historyData.data.dcd_constituencies,
           settings
         )
-        const dataForExpectedD3 = convertToD3Compatible(dataForExpectedGraph)
+        const dataForExpectedD3 = convertToD3Compatible(
+          dataForExpectedGraph,
+          sortByOriginalOrderFunc(dataForD3)
+        )
 
         return (
           <Container>
