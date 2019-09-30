@@ -34,6 +34,7 @@ const DistrictContainer = styled(Button)`
 const DistrictExpansionPanel = styled(ExpansionPanel)`
   && {
     margin: 0;
+    box-shadow: none;
   }
 `
 
@@ -50,7 +51,6 @@ const DistrictExpansionPanelDetails = styled(ExpansionPanelDetails)`
 
 const DistrictGrid = styled(Grid)`
   && {
-    margin: 5px;
   }
 `
 
