@@ -6,6 +6,7 @@ id
 name_zh
 name_en
 district {
+  dc_code
   dc_name_en
   dc_name_zh
   area_name_en
@@ -68,6 +69,20 @@ export const QUERY_CONSTITUENCY_STATS = gql`
         subtype
         category_1
         category_2
+      }
+    }
+  }
+`
+
+export const QUERY_GET_DISTRICT = gql`
+  query($year: Int!, $code: String!) {
+    dcd_districts( where: { dc_code: { _eq: $code} }) {
+      area_code
+      area_name_zh
+      dc_code
+      dc_name_zh
+      constituencies( where: { year: { _eq: $year } }, order_by: {code: asc} ) {
+        ${CONSTITUENCIES_DATA}
       }
     }
   }

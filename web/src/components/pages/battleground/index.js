@@ -88,7 +88,8 @@ class BattleGroundPage extends Component {
               <>
                 <DCCAOverview
                   year={year}
-                  name_zh={district.name_zh}
+                  dc_code={district.district.dc_code}
+                  dc_name_zh={district.district.dc_name_zh}
                   dc_name_zh={district.district.dc_name_zh}
                   code={district.code}
                   tags={district.tags}

@@ -13,7 +13,9 @@ import { withRouter } from 'react-router-dom'
 import { Query } from 'react-apollo'
 import { QUERY_GET_AREA } from 'queries/gql'
 import Grid from '@material-ui/core/Grid'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import AreaTabs from 'components/organisms/AreaTabs'
+import { getDistrictOverviewUriFromTag } from 'utils/helper'
 
 const Container = styled.div`
   && {
@@ -33,7 +35,7 @@ const DistrictContainer = styled(Button)`
 
 const DistrictExpansionPanel = styled(ExpansionPanel)`
   && {
-    margin: 0;
+    margin: 5px 0;
   }
 `
 
@@ -48,9 +50,9 @@ const DistrictExpansionPanelDetails = styled(ExpansionPanelDetails)`
   }
 `
 
-const DistrictGrid = styled(Grid)`
+const DistrictWrapper = styled(Grid)`
   && {
-    margin: 5px;
+    margin: 0 5px;
   }
 `
 
@@ -62,13 +64,26 @@ const DistrictSelector = props => {
   const renderDCCA = district => {
     return (
       <div>
+        <DistrictContainer
+          key={district.dc_code}
+          onClick={() => {
+            dispatch({ type: DRAWER_CLOSE })
+            props.history.push(`/district/2019/${district.dc_code}`)
+          }}
+          color="secondary"
+        >
+          <Typography variant="h5">
+            全{district.dc_name_zh}
+            {district.dc_name_zh.includes('區') ? '' : '區'}
+          </Typography>
+        </DistrictContainer>
         {district.constituencies.map(c => {
           return (
             <DistrictContainer
               key={c.code}
               onClick={() => {
                 dispatch({ type: DRAWER_CLOSE })
-                props.history.push(`/district/2019/${c.code}`)
+                getDistrictOverviewUriFromTag(c.code)
               }}
               color="secondary"
             >
@@ -80,27 +95,25 @@ const DistrictSelector = props => {
     )
   }
 
-  // TODO Change to use 2 columns design
   const renderArea = area => {
-    return _.chunk(area.districts, 1).map((row, index) => (
-      <Grid container wrap="nowrap" key={`districts-row-${index}`}>
-        {row.map(d => (
-          <DistrictGrid item xs={12} key={`district-item-${d.dc_code}`}>
-            <DistrictExpansionPanel key={`district-panel-${d.dc_code}`}>
-              <DistrictExpansionPanelSummary
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography variant="h5">{d.dc_name_zh}</Typography>
-              </DistrictExpansionPanelSummary>
-              <DistrictExpansionPanelDetails>
-                {renderDCCA(d)}
-              </DistrictExpansionPanelDetails>
-            </DistrictExpansionPanel>
-          </DistrictGrid>
+    return (
+      <DistrictWrapper>
+        {area.districts.map((d, index) => (
+          <DistrictExpansionPanel key={`district-panel-${d.dc_code}`}>
+            <DistrictExpansionPanelSummary
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+              expandIcon={<ExpandMoreIcon />}
+            >
+              <Typography variant="h5">{d.dc_name_zh}</Typography>
+            </DistrictExpansionPanelSummary>
+            <DistrictExpansionPanelDetails>
+              {renderDCCA(d)}
+            </DistrictExpansionPanelDetails>
+          </DistrictExpansionPanel>
         ))}
-      </Grid>
-    ))
+      </DistrictWrapper>
+    )
   }
 
   return (

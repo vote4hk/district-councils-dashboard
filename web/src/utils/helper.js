@@ -1,5 +1,7 @@
 export const getDistrictListUriFromTag = tag => `/district/2019/tags/${tag}`
 
+export const getDistrictOverviewUriFromTag = code => `/district/2019/${code}`
+
 /**
  * Passing a councillor object and get the meta data for it
  * (By QUERY_GET_COUNCILLOR_AND_CANDIDATES query)

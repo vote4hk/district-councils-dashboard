@@ -55,11 +55,7 @@ export default function AreaTabs(props) {
 
   return (
     <>
-      <AreasTabs
-        value={selectedTab}
-        onChange={handleChange}
-        variant="fullWidth"
-      >
+      <AreasTabs value={selectedTab} onChange={handleChange} centered>
         {titles.map((title, index) => (
           <AreasTab
             label={title}

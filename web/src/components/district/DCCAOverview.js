@@ -14,9 +14,12 @@ import Box from '@material-ui/core/Box'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
 import Breadcrumbs from '@material-ui/core/Breadcrumbs'
-// import Link from '@material-ui/core/Link'
+import Link from '@material-ui/core/Link'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
-import { getDistrictListUriFromTag } from 'utils/helper'
+import {
+  getDistrictListUriFromTag,
+  getDistrictOverviewUriFromTag,
+} from 'utils/helper'
 import { withRouter } from 'react-router-dom'
 import { SuccessText, FailureText } from 'components/atoms/Text'
 
@@ -70,7 +73,15 @@ class DCCAOverview extends Component {
   }
 
   render() {
-    const { name_zh, year, code, dc_name_zh, tags, voterData } = this.props
+    const {
+      name_zh,
+      year,
+      code,
+      dc_code,
+      dc_name_zh,
+      tags,
+      voterData,
+    } = this.props
     const sortedTags = tags.sort((a, b) =>
       a.type === 'boundary' ? -1 : a.type === b.type ? 0 : 1
     )
@@ -83,8 +94,8 @@ class DCCAOverview extends Component {
         <Rows>
           <Columns>
             <Box flexGrow={1}>
-              {/* 
-                wingkwong 20190927: 
+              {/*
+                wingkwong 20190927:
                   currently the pages are not avilable. Use below Breadcrumbs once they are ready.
               */}
               {/* <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
@@ -98,8 +109,8 @@ class DCCAOverview extends Component {
                   {name_zh} {code}
                 </Typography>
             </Breadcrumbs> */}
-              {/* 
-                wingkwong 20190927: 
+              {/*
+                wingkwong 20190927:
                   currently the pages are not avilable. Remove below Breadcrumbs once they are ready.
               */}
               <Breadcrumbs
@@ -107,7 +118,15 @@ class DCCAOverview extends Component {
                 aria-label="breadcrumb"
               >
                 <Typography color="textPrimary"> {year}</Typography>
-                <Typography color="textPrimary">{dc_name_zh}</Typography>
+                <Link
+                  onClick={() => {
+                    this.props.history.push(
+                      getDistrictOverviewUriFromTag(dc_code)
+                    )
+                  }}
+                >
+                  <Typography color="textPrimary">{dc_name_zh}</Typography>
+                </Link>
                 <Typography color="textPrimary">
                   {name_zh} {code}
                 </Typography>
