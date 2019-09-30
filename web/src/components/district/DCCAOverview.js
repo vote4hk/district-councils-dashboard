@@ -7,6 +7,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import { UnstyledButton } from 'components/atoms/Button'
 import { Tag } from 'components/atoms/Tag'
+import { UnstyledLink } from 'components/atoms/UnstyledLink'
 import { Button } from '@material-ui/core'
 import DistrictNewVoterChartContainer from 'components/containers/DistrictNewVoterChartContainer'
 import Columns from 'components/atoms/Columns'
@@ -100,39 +101,20 @@ class DCCAOverview extends Component {
     return (
       <>
         <BreadcrumbsContainer>
-          {/*
-                wingkwong 20190927:
-                  currently the pages are not avilable. Use below Breadcrumbs once they are ready.
-              */}
-          {/* <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-                <Link color="inherit" href="/tbc">
-                  {year}
-                </Link>
-                <Link color="inherit" href="/tbc">
-                  {dc_name_zh}
-                </Link>
-                <Typography color="textPrimary">
-                  {name_zh} {code}
-                </Typography>
-            </Breadcrumbs> */}
-          {/*
-                wingkwong 20190927:
-                  currently the pages are not avilable. Remove below Breadcrumbs once they are ready.
-              */}
           <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
           >
             <Typography color="textPrimary"> {year}</Typography>
-            <Link
+            <UnstyledLink
               onClick={() => {
                 this.props.history.push(getDistrictOverviewUriFromTag(dc_code))
               }}
             >
               <Typography color="textPrimary">{dc_name_zh}</Typography>
-            </Link>
+            </UnstyledLink>
             <Typography color="textPrimary">
-              {name_zh} {code}
+              {name_zh}（{code}）
             </Typography>
           </Breadcrumbs>
         </BreadcrumbsContainer>
