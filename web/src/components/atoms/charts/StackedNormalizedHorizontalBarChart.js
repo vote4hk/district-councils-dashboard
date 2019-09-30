@@ -2,11 +2,84 @@ import React, { useRef, useState, useEffect, useLayoutEffect } from 'react'
 import * as d3 from 'd3'
 import { FONT_FAMILY } from 'ui/theme'
 const ROW_HEIGHT = 20
+const CAMP_COLOR_EST = '#ff6779'
+const CAMP_COLOR_OTH = '#eeeeee'
+const CAMP_COLOR_DEM = '#00c376'
+const CAMP_COLORS = [CAMP_COLOR_EST, CAMP_COLOR_OTH, CAMP_COLOR_DEM]
 
 export default props => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
 
   const d3Container = useRef(null)
+
+  const updateLegend = (res, svg) => {
+    const data = [
+      {
+        label: '建制',
+        color: CAMP_COLOR_EST,
+        count: res.data.map(d => d['建制']).reduce((c, v) => c + v, 0),
+        overhalf_count: res.data
+          .map(d => (d['建制'] > d.total / 2 ? 1 : 0))
+          .reduce((c, v) => c + v, 0),
+      },
+      {
+        label: '非建制',
+        color: CAMP_COLOR_DEM,
+        count: res.data.map(d => d['非建制']).reduce((c, v) => c + v, 0),
+        overhalf_count: res.data
+          .map(d => (d['非建制'] > d.total / 2 ? 1 : 0))
+          .reduce((c, v) => c + v, 0),
+      },
+      {
+        label: '其他',
+        color: CAMP_COLOR_OTH,
+        count: res.data.map(d => d['其他']).reduce((c, v) => c + v, 0),
+      },
+    ]
+
+    svg.selectAll('.legend').remove()
+
+    const legend = svg
+      .selectAll('legend')
+      .data(data)
+      .enter()
+      .append('g')
+      .attr('class', 'legend')
+      .attr('transform', (d, i) => `translate(0, ${10 + i * 23})`)
+
+    legend
+      .append('rect')
+      .attr('x', 8)
+      .attr('width', 18)
+      .attr('height', 18)
+      .style('fill', function(d, i) {
+        return d.color
+      })
+
+    legend
+      .append('text')
+      .attr('x', 32)
+      .attr('y', 9)
+      .attr('dy', '.35em')
+      .style('text-anchor', 'start')
+      .text(function(d) {
+        return d.label
+      })
+
+    legend
+      .append('text')
+      .attr('x', 90)
+      .attr('y', 9)
+      .attr('dy', '.35em')
+      .style('text-anchor', 'start')
+      .style('fill', '#666')
+      .attr('font-size', '10px')
+      .text(function(d) {
+        return `共${
+          d.count
+        }席 ${d.overhalf_count !== undefined ? ` - ${d.overhalf_count}區過半數` : ''}`
+      })
+  }
 
   const drawChart = res => {
     const { columns, data } = res
@@ -48,7 +121,7 @@ export default props => {
     const color = d3
       .scaleOrdinal()
       .domain(series.map(d => d.key))
-      .range(['#ff6779', '#eeeeee', '#00c376'])
+      .range(CAMP_COLORS)
       .unknown('#ccc')
 
     const y = d3
@@ -107,7 +180,9 @@ export default props => {
         .data(d => d)
         .join('text')
         .text(function(d, i, groups, f) {
-          return d.count === 0 ? '' : d.count + '席'
+          return d.count === 0
+            ? ''
+            : d.count + (d.count / d.data.total > 0.1 ? '席' : '')
         })
         .attr('x', d => {
           switch (d.index) {
@@ -161,32 +236,7 @@ export default props => {
         .style('stroke-dasharray', '10, 4')
 
       //Legend
-      const legend = svg
-        .selectAll('.legend')
-        .data(labels)
-        .enter()
-        .append('g')
-        .attr('class', 'legend')
-        .attr('transform', (d, i) => `translate(0, ${10 + i * 23})`)
-
-      legend
-        .append('rect')
-        .attr('x', width - margin.right - 50)
-        .attr('width', 18)
-        .attr('height', 18)
-        .style('fill', function(d) {
-          return color(d)
-        })
-
-      legend
-        .append('text')
-        .attr('x', width - margin.right - 20)
-        .attr('y', 9)
-        .attr('dy', '.35em')
-        .style('text-anchor', 'start')
-        .text(function(d) {
-          return d
-        })
+      updateLegend(res, svg)
     } else {
       // Update chart
       const svg = d3.select(d3Container.current).select('svg')
@@ -217,7 +267,9 @@ export default props => {
         .data(d => d)
         .join('text')
         .text(function(d, i, groups, f) {
-          return d.count === 0 ? '' : d.count + '席'
+          return d.count === 0
+            ? ''
+            : d.count + (d.count / d.data.total > 0.1 ? '席' : '')
         })
         .attr('opacity', 0)
         .attr('x', d => {
@@ -249,6 +301,8 @@ export default props => {
           return 800 + Math.random() * 500
         })
         .attr('opacity', 1)
+
+      updateLegend(res, svg)
     }
   }
 

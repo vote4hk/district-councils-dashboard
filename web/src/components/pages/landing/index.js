@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
-import CampCompareChartContainer from 'components/containers/CampCompareChartContainer'
+import CampCompareChartContainer from 'components/templates/CampCompareChartContainer'
 import Countdown from 'components/atoms/Countdown'
 import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
