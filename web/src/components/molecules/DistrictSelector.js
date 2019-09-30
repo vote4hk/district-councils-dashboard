@@ -128,7 +128,7 @@ const DistrictSelector = props => {
           const areaNames = areas.map(a => a.area_name_zh)
 
           return (
-            <AreaTabs titles={areaNames}>
+            <AreaTabs titles={areaNames} expanded={props.expanded}>
               {areasWithDistricts.map(a => {
                 return renderArea(a)
               })}
