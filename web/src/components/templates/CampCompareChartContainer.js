@@ -8,7 +8,7 @@ import StackedNormalizedHorizontalBarChart from 'components/atoms/charts/Stacked
 import PredictionChartPanel from 'components/organisms/PredictionChartPanel'
 import { QUERY_GET_CONSTITUENCY_CAMP_DATA } from 'queries/gql'
 import LoadingButton from 'components/molecules/LoadingButton'
-
+import Text from 'components/atoms/Text'
 const Container = styled.div`
   && {
     width: 100%;
@@ -148,7 +148,6 @@ const groupExpectDataByRegionAndCamp = (constituencies, settings) => {
               constituency.vote_stats
             )
 
-
           if (onlyCandidate.camp !== camp) {
             constituency.predecessors[0].predecessor.candidates.push({
               camp,
@@ -216,6 +215,7 @@ const groupExpectDataByRegionAndCamp = (constituencies, settings) => {
 }
 
 const CampCompareChartContainer = props => {
+  const { className } = props
   const [predictEnabled, setPredictEnabled] = React.useState(false)
   const [settings, setSettings] = React.useState({
     config: {
@@ -254,7 +254,13 @@ const CampCompareChartContainer = props => {
               }
 
               return (
-                <Container>
+                <Container className={className}>
+                  <Text variant="h4">
+                    {' '}
+                    {predictEnabled
+                      ? '2019區議會勢力預測'
+                      : '現屆區議會勢力分布'}
+                  </Text>
                   <StackedNormalizedHorizontalBarChart
                     data={d3Data}
                   ></StackedNormalizedHorizontalBarChart>

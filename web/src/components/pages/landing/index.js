@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Box from '@material-ui/core/Box'
 import CampCompareChartContainer from 'components/templates/CampCompareChartContainer'
 import Countdown from 'components/atoms/Countdown'
 import styled from 'styled-components'
@@ -23,13 +22,9 @@ const TopSection = styled(Container)`
   }
 `
 
-const ExpandedRow = styled(Box)`
+const StyledCampCompareChartContainer = styled(CampCompareChartContainer)`
   && {
-    margin-top: 8px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    flex-grow: 1;
+    margin-top: 16px;
   }
 `
 const CountdownContainer = styled.div`
@@ -88,11 +83,7 @@ class IndexPage extends Component {
         </TopSection>
         <Container>
           <StyledSearchTab />
-          <ExpandedRow>
-            <Typography variant="h4">現屆區議會勢力分布</Typography>
-          </ExpandedRow>
-
-          <CampCompareChartContainer />
+          <StyledCampCompareChartContainer />
         </Container>
       </>
     )
