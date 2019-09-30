@@ -17,7 +17,7 @@ const StyledFooter = styled(Box)`
 
 const StyledDivider = styled(Divider)`
   && {
-    margin-top: 16px;
+    margin: 16px 0;
   }
 `
 
@@ -32,6 +32,7 @@ const LinkBox = styled(Box)`
     margin-right: 16px;
     margin-top: 16px;
     word-break: keep-all;
+    overflow: hidden;
   }
 `
 
@@ -40,11 +41,7 @@ function Footer(props) {
     <>
       <StyledFooter>
         <StyledDivider />
-        <Typography
-          variant="body2"
-          gutterBottom
-          style={{ 'margin-top': '16px' }}
-        >
+        <Typography variant="body2" gutterBottom>
           本網站所刊載資訊全為公開資料，歸納自選舉管理委員會丶選舉事務處丶政府統計處丶各區區議會網站及
           <a href="https://github.com/initiummedia/hk_district_council_election">
             端傳媒
@@ -78,6 +75,11 @@ function Footer(props) {
               href="https://github.com/cswbrian/district-councils-dashboard"
             >
               GitHub
+            </StyledFooterLink>
+          </LinkBox>
+          <LinkBox>
+            <StyledFooterLink target="_blank" href="https://hkfactcheck.io/">
+              選區事實處
             </StyledFooterLink>
           </LinkBox>
           <LinkBox>

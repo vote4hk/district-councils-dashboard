@@ -37,8 +37,10 @@ TabPanel.propTypes = {
 }
 
 export default function AreaTabs(props) {
-  const [selectedTab, setSelectedTab] = React.useState(false)
-  const [expanded, setExpanded] = React.useState(false)
+  const [selectedTab, setSelectedTab] = React.useState(
+    props.expanded ? 0 : false
+  )
+  const [expanded, setExpanded] = React.useState(props.expanded)
   const { titles, children } = props
 
   function handleChange(event, newValue) {
@@ -53,11 +55,7 @@ export default function AreaTabs(props) {
 
   return (
     <>
-      <AreasTabs
-        value={selectedTab}
-        onChange={handleChange}
-        variant="fullWidth"
-      >
+      <AreasTabs value={selectedTab} onChange={handleChange} centered>
         {titles.map((title, index) => (
           <AreasTab
             label={title}

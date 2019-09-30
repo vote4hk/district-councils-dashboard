@@ -117,7 +117,7 @@ const SearchMenu = props => {
   }
 
   function renderDistrictSelector() {
-    return <DistrictSelector />
+    return <DistrictSelector expanded={true} />
   }
 
   return (

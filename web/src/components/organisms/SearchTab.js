@@ -102,7 +102,7 @@ function SearchTab(props) {
   function renderSearchDistrict() {
     return (
       <ContentRowContainer>
-        <DistrictSelector />
+        <DistrictSelector expanded={false} />
         <AddressSearchContainer>
           <AddressSearcher handleAddressSelected={handleAddressSelected} />
         </AddressSearchContainer>
