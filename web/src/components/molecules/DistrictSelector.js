@@ -73,10 +73,7 @@ const DistrictSelector = props => {
           }}
           color="secondary"
         >
-          <Typography variant="h5">
-            全{district.dc_name_zh}
-            {district.dc_name_zh.includes('區') ? '' : '區'}
-          </Typography>
+          <Typography variant="h5">總覽</Typography>
         </DistrictContainer>
         {district.constituencies.map(c => {
           return (
