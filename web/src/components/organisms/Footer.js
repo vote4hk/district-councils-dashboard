@@ -78,6 +78,11 @@ function Footer(props) {
             </StyledFooterLink>
           </LinkBox>
           <LinkBox>
+            <StyledFooterLink target="_blank" href="https://hkfactcheck.io/">
+              選區事實處
+            </StyledFooterLink>
+          </LinkBox>
+          <LinkBox>
             <div
               className="fb-like"
               data-href="https://dc2019.g0vhk.io"
