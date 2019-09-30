@@ -89,6 +89,7 @@ class BattleGroundPage extends Component {
               <>
                 <DCCAOverview
                   year={year}
+                  name_zh={district.name_zh}
                   dc_code={district.district.dc_code}
                   dc_name_zh={district.district.dc_name_zh}
                   dc_name_zh={district.district.dc_name_zh}
@@ -98,7 +99,7 @@ class BattleGroundPage extends Component {
                 />
                 {/* TODO Refactor style for ToggleMap Button */}
                 <UnstyledButton
-                  style={{ margin: '8px 0 0 16px', 'font-size': '14px' }}
+                  style={{ margin: '8px 0 0 16px', fontSize: '14px' }}
                   onClick={() => this.setState({ showMap: !showMap })}
                 >
                   {showMap ? '隱藏地圖' : '顯示地圖'}
