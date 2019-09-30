@@ -5,7 +5,8 @@ import Paper from '@material-ui/core/Paper'
 import IconButton from '@material-ui/core/IconButton'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
-import { Tag } from '../atoms/Tag'
+import { UnstyledButton } from 'components/atoms/Button'
+import { Tag } from 'components/atoms/Tag'
 import { Button } from '@material-ui/core'
 import DistrictNewVoterChartContainer from 'components/containers/DistrictNewVoterChartContainer'
 import Columns from 'components/atoms/Columns'
@@ -26,8 +27,15 @@ import { SuccessText, FailureText } from 'components/atoms/Text'
 const Container = styled(Paper)`
   && {
     width: 100%;
-    padding: 16px;
+    padding: 0 16px;
     box-shadow: none;
+  }
+`
+
+const BreadcrumbsContainer = styled(Box)`
+  && {
+    flex-grow: 1;
+    padding: 8px 16px;
   }
 `
 
@@ -90,15 +98,13 @@ class DCCAOverview extends Component {
       (voterData.aggregations.all_voters - voterData.aggregations.new_voters)
     ).toFixed(2)
     return (
-      <Container>
-        <Rows>
-          <Columns>
-            <Box flexGrow={1}>
-              {/*
+      <>
+        <BreadcrumbsContainer>
+          {/*
                 wingkwong 20190927:
                   currently the pages are not avilable. Use below Breadcrumbs once they are ready.
               */}
-              {/* <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+          {/* <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
                 <Link color="inherit" href="/tbc">
                   {year}
                 </Link>
@@ -109,84 +115,87 @@ class DCCAOverview extends Component {
                   {name_zh} {code}
                 </Typography>
             </Breadcrumbs> */}
-              {/*
+          {/*
                 wingkwong 20190927:
                   currently the pages are not avilable. Remove below Breadcrumbs once they are ready.
               */}
-              <Breadcrumbs
-                separator={<NavigateNextIcon fontSize="small" />}
-                aria-label="breadcrumb"
-              >
-                <Typography color="textPrimary"> {year}</Typography>
-                <Link
-                  onClick={() => {
-                    this.props.history.push(
-                      getDistrictOverviewUriFromTag(dc_code)
-                    )
-                  }}
-                >
-                  <Typography color="textPrimary">{dc_name_zh}</Typography>
-                </Link>
-                <Typography color="textPrimary">
-                  {name_zh} {code}
-                </Typography>
-              </Breadcrumbs>
-            </Box>
-            <Box>
-              {sortedTags
-                .filter(tag => tag.type === 'boundary')
-                .map((tag, index) => (
-                  <Tag
-                    key={index}
-                    value={tag.tag}
-                    variant="default"
-                    handleClick={() => {
-                      this.props.history.push(
-                        getDistrictListUriFromTag(tag.tag)
-                      )
-                    }}
-                  />
-                ))}
-            </Box>
-          </Columns>
-          <Button onClick={this.toggleGraph.bind(this)}>
-            <Typography variant="h6">
-              選民人數 {voterData.aggregations.all_voters} {' ('}
-              {new_voters_percentage > 0 ? (
-                <SuccessText display="inline">
-                  +{new_voters_percentage}%
-                </SuccessText>
-              ) : (
-                <FailureText display="inline">
-                  -{new_voters_percentage}%
-                </FailureText>
-              )}
-              )
-            </Typography>
-            {this.state.showGraph ? (
-              <KeyboardArrowUp fontSize="small" />
-            ) : (
-              <ExpandMoreIcon fontSize="small" />
-            )}
-          </Button>
-          {this.state.showGraph && (
-            <DistrictNewVoterChartContainer code={code} />
-          )}
-        </Rows>
-
-        {sortedTags
-          .filter(tag => tag.type !== 'boundary')
-          .map((tag, index) => (
-            <Tag
-              key={index}
-              value={tag.tag}
-              variant="outlined"
-              handleClick={() => {
-                this.props.history.push(getDistrictListUriFromTag(tag.tag))
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize="small" />}
+            aria-label="breadcrumb"
+          >
+            <Typography color="textPrimary"> {year}</Typography>
+            <Link
+              onClick={() => {
+                this.props.history.push(getDistrictOverviewUriFromTag(dc_code))
               }}
-            />
-          ))}
-      </Container>
+            >
+              <Typography color="textPrimary">{dc_name_zh}</Typography>
+            </Link>
+            <Typography color="textPrimary">
+              {name_zh} {code}
+            </Typography>
+          </Breadcrumbs>
+        </BreadcrumbsContainer>
+
+        <Container>
+          <Rows>
+            <Columns>
+              <Box>
+                {sortedTags
+                  .filter(tag => tag.type === 'boundary')
+                  .map((tag, index) => (
+                    <Tag
+                      key={index}
+                      value={tag.tag}
+                      variant="default"
+                      handleClick={() => {
+                        this.props.history.push(
+                          getDistrictListUriFromTag(tag.tag)
+                        )
+                      }}
+                    />
+                  ))}
+              </Box>
+            </Columns>
+            <UnstyledButton onClick={this.toggleGraph.bind(this)}>
+              <Typography variant="h6">
+                選民人數 {voterData.aggregations.all_voters} {' ('}
+                {new_voters_percentage > 0 ? (
+                  <SuccessText display="inline">
+                    +{new_voters_percentage}%
+                  </SuccessText>
+                ) : (
+                  <FailureText display="inline">
+                    -{new_voters_percentage}%
+                  </FailureText>
+                )}
+                )
+              </Typography>
+              {this.state.showGraph ? (
+                <KeyboardArrowUp fontSize="small" />
+              ) : (
+                <ExpandMoreIcon fontSize="small" />
+              )}
+            </UnstyledButton>
+            {this.state.showGraph && (
+              <DistrictNewVoterChartContainer code={code} />
+            )}
+          </Rows>
+
+          {sortedTags
+            .filter(tag => tag.type !== 'boundary')
+            .map((tag, index) => (
+              <Tag
+                key={index}
+                value={tag.tag}
+                variant="outlined"
+                handleClick={() => {
+                  this.props.history.push(getDistrictListUriFromTag(tag.tag))
+                }}
+              />
+            ))}
+        </Container>
+      </>
     )
   }
 }

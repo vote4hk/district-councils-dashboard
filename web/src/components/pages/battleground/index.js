@@ -6,6 +6,7 @@ import MainAreas from 'components/district/MainAreas'
 import CouncillorContainer from 'components/containers/CouncillorContainer'
 import CandidateList from 'components/district/CandidateList'
 import DCCAOverview from 'components/district/DCCAOverview'
+import { UnstyledButton } from 'components/atoms/Button'
 import Button from '@material-ui/core/Button'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
@@ -95,10 +96,14 @@ class BattleGroundPage extends Component {
                   tags={district.tags}
                   voterData={groupVoteStat(district.vote_stats)}
                 />
-                <Button onClick={() => this.setState({ showMap: !showMap })}>
+                {/* TODO Refactor style for ToggleMap Button */}
+                <UnstyledButton
+                  style={{ margin: '8px 0 0 16px', 'font-size': '14px' }}
+                  onClick={() => this.setState({ showMap: !showMap })}
+                >
                   {showMap ? '隱藏地圖' : '顯示地圖'}
                   {showMap ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                </Button>
+                </UnstyledButton>
                 <Collapse in={showMap}>
                   <Box
                     width={{ sm: '100%', md: '960px' }}
