@@ -10,6 +10,7 @@ const TimeGrid = styled(Grid)`
 
 const Time = styled(Typography)`
   && {
+    font-weight: 700;
   }
 `
 
