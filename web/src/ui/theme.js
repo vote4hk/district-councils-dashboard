@@ -18,7 +18,7 @@ export const typography = {
   h1: {
     fontFamily: headingFontFamily,
     fontSize: 24,
-    fontWeight: 700,
+    fontWeight: 500,
   },
   h2: {
     fontFamily: headingFontFamily,

@@ -16,6 +16,7 @@ import DistrictSelector from 'components/molecules/DistrictSelector'
 const Container = styled(Paper)`
   && {
     width: 100%;
+    box-shadow: none;
   }
 `
 

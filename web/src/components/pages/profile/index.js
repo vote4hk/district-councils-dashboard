@@ -15,7 +15,7 @@ import FCPersonData from 'components/templates/FCPersonData'
 import { SuccessText, FailureText } from 'components/atoms/Text'
 import { COLORS } from 'ui/theme'
 
-// TODO: add age, camp & political_affiliation
+// TODO: add age, camp & related_organization
 const GET_PEOPLE_PROFILE = gql`
   query($uuid: uuid!) {
     dcd_people(where: { uuid: { _eq: $uuid } }) {
@@ -25,6 +25,7 @@ const GET_PEOPLE_PROFILE = gql`
       name_zh
       name_en
       gender
+      related_organization
       estimated_yob
       councillors {
         year
@@ -253,21 +254,11 @@ class ProfilePage extends Component {
             })
           }
 
-          if (currentTerm && currentTerm.political_affiliation) {
-            personHighlight.push({
-              xs: 5,
-              title: '報稱政治聯繫',
-              text: `${currentTerm.political_affiliation}`,
-            })
-          } else if (lastElection && lastElection.political_affiliation) {
-            personHighlight.push({
-              xs: 5,
-              title: '報稱政治聯繫',
-              text:
-                `${lastElection.political_affiliation}` +
-                (lastElection.camp && `（${lastElection.camp}）`),
-            })
-          }
+          personHighlight.push({
+            xs: 5,
+            title: '相關組織',
+            text: person.related_organization || '-',
+          })
 
           personHighlight.push({
             xs: 5,
