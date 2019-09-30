@@ -98,7 +98,7 @@ class BattleGroundPage extends Component {
                 />
                 {/* TODO Refactor style for ToggleMap Button */}
                 <UnstyledButton
-                  style={{ margin: '8px 0 0 16px', 'font-size': '14px' }}
+                  style={{ margin: '8px 0 0 16px', fontSize: '14px' }}
                   onClick={() => this.setState({ showMap: !showMap })}
                 >
                   {showMap ? '隱藏地圖' : '顯示地圖'}
