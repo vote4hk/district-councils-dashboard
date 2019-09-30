@@ -274,7 +274,7 @@ class ProfilePage extends Component {
           return (
             <>
               <CandidateHeaderContainer
-                camp={getColorFromCamp(lastElection.camp)}
+                camp={getColorFromCamp(lastElection && lastElection.camp)}
               >
                 <Box>
                   <CandidateAvatar
