@@ -29,7 +29,7 @@ const StyledFooterLink = styled(UnstyledLink)`
 
 const LinkBox = styled(Box)`
   && {
-    margin-left: 16px;
+    margin-right: 16px;
     margin-top: 16px;
     word-break: keep-all;
   }
