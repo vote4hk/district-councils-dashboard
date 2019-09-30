@@ -17,7 +17,7 @@ const SliderContainer = styled(Box)`
 
 const Label = styled(Text)`
   && {
-    min-width: 60px;
+    min-width: 80px;
   }
 `
 
