@@ -8,11 +8,10 @@ import Columns from 'components/atoms/Columns'
 
 const StyledFooter = styled(Box)`
   && {
-    border-top: 1px rgba(0, 0, 0, 0.12) solid;
     width: 100%;
     max-width: 1024px;
     margin: auto;
-    padding: 16px 0;
+    padding: 16px;
   }
 `
 
@@ -40,7 +39,12 @@ function Footer(props) {
   return (
     <>
       <StyledFooter>
-        <Typography variant="body2" gutterBottom>
+        <StyledDivider />
+        <Typography
+          variant="body2"
+          gutterBottom
+          style={{ 'margin-top': '16px' }}
+        >
           本網站所刊載資訊全為公開資料，歸納自選舉管理委員會丶選舉事務處丶政府統計處丶各區區議會網站及
           <a href="https://github.com/initiummedia/hk_district_council_election">
             端傳媒
