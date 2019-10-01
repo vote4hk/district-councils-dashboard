@@ -15,7 +15,10 @@ import { QUERY_GET_AREA } from 'queries/gql'
 import Grid from '@material-ui/core/Grid'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import AreaTabs from 'components/organisms/AreaTabs'
-import { getDistrictOverviewUriFromTag } from 'utils/helper'
+import {
+  getDistrictOverviewUriFromTag,
+  getConstituencyUriFromTag,
+} from 'utils/helper'
 
 const Container = styled.div`
   && {
@@ -69,7 +72,7 @@ const DistrictSelector = props => {
           key={district.dc_code}
           onClick={() => {
             dispatch({ type: DRAWER_CLOSE })
-            props.history.push(`/district/2019/${district.dc_code}`)
+            props.history.push(getDistrictOverviewUriFromTag(district.dc_code))
           }}
           color="secondary"
         >
@@ -81,7 +84,7 @@ const DistrictSelector = props => {
               key={c.code}
               onClick={() => {
                 dispatch({ type: DRAWER_CLOSE })
-                getDistrictOverviewUriFromTag(c.code)
+                props.history.push(getConstituencyUriFromTag(c.code))
               }}
               color="secondary"
             >
@@ -95,7 +98,7 @@ const DistrictSelector = props => {
 
   const renderArea = area => {
     return (
-      <DistrictWrapper>
+      <DistrictWrapper key={area.area_code}>
         {area.districts.map((d, index) => (
           <DistrictExpansionPanel key={`district-panel-${d.dc_code}`}>
             <DistrictExpansionPanelSummary
