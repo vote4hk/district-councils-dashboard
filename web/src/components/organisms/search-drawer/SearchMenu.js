@@ -4,6 +4,7 @@ import Box from '@material-ui/core/Box'
 import AddressSearcher from 'components/molecules/AddressSearcher'
 import PeopleSearcher from 'components/molecules/PeopleSearcher'
 import DistrictSelector from 'components/molecules/DistrictSelector'
+import SearchTab from 'components/organisms/SearchTab'
 import Typography from '@material-ui/core/Typography'
 import { withRouter } from 'react-router-dom'
 import ContextStore from 'ContextStore'
@@ -128,6 +129,8 @@ const SearchMenu = props => {
         </Typography>
       </LeftMargin>
 
+      <SearchTab />
+      {/*
       <StyledExpansionPanel
         square
         expanded={expanded === 'panel1'}
@@ -179,6 +182,7 @@ const SearchMenu = props => {
           {renderDistrictSelector()}
         </StyledExpansionPanelDetail>
       </StyledExpansionPanel>
+      */}
     </>
   )
 }
