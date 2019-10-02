@@ -18,10 +18,7 @@ import { PlainCard } from '../../molecules/Card'
 import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/UnstyledLink'
-import {
-  getDistrictListUriFromTag,
-  getDistrictOverviewUriFromTag,
-} from 'utils/helper'
+import { getDistrictOverviewUriFromTag } from 'utils/helper'
 
 const groupVoteStat = voteStats => {
   const data = _.groupBy(voteStats, stat => stat.subtype)
@@ -126,7 +123,6 @@ class BattleGroundPage extends Component {
                     </Typography>
                   </Breadcrumbs>
                 </BreadcrumbsContainer>
-                <CandidatesContainer year={2015} code={district.code} />
                 <DCCAOverview
                   year={year}
                   name_zh={district.name_zh}
