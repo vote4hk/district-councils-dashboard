@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
-import Avatar from '@material-ui/core/Avatar'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
+import { PeopleAvatar } from 'components/atoms/Avatar'
 import ScrollableTabs from 'components/organisms/ScrollableTabs'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
@@ -77,13 +77,11 @@ const CandidateHeaderContainer = styled(FlexRowContainer)`
   }
 `
 
-const CandidateAvatar = styled(Avatar)`
+const CandidateAvatorContainer = styled(Box)`
   && {
     position: absolute;
     left: 16px;
     bottom: 8px;
-    width: 84px;
-    height: 84px;
   }
 `
 
@@ -276,8 +274,10 @@ class ProfilePage extends Component {
               <CandidateHeaderContainer
                 camp={getColorFromCamp(lastElection && lastElection.camp)}
               >
-                <Box>
-                  <CandidateAvatar
+                <CandidateAvatorContainer>
+                  <PeopleAvatar
+                    dimension={'84px'}
+                    borderWidth={'0'}
                     src={`${homeUrl}/static/images/avatar/${person.uuid}.jpg`}
                     imgProps={{
                       onError: e => {
@@ -285,7 +285,7 @@ class ProfilePage extends Component {
                       },
                     }}
                   />
-                </Box>
+                </CandidateAvatorContainer>
                 <Box>
                   <PersonName>
                     <Typography
