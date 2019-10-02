@@ -47,7 +47,7 @@ const Councillor = props => {
           <Grid item>
             <PeopleAvatar
               dimension="60px"
-              borderWidth={'3'}
+              borderwidth={'3'}
               camp={getColorFromPoliticalAffiliation(
                 councillor.political_affiliation
               )}

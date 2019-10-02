@@ -277,7 +277,7 @@ class ProfilePage extends Component {
                 <CandidateAvatorContainer>
                   <PeopleAvatar
                     dimension={'84px'}
-                    borderWidth={'0'}
+                    borderwidth={'0'}
                     src={`${homeUrl}/static/images/avatar/${person.uuid}.jpg`}
                     imgProps={{
                       onError: e => {

@@ -6,7 +6,7 @@ export const PeopleAvatar = styled(Avatar)`
   && {
     width: ${props => props.dimension};
     height: ${props => props.dimension};
-    border: ${props => props.borderWidth}px ${props => COLORS.camp[props.camp]}
+    border: ${props => props.borderwidth}px ${props => COLORS.camp[props.camp]}
       solid;
   }
 `
