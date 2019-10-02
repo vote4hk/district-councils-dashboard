@@ -154,7 +154,7 @@ export const QUERY_GET_PERSON_MEETING_ATTENDANCES = gql`
   }
 `
 
-export const QUERY_GET_COUNCILLOR_AND_CANDIDATES = gql`
+export const QUERY_GET_COUNCILLOR = gql`
   query fetch_councillors($year: Int!, $code: String!) {
     dcd_councillors(
       where: { cacode: { _eq: $code }, year: { _eq: $year } }
@@ -197,6 +197,25 @@ export const QUERY_GET_COUNCILLOR_AND_CANDIDATES = gql`
             }
           }
         }
+      }
+    }
+  }
+`
+
+export const QUERY_GET_CANDIDATES = gql`
+  query fetch_candidates($year: Int!, $code: String!) {
+    dcd_candidates(
+      where: { cacode: { _eq: $code }, year: { _eq: $year } }
+      order_by: { candidate_number: asc }
+    ) {
+      candidate_number
+      is_won
+      political_affiliation
+      person {
+        id
+        uuid
+        name_zh
+        related_organization
       }
     }
   }

@@ -4,6 +4,7 @@ import DCCACompareMap from '../../DCCACompareMap'
 import { Query } from 'react-apollo'
 import MainAreas from 'components/district/MainAreas'
 import CouncillorContainer from 'components/containers/CouncillorContainer'
+import CandidatesContainer from 'components/containers/CandidatesContainer'
 import CandidateList from 'components/district/CandidateList'
 import DCCAOverview from 'components/district/DCCAOverview'
 import { UnstyledButton } from 'components/atoms/Button'
@@ -86,6 +87,7 @@ class BattleGroundPage extends Component {
 
             return (
               <>
+                <CandidatesContainer year={2015} code={district.code} />
                 <DCCAOverview
                   year={year}
                   name_zh={district.name_zh}
