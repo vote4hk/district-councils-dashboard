@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
 import Box from '@material-ui/core/Box'
 import DCCACompareMap from '../../DCCACompareMap'
 import { Query } from 'react-apollo'
@@ -14,6 +15,13 @@ import _ from 'lodash'
 import { QUERY_CONSTITUENCIES } from 'queries/gql'
 import { Typography } from '@material-ui/core'
 import { PlainCard } from '../../molecules/Card'
+import Breadcrumbs from '@material-ui/core/Breadcrumbs'
+import NavigateNextIcon from '@material-ui/icons/NavigateNext'
+import { UnstyledLink } from 'components/atoms/UnstyledLink'
+import {
+  getDistrictListUriFromTag,
+  getDistrictOverviewUriFromTag,
+} from 'utils/helper'
 
 const groupVoteStat = voteStats => {
   const data = _.groupBy(voteStats, stat => stat.subtype)
@@ -23,6 +31,14 @@ const groupVoteStat = voteStats => {
   }
   return data
 }
+
+const BreadcrumbsContainer = styled(Box)`
+  && {
+    flex-grow: 1;
+    padding: 8px 16px;
+  }
+`
+
 class BattleGroundPage extends Component {
   constructor(props) {
     super(props)
@@ -86,11 +102,35 @@ class BattleGroundPage extends Component {
 
             return (
               <>
+                <BreadcrumbsContainer>
+                  <Breadcrumbs
+                    separator={<NavigateNextIcon fontSize="small" />}
+                    aria-label="breadcrumb"
+                  >
+                    <Typography color="textPrimary"> {year}</Typography>
+                    <UnstyledLink
+                      onClick={() => {
+                        this.props.history.push(
+                          getDistrictOverviewUriFromTag(
+                            district.district.dc_code
+                          )
+                        )
+                      }}
+                    >
+                      <Typography color="textPrimary">
+                        {district.district.dc_name_zh}
+                      </Typography>
+                    </UnstyledLink>
+                    <Typography color="textPrimary">
+                      {district.name_zh}（{code}）
+                    </Typography>
+                  </Breadcrumbs>
+                </BreadcrumbsContainer>
+                <CandidatesContainer year={2015} code={district.code} />
                 <DCCAOverview
                   year={year}
                   name_zh={district.name_zh}
                   dc_code={district.district.dc_code}
-                  dc_name_zh={district.district.dc_name_zh}
                   dc_name_zh={district.district.dc_name_zh}
                   code={district.code}
                   tags={district.tags}
