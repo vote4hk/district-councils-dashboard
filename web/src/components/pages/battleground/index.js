@@ -6,7 +6,6 @@ import { Query } from 'react-apollo'
 import MainAreas from 'components/district/MainAreas'
 import CouncillorContainer from 'components/containers/CouncillorContainer'
 import CandidatesContainer from 'components/containers/CandidatesContainer'
-import CandidateList from 'components/district/CandidateList'
 import DCCAOverview from 'components/district/DCCAOverview'
 import { UnstyledButton } from 'components/atoms/Button'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
@@ -168,12 +167,6 @@ class BattleGroundPage extends Component {
                     />
                   ))}
                 </PlainCard>
-                <CandidateList
-                  candidates={district.candidates}
-                  // year={parseInt(year, 10)}
-                  // code={code}
-                  // handleCandidateSelected={this.handleCandidateSelected}
-                />
               </>
             )
           }}

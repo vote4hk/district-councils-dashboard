@@ -215,6 +215,7 @@ export const QUERY_GET_CANDIDATES = gql`
         id
         uuid
         name_zh
+        name_en
         related_organization
       }
     }
