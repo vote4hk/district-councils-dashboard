@@ -32,7 +32,7 @@ const groupVoteStat = voteStats => {
 const BreadcrumbsContainer = styled(Box)`
   && {
     flex-grow: 1;
-    padding: 8px 16px;
+    padding: 4px 16px;
   }
 `
 
