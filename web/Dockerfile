@@ -2,11 +2,11 @@ FROM node:alpine AS base
 
 WORKDIR /app
 
-COPY package*.json /app/
+COPY ./web/package*.json /app/
 
 RUN npm install
 
-COPY ./ /app/
+COPY ./web /app/
 
 RUN node --max_old_space_size=4096 node_modules/.bin/react-scripts build
 

@@ -7,7 +7,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import { withRouter } from 'react-router-dom'
 import ContextStore from 'ContextStore'
 import { DRAWER_CLOSE } from 'reducers/drawer'
-import SearchMenu from 'components/organisms/search-drawer/SearchMenu'
+import SearchMenu from 'components/organisms/SearchMenu'
 
 const Container = styled(Box)`
   && {

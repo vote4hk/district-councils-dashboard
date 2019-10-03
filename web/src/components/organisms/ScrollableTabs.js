@@ -21,27 +21,34 @@ function TabPanel(props) {
   )
 }
 
-TabPanel.propTypes = {
+ScrollableTabs.propTypes = {
   children: PropTypes.node,
   titles: PropTypes.array,
+  buttonLayout: PropTypes.oneOf(['left', 'centered']),
 }
 
-export default function ScrollableTabsButtonAuto(props) {
-  const [selectedTab, setSelectedTab] = React.useState(0)
-  const { titles, children } = props
+ScrollableTabs.defaultProps = {
+  buttonLayout: 'left',
+}
 
-  // Get all the me
-  // const allMeetings = _.flatten(
-  //   person.councillors.map(c => c.meeting_attendances)
-  // )
+export default function ScrollableTabs(props) {
+  const [selectedTab, setSelectedTab] = React.useState(0)
+  const { titles, children, buttonLayout } = props
   function handleChange(event, newValue) {
     setSelectedTab(newValue)
   }
 
+  const shouldCenter = buttonLayout === 'centered' ? true : false
+
   return (
     <>
       <AppBar position="static">
-        <Tabs value={selectedTab} onChange={handleChange}>
+        <Tabs
+          value={selectedTab}
+          onChange={handleChange}
+          centered={shouldCenter}
+          color="primary"
+        >
           {titles.map((title, index) => (
             <Tab
               label={title}
