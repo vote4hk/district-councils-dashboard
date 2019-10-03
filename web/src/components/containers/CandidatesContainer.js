@@ -69,7 +69,7 @@ const AlertBox = styled(Columns)`
     width: 100%;
     margin-bottom: 8px;
     padding: 4px 16px 1px;
-    background-color: #ffd731;
+    background-color: ${COLORS.main.primary};
   }
 `
 
