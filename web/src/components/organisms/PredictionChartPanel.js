@@ -61,22 +61,7 @@ function PredictionChartPanel(props) {
     })
   return (
     <div>
-      <Tabs titles={['預測', '投票取向', '投票率']} buttonLayout="centered">
-        <TabSection>
-          <Text variant="h5">2019區議會議席分佈預測</Text>
-          <Rows>
-            <StyledCheckBox
-              label="參考上一屆資料"
-              checked={settings.config.reference_last_election}
-              setChecked={setSettingConfigFunc('reference_last_election')}
-            ></StyledCheckBox>
-            <StyledCheckBox
-              label="自動當選議席加入對手"
-              checked={settings.config.auto_won_add_components}
-              setChecked={setSettingConfigFunc('auto_won_add_components')}
-            ></StyledCheckBox>
-          </Rows>
-        </TabSection>
+      <Tabs titles={['投票取向', '投票率', '設定']} buttonLayout="centered">
         <TabSection>
           <Text variant="h4">非建制支持率</Text>
           <StyledValueSlider
@@ -112,6 +97,20 @@ function PredictionChartPanel(props) {
             value={settings.vote_rate[2]}
             setValue={setSettingFunc(1, 2)}
           ></StyledValueSlider>
+        </TabSection>
+        <TabSection>
+          <Rows>
+            <StyledCheckBox
+              label="參考上一屆資料"
+              checked={settings.config.reference_last_election}
+              setChecked={setSettingConfigFunc('reference_last_election')}
+            ></StyledCheckBox>
+            <StyledCheckBox
+              label="自動當選議席加入對手"
+              checked={settings.config.auto_won_add_components}
+              setChecked={setSettingConfigFunc('auto_won_add_components')}
+            ></StyledCheckBox>
+          </Rows>
         </TabSection>
       </Tabs>
     </div>

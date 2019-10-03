@@ -17,6 +17,15 @@ const Container = styled.div`
   }
 `
 
+const StyledLoadingButton = styled(LoadingButton)`
+  && {
+    width: 200px;
+    margin-top: 8px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+`
+
 const FETCH_CAMP_DATA = gql`
   query fetch_camp_data($year: Int!) {
     dcd_candidates(where: { is_won: { _eq: true }, year: { _eq: $year } }) {
@@ -265,7 +274,7 @@ const CampCompareChartContainer = props => {
                     data={d3Data}
                   ></StackedNormalizedHorizontalBarChart>
                   {!predictEnabled && (
-                    <LoadingButton
+                    <StyledLoadingButton
                       isLoading={loading}
                       onClick={() => setPredictEnabled(true)}
                       label="2019議席分佈預測"

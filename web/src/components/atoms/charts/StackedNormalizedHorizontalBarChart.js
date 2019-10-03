@@ -73,7 +73,7 @@ export default props => {
       .attr('dy', '.35em')
       .style('text-anchor', 'start')
       .style('fill', '#666')
-      .attr('font-size', '10px')
+      .attr('font-size', '12px')
       .text(function(d) {
         return `共${
           d.count
@@ -87,7 +87,7 @@ export default props => {
       return
     }
 
-    const margin = { top: 110, right: 15, bottom: 20, left: 50 }
+    const margin = { top: 110, right: 15, bottom: 0, left: 50 }
     const width = dimensions.width
     const height = data.length * ROW_HEIGHT + margin.top + margin.bottom
 
