@@ -22,6 +22,11 @@ export default props => {
           .map(d => (d['建制'] > d.total / 2 ? 1 : 0))
           .reduce((c, v) => c + v, 0),
       },
+      // {
+      //   label: '其他',
+      //   color: CAMP_COLOR_OTH,
+      //   count: res.data.map(d => d['其他']).reduce((c, v) => c + v, 0),
+      // },
       {
         label: '非建制',
         color: CAMP_COLOR_DEM,
@@ -29,11 +34,6 @@ export default props => {
         overhalf_count: res.data
           .map(d => (d['非建制'] > d.total / 2 ? 1 : 0))
           .reduce((c, v) => c + v, 0),
-      },
-      {
-        label: '其他',
-        color: CAMP_COLOR_OTH,
-        count: res.data.map(d => d['其他']).reduce((c, v) => c + v, 0),
       },
     ]
 
@@ -45,11 +45,28 @@ export default props => {
       .enter()
       .append('g')
       .attr('class', 'legend')
-      .attr('transform', (d, i) => `translate(0, ${10 + i * 23})`)
+      .attr(
+        'transform',
+        (d, i) => `translate(${i * (dimensions.width - 100)}, 8)`
+      )
+
+    legend
+      .append('text')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('dy', '.5em')
+      .style('text-anchor', 'start')
+      .attr('font-size', '14px')
+      .text(function(d) {
+        return d.overhalf_count > 9
+          ? `${d.label}${d.overhalf_count}區過半數`
+          : ''
+      })
 
     legend
       .append('rect')
-      .attr('x', 8)
+      .attr('x', 0)
+      .attr('y', 16)
       .attr('width', 18)
       .attr('height', 18)
       .style('fill', function(d, i) {
@@ -58,27 +75,26 @@ export default props => {
 
     legend
       .append('text')
-      .attr('x', 32)
-      .attr('y', 9)
-      .attr('dy', '.35em')
+      .attr('x', 24)
+      .attr('y', 29)
       .style('text-anchor', 'start')
       .text(function(d) {
-        return d.label
+        return `${d.label} ${d.count}席`
       })
 
-    legend
-      .append('text')
-      .attr('x', 90)
-      .attr('y', 9)
-      .attr('dy', '.35em')
-      .style('text-anchor', 'start')
-      .style('fill', '#666')
-      .attr('font-size', '12px')
-      .text(function(d) {
-        return `共${
-          d.count
-        }席 ${d.overhalf_count !== undefined ? ` - ${d.overhalf_count}區過半數` : ''}`
-      })
+    // legend
+    //   .append('text')
+    //   .attr('x', 60)
+    //   .attr('y', 8)
+    //   .attr('dy', '.5em')
+    //   .style('text-anchor', 'start')
+    //   .style('fill', '#666')
+    //   .attr('font-size', '12px')
+    //   .text(function(d) {
+    //     return `${
+    //       d.count
+    //     }席`
+    //   })
   }
 
   const drawChart = res => {
@@ -87,7 +103,7 @@ export default props => {
       return
     }
 
-    const margin = { top: 110, right: 15, bottom: 0, left: 50 }
+    const margin = { top: 65, right: 15, bottom: 0, left: 50 }
     const width = dimensions.width
     const height = data.length * ROW_HEIGHT + margin.top + margin.bottom
 

@@ -59,16 +59,10 @@ export const typography = {
 export const COLORS = {
   main: {
     text: '#000',
-    highlightedText: '#ffb500', // organe
+    primary: '#ffb500',
     background: '#fff',
   },
   mainText: 'black',
-  checkbox: {
-    box: cyan[500],
-  },
-  slider: {
-    bar: cyan[500],
-  },
   dark: {
     backgroundColor: '#3e474f',
     color: 'white',
