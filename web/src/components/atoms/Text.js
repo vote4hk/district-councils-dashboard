@@ -26,6 +26,10 @@ export const FailureText = styled(Typography)`
   }
 `
 
+export default props => {
+  return <Typography {...props} />
+}
+
 export const TitleText = props => {
   return <Typography variant="h2" {...props} />
 }

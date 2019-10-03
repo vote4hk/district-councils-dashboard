@@ -217,6 +217,28 @@ export const QUERY_GET_CANDIDATES = gql`
         name_zh
         name_en
         related_organization
+`
+
+export const QUERY_GET_CONSTITUENCY_CAMP_DATA = gql`
+  query fetch_camp_data($year: Int!) {
+    dcd_constituencies(where: { year: { _eq: $year } }) {
+      code
+      predecessors(limit: 1, order_by: { intersect_area: desc }) {
+        predecessor {
+          code
+          candidates {
+            camp
+            votes
+            is_won
+          }
+        }
+      }
+      vote_stats {
+        type
+        subtype
+        category_1
+        category_2
+        count
       }
     }
   }
