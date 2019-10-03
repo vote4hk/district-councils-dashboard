@@ -217,6 +217,9 @@ export const QUERY_GET_CANDIDATES = gql`
         name_zh
         name_en
         related_organization
+      }
+    }
+  }
 `
 
 export const QUERY_GET_CONSTITUENCY_CAMP_DATA = gql`
