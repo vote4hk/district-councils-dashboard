@@ -11,23 +11,23 @@ import { Box } from '@material-ui/core'
 
 const StyledValueSlider = styled(ValueSlider)`
   && {
-    margin-top: 16px;
+    margin-top: 8px;
     .MuiSlider-root {
-      color: ${COLORS.slider.bar};
+      color: ${COLORS.main.highlightedText};
     }
   }
 `
 
 const TabSection = styled(Box)`
   && {
-    padding: 8px;
+    padding: 8px 0 0;
   }
 `
 
 const StyledCheckBox = styled(CheckBox)`
   && {
     .MuiSvgIcon-root {
-      color: ${COLORS.checkbox.box};
+      color: ${COLORS.main.highlightedText};
     }
   }
 `
@@ -63,7 +63,7 @@ function PredictionChartPanel(props) {
     <div>
       <Tabs titles={['投票取向', '投票率', '設定']} buttonLayout="centered">
         <TabSection>
-          <Text variant="h4">非建制支持率</Text>
+          <Text variant="h5">非建制支持率</Text>
           <StyledValueSlider
             label={'18-30歲'}
             value={settings.camp_rate[0]}
@@ -81,7 +81,7 @@ function PredictionChartPanel(props) {
           ></StyledValueSlider>
         </TabSection>
         <TabSection>
-          <Text variant="h4">已登記選民投票率</Text>
+          <Text variant="h5">已登記選民投票率</Text>
           <StyledValueSlider
             label={'18-30歲'}
             value={settings.vote_rate[0]}

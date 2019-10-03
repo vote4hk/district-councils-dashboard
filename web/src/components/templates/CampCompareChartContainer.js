@@ -9,6 +9,7 @@ import PredictionChartPanel from 'components/organisms/PredictionChartPanel'
 import { QUERY_GET_CONSTITUENCY_CAMP_DATA } from 'queries/gql'
 import LoadingButton from 'components/molecules/LoadingButton'
 import Text from 'components/atoms/Text'
+import Box from '@material-ui/core/Box'
 const Container = styled.div`
   && {
     width: 100%;
@@ -17,12 +18,17 @@ const Container = styled.div`
   }
 `
 
+const PredictionChartHeader = styled(Box)`
+  && {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+`
+
 const StyledLoadingButton = styled(LoadingButton)`
   && {
-    width: 200px;
-    margin-top: 8px;
-    margin-left: auto;
-    margin-right: auto;
+    padding: 5px 16px;
   }
 `
 
@@ -264,28 +270,30 @@ const CampCompareChartContainer = props => {
 
               return (
                 <Container className={className}>
-                  <Text variant="h4">
-                    {' '}
-                    {predictEnabled
-                      ? '2019區議會勢力預測'
-                      : '現屆區議會勢力分布'}
-                  </Text>
-                  <StackedNormalizedHorizontalBarChart
-                    data={d3Data}
-                  ></StackedNormalizedHorizontalBarChart>
-                  {!predictEnabled && (
-                    <StyledLoadingButton
-                      isLoading={loading}
-                      onClick={() => setPredictEnabled(true)}
-                      label="2019議席分佈預測"
-                    />
-                  )}
+                  <PredictionChartHeader>
+                    <Text variant="h5">
+                      {predictEnabled
+                        ? '2019選舉結果預測'
+                        : '現屆區議會勢力分布'}
+                    </Text>
+                    {!predictEnabled && (
+                      <StyledLoadingButton
+                        style={{ float: 'right' }}
+                        isLoading={loading}
+                        onClick={() => setPredictEnabled(true)}
+                        label="預測結果"
+                      />
+                    )}
+                  </PredictionChartHeader>
                   {!loading && predictEnabled && (
                     <PredictionChartPanel
                       settings={settings}
                       setSettings={setSettings}
                     />
                   )}
+                  <StackedNormalizedHorizontalBarChart
+                    data={d3Data}
+                  ></StackedNormalizedHorizontalBarChart>
                 </Container>
               )
             }}
