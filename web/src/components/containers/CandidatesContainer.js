@@ -8,6 +8,7 @@ import Columns from 'components/atoms/Columns'
 import { Box, Typography } from '@material-ui/core'
 import styled from 'styled-components'
 import { getColorFromPoliticalAffiliation } from 'utils/helper'
+import { COLORS } from 'ui/theme'
 import PropTypes from 'prop-types'
 
 const IMAGE_HOST_URI =
@@ -25,14 +26,41 @@ const CandidateList = styled(Box)`
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
   }
 `
 
 const Candidate = styled(Box)`
   && {
+    position: relative;
     width: auto;
     text-align: center;
+    & > div {
+      margin: 0 auto;
+    }
+  }
+`
+
+const CandidateNumber = styled(Box)`
+  && {
+    position: absolute;
+    top: 64px;
+    left: 3px;
+    border-radius: 50%;
+    font-weight: 700;
+    width: ${props => props.dimension};
+    height: ${props => props.dimension};
+    background-color: ${props => COLORS.camp[props.camp]};
+    color: white;
+    text-align: center;
+  }
+`
+
+const CandidateName = styled(Typography)`
+  && {
+    margin-top: 5px;
+    font-weight: 700;
   }
 `
 
@@ -103,10 +131,19 @@ const CandidatesContainer = props => {
                                 },
                               }}
                             />
-                            <Typography variant="h5">
-                              {candidate.candidate_number}{' '}
+                            {candidate.candidate_number > 0 && (
+                              <CandidateNumber
+                                dimension="18px"
+                                camp={getColorFromPoliticalAffiliation(
+                                  candidate.person.related_organization
+                                )}
+                              >
+                                {candidate.candidate_number}
+                              </CandidateNumber>
+                            )}
+                            <CandidateName variant="h5">
                               {candidate.person.name_zh}
-                            </Typography>
+                            </CandidateName>
 
                             <Typography variant="h6">
                               {candidate.political_affiliation}
