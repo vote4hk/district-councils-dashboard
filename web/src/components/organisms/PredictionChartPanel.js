@@ -13,7 +13,7 @@ const StyledValueSlider = styled(ValueSlider)`
   && {
     margin-top: 8px;
     .MuiSlider-root {
-      color: ${COLORS.main.highlightedText};
+      color: ${COLORS.main.primary};
     }
   }
 `
@@ -27,7 +27,7 @@ const TabSection = styled(Box)`
 const StyledCheckBox = styled(CheckBox)`
   && {
     .MuiSvgIcon-root {
-      color: ${COLORS.main.highlightedText};
+      color: ${COLORS.main.primary};
     }
   }
 `

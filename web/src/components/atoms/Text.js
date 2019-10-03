@@ -4,7 +4,7 @@ import React from 'react'
 import { COLORS } from 'ui/theme'
 const StyledSubtTitle = styled(Typography)`
   && {
-    color: ${COLORS.highlightedText};
+    color: ${COLORS.primary};
   }
 `
 

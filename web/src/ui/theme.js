@@ -59,7 +59,7 @@ export const typography = {
 export const COLORS = {
   main: {
     text: '#000',
-    highlightedText: '#ffb500', // organe
+    primary: '#ffb500',
     background: '#fff',
   },
   mainText: 'black',
