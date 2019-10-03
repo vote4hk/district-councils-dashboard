@@ -40,7 +40,7 @@ class BattleGroundPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      showMap: false,
+      showMap: true,
     }
   }
 
