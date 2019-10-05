@@ -71,7 +71,7 @@ const CandidateHeaderContainer = styled(FlexRowContainer)`
     position: relative;
     display: flex;
     background: linear-gradient(
-      ${props => COLORS.camp[props.camp]} 84px,
+      ${props => COLORS.camp[props.camp].background} 84px,
       rgba(255, 255, 255, 0) 32px
     );
   }
@@ -90,6 +90,7 @@ const PersonName = styled.div`
     position: absolute;
     left: 116px;
     top: 32px;
+    color: ${props => COLORS.camp[props.camp].text};
   }
 `
 
@@ -288,17 +289,13 @@ class ProfilePage extends Component {
                   />
                 </CandidateAvatorContainer>
                 <Box>
-                  <PersonName>
-                    <Typography
-                      variant="h3"
-                      style={{ marginBottom: '2px', color: 'white' }}
-                    >
+                  <PersonName
+                    camp={getColorFromCamp(lastElection && lastElection.camp)}
+                  >
+                    <Typography variant="h3" style={{ marginBottom: '2px' }}>
                       {person.name_zh || ''}
                     </Typography>
-                    <Typography
-                      variant="h5"
-                      style={{ marginBottom: '8px', color: 'white' }}
-                    >
+                    <Typography variant="h5" style={{ marginBottom: '8px' }}>
                       {person.name_en || ''}
                     </Typography>
                     {currentTerm &&
