@@ -123,7 +123,7 @@ class BattleGroundPage extends Component {
                     </Typography>
                   </Breadcrumbs>
                 </BreadcrumbsContainer>
-                <CandidatesContainer year={2015} code={district.code} />
+                <CandidatesContainer year={year} code={district.code} />
                 <DCCAOverview
                   year={year}
                   name_zh={district.name_zh}
