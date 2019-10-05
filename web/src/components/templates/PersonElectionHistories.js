@@ -1,11 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 import { PlainCard } from 'components/molecules/Card'
 import Typography from '@material-ui/core/Typography'
 import { Box, Grid } from '@material-ui/core'
 import { SuccessText, FailureText } from '../atoms/Text'
 import { UnstyledNavLink } from '../atoms/UnstyledLink'
+import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
+const PersonElectionHistoriesTitle = styled.div`
+  && {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+`
 const PersonElectionHistories = props => {
   const { histories } = props
 
@@ -17,11 +26,14 @@ const PersonElectionHistories = props => {
           to={m.year === 2019 && `/district/2019/${m.constituency.code}`}
         >
           <PlainCard color="#fafafa">
-            <Box>
-              <Typography variant="h6" gutterBottom>
-                {m.year}
-              </Typography>
-            </Box>
+            <PersonElectionHistoriesTitle>
+              <Box>
+                <Typography variant="h6" gutterBottom>
+                  {m.year}
+                </Typography>
+              </Box>
+              <Box>{m.year === 2019 && <NavigateNextIcon />}</Box>
+            </PersonElectionHistoriesTitle>
             <Grid container>
               <Grid item xs={4}>
                 <Typography variant="h5">{m.constituency.name_zh}</Typography>
