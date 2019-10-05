@@ -85,7 +85,7 @@ class IndexPage extends Component {
               <Countdown date={electionDate} />
             </CountdownContainer>
           )}
-          <LandingIcon />
+          {/* <LandingIcon /> */}
         </TopSection>
         <Container>
           <StyledSearchTab />

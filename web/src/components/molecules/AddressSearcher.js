@@ -102,7 +102,7 @@ const styles = theme => ({
     textDecoration: 'none',
   },
   searchButton: {
-    color: '#ffd731',
+    color: '#7B68EE',
   },
 })
 
