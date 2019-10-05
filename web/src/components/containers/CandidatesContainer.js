@@ -97,12 +97,12 @@ const CandidatesContainer = props => {
                 <Rows>
                   <AlertBox>
                     <Typography variant="h6" gutterBottom>
-                      10月4日至10月17日期間為選舉提名期。
+                      選舉提名期為10月4日至10月17日
                     </Typography>
                   </AlertBox>
                   <PaddingColumns>
                     <Typography variant="h6" gutterBottom>
-                      候選人
+                      已接獲提名
                     </Typography>
                   </PaddingColumns>
                 </Rows>
