@@ -1,11 +1,30 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from 'react'
+import styled from 'styled-components'
+import { Box } from '@material-ui/core'
 import * as d3 from 'd3'
 import { FONT_FAMILY } from 'ui/theme'
+import {
+  getConstituencyUriFromTag,
+  getCodeFromDistrictName,
+} from 'utils/helper'
+
 const ROW_HEIGHT = 20
 const CAMP_COLOR_EST = '#ff6779'
 const CAMP_COLOR_OTH = '#eeeeee'
 const CAMP_COLOR_DEM = '#00c376'
 const CAMP_COLORS = [CAMP_COLOR_EST, CAMP_COLOR_OTH, CAMP_COLOR_DEM]
+
+const Styled = styled(Box)`
+  && {
+    .link {
+      text {
+        cursor: pointer;
+        color: blue;
+        text-decoration: underline;
+      }
+    }
+  }
+`
 
 export default props => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
@@ -81,20 +100,6 @@ export default props => {
       .text(function(d) {
         return `${d.label} ${d.count}席`
       })
-
-    // legend
-    //   .append('text')
-    //   .attr('x', 60)
-    //   .attr('y', 8)
-    //   .attr('dy', '.5em')
-    //   .style('text-anchor', 'start')
-    //   .style('fill', '#666')
-    //   .attr('font-size', '12px')
-    //   .text(function(d) {
-    //     return `${
-    //       d.count
-    //     }席`
-    //   })
   }
 
   const drawChart = res => {
@@ -124,6 +129,7 @@ export default props => {
       g
         .style('font', `12px ${FONT_FAMILY}`)
         .attr('transform', `translate(${margin.left},0)`)
+        .attr('class', 'link')
         .call(d3.axisLeft(y).tickSizeOuter(0))
         .call(g => g.selectAll('.domain').remove())
 
@@ -152,10 +158,6 @@ export default props => {
       .select(d3Container.current)
       .select('svg')
       .empty()
-
-    // d3.select(d3Container.current)
-    //   .select('svg')
-    //   .remove()
 
     if (isCreate) {
       const svg = d3
@@ -235,8 +237,14 @@ export default props => {
           }
         })
 
-      svg.append('g').call(xAxis)
+      // Add the y axis and add on click function to it
       svg.append('g').call(yAxis)
+      svg.selectAll('.tick').on('click', function(d, i) {
+        const code = getCodeFromDistrictName(d)
+        window.location = getConstituencyUriFromTag(code)
+      })
+
+      svg.append('g').call(xAxis)
 
       // middle line
       const middle = (width + margin.left - margin.right) / 2
@@ -340,8 +348,8 @@ export default props => {
   }, [])
 
   return (
-    <>
+    <Styled>
       <div ref={d3Container} style={{ height: 'auto', width: '100%' }}></div>
-    </>
+    </Styled>
   )
 }

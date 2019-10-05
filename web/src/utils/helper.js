@@ -1,8 +1,20 @@
+import { DCREGION } from 'constants/dcregion'
+
 export const getDistrictListUriFromTag = tag => `/district/2019/tags/${tag}`
 
 export const getDistrictOverviewUriFromTag = code => `/district/2019/${code}`
 
 export const getConstituencyUriFromTag = code => `/district/2019/${code}`
+
+export const getCodeFromDistrictName = name => {
+  let code = 'A'
+  Object.keys(DCREGION).forEach(k => {
+    if (DCREGION[k].zh_hk === name) {
+      code = k
+    }
+  })
+  return code
+}
 
 /**
  * Passing a councillor object and get the meta data for it
