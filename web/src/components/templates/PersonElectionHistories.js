@@ -16,7 +16,7 @@ const PersonElectionHistories = props => {
           key={index}
           to={m.year === 2019 && `/district/2019/${m.constituency.code}`}
         >
-          <PlainCard>
+          <PlainCard color="#fafafa">
             <Box>
               <Typography variant="h6" gutterBottom>
                 {m.year}

@@ -6,7 +6,7 @@ const StyledCard = styled(Card)`
   && {
     padding: 16px;
     margin: 16px;
-    background-color: #fafafa;
+    background-color: ${props => props.color || '#fff'};
   }
 `
 
