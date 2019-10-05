@@ -12,6 +12,7 @@ import { COLORS } from 'ui/theme'
 
 const StyledAppBar = styled(AppBar)`
   && {
+    background: white;
     width: 100%;
     box-shadow: none;
   }
@@ -33,7 +34,7 @@ function MobileAppBar(props) {
 
   return (
     <>
-      <StyledAppBar position="sticky" color={COLORS.main.background}>
+      <StyledAppBar position="sticky">
         <Toolbar disableGutters>
           <AppBarTitle to={'/'}>
             <Typography variant="h1" align="center">

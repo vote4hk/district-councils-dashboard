@@ -327,7 +327,14 @@ class ProfilePage extends Component {
                   ))}
                 </Grid>
               </PersonHighlightContainer>
-              <ScrollableTabs titles={titles}>
+              <ScrollableTabs
+                titles={titles}
+                indicatorColor={
+                  COLORS.camp[
+                    getColorFromCamp(lastElection && lastElection.camp)
+                  ].background
+                }
+              >
                 <PersonElectionHistoriesContainer personId={person.id} />
                 {person.fc_uuid && (
                   <FCPersonData
