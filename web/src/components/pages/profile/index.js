@@ -265,9 +265,10 @@ class ProfilePage extends Component {
               (currentTerm && currentTerm.career) || lastElection.occupation,
           })
 
-          const titles = ['參選紀錄', '會議出席率']
+          const titles = ['參選紀錄']
 
           if (person.fc_uuid) titles.push('個人立場')
+          titles.push('會議出席率')
 
           return (
             <>
@@ -331,13 +332,13 @@ class ProfilePage extends Component {
               </PersonHighlightContainer>
               <ScrollableTabs titles={titles}>
                 <PersonElectionHistoriesContainer personId={person.id} />
-                <CouncillorMeetingAttendanceContainer personId={person.id} />
                 {person.fc_uuid && (
                   <FCPersonData
                     fcUuid={person.fc_uuid}
                     name={person.name_zh || person.name_en}
                   />
                 )}
+                <CouncillorMeetingAttendanceContainer personId={person.id} />
               </ScrollableTabs>
             </>
           )
