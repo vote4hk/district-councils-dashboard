@@ -2,17 +2,13 @@ import React, { useRef, useState, useEffect, useLayoutEffect } from 'react'
 import styled from 'styled-components'
 import { Box } from '@material-ui/core'
 import * as d3 from 'd3'
-import { FONT_FAMILY } from 'ui/theme'
+import { FONT_FAMILY, COLORS } from 'ui/theme'
 import {
   getConstituencyUriFromTag,
   getCodeFromDistrictName,
 } from 'utils/helper'
 
 const ROW_HEIGHT = 20
-const CAMP_COLOR_EST = '#ff6779'
-const CAMP_COLOR_OTH = '#eeeeee'
-const CAMP_COLOR_DEM = '#00c376'
-const CAMP_COLORS = [CAMP_COLOR_EST, CAMP_COLOR_OTH, CAMP_COLOR_DEM]
 
 const Styled = styled(Box)`
   && {
@@ -29,26 +25,35 @@ const Styled = styled(Box)`
 export default props => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
 
+  const CAMP_COLORS = [
+    COLORS.camp.establishment.background,
+    COLORS.camp.other.background,
+    COLORS.camp.democracy.background,
+  ]
+
   const d3Container = useRef(null)
 
   const updateLegend = (res, svg) => {
     const data = [
       {
+        camp: 'establishment',
         label: '建制',
-        color: CAMP_COLOR_EST,
+        color: CAMP_COLORS[0],
         count: res.data.map(d => d['建制']).reduce((c, v) => c + v, 0),
         overhalf_count: res.data
           .map(d => (d['建制'] > d.total / 2 ? 1 : 0))
           .reduce((c, v) => c + v, 0),
       },
       // {
+      //   camp: 'other',
       //   label: '其他',
       //   color: CAMP_COLOR_OTH,
       //   count: res.data.map(d => d['其他']).reduce((c, v) => c + v, 0),
       // },
       {
+        camp: 'democracy',
         label: '非建制',
-        color: CAMP_COLOR_DEM,
+        color: CAMP_COLORS[2],
         count: res.data.map(d => d['非建制']).reduce((c, v) => c + v, 0),
         overhalf_count: res.data
           .map(d => (d['非建制'] > d.total / 2 ? 1 : 0))
@@ -231,9 +236,9 @@ export default props => {
           switch (d.index) {
             case 0:
             case 2:
-              return 'white'
-            default:
               return 'black'
+            default:
+              return 'white'
           }
         })
 
