@@ -54,7 +54,7 @@ function renderInputComponent(inputProps) {
           disableUnderline: true,
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton aria-label="Search">
+              <IconButton color="primary" aria-label="Search">
                 <SearchIcon />
               </IconButton>
             </InputAdornment>

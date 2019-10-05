@@ -59,7 +59,7 @@ export const typography = {
 export const COLORS = {
   main: {
     text: '#000',
-    primary: 'mediumslateblue',
+    primary: '#7B68EE', // mediumslateblue
     background: '#fff',
   },
   mainText: 'black',
@@ -100,7 +100,7 @@ export default createMuiTheme({
   typography,
   palette: {
     primary: {
-      main: COLORS.main.background,
+      main: COLORS.main.primary,
       contrastText: COLORS.main.text,
     },
     secondary: {

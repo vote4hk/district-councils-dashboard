@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import { DRAWER_OPEN } from '../../reducers/drawer'
 import ContextStore from 'ContextStore'
 import { UnstyledNavLink } from '../atoms/UnstyledLink'
+import { COLORS } from 'ui/theme'
 
 const StyledAppBar = styled(AppBar)`
   && {
@@ -32,7 +33,7 @@ function MobileAppBar(props) {
 
   return (
     <>
-      <StyledAppBar position="sticky" color="primary">
+      <StyledAppBar position="sticky" color={COLORS.main.background}>
         <Toolbar disableGutters>
           <AppBarTitle to={'/'}>
             <Typography variant="h1" align="center">
