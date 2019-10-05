@@ -5,6 +5,7 @@ import { PeopleAvatar } from 'components/atoms/Avatar'
 import { UnstyledNavLink } from 'components/atoms/UnstyledLink'
 import Rows from 'components/atoms/Rows'
 import Columns from 'components/atoms/Columns'
+import { Alert } from 'components/atoms/Alert'
 import { Box, Typography } from '@material-ui/core'
 import styled from 'styled-components'
 import { getColorFromPoliticalAffiliation } from 'utils/helper'
@@ -64,15 +65,6 @@ const CandidateName = styled(Typography)`
   }
 `
 
-const AlertBox = styled(Columns)`
-  && {
-    width: 100%;
-    margin-bottom: 8px;
-    padding: 4px 16px 1px;
-    background-color: ${COLORS.main.primary};
-  }
-`
-
 const PaddingColumns = styled(Columns)`
   && {
     padding: 0 16px;
@@ -95,11 +87,11 @@ const CandidatesContainer = props => {
             {data.dcd_candidates.length > 0 && (
               <>
                 <Rows>
-                  <AlertBox>
+                  <Alert>
                     <Typography variant="h6" gutterBottom>
                       選舉提名期為10月4日至10月17日
                     </Typography>
-                  </AlertBox>
+                  </Alert>
                   <PaddingColumns>
                     <Typography variant="h6" gutterBottom>
                       已接獲提名

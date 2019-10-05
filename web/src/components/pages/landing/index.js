@@ -3,6 +3,7 @@ import CampCompareChartContainer from 'components/templates/CampCompareChartCont
 import Countdown from 'components/atoms/Countdown'
 import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
+import { Alert } from 'components/atoms/Alert'
 import SearchTab from 'components/organisms/SearchTab'
 
 const Container = styled.div`
@@ -66,6 +67,11 @@ class IndexPage extends Component {
   render() {
     return (
       <>
+        <Alert>
+          <Typography variant="h6" gutterBottom>
+            區議會選舉提名期於已展開，至10月17日結束。
+          </Typography>
+        </Alert>
         <TopSection>
           {Date.parse(new Date(electionDate)) > Date.parse(new Date()) && (
             <CountdownContainer>
