@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles'
-import { red, green } from '@material-ui/core/colors'
+import { red, green, cyan } from '@material-ui/core/colors'
 export const headingFontFamily = 'Noto Sans TC, sans-serif'
 export const bodyFontFamily = 'Noto Sans TC, sans-serif'
 
@@ -59,11 +59,10 @@ export const typography = {
 export const COLORS = {
   main: {
     text: '#000',
-    highlightedText: '#ffb500', // organe
+    primary: '#ffb500',
     background: '#fff',
   },
   mainText: 'black',
-
   dark: {
     backgroundColor: '#3e474f',
     color: 'white',

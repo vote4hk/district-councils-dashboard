@@ -59,13 +59,9 @@ const TabButton = styled(Button)`
     padding-bottom: 15px;
 
     color: ${props =>
-      props.active === 'active'
-        ? COLORS.main.highlightedText
-        : COLORS.main.text};
+      props.active === 'active' ? COLORS.main.primary : COLORS.main.text};
     border-bottom: ${props =>
-      props.active === 'active'
-        ? `1px solid ${COLORS.main.highlightedText}`
-        : 'none'};
+      props.active === 'active' ? `1px solid ${COLORS.main.primary}` : 'none'};
   }
 `
 

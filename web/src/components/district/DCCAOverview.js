@@ -7,17 +7,13 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import { UnstyledButton } from 'components/atoms/Button'
 import { Tag } from 'components/atoms/Tag'
-import { UnstyledLink } from 'components/atoms/UnstyledLink'
-import { Button } from '@material-ui/core'
 import DistrictNewVoterChartContainer from 'components/containers/DistrictNewVoterChartContainer'
 import Columns from 'components/atoms/Columns'
 import Rows from 'components/atoms/Rows'
 import Box from '@material-ui/core/Box'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
-import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import Link from '@material-ui/core/Link'
-import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import {
   getDistrictListUriFromTag,
   getDistrictOverviewUriFromTag,
@@ -32,14 +28,6 @@ const Container = styled(Paper)`
     box-shadow: none;
   }
 `
-
-const BreadcrumbsContainer = styled(Box)`
-  && {
-    flex-grow: 1;
-    padding: 8px 16px;
-  }
-`
-
 class DCCAOverview extends Component {
   constructor(props) {
     super(props)
@@ -100,25 +88,6 @@ class DCCAOverview extends Component {
     ).toFixed(2)
     return (
       <>
-        <BreadcrumbsContainer>
-          <Breadcrumbs
-            separator={<NavigateNextIcon fontSize="small" />}
-            aria-label="breadcrumb"
-          >
-            <Typography color="textPrimary"> {year}</Typography>
-            <UnstyledLink
-              onClick={() => {
-                this.props.history.push(getDistrictOverviewUriFromTag(dc_code))
-              }}
-            >
-              <Typography color="textPrimary">{dc_name_zh}</Typography>
-            </UnstyledLink>
-            <Typography color="textPrimary">
-              {name_zh}（{code}）
-            </Typography>
-          </Breadcrumbs>
-        </BreadcrumbsContainer>
-
         <Container>
           <Rows>
             <Columns>

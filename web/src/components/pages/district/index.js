@@ -4,7 +4,6 @@ import OLMap from '../../OLMap'
 import { Query } from 'react-apollo'
 import DistrictCard from 'components/district/DistrictCard'
 import MainAreas from 'components/district/MainAreas'
-import CandidateList from 'components/district/CandidateList'
 import Metrics from 'components/district/Metrics'
 import styled from 'styled-components'
 import { bps } from 'ui/responsive'
@@ -142,14 +141,7 @@ class DistrictPage extends Component {
                           district={district}
                         ></Metrics>
                       </FullWidthBox>
-                      <FullWidthBox>
-                        <CandidateList
-                          candidates={district.candidates}
-                          year={parseInt(year, 10)}
-                          code={code}
-                          handleCandidateSelected={this.handleCandidateSelected}
-                        />
-                      </FullWidthBox>
+                      <FullWidthBox></FullWidthBox>
                     </FlexRowContainer>
                   </LowerBackgroundContainer>
                 </>
