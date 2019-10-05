@@ -59,7 +59,7 @@ export const typography = {
 export const COLORS = {
   main: {
     text: '#000',
-    primary: '#ffb500',
+    primary: 'mediumslateblue',
     background: '#fff',
   },
   mainText: 'black',
@@ -68,11 +68,26 @@ export const COLORS = {
     color: 'white',
   },
   camp: {
-    democracy: '#00c376',
-    establishment: '#ff6779',
-    localist: '#ffcd00',
-    other: '#45b6ff',
-    uncertain: '#a8a8ad',
+    democracy: {
+      background: '#ffcd00',
+      text: 'black',
+    },
+    establishment: {
+      background: '#45b6ff',
+      text: 'white',
+    },
+    localist: {
+      background: '#ffcd00',
+      text: 'black',
+    },
+    other: {
+      background: '#a8a8ad',
+      text: 'black',
+    },
+    uncertain: {
+      background: '#a8a8ad',
+      text: 'black',
+    },
   },
   common: {
     success: green[800],

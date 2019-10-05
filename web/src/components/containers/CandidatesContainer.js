@@ -52,8 +52,8 @@ const CandidateNumber = styled(Box)`
     font-weight: 700;
     width: ${props => props.dimension};
     height: ${props => props.dimension};
-    background-color: ${props => COLORS.camp[props.camp]};
-    color: white;
+    background-color: ${props => COLORS.camp[props.camp].background};
+    color: ${props => COLORS.camp[props.camp].text};
     text-align: center;
   }
 `
