@@ -64,7 +64,7 @@ function convertToD3Compatible(data, sortFunc) {
       .map(d => {
         return {
           name: DCREGION[d.code].zh_hk,
-          建制: DCREGION[d.code].unelected_dc_seat + d.count['建制'] || 0, // 當然議員
+          建制: DCREGION[d.code].unelected_dc_seat + (d.count['建制'] || 0), // 當然議員
           非建制: d.count['泛民'] || 0,
           其他: d.count['其他'] || 0,
           total: Object.values(d.count).reduce((acc, c) => {
