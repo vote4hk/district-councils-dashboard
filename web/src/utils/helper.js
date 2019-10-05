@@ -31,7 +31,8 @@ export const getCouncillorMeta = councillor => {
   ).length
 
   if (participatedElections.length > 0) {
-    const e = participatedElections[0]
+    // Filter out 2019 result
+    const e = participatedElections.filter(e => e.year !== 2019)[0]
     const electionYear = e.year
 
     const myVotes = e.constituency.candidates.find(
