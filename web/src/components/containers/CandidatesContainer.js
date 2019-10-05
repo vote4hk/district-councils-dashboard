@@ -84,14 +84,14 @@ const CandidatesContainer = props => {
         if (error) return `Error! ${error}`
         return (
           <Container>
+            <Alert>
+              <Typography variant="h6" gutterBottom>
+                區議會選舉提名期現已展開，至10月17日結束。
+              </Typography>
+            </Alert>
             {data.dcd_candidates.length > 0 && (
               <>
                 <Rows>
-                  <Alert>
-                    <Typography variant="h6" gutterBottom>
-                      選舉提名期為10月4日至10月17日
-                    </Typography>
-                  </Alert>
                   <PaddingColumns>
                     <Typography variant="h6" gutterBottom>
                       已接獲提名
