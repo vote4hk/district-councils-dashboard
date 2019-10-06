@@ -10,6 +10,8 @@ import { QUERY_GET_CONSTITUENCY_CAMP_DATA } from 'queries/gql'
 import LoadingButton from 'components/molecules/LoadingButton'
 import Text from 'components/atoms/Text'
 import Box from '@material-ui/core/Box'
+import { COLORS } from 'ui/theme'
+
 const Container = styled.div`
   && {
     width: 100%;
@@ -28,7 +30,13 @@ const PredictionChartHeader = styled(Box)`
 
 const StyledLoadingButton = styled(LoadingButton)`
   && {
+    background-color: ${COLORS.main.primary};
+    color: ${COLORS.main.background};
     padding: 5px 16px;
+    :hover {
+      color: ${COLORS.main.primary};
+      border-color: 1px ${COLORS.main.primary} solid;
+    }
   }
 `
 
