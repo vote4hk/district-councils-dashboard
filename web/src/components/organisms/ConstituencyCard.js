@@ -27,9 +27,8 @@ const ConstituencyCard = props => {
         props.history.push(`/district/2019/${constituency.code}`)
       }}
     >
-      <Typography variant="h6">{constituency.code}</Typography>
-      <Typography variant="h5" gutterBottom>
-        {constituency.name_zh}
+      <Typography variant="h6" gutterBottom>
+        {constituency.name_zh}（{constituency.code}）
       </Typography>
       {sortedTags.map((tag, index) => (
         <Tag
