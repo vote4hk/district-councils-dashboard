@@ -102,7 +102,7 @@ const App = props => {
                       component={withTracker(DistrictListPage)}
                     />
                     <Route
-                      path="/district/2019/:code(\w{1})"
+                      path="/district/:year/:code(\w{1})"
                       component={withTracker(DistrictOverviewPage)}
                     />
                     <Route

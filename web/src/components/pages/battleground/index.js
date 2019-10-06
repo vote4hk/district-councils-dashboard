@@ -18,6 +18,7 @@ import { PlainCard } from '../../molecules/Card'
 import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/Link'
+import { Alert } from 'components/atoms/Alert'
 import { getDistrictOverviewUriFromTag } from 'utils/helper'
 
 const groupVoteStat = voteStats => {
@@ -28,6 +29,13 @@ const groupVoteStat = voteStats => {
   }
   return data
 }
+
+const Container = styled(Box)`
+  && {
+    width: 100%;
+    padding: 0 16px 0;
+  }
+`
 
 const BreadcrumbsContainer = styled(Box)`
   && {
@@ -55,10 +63,6 @@ class BattleGroundPage extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     //  if (this.props.route.path === nextProps.route.path) return false;
     return true
-  }
-
-  handleCandidateSelected = candidateId => {
-    this.props.history.push(`/profile/${candidateId}`)
   }
 
   handleChangeDistrict = (year, code) => {
@@ -131,7 +135,14 @@ class BattleGroundPage extends Component {
                     </Typography>
                   </Breadcrumbs>
                 </BreadcrumbsContainer>
-                <CandidatesContainer year={year} code={district.code} />
+                <Alert>
+                  <Typography variant="h6" gutterBottom>
+                    區議會選舉提名期現已展開，至10月17日結束。
+                  </Typography>
+                </Alert>
+                <Container>
+                  <CandidatesContainer year={year} code={district.code} />
+                </Container>
                 <DCCAOverview
                   year={year}
                   name_zh={district.name_zh}

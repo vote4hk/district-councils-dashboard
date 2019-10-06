@@ -5,7 +5,6 @@ import { PeopleAvatar } from 'components/atoms/Avatar'
 import { UnstyledNavLink } from 'components/atoms/Link'
 import Rows from 'components/atoms/Rows'
 import Columns from 'components/atoms/Columns'
-import { Alert } from 'components/atoms/Alert'
 import { Box, Typography } from '@material-ui/core'
 import styled from 'styled-components'
 import { getColorFromPoliticalAffiliation } from 'utils/helper'
@@ -65,12 +64,6 @@ const CandidateName = styled(Typography)`
   }
 `
 
-const PaddingColumns = styled(Columns)`
-  && {
-    padding: 0 16px;
-  }
-`
-
 const CandidatesContainer = props => {
   const { code, year } = props
 
@@ -84,22 +77,17 @@ const CandidatesContainer = props => {
         if (error) return `Error! ${error}`
         return (
           <Container>
-            <Alert>
-              <Typography variant="h6" gutterBottom>
-                區議會選舉提名期現已展開，至10月17日結束。
-              </Typography>
-            </Alert>
             {data.dcd_candidates.length > 0 && (
               <>
                 <Rows>
-                  <PaddingColumns>
+                  <Columns>
                     <Typography variant="h6" gutterBottom>
                       已接獲提名
                     </Typography>
-                  </PaddingColumns>
+                  </Columns>
                 </Rows>
                 <Rows>
-                  <PaddingColumns>
+                  <Columns>
                     <CandidateList>
                       {data.dcd_candidates.map(candidate => (
                         <UnstyledNavLink
@@ -144,7 +132,7 @@ const CandidatesContainer = props => {
                         </UnstyledNavLink>
                       ))}
                     </CandidateList>
-                  </PaddingColumns>
+                  </Columns>
                 </Rows>
               </>
             )}

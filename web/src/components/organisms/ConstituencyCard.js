@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import { Tag } from 'components/atoms/Tag'
 import { getDistrictListUriFromTag } from 'utils/helper'
+import CandidatesContainer from 'components/containers/CandidatesContainer'
 
 const StyledCard = styled(Card)`
   && {
@@ -14,7 +15,7 @@ const StyledCard = styled(Card)`
 `
 
 const ConstituencyCard = props => {
-  const { constituency } = props
+  const { year, constituency } = props
   const { tags } = constituency
   const sortedTags = tags.sort((a, b) =>
     a.type === 'boundary' ? -1 : a.type === b.type ? 0 : 1
@@ -41,6 +42,7 @@ const ConstituencyCard = props => {
           }}
         />
       ))}
+      <CandidatesContainer year={year} code={constituency.code} />
     </StyledCard>
   )
 }
