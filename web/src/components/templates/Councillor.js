@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import { Tag } from '../atoms/Tag'
 import { PeopleAvatar } from '../atoms/Avatar'
-import { UnstyledNavLink } from '../atoms/UnstyledLink'
+import { UnstyledNavLink } from '../atoms/Link'
 import {
   getColorFromPoliticalAffiliation,
   getCouncillorMeta,

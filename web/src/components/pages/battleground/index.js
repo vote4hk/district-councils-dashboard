@@ -17,7 +17,7 @@ import { Typography } from '@material-ui/core'
 import { PlainCard } from '../../molecules/Card'
 import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
-import { UnstyledLink } from 'components/atoms/UnstyledLink'
+import { UnstyledLink } from 'components/atoms/Link'
 import { getDistrictOverviewUriFromTag } from 'utils/helper'
 
 const groupVoteStat = voteStats => {

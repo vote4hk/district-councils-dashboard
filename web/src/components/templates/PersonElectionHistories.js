@@ -5,7 +5,7 @@ import { PlainCard } from 'components/molecules/Card'
 import Typography from '@material-ui/core/Typography'
 import { Box, Grid } from '@material-ui/core'
 import { SuccessText, FailureText } from '../atoms/Text'
-import { UnstyledNavLink } from '../atoms/UnstyledLink'
+import { UnstyledNavLink } from '../atoms/Link'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 const PersonElectionHistoriesTitle = styled.div`

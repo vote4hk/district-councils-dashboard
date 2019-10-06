@@ -15,8 +15,8 @@ const Styled = styled(Box)`
     .link {
       text {
         cursor: pointer;
-        color: blue;
-        text-decoration: underline;
+        color: ${COLORS.main.primary};
+        font-weight: 500;
       }
     }
   }
