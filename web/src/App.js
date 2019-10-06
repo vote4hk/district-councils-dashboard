@@ -98,7 +98,7 @@ const App = props => {
                       component={withTracker(ProfilePage)}
                     />
                     <Route
-                      path="/district/2019/tags/:tag"
+                      path="/district/:year/tags/:tag"
                       component={withTracker(DistrictListPage)}
                     />
                     <Route
