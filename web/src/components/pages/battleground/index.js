@@ -35,6 +35,14 @@ const BreadcrumbsContainer = styled(Box)`
     padding: 4px 16px;
   }
 `
+const ToggleMapButton = styled(UnstyledButton)`
+  && {
+    border-radius: 0;
+    width: 100%;
+    font-size: 14px;
+    text-align: center;
+  }
+`
 
 class BattleGroundPage extends Component {
   constructor(props) {
@@ -134,13 +142,12 @@ class BattleGroundPage extends Component {
                   voterData={groupVoteStat(district.vote_stats)}
                 />
                 {/* TODO Refactor style for ToggleMap Button */}
-                <UnstyledButton
-                  style={{ margin: '8px 0 0 16px', fontSize: '14px' }}
+                <ToggleMapButton
                   onClick={() => this.setState({ showMap: !showMap })}
                 >
                   {showMap ? '隱藏地圖' : '顯示地圖'}
                   {showMap ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                </UnstyledButton>
+                </ToggleMapButton>
                 <Collapse in={showMap}>
                   <Box
                     width={{ sm: '100%', md: '960px' }}
