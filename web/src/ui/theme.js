@@ -74,7 +74,7 @@ export const COLORS = {
     },
     establishment: {
       background: '#45b6ff',
-      text: 'white',
+      text: 'black',
     },
     localist: {
       background: '#ffcd00',
