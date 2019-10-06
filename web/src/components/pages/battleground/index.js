@@ -118,7 +118,7 @@ class BattleGroundPage extends Component {
                         {district.district.dc_name_zh}
                       </Typography>
                     </UnstyledLink>
-                    <Typography color="textPrimary">
+                    <Typography color="primary" style={{ fontWeight: 600 }}>
                       {district.name_zh}（{code}）
                     </Typography>
                   </Breadcrumbs>
