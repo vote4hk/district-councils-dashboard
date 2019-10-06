@@ -75,9 +75,13 @@ const CandidatesContainer = props => {
       {({ loading, error, data }) => {
         if (loading) return null
         if (error) return `Error! ${error}`
+
+        const candidates =
+          data.dcd_candidates &&
+          data.dcd_candidates.filter(c => c.election_type === 'ordinary')
         return (
           <Container>
-            {data.dcd_candidates.length > 0 && (
+            {candidates.length > 0 && (
               <>
                 <Rows>
                   <Columns>
@@ -89,7 +93,7 @@ const CandidatesContainer = props => {
                 <Rows>
                   <Columns>
                     <CandidateList>
-                      {data.dcd_candidates.map(candidate => (
+                      {candidates.map(candidate => (
                         <UnstyledNavLink
                           key={candidate.person.id}
                           to={`/profile/${candidate.person.name_zh ||

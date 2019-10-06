@@ -211,6 +211,8 @@ export const QUERY_GET_CANDIDATES = gql`
       candidate_number
       is_won
       political_affiliation
+      election_type
+      camp
       person {
         id
         uuid
