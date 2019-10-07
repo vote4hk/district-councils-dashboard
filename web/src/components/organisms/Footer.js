@@ -58,7 +58,7 @@ function Footer(props) {
               target="_blank"
               href="https://www.facebook.com/g0vhk.io"
             >
-              關於g0vhk.io
+              g0vhk.io
             </StyledFooterLink>
           </LinkBox>
           <LinkBox>
