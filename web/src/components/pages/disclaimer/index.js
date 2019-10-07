@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
 import { DefaultLink } from 'components/atoms/Link'
+import Rows from 'components/atoms/Rows'
+import Columns from 'components/atoms/Columns'
 
 const Container = styled(Paper)`
   && {
@@ -15,6 +17,9 @@ const Container = styled(Paper)`
     }
     ol {
       padding-left: 1rem;
+    }
+    ul li {
+      list-style-type: none;
     }
   }
 `
@@ -55,6 +60,45 @@ const DisclaimerPage = props => {
           </DefaultLink>
           ，我們會盡快跟進。
         </p>
+
+        <Typography variant="h5">候選陣營分類</Typography>
+
+        <Rows>
+          <Columns>
+            <p>建制</p>
+            <ul>
+              <li>民建聯</li>
+              <li>工聯會</li>
+              <li>經民聯</li>
+              <li>西九新動力</li>
+              <li>自由黨</li>
+              <li>新民黨</li>
+              <li>新世紀論壇</li>
+              <li>香港社團聯會</li>
+              <li>新界社團聯會</li>
+              <li>九龍社團聯會</li>
+              <li>港九勞工社團聯會</li>
+              <li>香港島各界聯合會</li>
+              <li>社區18</li>
+              <li>公民力量</li>
+              <li>公屋聯會</li>
+            </ul>
+            <p>民主</p>
+            <ul>
+              <li>民主黨</li>
+              <li>公民黨</li>
+              <li>民協</li>
+              <li>街工</li>
+              <li>新民主同盟</li>
+              <li>工黨</li>
+              <li>職工盟</li>
+              <li>社民連</li>
+              <li>人民力量</li>
+              <li>支聯會</li>
+              <li>民主動力</li>
+            </ul>
+          </Columns>
+        </Rows>
       </Container>
     </>
   )
