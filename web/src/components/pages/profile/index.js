@@ -329,7 +329,7 @@ class ProfilePage extends Component {
               </PersonHighlightContainer>
               <ScrollableTabs
                 titles={titles}
-                indicatorColor={
+                indicatorcolor={
                   COLORS.camp[
                     getColorFromCamp(lastElection && lastElection.camp)
                   ].background

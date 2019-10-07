@@ -11,7 +11,7 @@ const StyledAppBar = styled(AppBar)`
   && {
     background: white;
     .MuiTabs-indicator {
-      background: ${props => props.indicatorColor || 'black'};
+      background: ${props => props.indicatorcolor || 'black'};
     }
   }
 `
@@ -44,7 +44,7 @@ ScrollableTabs.defaultProps = {
 
 export default function ScrollableTabs(props) {
   const [selectedTab, setSelectedTab] = React.useState(0)
-  const { titles, children, buttonLayout, indicatorColor } = props
+  const { titles, children, buttonLayout, indicatorcolor } = props
   function handleChange(event, newValue) {
     setSelectedTab(newValue)
   }
@@ -53,7 +53,7 @@ export default function ScrollableTabs(props) {
 
   return (
     <>
-      <StyledAppBar position="static" indicatorColor={indicatorColor}>
+      <StyledAppBar position="static" indicatorcolor={indicatorcolor}>
         <Tabs
           value={selectedTab}
           onChange={handleChange}
