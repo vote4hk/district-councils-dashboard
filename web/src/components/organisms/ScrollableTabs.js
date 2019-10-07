@@ -4,6 +4,17 @@ import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
+import styled from 'styled-components'
+import { COLORS } from 'ui/theme'
+
+const StyledAppBar = styled(AppBar)`
+  && {
+    background: white;
+    .MuiTabs-indicator {
+      background: ${props => props.indicatorcolor || 'black'};
+    }
+  }
+`
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props
@@ -21,27 +32,33 @@ function TabPanel(props) {
   )
 }
 
-TabPanel.propTypes = {
+ScrollableTabs.propTypes = {
   children: PropTypes.node,
   titles: PropTypes.array,
+  buttonLayout: PropTypes.oneOf(['left', 'centered']),
 }
 
-export default function ScrollableTabsButtonAuto(props) {
-  const [selectedTab, setSelectedTab] = React.useState(0)
-  const { titles, children } = props
+ScrollableTabs.defaultProps = {
+  buttonLayout: 'left',
+}
 
-  // Get all the me
-  // const allMeetings = _.flatten(
-  //   person.councillors.map(c => c.meeting_attendances)
-  // )
+export default function ScrollableTabs(props) {
+  const [selectedTab, setSelectedTab] = React.useState(0)
+  const { titles, children, buttonLayout, indicatorcolor } = props
   function handleChange(event, newValue) {
     setSelectedTab(newValue)
   }
 
+  const shouldCenter = buttonLayout === 'centered' ? true : false
+
   return (
     <>
-      <AppBar position="static">
-        <Tabs value={selectedTab} onChange={handleChange}>
+      <StyledAppBar position="static" indicatorcolor={indicatorcolor}>
+        <Tabs
+          value={selectedTab}
+          onChange={handleChange}
+          centered={shouldCenter}
+        >
           {titles.map((title, index) => (
             <Tab
               label={title}
@@ -51,7 +68,7 @@ export default function ScrollableTabsButtonAuto(props) {
             />
           ))}
         </Tabs>
-      </AppBar>
+      </StyledAppBar>
       {// TODO: support single tab
       children &&
         children.length > 0 &&

@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
-import Avatar from '@material-ui/core/Avatar'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
+import { PeopleAvatar } from 'components/atoms/Avatar'
 import ScrollableTabs from 'components/organisms/ScrollableTabs'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
@@ -71,19 +71,17 @@ const CandidateHeaderContainer = styled(FlexRowContainer)`
     position: relative;
     display: flex;
     background: linear-gradient(
-      ${props => COLORS.camp[props.camp]} 84px,
+      ${props => COLORS.camp[props.camp].background} 84px,
       rgba(255, 255, 255, 0) 32px
     );
   }
 `
 
-const CandidateAvatar = styled(Avatar)`
+const CandidateAvatorContainer = styled(Box)`
   && {
     position: absolute;
     left: 16px;
     bottom: 8px;
-    width: 84px;
-    height: 84px;
   }
 `
 
@@ -92,6 +90,7 @@ const PersonName = styled.div`
     position: absolute;
     left: 116px;
     top: 32px;
+    color: ${props => COLORS.camp[props.camp].text};
   }
 `
 
@@ -267,17 +266,20 @@ class ProfilePage extends Component {
               (currentTerm && currentTerm.career) || lastElection.occupation,
           })
 
-          const titles = ['參選紀錄', '會議出席率']
+          const titles = ['參選紀錄']
 
           if (person.fc_uuid) titles.push('個人立場')
+          titles.push('會議出席率')
 
           return (
             <>
               <CandidateHeaderContainer
                 camp={getColorFromCamp(lastElection && lastElection.camp)}
               >
-                <Box>
-                  <CandidateAvatar
+                <CandidateAvatorContainer>
+                  <PeopleAvatar
+                    dimension={'84px'}
+                    borderwidth={'0'}
                     src={`${homeUrl}/static/images/avatar/${person.uuid}.jpg`}
                     imgProps={{
                       onError: e => {
@@ -285,19 +287,15 @@ class ProfilePage extends Component {
                       },
                     }}
                   />
-                </Box>
+                </CandidateAvatorContainer>
                 <Box>
-                  <PersonName>
-                    <Typography
-                      variant="h3"
-                      style={{ marginBottom: '2px', color: 'white' }}
-                    >
+                  <PersonName
+                    camp={getColorFromCamp(lastElection && lastElection.camp)}
+                  >
+                    <Typography variant="h3" style={{ marginBottom: '2px' }}>
                       {person.name_zh || ''}
                     </Typography>
-                    <Typography
-                      variant="h5"
-                      style={{ marginBottom: '8px', color: 'white' }}
-                    >
+                    <Typography variant="h5" style={{ marginBottom: '8px' }}>
                       {person.name_en || ''}
                     </Typography>
                     {currentTerm &&
@@ -329,15 +327,22 @@ class ProfilePage extends Component {
                   ))}
                 </Grid>
               </PersonHighlightContainer>
-              <ScrollableTabs titles={titles}>
+              <ScrollableTabs
+                titles={titles}
+                indicatorcolor={
+                  COLORS.camp[
+                    getColorFromCamp(lastElection && lastElection.camp)
+                  ].background
+                }
+              >
                 <PersonElectionHistoriesContainer personId={person.id} />
-                <CouncillorMeetingAttendanceContainer personId={person.id} />
                 {person.fc_uuid && (
                   <FCPersonData
                     fcUuid={person.fc_uuid}
                     name={person.name_zh || person.name_en}
                   />
                 )}
+                <CouncillorMeetingAttendanceContainer personId={person.id} />
               </ScrollableTabs>
             </>
           )

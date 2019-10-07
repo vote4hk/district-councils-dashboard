@@ -9,6 +9,7 @@ import GeoJSON from 'ol/format/GeoJSON'
 import { Style, Stroke, Fill, Text } from 'ol/style'
 import Select from 'ol/interaction/Select'
 import styled from 'styled-components'
+import { COLORS } from 'ui/theme'
 
 import dc2003 from '../data/DCCA_2003'
 import dc2007 from '../data/DCCA_2007'
@@ -23,40 +24,40 @@ const MapContainer = styled.div`
 
 const regionStyle = new Style({
   fill: new Fill({
-    color: 'rgba(255, 255, 255, 0.2)',
+    color: 'rgba(255, 255, 255, 0.1)',
   }),
   stroke: new Stroke({
-    color: '#319FD3',
+    color: '#356272',
     width: 1,
   }),
   text: new Text({
-    font: '16px Calibri,sans-serif',
+    font: '14px Noto Sans TC, sans-serif',
     fill: new Fill({
-      color: '#000',
+      color: '#356272',
     }),
     stroke: new Stroke({
       color: '#fff',
-      width: 2,
+      width: 3,
     }),
   }),
 })
 
 const highlightStyle = new Style({
   stroke: new Stroke({
-    color: '#f00',
-    width: 1,
+    color: COLORS.main.primary,
+    width: 2,
   }),
   fill: new Fill({
-    color: 'rgba(255,0,0,0.1)',
+    color: 'rgba(255,255,255,0.5)',
   }),
   text: new Text({
-    font: '16px Calibri,sans-serif',
+    font: 'bold 16px Noto Sans TC, sans-serif',
     fill: new Fill({
-      color: '#000',
+      color: COLORS.main.primary,
     }),
     stroke: new Stroke({
-      color: '#f00',
-      width: 2,
+      color: 'white',
+      width: 3,
     }),
   }),
 })

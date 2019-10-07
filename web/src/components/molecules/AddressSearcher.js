@@ -32,7 +32,7 @@ function renderInputComponent(inputProps) {
           disableUnderline: true,
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton className={classes.searchButton} aria-label="Search">
+              <IconButton color="primary" aria-label="Search">
                 <SearchIcon />
               </IconButton>
             </InputAdornment>
@@ -102,7 +102,7 @@ const styles = theme => ({
     textDecoration: 'none',
   },
   searchButton: {
-    color: '#ffd731',
+    color: '#7B68EE',
   },
 })
 

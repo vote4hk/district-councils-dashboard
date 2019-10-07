@@ -1,8 +1,20 @@
+import { DCREGION } from 'constants/dcregion'
+
 export const getDistrictListUriFromTag = tag => `/district/2019/tags/${tag}`
 
 export const getDistrictOverviewUriFromTag = code => `/district/2019/${code}`
 
 export const getConstituencyUriFromTag = code => `/district/2019/${code}`
+
+export const getCodeFromDistrictName = name => {
+  let code = 'A'
+  Object.keys(DCREGION).forEach(k => {
+    if (DCREGION[k].zh_hk === name) {
+      code = k
+    }
+  })
+  return code
+}
 
 /**
  * Passing a councillor object and get the meta data for it
@@ -31,7 +43,10 @@ export const getCouncillorMeta = councillor => {
   ).length
 
   if (participatedElections.length > 0) {
-    const e = participatedElections[0]
+    // Filter out 2019 result
+    const e = participatedElections.filter(
+      e => !(e.year === 2019 && e.election_type === 'ordinary')
+    )[0]
     const electionYear = e.year
 
     const myVotes = e.constituency.candidates.find(
@@ -97,6 +112,7 @@ export const getColorFromCamp = camp => {
   if (!camp) return 'uncertain'
   const mapping = {
     泛民: 'democracy',
+    民主: 'democracy',
     建制: 'establishment',
     本土: 'localist',
     傘兵: 'localist',

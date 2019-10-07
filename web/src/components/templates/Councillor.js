@@ -1,25 +1,14 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
-import styled from 'styled-components'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
-import Avatar from '@material-ui/core/Avatar'
 import { Tag } from '../atoms/Tag'
-import { COLORS } from 'ui/theme'
-import { UnstyledNavLink } from '../atoms/UnstyledLink'
+import { PeopleAvatar } from '../atoms/Avatar'
+import { UnstyledNavLink } from '../atoms/Link'
 import {
   getColorFromPoliticalAffiliation,
   getCouncillorMeta,
 } from 'utils/helper'
-
-const StyledAvatar = styled(Avatar)`
-  && {
-    margin: 10px;
-    width: 60px;
-    height: 60px;
-    border: 3px ${props => COLORS.camp[props.camp]} solid;
-  }
-`
 
 const Councillor = props => {
   const { councillors } = props
@@ -54,9 +43,11 @@ const Councillor = props => {
           </Box>
         </Box>
 
-        <Grid container wrap="nowrap" spacing={0}>
+        <Grid container wrap="nowrap" spacing={1}>
           <Grid item>
-            <StyledAvatar
+            <PeopleAvatar
+              dimension="60px"
+              borderwidth={'3'}
               camp={getColorFromPoliticalAffiliation(
                 councillor.political_affiliation
               )}

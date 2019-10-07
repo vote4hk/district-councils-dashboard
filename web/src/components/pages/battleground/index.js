@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
 import Box from '@material-ui/core/Box'
 import DCCACompareMap from '../../DCCACompareMap'
 import { Query } from 'react-apollo'
 import MainAreas from 'components/district/MainAreas'
 import CouncillorContainer from 'components/containers/CouncillorContainer'
-import CandidateList from 'components/district/CandidateList'
+import CandidatesContainer from 'components/containers/CandidatesContainer'
 import DCCAOverview from 'components/district/DCCAOverview'
 import { UnstyledButton } from 'components/atoms/Button'
-import Button from '@material-ui/core/Button'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 import Collapse from '@material-ui/core/Collapse'
@@ -15,6 +15,11 @@ import _ from 'lodash'
 import { QUERY_CONSTITUENCIES } from 'queries/gql'
 import { Typography } from '@material-ui/core'
 import { PlainCard } from '../../molecules/Card'
+import Breadcrumbs from '@material-ui/core/Breadcrumbs'
+import NavigateNextIcon from '@material-ui/icons/NavigateNext'
+import { UnstyledLink } from 'components/atoms/Link'
+import { Alert } from 'components/atoms/Alert'
+import { getDistrictOverviewUriFromTag } from 'utils/helper'
 
 const groupVoteStat = voteStats => {
   const data = _.groupBy(voteStats, stat => stat.subtype)
@@ -24,6 +29,29 @@ const groupVoteStat = voteStats => {
   }
   return data
 }
+
+const Container = styled(Box)`
+  && {
+    width: 100%;
+    padding: 0 16px 0;
+  }
+`
+
+const BreadcrumbsContainer = styled(Box)`
+  && {
+    flex-grow: 1;
+    padding: 4px 16px;
+  }
+`
+const ToggleMapButton = styled(UnstyledButton)`
+  && {
+    border-radius: 0;
+    width: 100%;
+    font-size: 14px;
+    text-align: center;
+  }
+`
+
 class BattleGroundPage extends Component {
   constructor(props) {
     super(props)
@@ -35,10 +63,6 @@ class BattleGroundPage extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     //  if (this.props.route.path === nextProps.route.path) return false;
     return true
-  }
-
-  handleCandidateSelected = candidateId => {
-    this.props.history.push(`/profile/${candidateId}`)
   }
 
   handleChangeDistrict = (year, code) => {
@@ -87,24 +111,54 @@ class BattleGroundPage extends Component {
 
             return (
               <>
+                <BreadcrumbsContainer>
+                  <Breadcrumbs
+                    separator={<NavigateNextIcon fontSize="small" />}
+                    aria-label="breadcrumb"
+                  >
+                    <Typography color="textPrimary"> {year}</Typography>
+                    <UnstyledLink
+                      onClick={() => {
+                        this.props.history.push(
+                          getDistrictOverviewUriFromTag(
+                            district.district.dc_code
+                          )
+                        )
+                      }}
+                    >
+                      <Typography color="textPrimary">
+                        {district.district.dc_name_zh}
+                      </Typography>
+                    </UnstyledLink>
+                    <Typography color="primary" style={{ fontWeight: 600 }}>
+                      {district.name_zh}（{code}）
+                    </Typography>
+                  </Breadcrumbs>
+                </BreadcrumbsContainer>
+                <Alert>
+                  <Typography variant="h6" gutterBottom>
+                    區議會選舉提名期現已展開，至10月17日結束。
+                  </Typography>
+                </Alert>
+                <Container>
+                  <CandidatesContainer year={year} code={district.code} />
+                </Container>
                 <DCCAOverview
                   year={year}
                   name_zh={district.name_zh}
                   dc_code={district.district.dc_code}
-                  dc_name_zh={district.district.dc_name_zh}
                   dc_name_zh={district.district.dc_name_zh}
                   code={district.code}
                   tags={district.tags}
                   voterData={groupVoteStat(district.vote_stats)}
                 />
                 {/* TODO Refactor style for ToggleMap Button */}
-                <UnstyledButton
-                  style={{ margin: '8px 0 0 16px', fontSize: '14px' }}
+                <ToggleMapButton
                   onClick={() => this.setState({ showMap: !showMap })}
                 >
                   {showMap ? '隱藏地圖' : '顯示地圖'}
                   {showMap ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                </UnstyledButton>
+                </ToggleMapButton>
                 <Collapse in={showMap}>
                   <Box
                     width={{ sm: '100%', md: '960px' }}
@@ -131,12 +185,6 @@ class BattleGroundPage extends Component {
                     />
                   ))}
                 </PlainCard>
-                <CandidateList
-                  candidates={district.candidates}
-                  // year={parseInt(year, 10)}
-                  // code={code}
-                  // handleCandidateSelected={this.handleCandidateSelected}
-                />
               </>
             )
           }}

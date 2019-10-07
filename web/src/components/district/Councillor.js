@@ -6,7 +6,7 @@ import Box from '@material-ui/core/Box'
 import Avatar from '@material-ui/core/Avatar'
 import { PlainCard } from '../molecules/Card'
 import { Tag } from '../atoms/Tag'
-import { UnstyledNavLink } from '../atoms/UnstyledLink'
+import { UnstyledNavLink } from '../atoms/Link'
 import { COLORS } from 'ui/theme'
 import {
   getColorFromPoliticalAffiliation,
@@ -19,7 +19,7 @@ const StyledAvatar = styled(Avatar)`
     margin: 10px;
     width: 60px;
     height: 60px;
-    border: 3px ${props => COLORS.camp[props.camp]} solid;
+    border: 3px ${props => COLORS.camp[props.camp].background} solid;
   }
 `
 

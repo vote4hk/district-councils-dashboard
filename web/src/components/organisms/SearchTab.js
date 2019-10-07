@@ -57,15 +57,11 @@ const TabButton = styled(Button)`
   && {
     margin: 10px 10px 15px 10px;
     padding-bottom: 15px;
-
     color: ${props =>
-      props.active === 'active'
-        ? COLORS.main.highlightedText
-        : COLORS.main.text};
+      props.active === 'active' ? COLORS.main.primary : COLORS.main.text};
     border-bottom: ${props =>
-      props.active === 'active'
-        ? `1px solid ${COLORS.main.highlightedText}`
-        : 'none'};
+      props.active === 'active' ? `1px solid ${COLORS.main.primary}` : 'none'};
+    border-radius: 0px;
   }
 `
 

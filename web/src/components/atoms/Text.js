@@ -4,7 +4,7 @@ import React from 'react'
 import { COLORS } from 'ui/theme'
 const StyledSubtTitle = styled(Typography)`
   && {
-    color: ${COLORS.highlightedText};
+    color: ${COLORS.primary};
   }
 `
 
@@ -25,6 +25,10 @@ export const FailureText = styled(Typography)`
     }
   }
 `
+
+export default props => {
+  return <Typography {...props} />
+}
 
 export const TitleText = props => {
   return <Typography variant="h2" {...props} />
