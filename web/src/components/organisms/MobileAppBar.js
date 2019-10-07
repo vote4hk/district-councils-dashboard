@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography'
 import { DRAWER_OPEN } from '../../reducers/drawer'
 import ContextStore from 'ContextStore'
 import { UnstyledNavLink } from '../atoms/Link'
-import { COLORS } from 'ui/theme'
 
 const StyledAppBar = styled(AppBar)`
   && {

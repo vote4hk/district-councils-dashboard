@@ -9,7 +9,6 @@ import { Box, Typography } from '@material-ui/core'
 import styled from 'styled-components'
 import { getColorFromPoliticalAffiliation } from 'utils/helper'
 import { COLORS } from 'ui/theme'
-import PropTypes from 'prop-types'
 
 const IMAGE_HOST_URI =
   process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'

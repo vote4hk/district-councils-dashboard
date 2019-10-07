@@ -13,11 +13,7 @@ import Rows from 'components/atoms/Rows'
 import Box from '@material-ui/core/Box'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
-import Link from '@material-ui/core/Link'
-import {
-  getDistrictListUriFromTag,
-  getDistrictOverviewUriFromTag,
-} from 'utils/helper'
+import { getDistrictListUriFromTag } from 'utils/helper'
 import { withRouter } from 'react-router-dom'
 import { SuccessText, FailureText } from 'components/atoms/Text'
 
@@ -70,15 +66,7 @@ class DCCAOverview extends Component {
   }
 
   render() {
-    const {
-      name_zh,
-      year,
-      code,
-      dc_code,
-      dc_name_zh,
-      tags,
-      voterData,
-    } = this.props
+    const { code, tags, voterData } = this.props
     const sortedTags = tags.sort((a, b) =>
       a.type === 'boundary' ? -1 : a.type === b.type ? 0 : 1
     )

@@ -35,17 +35,6 @@ const CountdownContainer = styled.div`
   }
 `
 
-const LandingIcon = styled.div`
-  && {
-    margin-left: auto;
-    margin-right: auto;
-    width: 200px;
-    height: 128px;
-    background: url('/static/images/landingIcon.svg') no-repeat;
-    background-size: cover;
-  }
-`
-
 const StyledSearchTab = styled(SearchTab)`
   && {
     padding: 100px;
