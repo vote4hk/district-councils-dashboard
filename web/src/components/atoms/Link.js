@@ -5,7 +5,7 @@ import { COLORS } from 'ui/theme'
 
 export const UnstyledLink = styled(Link)`
   text-decoration: unset;
-  color: unset;
+  color: black;
   font-style: unset;
   cursor: pointer;
 `

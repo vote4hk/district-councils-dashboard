@@ -5,6 +5,7 @@ import Divider from '@material-ui/core/Divider'
 import { UnstyledLink, DefaultLink } from 'components/atoms/Link'
 import { Typography } from '@material-ui/core'
 import Columns from 'components/atoms/Columns'
+import { withRouter } from 'react-router-dom'
 
 const StyledFooter = styled(Box)`
   && {
@@ -62,6 +63,16 @@ function Footer(props) {
           </LinkBox>
           <LinkBox>
             <StyledFooterLink
+              onClick={
+                () => props.history.push(`/disclaimer`)
+                // console.log(props)
+              }
+            >
+              關於候選人陣營
+            </StyledFooterLink>
+          </LinkBox>
+          <LinkBox>
+            <StyledFooterLink
               target="_blank"
               href="https://forms.gle/irD6tEznWPNda6w59"
             >
@@ -99,4 +110,4 @@ function Footer(props) {
   )
 }
 
-export default Footer
+export default withRouter(Footer)
