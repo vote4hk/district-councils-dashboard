@@ -73,7 +73,7 @@ function convertToD3Compatible(data, sortFunc) {
         return {
           name: DCREGION[d.code].zh_hk,
           建制: DCREGION[d.code].unelected_dc_seat + (d.count['建制'] || 0), // 當然議員
-          非建制: d.count['泛民'] || 0,
+          非建制: d.count['民主'] || 0,
           其他: d.count['其他'] || 0,
           total: Object.values(d.count).reduce((acc, c) => {
             acc += c
@@ -152,7 +152,7 @@ const groupExpectDataByRegionAndCamp = (constituencies, settings) => {
         constituency.predecessors[0].predecessor.candidates.length === 1 &&
         settings.config.auto_won_add_components
       ) {
-        const camps = ['泛民', '建制', '其他']
+        const camps = ['民主', '建制', '其他']
         const onlyCandidate =
           constituency.predecessors[0].predecessor.candidates[0]
         camps.forEach(camp => {
@@ -210,12 +210,12 @@ const groupExpectDataByRegionAndCamp = (constituencies, settings) => {
       )
       const democracyCount = getProjectedVotes(
         STAT_TYPE_ALL_VOTERS,
-        '泛民',
+        '民主',
         settings,
         constituency.vote_stats
       )
       if (democracyCount > establishCount) {
-        camp = '泛民'
+        camp = '民主'
       }
     }
 
