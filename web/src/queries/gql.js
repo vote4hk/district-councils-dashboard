@@ -248,3 +248,16 @@ export const QUERY_GET_CONSTITUENCY_CAMP_DATA = gql`
     }
   }
 `
+
+export const QUERY_GET_NOMINATION_SUMMARY = gql`
+  query {
+    dcd_constituencies(where: { year: { _eq: 2019 } }) {
+      code
+      name_zh
+      candidates {
+        camp
+        nominated_at
+      }
+    }
+  }
+`

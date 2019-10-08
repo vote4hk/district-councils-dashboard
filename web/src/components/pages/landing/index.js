@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Summary from 'components/templates/Summary'
 import CampCompareChartContainer from 'components/templates/CampCompareChartContainer'
 import Countdown from 'components/atoms/Countdown'
 import styled from 'styled-components'
@@ -85,6 +86,7 @@ class IndexPage extends Component {
               <Countdown date={electionDate} />
             </CountdownContainer>
           )}
+          <Summary />
           {/* <LandingIcon /> */}
         </TopSection>
         <Container>
