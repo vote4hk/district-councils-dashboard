@@ -31,7 +31,8 @@ const client = new ApolloClient({
 
 const useStyles = makeStyles(theme => ({
   drawerPaper: {
-    width: '100%',
+    width: '500px',
+    maxWidth: '100%',
   },
 }))
 
