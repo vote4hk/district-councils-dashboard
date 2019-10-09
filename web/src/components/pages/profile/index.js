@@ -241,8 +241,19 @@ class ProfilePage extends Component {
             person.councillors &&
             person.councillors[person.councillors.length - 1]
           const lastElection =
-            person.candidates && person.candidates[person.candidates.length - 1]
-
+            person.candidates &&
+            person.candidates.sort((a, b) => {
+              if (b.year > a.year) return 1
+              else if (b.year < a.year) return -1
+              else {
+                if (
+                  b.election_type === 'ordinary' &&
+                  a.election_type === 'by-election'
+                )
+                  return 1
+                else return -1
+              }
+            })[0]
           const personHighlight = []
 
           if (person.estimated_yob) {
