@@ -94,6 +94,12 @@ const CandidatesContainer = props => {
                           xs={
                             candidates.length < 3 ? 12 / candidates.length : 4
                           }
+                          sm={
+                            candidates.length < 4 ? 12 / candidates.length : 3
+                          }
+                          md={
+                            candidates.length < 6 ? 12 / candidates.length : 2
+                          }
                         >
                           <UnstyledNavLink
                             key={candidate.person.id}
