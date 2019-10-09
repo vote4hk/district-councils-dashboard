@@ -29,7 +29,6 @@ const Summary = props => {
         if (error) return `Error! ${error}`
 
         let result
-        let more_than_2 = []
         if (data && data.dcd_constituencies) {
           result = data.dcd_constituencies.reduce(
             (a, c) => {
