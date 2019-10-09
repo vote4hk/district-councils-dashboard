@@ -7,7 +7,7 @@ import Rows from 'components/atoms/Rows'
 import Columns from 'components/atoms/Columns'
 import { Box, Typography, Grid } from '@material-ui/core'
 import styled from 'styled-components'
-import { getColorFromPoliticalAffiliation } from 'utils/helper'
+import { getColorFromCamp } from 'utils/helper'
 import { COLORS } from 'ui/theme'
 
 const IMAGE_HOST_URI =
@@ -112,9 +112,7 @@ const CandidatesContainer = props => {
                               <PeopleAvatar
                                 dimension="84px"
                                 borderwidth={'4'}
-                                camp={getColorFromPoliticalAffiliation(
-                                  candidate.person.related_organization
-                                )}
+                                camp={getColorFromCamp(candidate.camp)}
                                 src={`${IMAGE_HOST_URI}/static/images/avatar/${candidate.person.uuid}.jpg`}
                                 imgProps={{
                                   onError: e => {
@@ -127,9 +125,7 @@ const CandidatesContainer = props => {
                               {candidate.candidate_number > 0 && (
                                 <CandidateNumber
                                   dimension="18px"
-                                  camp={getColorFromPoliticalAffiliation(
-                                    candidate.person.related_organization
-                                  )}
+                                  camp={getColorFromCamp(candidate.camp)}
                                 >
                                   {candidate.candidate_number}
                                 </CandidateNumber>
