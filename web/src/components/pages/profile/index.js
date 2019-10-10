@@ -14,6 +14,7 @@ import PersonElectionHistoriesContainer from 'components/containers/PersonElecti
 import FCPersonData from 'components/templates/FCPersonData'
 import { SuccessText, FailureText } from 'components/atoms/Text'
 import { COLORS } from 'ui/theme'
+import { Tag } from 'components/atoms/Tag'
 
 // TODO: add age, camp & related_organization
 const GET_PEOPLE_PROFILE = gql`
@@ -100,6 +101,17 @@ const YearDiv = styled.div`
     font-weight: 600;
     color: #9b9b9b;
     margin-bottom: 20px;
+  }
+`
+
+const ElectionStatus = styled(Box)`
+  && {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    div {
+      margin: 8px 8px 0 0;
+    }
   }
 `
 
@@ -282,11 +294,28 @@ class ProfilePage extends Component {
           if (person.fc_uuid) titles.push('個人立場')
           titles.push('會議出席率')
 
+          const electionStatusText = currentTerm
+            ? '競逐連任'
+            : person.candidates.length === 1 &&
+              lastElection.year === 2019 &&
+              lastElection.election_type === 'ordinary'
+            ? '首度參選'
+            : undefined
+
           return (
             <>
               <CandidateHeaderContainer
                 camp={getColorFromCamp(lastElection && lastElection.camp)}
               >
+                {electionStatusText && (
+                  <ElectionStatus>
+                    <Tag
+                      value={electionStatusText}
+                      borderwidth={1}
+                      backgroundcolor={'transparent'}
+                    />
+                  </ElectionStatus>
+                )}
                 <CandidateAvatorContainer>
                   <PeopleAvatar
                     dimension={'84px'}
