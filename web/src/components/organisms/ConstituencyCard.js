@@ -3,6 +3,8 @@ import { Card, Typography } from '@material-ui/core'
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import { Tag } from 'components/atoms/Tag'
+import Box from '@material-ui/core/Box'
+import Columns from 'components/atoms/Columns'
 import { getDistrictListUriFromTag } from 'utils/helper'
 import CandidatesContainer from 'components/containers/CandidatesContainer'
 
@@ -11,6 +13,13 @@ const StyledCard = styled(Card)`
     margin: 0 0 16px;
     padding: 16px;
     height: auto;
+  }
+`
+
+const TagContainer = styled(Box)`
+  && {
+    margin-top: 6px;
+    margin-right: 8px;
   }
 `
 
@@ -30,17 +39,20 @@ const ConstituencyCard = props => {
       <Typography variant="h6" gutterBottom>
         {constituency.name_zh}（{constituency.code}）
       </Typography>
-      {sortedTags.map((tag, index) => (
-        <Tag
-          key={index}
-          value={tag.tag}
-          variant={tag.type === 'boundary' ? 'default' : 'outlined'}
-          handleClick={evt => {
-            evt.stopPropagation()
-            props.history.push(getDistrictListUriFromTag(tag.tag))
-          }}
-        />
-      ))}
+      <Columns>
+        {sortedTags.map((tag, index) => (
+          <TagContainer>
+            <Tag
+              key={index}
+              value={tag.tag}
+              handleClick={evt => {
+                evt.stopPropagation()
+                props.history.push(getDistrictListUriFromTag(tag.tag))
+              }}
+            />
+          </TagContainer>
+        ))}
+      </Columns>
       <CandidatesContainer year={year} code={constituency.code} />
     </StyledCard>
   )

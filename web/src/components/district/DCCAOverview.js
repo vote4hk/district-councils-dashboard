@@ -24,6 +24,14 @@ const Container = styled(Paper)`
     box-shadow: none;
   }
 `
+
+const TagContainer = styled(Box)`
+  && {
+    margin-top: 6px;
+    margin-right: 8px;
+  }
+`
+
 class DCCAOverview extends Component {
   constructor(props) {
     super(props)
@@ -120,19 +128,23 @@ class DCCAOverview extends Component {
               <DistrictNewVoterChartContainer code={code} />
             )}
           </Rows>
-
-          {sortedTags
-            .filter(tag => tag.type !== 'boundary')
-            .map((tag, index) => (
-              <Tag
-                key={index}
-                value={tag.tag}
-                variant="outlined"
-                handleClick={() => {
-                  this.props.history.push(getDistrictListUriFromTag(tag.tag))
-                }}
-              />
-            ))}
+          <Columns>
+            {sortedTags
+              .filter(tag => tag.type !== 'boundary')
+              .map((tag, index) => (
+                <TagContainer>
+                  <Tag
+                    key={index}
+                    value={tag.tag}
+                    handleClick={() => {
+                      this.props.history.push(
+                        getDistrictListUriFromTag(tag.tag)
+                      )
+                    }}
+                  />
+                </TagContainer>
+              ))}
+          </Columns>
         </Container>
       </>
     )
