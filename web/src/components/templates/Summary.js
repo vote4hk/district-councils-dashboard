@@ -60,8 +60,6 @@ const Summary = props => {
 
           result.no_competition =
             result.stat['0'].length + result.stat['1'].length
-
-          console.log(result)
         }
 
         return (
