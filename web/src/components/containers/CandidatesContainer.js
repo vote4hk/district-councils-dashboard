@@ -90,6 +90,7 @@ const CandidatesContainer = props => {
                       {/* Max 3 columns and always centered */}
                       {candidates.map(candidate => (
                         <Grid
+                          key={candidate.person.id}
                           item
                           xs={
                             candidates.length < 3 ? 12 / candidates.length : 4
@@ -102,7 +103,6 @@ const CandidatesContainer = props => {
                           }
                         >
                           <UnstyledNavLink
-                            key={candidate.person.id}
                             to={`/profile/${candidate.person.name_zh ||
                               candidate.person.name_en}/${
                               candidate.person.uuid

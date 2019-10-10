@@ -132,9 +132,8 @@ class DCCAOverview extends Component {
             {sortedTags
               .filter(tag => tag.type !== 'boundary')
               .map((tag, index) => (
-                <TagContainer>
+                <TagContainer key={index}>
                   <Tag
-                    key={index}
                     value={tag.tag}
                     handleClick={() => {
                       this.props.history.push(

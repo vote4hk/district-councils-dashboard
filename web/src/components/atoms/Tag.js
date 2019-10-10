@@ -14,7 +14,7 @@ const StyledChip = styled(Chip)`
 export const Tag = props => {
   return (
     <StyledChip
-      fontsize={props.fontsize}
+      fontSize={props.fontsize}
       backgroundcolor={props.backgroundcolor}
       bordercolor={props.bordercolor}
       borderwidth={props.borderwidth}
