@@ -11,7 +11,7 @@ import Columns from 'components/atoms/Columns'
 const Container = styled(Box)`
   && {
     width: 100%;
-    padding: 16px;
+    padding: 0 16px;
     box-shadow: none;
   }
 `
@@ -34,11 +34,17 @@ const Summary = props => {
             (a, c) => {
               a.no_of_candidates += c.candidates.length
 
-              if (!a.stat[c.candidates.length]) {
-                a.stat[c.candidates.length] = 1
-              } else {
-                a.stat[c.candidates.length]++
+              const district = {
+                code: c.code,
+                name_zh: c.name_zh,
               }
+
+              if (!a.stat[c.candidates.length]) {
+                a.stat[c.candidates.length] = []
+                if (c.candidates.length > a.max) a.max = c.candidates.length
+              }
+
+              a.stat[c.candidates.length].push(district)
 
               if (c.candidates.length > 2) {
                 const district = {
@@ -49,10 +55,11 @@ const Summary = props => {
               }
               return a
             },
-            { no_of_candidates: 0, stat: {}, more_than_2: [] }
+            { no_of_candidates: 0, stat: {}, more_than_2: [], max: 0 }
           )
 
-          result.no_competition = result.stat['0'] + result.stat['1']
+          result.no_competition =
+            result.stat['0'].length + result.stat['1'].length
 
           console.log(result)
         }
@@ -63,8 +70,7 @@ const Summary = props => {
               <Container>
                 <Typography variant="h6" gutterBottom>
                   2019年區議會選舉將於11月24日舉行，屆時將選出香港18區區議會共
-                  <b>{data.dcd_constituencies.length}</b>個民選議席，連同
-                  <b>27</b>位當然議員，合共<b>479</b>個議席。
+                  <b>{data.dcd_constituencies.length}</b>個民選議席。
                 </Typography>
 
                 <Typography variant="h6" gutterBottom>
@@ -74,7 +80,30 @@ const Summary = props => {
                   個選區多於兩人參選。
                 </Typography>
 
-                <Columns>
+                {[...Array(result.max + 1).keys()]
+                  .reverse()
+                  .filter(a => a > 2)
+                  .map((noc, i) => (
+                    <Typography variant="h6" gutterBottom key={i}>
+                      {noc}人參選：
+                      <Columns>
+                        {result.stat[noc].map((district, index) => (
+                          <FlexLink
+                            key={index}
+                            onClick={() =>
+                              props.history.push(
+                                `district/2019/${district.code}`
+                              )
+                            }
+                          >
+                            {`${district.name_zh}`}
+                          </FlexLink>
+                        ))}
+                      </Columns>
+                    </Typography>
+                  ))}
+
+                {/* <Columns>
                   {result.more_than_2.map((district, index) => (
                     <FlexLink
                       key={index}
@@ -85,7 +114,7 @@ const Summary = props => {
                       {`${district.name_zh}`}
                     </FlexLink>
                   ))}
-                </Columns>
+                </Columns> */}
               </Container>
             )}
           </>
