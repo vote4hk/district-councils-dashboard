@@ -1,9 +1,12 @@
 set -e
 # make sure the .env.production is valid
-export $(cat .env.production | xargs)
 
 # build the docker image with name dc2019
-docker build -t dc2019 .
+docker build -t dc2019 $(
+  for i in $(cat .env.production); do out+="--build-arg $i "; done
+  echo $out
+  out=""
+) .
 
 # build and push image (to nandi's dockerhub repo)
 docker tag dc2019 nandiheath/dc2019:latest
