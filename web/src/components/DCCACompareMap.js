@@ -154,7 +154,7 @@ class DCCACompareMap extends Component {
 
     if (select !== null) {
       map.addInteraction(select)
-      select.on('select', this.handleMapClick)
+      select.on('select', this.mapClick)
     }
   }
 
@@ -167,9 +167,11 @@ class DCCACompareMap extends Component {
     this.highlightedFeature = feature
   }
 
-  handleMapClick = e => {
-    const { year, changeDistrict } = this.props
+  mapClick = e => {
+    const { year, changeDistrict, handleMapClick } = this.props
     const selectedFeature = e.target.getFeatures().item(0)
+
+    handleMapClick(e.mapBrowserEvent.coordinate)
 
     if (selectedFeature) {
       this.highlightFeature(selectedFeature)
