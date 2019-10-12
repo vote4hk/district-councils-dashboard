@@ -4,6 +4,9 @@ import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
+import Breadcrumbs from '@material-ui/core/Breadcrumbs'
+import NavigateNextIcon from '@material-ui/icons/NavigateNext'
+import { UnstyledLink } from 'components/atoms/Link'
 import { PeopleAvatar } from 'components/atoms/Avatar'
 import ScrollableTabs from 'components/organisms/ScrollableTabs'
 import gql from 'graphql-tag'
@@ -15,6 +18,10 @@ import FCPersonData from 'components/templates/FCPersonData'
 import { SuccessText, FailureText } from 'components/atoms/Text'
 import { COLORS } from 'ui/theme'
 import { Tag } from 'components/atoms/Tag'
+import {
+  getDistrictOverviewUriFromTag,
+  getConstituencyUriFromTag,
+} from 'utils/helper'
 
 // TODO: add age, camp & related_organization
 const GET_PEOPLE_PROFILE = gql`
@@ -36,6 +43,7 @@ const GET_PEOPLE_PROFILE = gql`
         career
         district {
           dc_name_zh
+          dc_code
         }
         political_affiliation
         post
@@ -155,6 +163,12 @@ const ElectionDetailButton = styled.div`
     border-radius: 4px;
     border: 2px solid #ffb700;
     cursor: pointer;
+  }
+`
+const BreadcrumbsContainer = styled(Box)`
+  && {
+    flex-grow: 1;
+    padding: 4px 16px;
   }
 `
 
@@ -304,6 +318,47 @@ class ProfilePage extends Component {
 
           return (
             <>
+              {lastElection.year === 2019 && (
+                <BreadcrumbsContainer>
+                  <Breadcrumbs
+                    separator={<NavigateNextIcon fontSize="small" />}
+                    aria-label="breadcrumb"
+                  >
+                    <Typography color="textPrimary">
+                      {lastElection.year}
+                    </Typography>
+                    <UnstyledLink
+                      onClick={() => {
+                        this.props.history.push(
+                          getDistrictOverviewUriFromTag(
+                            currentTerm.district.dc_code
+                          )
+                        )
+                      }}
+                    >
+                      <Typography color="textPrimary">
+                        {currentTerm.district.dc_name_zh}
+                      </Typography>
+                    </UnstyledLink>
+                    <UnstyledLink
+                      onClick={() => {
+                        this.props.history.push(
+                          getConstituencyUriFromTag(currentTerm.cacode)
+                        )
+                      }}
+                    >
+                      <Typography color="textPrimary">
+                        {currentTerm.constituency.name_zh} ({currentTerm.cacode}
+                        )
+                      </Typography>
+                    </UnstyledLink>
+                    <Typography color="primary" style={{ fontWeight: 600 }}>
+                      {person.name_zh}
+                    </Typography>
+                  </Breadcrumbs>
+                </BreadcrumbsContainer>
+              )}
+
               <CandidateHeaderContainer
                 camp={getColorFromCamp(lastElection && lastElection.camp)}
               >
