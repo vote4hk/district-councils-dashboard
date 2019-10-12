@@ -3,6 +3,7 @@ import { Card, CardContent } from '@material-ui/core'
 import Text from '../atoms/Text'
 import React from 'react'
 import PropTypes from 'prop-types'
+import { ReactTinyLink } from 'react-tiny-link'
 
 const StyledCard = styled(Card)`
   && {
@@ -32,7 +33,7 @@ const trimDescription = description => {
 }
 
 const PersonEvent = props => {
-  const { title, eventType, date, description } = props
+  const { title, eventType, date, description, url } = props
   return (
     <StyledCard>
       <CardContent>
@@ -41,6 +42,15 @@ const PersonEvent = props => {
         </Text>
         <Text gutterBottom>{date}</Text>
         <Text color="textSecondary">{trimDescription(description)}</Text>
+        {eventType === 'MEDIA' && url && (
+          <ReactTinyLink
+            cardSize="small"
+            showGraphic={true}
+            maxLine={2}
+            minLine={1}
+            url={url}
+          />
+        )}
       </CardContent>
     </StyledCard>
   )

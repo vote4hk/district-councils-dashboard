@@ -79,3 +79,4 @@ const events = [
   },
 ]
 export const Event = () => <DCPersonEvent {...events[0]}></DCPersonEvent>
+export const MediaEvent = () => <DCPersonEvent {...events[2]}></DCPersonEvent>
