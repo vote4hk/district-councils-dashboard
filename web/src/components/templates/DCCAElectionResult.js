@@ -110,23 +110,29 @@ const DCCAElectionResult = props => {
             </Rows>
           </CandidateName>
           <Columns>
-            <Rows>
-              <Typography variant="h5">
-                {candidate.votes}（{candidate.vote_percentage}%）
-              </Typography>
-            </Rows>
-            <Rows>
-              <VotePercentageBar
-                // className={classes.margin}
-                variant="determinate"
-                camp={getColorFromCamp(candidate.camp)}
-                value={
-                  (candidate.vote_percentage /
-                    sortedCandidates[0].vote_percentage) *
-                  100
-                }
-              />
-            </Rows>
+            {candidate.votes > 0 ? (
+              <>
+                <Rows>
+                  <Typography variant="h5">
+                    {candidate.votes}（{candidate.vote_percentage}%）
+                  </Typography>
+                </Rows>
+                <Rows>
+                  <VotePercentageBar
+                    // className={classes.margin}
+                    variant="determinate"
+                    camp={getColorFromCamp(candidate.camp)}
+                    value={
+                      (candidate.vote_percentage /
+                        sortedCandidates[0].vote_percentage) *
+                      100
+                    }
+                  />
+                </Rows>
+              </>
+            ) : (
+              <Typography variant="h5">自動當選</Typography>
+            )}
           </Columns>
         </CandiateBox>
       ))}
