@@ -54,6 +54,14 @@ const GET_PEOPLE_PROFILE = gql`
         }
       }
       candidates {
+        constituency {
+          name_zh
+          code
+          district {
+            dc_name_zh
+            dc_code
+          }
+        }
         candidate_number
         is_won
         occupation
@@ -318,46 +326,50 @@ class ProfilePage extends Component {
 
           return (
             <>
-              {lastElection.year === 2019 && (
-                <BreadcrumbsContainer>
-                  <Breadcrumbs
-                    separator={<NavigateNextIcon fontSize="small" />}
-                    aria-label="breadcrumb"
-                  >
-                    <Typography color="textPrimary">
-                      {lastElection.year}
-                    </Typography>
-                    <UnstyledLink
-                      onClick={() => {
-                        this.props.history.push(
-                          getDistrictOverviewUriFromTag(
-                            currentTerm.district.dc_code
+              {lastElection.year === 2019 &&
+                lastElection.election_type === 'ordinary' && (
+                  <BreadcrumbsContainer>
+                    <Breadcrumbs
+                      separator={<NavigateNextIcon fontSize="small" />}
+                      aria-label="breadcrumb"
+                    >
+                      {console.log(lastElection)}
+                      <Typography color="textPrimary">
+                        {lastElection.year}
+                      </Typography>
+                      <UnstyledLink
+                        onClick={() => {
+                          this.props.history.push(
+                            getDistrictOverviewUriFromTag(
+                              lastElection.constituency.district.dc_code
+                            )
                           )
-                        )
-                      }}
-                    >
-                      <Typography color="textPrimary">
-                        {currentTerm.district.dc_name_zh}
+                        }}
+                      >
+                        <Typography color="textPrimary">
+                          {lastElection.constituency.district.dc_name_zh}
+                        </Typography>
+                      </UnstyledLink>
+                      <UnstyledLink
+                        onClick={() => {
+                          this.props.history.push(
+                            getConstituencyUriFromTag(
+                              lastElection.constituency.code
+                            )
+                          )
+                        }}
+                      >
+                        <Typography color="textPrimary">
+                          {lastElection.constituency.name_zh} (
+                          {lastElection.constituency.code}）
+                        </Typography>
+                      </UnstyledLink>
+                      <Typography color="primary" style={{ fontWeight: 600 }}>
+                        {person.name_zh}
                       </Typography>
-                    </UnstyledLink>
-                    <UnstyledLink
-                      onClick={() => {
-                        this.props.history.push(
-                          getConstituencyUriFromTag(currentTerm.cacode)
-                        )
-                      }}
-                    >
-                      <Typography color="textPrimary">
-                        {currentTerm.constituency.name_zh} ({currentTerm.cacode}
-                        )
-                      </Typography>
-                    </UnstyledLink>
-                    <Typography color="primary" style={{ fontWeight: 600 }}>
-                      {person.name_zh}
-                    </Typography>
-                  </Breadcrumbs>
-                </BreadcrumbsContainer>
-              )}
+                    </Breadcrumbs>
+                  </BreadcrumbsContainer>
+                )}
 
               <CandidateHeaderContainer
                 camp={getColorFromCamp(lastElection && lastElection.camp)}
