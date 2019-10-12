@@ -20,6 +20,8 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/Link'
 import { Alert } from 'components/atoms/Alert'
 import { getDistrictOverviewUriFromTag } from 'utils/helper'
+import { getAllFeaturesFromPoint } from 'utils/features'
+import DCCAElectionHistories from 'components/templates/DCCAElectionHistories'
 
 const groupVoteStat = voteStats => {
   const data = _.groupBy(voteStats, stat => stat.subtype)
@@ -57,6 +59,10 @@ class BattleGroundPage extends Component {
     super(props)
     this.state = {
       showMap: true,
+      currentPoint: {
+        lng: 114.17056164035003,
+        lat: 22.312613750860297,
+      },
     }
   }
 
@@ -68,6 +74,15 @@ class BattleGroundPage extends Component {
   handleChangeDistrict = (year, code) => {
     if (!year || !code) return
     this.props.history.push(`/district/${year}/${code}`)
+  }
+
+  handleMapClick = coordinate => {
+    const point = {
+      lng: coordinate[0],
+      lat: coordinate[1],
+    }
+
+    this.setState({ currentPoint: point })
   }
 
   onPrevElection() {
@@ -107,6 +122,10 @@ class BattleGroundPage extends Component {
               district =>
                 district.intersect_area === null ||
                 district.intersect_area > 1000
+            )
+
+            const pointHistory = getAllFeaturesFromPoint(
+              this.state.currentPoint
             )
 
             return (
@@ -168,10 +187,12 @@ class BattleGroundPage extends Component {
                       year={year}
                       code={code}
                       changeDistrict={this.handleChangeDistrict}
+                      handleMapClick={this.handleMapClick}
                     />
                   </Box>
                 </Collapse>
                 <MainAreas areas={district.main_areas || []} />
+                <DCCAElectionHistories histories={pointHistory} />
                 <PlainCard>
                   <Typography variant="h6">現任區議員</Typography>
                   {previousDistricts.length > 1 && (
