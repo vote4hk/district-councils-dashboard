@@ -36,6 +36,9 @@ const GET_PEOPLE_PROFILE = gql`
       related_organization
       estimated_yob
       councillors {
+        meeting_attendances {
+          id
+        }
         year
         cacode
         term_from
@@ -288,6 +291,13 @@ class ProfilePage extends Component {
                 else return -1
               }
             })[0]
+          const hasMeetings =
+            person.councillors &&
+            person.councillors.length > 0 &&
+            person.councillors
+              .map(c => c.meeting_attendances && c.meeting_attendances.length)
+              .reduce((c, v) => Math.max(c, v), 0) > 0
+
           const personHighlight = []
 
           if (person.estimated_yob) {
@@ -314,7 +324,7 @@ class ProfilePage extends Component {
           const titles = ['參選紀錄']
 
           if (person.fc_uuid) titles.push('個人立場')
-          titles.push('會議出席率')
+          if (hasMeetings) titles.push('會議出席率')
 
           const electionStatusText = currentTerm
             ? '競逐連任'
@@ -448,7 +458,9 @@ class ProfilePage extends Component {
                     name={person.name_zh || person.name_en}
                   />
                 )}
-                <CouncillorMeetingAttendanceContainer personId={person.id} />
+                {hasMeetings && (
+                  <CouncillorMeetingAttendanceContainer personId={person.id} />
+                )}
               </ScrollableTabs>
             </>
           )
