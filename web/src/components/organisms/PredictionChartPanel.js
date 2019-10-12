@@ -101,12 +101,12 @@ function PredictionChartPanel(props) {
         <TabSection>
           <Rows>
             <StyledCheckBox
-              label="參考上一屆資料"
+              label="只計算新增選民，同時假設上屆投票選民維持相冋政治取向"
               checked={settings.config.reference_last_election}
               setChecked={setSettingConfigFunc('reference_last_election')}
             ></StyledCheckBox>
             <StyledCheckBox
-              label="自動當選議席加入對手"
+              label="為上屆自動當選議員加入對立陣營對手"
               checked={settings.config.auto_won_add_components}
               setChecked={setSettingConfigFunc('auto_won_add_components')}
             ></StyledCheckBox>

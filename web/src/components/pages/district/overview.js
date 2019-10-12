@@ -18,7 +18,7 @@ const Container = styled(Paper)`
 const DistrictOverviewPage = props => {
   const {
     match: {
-      params: { code },
+      params: { year, code },
     },
   } = props
 
@@ -37,7 +37,7 @@ const DistrictOverviewPage = props => {
             </Container>
             <Container>
               {district.constituencies.map(c => (
-                <ConstituencyCard key={c.id} constituency={c} />
+                <ConstituencyCard key={c.id} year={year} constituency={c} />
               ))}
             </Container>
           </>

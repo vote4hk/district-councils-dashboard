@@ -17,7 +17,8 @@ import { Typography } from '@material-ui/core'
 import { PlainCard } from '../../molecules/Card'
 import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
-import { UnstyledLink } from 'components/atoms/UnstyledLink'
+import { UnstyledLink } from 'components/atoms/Link'
+import { Alert } from 'components/atoms/Alert'
 import { getDistrictOverviewUriFromTag } from 'utils/helper'
 
 const groupVoteStat = voteStats => {
@@ -29,10 +30,25 @@ const groupVoteStat = voteStats => {
   return data
 }
 
+const Container = styled(Box)`
+  && {
+    width: 100%;
+    padding: 0 16px 0;
+  }
+`
+
 const BreadcrumbsContainer = styled(Box)`
   && {
     flex-grow: 1;
     padding: 4px 16px;
+  }
+`
+const ToggleMapButton = styled(UnstyledButton)`
+  && {
+    border-radius: 0;
+    width: 100%;
+    font-size: 14px;
+    text-align: center;
   }
 `
 
@@ -47,10 +63,6 @@ class BattleGroundPage extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     //  if (this.props.route.path === nextProps.route.path) return false;
     return true
-  }
-
-  handleCandidateSelected = candidateId => {
-    this.props.history.push(`/profile/${candidateId}`)
   }
 
   handleChangeDistrict = (year, code) => {
@@ -118,12 +130,19 @@ class BattleGroundPage extends Component {
                         {district.district.dc_name_zh}
                       </Typography>
                     </UnstyledLink>
-                    <Typography color="textPrimary">
+                    <Typography color="primary" style={{ fontWeight: 600 }}>
                       {district.name_zh}（{code}）
                     </Typography>
                   </Breadcrumbs>
                 </BreadcrumbsContainer>
-                <CandidatesContainer year={year} code={district.code} />
+                <Alert>
+                  <Typography variant="h6" gutterBottom>
+                    區議會選舉提名期現已展開，至10月17日結束。
+                  </Typography>
+                </Alert>
+                <Container>
+                  <CandidatesContainer year={year} code={district.code} />
+                </Container>
                 <DCCAOverview
                   year={year}
                   name_zh={district.name_zh}
@@ -134,13 +153,12 @@ class BattleGroundPage extends Component {
                   voterData={groupVoteStat(district.vote_stats)}
                 />
                 {/* TODO Refactor style for ToggleMap Button */}
-                <UnstyledButton
-                  style={{ margin: '8px 0 0 16px', fontSize: '14px' }}
+                <ToggleMapButton
                   onClick={() => this.setState({ showMap: !showMap })}
                 >
                   {showMap ? '隱藏地圖' : '顯示地圖'}
                   {showMap ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                </UnstyledButton>
+                </ToggleMapButton>
                 <Collapse in={showMap}>
                   <Box
                     width={{ sm: '100%', md: '960px' }}

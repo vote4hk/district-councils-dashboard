@@ -5,7 +5,7 @@ import { PlainCard } from 'components/molecules/Card'
 import Typography from '@material-ui/core/Typography'
 import { Box, Grid } from '@material-ui/core'
 import { SuccessText, FailureText } from '../atoms/Text'
-import { UnstyledNavLink } from '../atoms/UnstyledLink'
+import { UnstyledNavLink } from '../atoms/Link'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 const PersonElectionHistoriesTitle = styled.div`
@@ -18,12 +18,26 @@ const PersonElectionHistoriesTitle = styled.div`
 const PersonElectionHistories = props => {
   const { histories } = props
 
+  histories.sort((a, b) => {
+    if (b.year > a.year) return 1
+    else if (b.year < a.year) return -1
+    else {
+      if (b.election_type === 'ordinary' && a.election_type === 'by-election')
+        return 1
+      else return -1
+    }
+  })
+
   return (
     <>
       {histories.map((m, index) => (
         <UnstyledNavLink
           key={index}
-          to={m.year === 2019 && `/district/2019/${m.constituency.code}`}
+          to={
+            m.year === 2019 &&
+            m.election_type === 'ordinary' &&
+            `/district/2019/${m.constituency.code}`
+          }
         >
           <PlainCard color="#fafafa">
             <PersonElectionHistoriesTitle>
@@ -32,7 +46,11 @@ const PersonElectionHistories = props => {
                   {m.year}
                 </Typography>
               </Box>
-              <Box>{m.year === 2019 && <NavigateNextIcon />}</Box>
+              <Box>
+                {m.year === 2019 && m.election_type === 'ordinary' && (
+                  <NavigateNextIcon />
+                )}
+              </Box>
             </PersonElectionHistoriesTitle>
             <Grid container>
               <Grid item xs={4}>

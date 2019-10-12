@@ -2,15 +2,13 @@ import React from 'react'
 import { Query } from 'react-apollo'
 import { QUERY_GET_CANDIDATES } from 'queries/gql'
 import { PeopleAvatar } from 'components/atoms/Avatar'
-import { UnstyledNavLink } from 'components/atoms/UnstyledLink'
+import { UnstyledNavLink } from 'components/atoms/Link'
 import Rows from 'components/atoms/Rows'
 import Columns from 'components/atoms/Columns'
-import { Alert } from 'components/atoms/Alert'
-import { Box, Typography } from '@material-ui/core'
+import { Box, Typography, Grid } from '@material-ui/core'
 import styled from 'styled-components'
-import { getColorFromPoliticalAffiliation } from 'utils/helper'
+import { getColorFromCamp } from 'utils/helper'
 import { COLORS } from 'ui/theme'
-import PropTypes from 'prop-types'
 
 const IMAGE_HOST_URI =
   process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'
@@ -22,13 +20,8 @@ const Container = styled(Box)`
   }
 `
 
-const CandidateList = styled(Box)`
+const CandidateList = styled(Grid)`
   && {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
   }
 `
 
@@ -52,8 +45,8 @@ const CandidateNumber = styled(Box)`
     font-weight: 700;
     width: ${props => props.dimension};
     height: ${props => props.dimension};
-    background-color: ${props => COLORS.camp[props.camp]};
-    color: white;
+    background-color: ${props => COLORS.camp[props.camp].background};
+    color: ${props => COLORS.camp[props.camp].text};
     text-align: center;
   }
 `
@@ -62,12 +55,6 @@ const CandidateName = styled(Typography)`
   && {
     margin-top: 5px;
     font-weight: 700;
-  }
-`
-
-const PaddingColumns = styled(Columns)`
-  && {
-    padding: 0 16px;
   }
 `
 
@@ -82,69 +69,80 @@ const CandidatesContainer = props => {
       {({ loading, error, data }) => {
         if (loading) return null
         if (error) return `Error! ${error}`
+
+        const candidates =
+          data.dcd_candidates &&
+          data.dcd_candidates.filter(c => c.election_type === 'ordinary')
         return (
           <Container>
-            <Alert>
-              <Typography variant="h6" gutterBottom>
-                區議會選舉提名期現已展開，至10月17日結束。
-              </Typography>
-            </Alert>
-            {data.dcd_candidates.length > 0 && (
+            {candidates.length > 0 && (
               <>
                 <Rows>
-                  <PaddingColumns>
+                  <Columns>
                     <Typography variant="h6" gutterBottom>
                       已接獲提名
                     </Typography>
-                  </PaddingColumns>
+                  </Columns>
                 </Rows>
                 <Rows>
-                  <PaddingColumns>
-                    <CandidateList>
-                      {data.dcd_candidates.map(candidate => (
-                        <UnstyledNavLink
+                  <Columns>
+                    <CandidateList container direction="row">
+                      {/* Max 3 columns and always centered */}
+                      {candidates.map(candidate => (
+                        <Grid
                           key={candidate.person.id}
-                          to={`/profile/${candidate.person.name_zh ||
-                            candidate.person.name_en}/${candidate.person.uuid}`}
+                          item
+                          xs={
+                            candidates.length < 3 ? 12 / candidates.length : 4
+                          }
+                          sm={
+                            candidates.length < 4 ? 12 / candidates.length : 3
+                          }
+                          md={
+                            candidates.length < 6 ? 12 / candidates.length : 2
+                          }
                         >
-                          <Candidate>
-                            <PeopleAvatar
-                              dimension="84px"
-                              borderwidth={'4'}
-                              camp={getColorFromPoliticalAffiliation(
-                                candidate.person.related_organization
+                          <UnstyledNavLink
+                            to={`/profile/${candidate.person.name_zh ||
+                              candidate.person.name_en}/${
+                              candidate.person.uuid
+                            }`}
+                          >
+                            <Candidate>
+                              <PeopleAvatar
+                                dimension="84px"
+                                borderwidth={'4'}
+                                camp={getColorFromCamp(candidate.camp)}
+                                src={`${IMAGE_HOST_URI}/static/images/avatar/${candidate.person.uuid}.jpg`}
+                                imgProps={{
+                                  onError: e => {
+                                    e.target.src =
+                                      IMAGE_HOST_URI +
+                                      '/static/images/avatar/default.png'
+                                  },
+                                }}
+                              />
+                              {candidate.candidate_number > 0 && (
+                                <CandidateNumber
+                                  dimension="18px"
+                                  camp={getColorFromCamp(candidate.camp)}
+                                >
+                                  {candidate.candidate_number}
+                                </CandidateNumber>
                               )}
-                              src={`${IMAGE_HOST_URI}/static/images/avatar/${candidate.person.uuid}.jpg`}
-                              imgProps={{
-                                onError: e => {
-                                  e.target.src =
-                                    IMAGE_HOST_URI +
-                                    '/static/images/avatar/default.png'
-                                },
-                              }}
-                            />
-                            {candidate.candidate_number > 0 && (
-                              <CandidateNumber
-                                dimension="18px"
-                                camp={getColorFromPoliticalAffiliation(
-                                  candidate.person.related_organization
-                                )}
-                              >
-                                {candidate.candidate_number}
-                              </CandidateNumber>
-                            )}
-                            <CandidateName variant="h5">
-                              {candidate.person.name_zh}
-                            </CandidateName>
+                              <CandidateName variant="h5">
+                                {candidate.person.name_zh}
+                              </CandidateName>
 
-                            <Typography variant="h6">
-                              {candidate.political_affiliation}
-                            </Typography>
-                          </Candidate>
-                        </UnstyledNavLink>
+                              <Typography variant="h6">
+                                {candidate.political_affiliation}
+                              </Typography>
+                            </Candidate>
+                          </UnstyledNavLink>
+                        </Grid>
                       ))}
                     </CandidateList>
-                  </PaddingColumns>
+                  </Columns>
                 </Rows>
               </>
             )}

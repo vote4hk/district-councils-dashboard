@@ -7,10 +7,11 @@ import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import { DRAWER_OPEN } from '../../reducers/drawer'
 import ContextStore from 'ContextStore'
-import { UnstyledNavLink } from '../atoms/UnstyledLink'
+import { UnstyledNavLink } from '../atoms/Link'
 
 const StyledAppBar = styled(AppBar)`
   && {
+    background: white;
     width: 100%;
     box-shadow: none;
   }
@@ -32,12 +33,12 @@ function MobileAppBar(props) {
 
   return (
     <>
-      <StyledAppBar position="sticky" color="primary">
+      <StyledAppBar position="sticky">
         <Toolbar disableGutters>
           <AppBarTitle to={'/'}>
             <Typography variant="h1" align="center">
               <span role="img" aria-label="區議會 2019">
-                區議會 2019 ✋🏻🧡⚡
+                區議會 2019 ✋🏻💜⚡
               </span>
             </Typography>
           </AppBarTitle>

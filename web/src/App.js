@@ -8,6 +8,7 @@ import ProfilePage from 'components/pages/profile'
 import DistrictPage from 'components/pages/district'
 import DistrictListPage from 'components/pages/district/list'
 import BattleGroundPage from 'components/pages/battleground'
+import DisclaimerPage from 'components/pages/disclaimer'
 import NotfoundPage from 'components/pages/notfound'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
@@ -30,7 +31,8 @@ const client = new ApolloClient({
 
 const useStyles = makeStyles(theme => ({
   drawerPaper: {
-    width: '100%',
+    width: '500px',
+    maxWidth: '100%',
   },
 }))
 
@@ -98,11 +100,11 @@ const App = props => {
                       component={withTracker(ProfilePage)}
                     />
                     <Route
-                      path="/district/2019/tags/:tag"
+                      path="/district/:year/tags/:tag"
                       component={withTracker(DistrictListPage)}
                     />
                     <Route
-                      path="/district/2019/:code(\w{1})"
+                      path="/district/:year/:code(\w{1})"
                       component={withTracker(DistrictOverviewPage)}
                     />
                     <Route
@@ -113,7 +115,10 @@ const App = props => {
                       path="/district/:year/:code"
                       component={withTracker(DistrictPage)}
                     />
-
+                    <Route
+                      path="/disclaimer"
+                      component={withTracker(DisclaimerPage)}
+                    />
                     <Route component={withTracker(NotfoundPage)} />
                   </Switch>
                 </main>

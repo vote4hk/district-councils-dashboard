@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Summary from 'components/templates/Summary'
 import CampCompareChartContainer from 'components/templates/CampCompareChartContainer'
 import Countdown from 'components/atoms/Countdown'
 import styled from 'styled-components'
@@ -32,17 +33,6 @@ const CountdownContainer = styled.div`
   && {
     width: 100%;
     margin: 0 auto 16px;
-  }
-`
-
-const LandingIcon = styled.div`
-  && {
-    margin-left: auto;
-    margin-right: auto;
-    width: 200px;
-    height: 128px;
-    background: url('/static/images/landingIcon.svg') no-repeat;
-    background-size: cover;
   }
 `
 
@@ -85,7 +75,8 @@ class IndexPage extends Component {
               <Countdown date={electionDate} />
             </CountdownContainer>
           )}
-          <LandingIcon />
+          <Summary />
+          {/* <LandingIcon /> */}
         </TopSection>
         <Container>
           <StyledSearchTab />

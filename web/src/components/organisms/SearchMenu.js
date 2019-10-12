@@ -1,20 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import Box from '@material-ui/core/Box'
-import AddressSearcher from 'components/molecules/AddressSearcher'
-import PeopleSearcher from 'components/molecules/PeopleSearcher'
-import DistrictSelector from 'components/molecules/DistrictSelector'
 import SearchTab from 'components/organisms/SearchTab'
 import Typography from '@material-ui/core/Typography'
 import { withRouter } from 'react-router-dom'
 import ContextStore from 'ContextStore'
 import { DRAWER_CLOSE } from 'reducers/drawer'
-import {
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
-} from '@material-ui/core/'
-import { getProfilePath } from 'utils/helper'
+import { ExpansionPanel } from '@material-ui/core/'
 
 const StyledExpansionPanel = styled(ExpansionPanel)`
   && {
@@ -30,16 +22,6 @@ const StyledExpansionPanel = styled(ExpansionPanel)`
   }
 `
 StyledExpansionPanel.muiName = 'ExpansionPanel'
-
-const StyledExpansionPanelSummary = styled(ExpansionPanelSummary)`
-  && {
-  }
-`
-
-const StyledExpansionPanelDetail = styled(ExpansionPanelDetails)`
-  && {
-  }
-`
 
 const ExpandedRow = styled(Box)`
   && {
@@ -58,67 +40,14 @@ const LeftMargin = styled(ExpandedRow)`
     cursor: pointer;
   }
 `
-
-const AddressSearchContainer = styled(Box)`
-  && {
-    width: 100%;
-    position: relative;
-    left: 0;
-    right: 0;
-  }
-`
-
 const SearchMenu = props => {
   const {
     drawer: { dispatch },
   } = React.useContext(ContextStore)
 
-  const [expanded, setExpanded] = React.useState('panel3')
-
-  const handleChange = panel => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false)
-  }
-
-  function handleAddressSelected(result) {
-    /* TODO:
-      Use context (?) to store the Global district result array
-      When user select click previous button in district page,
-      the CACODE should follow follow the above result
-    */
-
-    props.history.push(`/district/${result.year}/${result.code}`)
-    dispatch({ type: DRAWER_CLOSE })
-  }
-
-  function handlePeopleSelected(person) {
-    const path = getProfilePath(person)
-    props.history.push(path)
-    dispatch({ type: DRAWER_CLOSE })
-  }
-
   function goToHomePage() {
     props.history.push('/')
     dispatch({ type: DRAWER_CLOSE })
-  }
-
-  function renderSearchDistrict() {
-    return (
-      <AddressSearchContainer>
-        <AddressSearcher handleAddressSelected={handleAddressSelected} />
-      </AddressSearchContainer>
-    )
-  }
-
-  function renderSearchPeople() {
-    return (
-      <AddressSearchContainer>
-        <PeopleSearcher handlePeopleSelected={handlePeopleSelected} />
-      </AddressSearchContainer>
-    )
-  }
-
-  function renderDistrictSelector() {
-    return <DistrictSelector expanded={true} />
   }
 
   return (

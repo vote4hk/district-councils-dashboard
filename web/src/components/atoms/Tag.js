@@ -4,18 +4,21 @@ import React from 'react'
 
 const StyledChip = styled(Chip)`
   && {
-    font-size: 12px;
-    margin-top: 2px;
-    margin-left: 3px;
+    font-size: ${props => props.fontsize || 12}px;
+    background: ${props => props.backgroundcolor || '#e0e0e0'};
+    border: ${props => props.borderwidth || 0}px
+      ${props => props.bordercolor || 'rgba(0, 0, 0, 0.5)'} solid;
   }
 `
 
 export const Tag = props => {
   return (
     <StyledChip
-      color={props.color}
+      fontSize={props.fontsize}
+      backgroundcolor={props.backgroundcolor}
+      bordercolor={props.bordercolor}
+      borderwidth={props.borderwidth}
       label={props.value}
-      variant={props.variant || 'outlined'}
       size="small"
       onClick={props.handleClick}
     />

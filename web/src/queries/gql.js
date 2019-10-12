@@ -211,6 +211,8 @@ export const QUERY_GET_CANDIDATES = gql`
       candidate_number
       is_won
       political_affiliation
+      election_type
+      camp
       person {
         id
         uuid
@@ -242,6 +244,19 @@ export const QUERY_GET_CONSTITUENCY_CAMP_DATA = gql`
         category_1
         category_2
         count
+      }
+    }
+  }
+`
+
+export const QUERY_GET_NOMINATION_SUMMARY = gql`
+  query {
+    dcd_constituencies(where: { year: { _eq: 2019 } }) {
+      code
+      name_zh
+      candidates {
+        camp
+        nominated_at
       }
     }
   }

@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles'
-import { red, green, cyan } from '@material-ui/core/colors'
+import { red, green } from '@material-ui/core/colors'
 export const headingFontFamily = 'Noto Sans TC, sans-serif'
 export const bodyFontFamily = 'Noto Sans TC, sans-serif'
 
@@ -17,7 +17,7 @@ export const typography = {
   fontFamily: FONT_FAMILY.join(','),
   h1: {
     fontFamily: headingFontFamily,
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 500,
   },
   h2: {
@@ -59,7 +59,7 @@ export const typography = {
 export const COLORS = {
   main: {
     text: '#000',
-    primary: '#ffb500',
+    primary: '#7B68EE', // mediumslateblue
     background: '#fff',
   },
   mainText: 'black',
@@ -68,11 +68,26 @@ export const COLORS = {
     color: 'white',
   },
   camp: {
-    democracy: '#00c376',
-    establishment: '#ff6779',
-    localist: '#ffcd00',
-    other: '#45b6ff',
-    uncertain: '#a8a8ad',
+    democracy: {
+      background: '#ffcd00',
+      text: 'black',
+    },
+    establishment: {
+      background: '#45b6ff',
+      text: 'black',
+    },
+    localist: {
+      background: '#ffcd00',
+      text: 'black',
+    },
+    other: {
+      background: '#a8a8ad',
+      text: 'black',
+    },
+    uncertain: {
+      background: '#a8a8ad',
+      text: 'black',
+    },
   },
   common: {
     success: green[800],
@@ -85,7 +100,7 @@ export default createMuiTheme({
   typography,
   palette: {
     primary: {
-      main: COLORS.main.background,
+      main: COLORS.main.primary,
       contrastText: COLORS.main.text,
     },
     secondary: {

@@ -13,11 +13,7 @@ import Rows from 'components/atoms/Rows'
 import Box from '@material-ui/core/Box'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
-import Link from '@material-ui/core/Link'
-import {
-  getDistrictListUriFromTag,
-  getDistrictOverviewUriFromTag,
-} from 'utils/helper'
+import { getDistrictListUriFromTag } from 'utils/helper'
 import { withRouter } from 'react-router-dom'
 import { SuccessText, FailureText } from 'components/atoms/Text'
 
@@ -28,6 +24,14 @@ const Container = styled(Paper)`
     box-shadow: none;
   }
 `
+
+const TagContainer = styled(Box)`
+  && {
+    margin-top: 6px;
+    margin-right: 8px;
+  }
+`
+
 class DCCAOverview extends Component {
   constructor(props) {
     super(props)
@@ -70,15 +74,7 @@ class DCCAOverview extends Component {
   }
 
   render() {
-    const {
-      name_zh,
-      year,
-      code,
-      dc_code,
-      dc_name_zh,
-      tags,
-      voterData,
-    } = this.props
+    const { code, tags, voterData } = this.props
     const sortedTags = tags.sort((a, b) =>
       a.type === 'boundary' ? -1 : a.type === b.type ? 0 : 1
     )
@@ -132,19 +128,22 @@ class DCCAOverview extends Component {
               <DistrictNewVoterChartContainer code={code} />
             )}
           </Rows>
-
-          {sortedTags
-            .filter(tag => tag.type !== 'boundary')
-            .map((tag, index) => (
-              <Tag
-                key={index}
-                value={tag.tag}
-                variant="outlined"
-                handleClick={() => {
-                  this.props.history.push(getDistrictListUriFromTag(tag.tag))
-                }}
-              />
-            ))}
+          <Columns>
+            {sortedTags
+              .filter(tag => tag.type !== 'boundary')
+              .map((tag, index) => (
+                <TagContainer key={index}>
+                  <Tag
+                    value={tag.tag}
+                    handleClick={() => {
+                      this.props.history.push(
+                        getDistrictListUriFromTag(tag.tag)
+                      )
+                    }}
+                  />
+                </TagContainer>
+              ))}
+          </Columns>
         </Container>
       </>
     )

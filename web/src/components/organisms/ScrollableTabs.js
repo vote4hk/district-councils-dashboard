@@ -4,6 +4,16 @@ import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
+import styled from 'styled-components'
+
+const StyledAppBar = styled(AppBar)`
+  && {
+    background: white;
+    .MuiTabs-indicator {
+      background: ${props => props.indicatorcolor || 'black'};
+    }
+  }
+`
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props
@@ -33,7 +43,7 @@ ScrollableTabs.defaultProps = {
 
 export default function ScrollableTabs(props) {
   const [selectedTab, setSelectedTab] = React.useState(0)
-  const { titles, children, buttonLayout } = props
+  const { titles, children, buttonLayout, indicatorcolor } = props
   function handleChange(event, newValue) {
     setSelectedTab(newValue)
   }
@@ -42,12 +52,11 @@ export default function ScrollableTabs(props) {
 
   return (
     <>
-      <AppBar position="static">
+      <StyledAppBar position="static" indicatorcolor={indicatorcolor}>
         <Tabs
           value={selectedTab}
           onChange={handleChange}
           centered={shouldCenter}
-          color="primary"
         >
           {titles.map((title, index) => (
             <Tab
@@ -58,7 +67,7 @@ export default function ScrollableTabs(props) {
             />
           ))}
         </Tabs>
-      </AppBar>
+      </StyledAppBar>
       {// TODO: support single tab
       children &&
         children.length > 0 &&

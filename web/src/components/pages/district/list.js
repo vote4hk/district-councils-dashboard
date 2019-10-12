@@ -18,7 +18,7 @@ const Container = styled(Paper)`
 const DistrictListPage = props => {
   const {
     match: {
-      params: { tag },
+      params: { year, tag },
     },
   } = props
 
@@ -38,7 +38,7 @@ const DistrictListPage = props => {
             </Container>
             <Container>
               {data.dcd_constituencies.map(c => (
-                <ConstituencyCard key={c.id} constituency={c} />
+                <ConstituencyCard key={c.id} year={year} constituency={c} />
               ))}
             </Container>
           </>

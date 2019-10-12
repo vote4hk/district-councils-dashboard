@@ -2,9 +2,10 @@ import React from 'react'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
 import Divider from '@material-ui/core/Divider'
-import { UnstyledLink } from 'components/atoms/UnstyledLink'
+import { UnstyledLink, DefaultLink } from 'components/atoms/Link'
 import { Typography } from '@material-ui/core'
 import Columns from 'components/atoms/Columns'
+import { withRouter } from 'react-router-dom'
 
 const StyledFooter = styled(Box)`
   && {
@@ -42,9 +43,9 @@ function Footer(props) {
         <StyledDivider />
         <Typography variant="body2" gutterBottom>
           本網站所刊載資訊全為公開資料，歸納自選舉管理委員會丶選舉事務處丶政府統計處丶各區區議會網站及
-          <a href="https://github.com/initiummedia/hk_district_council_election">
+          <DefaultLink href="https://github.com/initiummedia/hk_district_council_election">
             端傳媒
-          </a>
+          </DefaultLink>
           ，刊載前已盡力確保資料真確性，如有建議或錯漏，請按下方連結回報。
         </Typography>
         <Typography variant="body2">
@@ -57,7 +58,17 @@ function Footer(props) {
               target="_blank"
               href="https://www.facebook.com/g0vhk.io"
             >
-              關於g0vhk.io
+              g0vhk.io
+            </StyledFooterLink>
+          </LinkBox>
+          <LinkBox>
+            <StyledFooterLink
+              onClick={
+                () => props.history.push(`/disclaimer`)
+                // console.log(props)
+              }
+            >
+              關於候選人陣營
             </StyledFooterLink>
           </LinkBox>
           <LinkBox>
@@ -99,4 +110,4 @@ function Footer(props) {
   )
 }
 
-export default Footer
+export default withRouter(Footer)

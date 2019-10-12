@@ -14,6 +14,7 @@ import PersonElectionHistoriesContainer from 'components/containers/PersonElecti
 import FCPersonData from 'components/templates/FCPersonData'
 import { SuccessText, FailureText } from 'components/atoms/Text'
 import { COLORS } from 'ui/theme'
+import { Tag } from 'components/atoms/Tag'
 
 // TODO: add age, camp & related_organization
 const GET_PEOPLE_PROFILE = gql`
@@ -71,7 +72,7 @@ const CandidateHeaderContainer = styled(FlexRowContainer)`
     position: relative;
     display: flex;
     background: linear-gradient(
-      ${props => COLORS.camp[props.camp]} 84px,
+      ${props => COLORS.camp[props.camp].background} 84px,
       rgba(255, 255, 255, 0) 32px
     );
   }
@@ -90,6 +91,7 @@ const PersonName = styled.div`
     position: absolute;
     left: 116px;
     top: 32px;
+    color: ${props => COLORS.camp[props.camp].text};
   }
 `
 
@@ -99,6 +101,17 @@ const YearDiv = styled.div`
     font-weight: 600;
     color: #9b9b9b;
     margin-bottom: 20px;
+  }
+`
+
+const ElectionStatus = styled(Box)`
+  && {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    div {
+      margin: 8px 8px 0 0;
+    }
   }
 `
 
@@ -240,8 +253,19 @@ class ProfilePage extends Component {
             person.councillors &&
             person.councillors[person.councillors.length - 1]
           const lastElection =
-            person.candidates && person.candidates[person.candidates.length - 1]
-
+            person.candidates &&
+            person.candidates.sort((a, b) => {
+              if (b.year > a.year) return 1
+              else if (b.year < a.year) return -1
+              else {
+                if (
+                  b.election_type === 'ordinary' &&
+                  a.election_type === 'by-election'
+                )
+                  return 1
+                else return -1
+              }
+            })[0]
           const personHighlight = []
 
           if (person.estimated_yob) {
@@ -270,11 +294,28 @@ class ProfilePage extends Component {
           if (person.fc_uuid) titles.push('個人立場')
           titles.push('會議出席率')
 
+          const electionStatusText = currentTerm
+            ? '競逐連任'
+            : person.candidates.length === 1 &&
+              lastElection.year === 2019 &&
+              lastElection.election_type === 'ordinary'
+            ? '首度參選'
+            : undefined
+
           return (
             <>
               <CandidateHeaderContainer
                 camp={getColorFromCamp(lastElection && lastElection.camp)}
               >
+                {electionStatusText && (
+                  <ElectionStatus>
+                    <Tag
+                      value={electionStatusText}
+                      borderwidth={1}
+                      backgroundcolor={'transparent'}
+                    />
+                  </ElectionStatus>
+                )}
                 <CandidateAvatorContainer>
                   <PeopleAvatar
                     dimension={'84px'}
@@ -288,17 +329,13 @@ class ProfilePage extends Component {
                   />
                 </CandidateAvatorContainer>
                 <Box>
-                  <PersonName>
-                    <Typography
-                      variant="h3"
-                      style={{ marginBottom: '2px', color: 'white' }}
-                    >
+                  <PersonName
+                    camp={getColorFromCamp(lastElection && lastElection.camp)}
+                  >
+                    <Typography variant="h3" style={{ marginBottom: '2px' }}>
                       {person.name_zh || ''}
                     </Typography>
-                    <Typography
-                      variant="h5"
-                      style={{ marginBottom: '8px', color: 'white' }}
-                    >
+                    <Typography variant="h5" style={{ marginBottom: '8px' }}>
                       {person.name_en || ''}
                     </Typography>
                     {currentTerm &&
@@ -330,7 +367,14 @@ class ProfilePage extends Component {
                   ))}
                 </Grid>
               </PersonHighlightContainer>
-              <ScrollableTabs titles={titles}>
+              <ScrollableTabs
+                titles={titles}
+                indicatorcolor={
+                  COLORS.camp[
+                    getColorFromCamp(lastElection && lastElection.camp)
+                  ].background
+                }
+              >
                 <PersonElectionHistoriesContainer personId={person.id} />
                 {person.fc_uuid && (
                   <FCPersonData
