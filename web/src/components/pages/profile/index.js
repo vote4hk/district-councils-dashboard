@@ -333,7 +333,6 @@ class ProfilePage extends Component {
                       separator={<NavigateNextIcon fontSize="small" />}
                       aria-label="breadcrumb"
                     >
-                      {console.log(lastElection)}
                       <Typography color="textPrimary">
                         {lastElection.year}
                       </Typography>
