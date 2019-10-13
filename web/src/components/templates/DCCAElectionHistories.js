@@ -16,8 +16,9 @@ const GET_DCCA_ELECTION_HISTORIES = gql`
   query($year: Int!, $code: String!) {
     dcd_constituencies(where: { year: { _eq: $year }, code: { _eq: $code } }) {
       code
+      year
       name_zh
-      candidates {
+      candidates(where: { year: { _eq: $year }, cacode: { _eq: $code } }) {
         person {
           name_zh
           uuid
@@ -37,10 +38,10 @@ const DCCAElectionResultContainer = styled(Box)`
     padding: 0 16px;
   }
 `
-
-const StyledTab = styled.div`
+const CampText = styled.div`
   && {
-    color: ${props => COLORS.camp[props.camp].background};
+    border-bottom: 2px ${props => COLORS.camp[props.camp].background} solid;
+    margin-bottom: 2px;
   }
 `
 
@@ -59,6 +60,10 @@ class DCCAElectionHistories extends Component {
 
     return (
       <ScrollableTabs
+        tabnumber={
+          filteredHistories.length > 0 ? filteredHistories.length - 1 : 0
+        }
+        indicatorcolor={COLORS.main.primary}
         titles={filteredHistories.map(history => (
           <Query
             query={GET_DCCA_ELECTION_HISTORIES}
@@ -71,24 +76,24 @@ class DCCAElectionHistories extends Component {
               const electionResult = data.dcd_constituencies[0]
 
               return (
-                <StyledTab
-                  camp={getColorFromCamp(
-                    electionResult.candidates.find(candi => candi.is_won).camp
-                  )}
-                >
-                  <Typography variant="h6">
+                <>
+                  <CampText
+                    camp={getColorFromCamp(
+                      electionResult.candidates.find(candi => candi.is_won).camp
+                    )}
+                  >
                     {electionResult.candidates.find(candi => candi.is_won).camp}
-                  </Typography>
-                  <Typography variant="h6">{history.year}</Typography>
-                  <Typography variant="h6">{electionResult.name_zh}</Typography>
-                </StyledTab>
+                  </CampText>
+                  <Typography variant="body2">{history.year}</Typography>
+                </>
               )
             }}
           </Query>
         ))}
       >
-        {filteredHistories.map(history => (
+        {filteredHistories.map((history, index) => (
           <Query
+            key={index}
             query={GET_DCCA_ELECTION_HISTORIES}
             variables={{ year: history.year, code: history.CACODE }}
           >
@@ -100,7 +105,7 @@ class DCCAElectionHistories extends Component {
 
               return (
                 <DCCAElectionResultContainer>
-                  <DCCAElectionResult candidates={electionResult.candidates} />
+                  <DCCAElectionResult electionResult={electionResult} />
                 </DCCAElectionResultContainer>
               )
             }}

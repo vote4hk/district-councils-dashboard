@@ -85,6 +85,15 @@ class BattleGroundPage extends Component {
     this.setState({ currentPoint: point })
   }
 
+  handleMapLoaded = props => {
+    const { centroid } = props
+    const point = {
+      lng: centroid[0],
+      lat: centroid[1],
+    }
+
+    this.setState({ currentPoint: point })
+  }
   onPrevElection() {
     const {
       match: {
@@ -196,6 +205,7 @@ class BattleGroundPage extends Component {
                       code={code}
                       changeDistrict={this.handleChangeDistrict}
                       handleMapClick={this.handleMapClick}
+                      handleMapLoaded={this.handleMapLoaded}
                     />
                   </Box>
                 </Collapse>
@@ -210,6 +220,7 @@ class BattleGroundPage extends Component {
                     </Typography>
                   </Container>
                 )}
+                <DCCAElectionHistories histories={pointHistory} />
                 <PlainCard>
                   <Typography variant="h6">現任區議員</Typography>
                   {previousDistricts.length > 1 && (

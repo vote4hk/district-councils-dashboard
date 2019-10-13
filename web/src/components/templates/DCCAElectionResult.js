@@ -10,12 +10,13 @@ import Rows from 'components/atoms/Rows'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import { COLORS } from 'ui/theme'
 
-import {
-  getColorFromPoliticalAffiliation,
-  getCouncillorMeta,
-  getColorFromCamp,
-} from 'utils/helper'
+import { formatNumber, getColorFromCamp } from 'utils/helper'
 
+const Container = styled.div`
+  && {
+    padding-top: 16px;
+  }
+`
 const CandiateBox = styled(Box)`
   && {
     display: flex;
@@ -38,7 +39,7 @@ const CandidateNumber = styled(Box)`
     left: 3px;
     border-radius: 50%;
     font-size: 10px;
-    font-weight: 700;
+    font-weight: 600;
     width: ${props => props.dimension};
     height: ${props => props.dimension};
     background-color: ${props => COLORS.camp[props.camp].background};
@@ -51,6 +52,9 @@ const CandidateName = styled(Columns)`
   && {
     width: auto;
     min-width: 120px;
+    .person-name {
+      font-weight: 600;
+    }
   }
 `
 
@@ -65,17 +69,33 @@ const VotePercentageBar = styled(LinearProgress)`
   }
 `
 
+const VoteText = styled(Typography)`
+  && {
+    font-size: 14px;
+    font-weight: 600;
+    .vote-percentage {
+      font-size: 12px;
+    }
+  }
+`
+
 const DCCAElectionResult = props => {
-  const { candidates } = props
+  const { electionResult } = props
 
   const IMAGE_HOST_URI =
     process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.io'
 
-  const sortedCandidates = candidates.sort((a, b) => b.votes - a.votes)
+  const sortedCandidates = electionResult.candidates.sort(
+    (a, b) => b.votes - a.votes
+  )
   return (
-    <>
-      {sortedCandidates.map(candidate => (
-        <CandiateBox>
+    <Container>
+      <Typography variant="h6">
+        {electionResult.year}年 - {electionResult.name_zh}（
+        {electionResult.code}）
+      </Typography>
+      {sortedCandidates.map((candidate, index) => (
+        <CandiateBox key={index}>
           <CandidateAvatar>
             <PeopleAvatar
               dimension="60px"
@@ -101,10 +121,12 @@ const DCCAElectionResult = props => {
           </CandidateAvatar>
           <CandidateName>
             <Rows>
-              <Typography variant="h5">{candidate.person.name_zh}</Typography>
+              <Typography variant="h5" className="person-name">
+                {candidate.person.name_zh}
+              </Typography>
             </Rows>
             <Rows>
-              <Typography variant="h6">
+              <Typography variant="body2">
                 {candidate.political_affiliation} （{candidate.camp}）
               </Typography>
             </Rows>
@@ -122,7 +144,6 @@ const DCCAElectionResult = props => {
                 </Rows>
                 <Rows>
                   <VotePercentageBar
-                    // className={classes.margin}
                     variant="determinate"
                     camp={getColorFromCamp(candidate.camp)}
                     value={
@@ -139,7 +160,7 @@ const DCCAElectionResult = props => {
           </Columns>
         </CandiateBox>
       ))}
-    </>
+    </Container>
   )
 }
 

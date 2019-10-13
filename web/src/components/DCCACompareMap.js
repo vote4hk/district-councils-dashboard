@@ -72,7 +72,7 @@ class DCCACompareMap extends Component {
   }
 
   componentDidMount() {
-    const { year, code } = this.props
+    const { year, code, handleMapLoaded } = this.props
     const dc = [dc2003, dc2007, dc2011, dc2015, dc2019].find(
       d => d.name === `DCCA_${year}`
     )
@@ -139,6 +139,15 @@ class DCCACompareMap extends Component {
           })
 
           this.highlightFeature(features[i])
+
+          const loadedResult = {
+            centroid: features[i]
+              .getGeometry()
+              .getInteriorPoint()
+              .getCoordinates(),
+          }
+
+          handleMapLoaded(loadedResult)
           break
         }
       }
