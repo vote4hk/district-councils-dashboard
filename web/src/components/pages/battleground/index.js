@@ -128,6 +128,10 @@ class BattleGroundPage extends Component {
               this.state.currentPoint
             )
 
+            const DCCAStatus =
+              district.tags &&
+              district.tags.find(tag => tag.type === 'boundary')
+
             return (
               <>
                 <BreadcrumbsContainer>
@@ -154,11 +158,15 @@ class BattleGroundPage extends Component {
                     </Typography>
                   </Breadcrumbs>
                 </BreadcrumbsContainer>
-                <Alert>
-                  <Typography variant="h6" gutterBottom>
-                    區議會選舉提名期現已展開，至10月17日結束。
-                  </Typography>
-                </Alert>
+                {DCCAStatus && (
+                  <Alert>
+                    <Typography variant="h6" gutterBottom>
+                      {DCCAStatus.tag === '改劃界'
+                        ? `此選區於2019年更改劃界`
+                        : `此選區為2019年${DCCAStatus.tag}`}
+                    </Typography>
+                  </Alert>
+                )}
                 <Container>
                   <CandidatesContainer year={year} code={district.code} />
                 </Container>
@@ -192,7 +200,16 @@ class BattleGroundPage extends Component {
                   </Box>
                 </Collapse>
                 <MainAreas areas={district.main_areas || []} />
-                <DCCAElectionHistories histories={pointHistory} />
+
+                {DCCAStatus && (
+                  <Container>
+                    <Typography variant="h6">
+                      {DCCAStatus.tag === '改劃界'
+                        ? `此選區於2019年更改劃界`
+                        : `此選區為2019年${DCCAStatus.tag}`}
+                    </Typography>
+                  </Container>
+                )}
                 <PlainCard>
                   <Typography variant="h6">現任區議員</Typography>
                   {previousDistricts.length > 1 && (

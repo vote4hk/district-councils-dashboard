@@ -86,24 +86,6 @@ class DCCAOverview extends Component {
       <>
         <Container>
           <Rows>
-            <Columns>
-              <Box>
-                {sortedTags
-                  .filter(tag => tag.type === 'boundary')
-                  .map((tag, index) => (
-                    <Tag
-                      key={index}
-                      value={tag.tag}
-                      variant="default"
-                      handleClick={() => {
-                        this.props.history.push(
-                          getDistrictListUriFromTag(tag.tag)
-                        )
-                      }}
-                    />
-                  ))}
-              </Box>
-            </Columns>
             <UnstyledButton onClick={this.toggleGraph.bind(this)}>
               <Typography variant="h6">
                 選民人數 {formatNumber(voterData.aggregations.all_voters)}{' '}
@@ -130,20 +112,16 @@ class DCCAOverview extends Component {
             )}
           </Rows>
           <Columns>
-            {sortedTags
-              .filter(tag => tag.type !== 'boundary')
-              .map((tag, index) => (
-                <TagContainer key={index}>
-                  <Tag
-                    value={tag.tag}
-                    handleClick={() => {
-                      this.props.history.push(
-                        getDistrictListUriFromTag(tag.tag)
-                      )
-                    }}
-                  />
-                </TagContainer>
-              ))}
+            {sortedTags.map((tag, index) => (
+              <TagContainer key={index}>
+                <Tag
+                  value={tag.tag}
+                  handleClick={() => {
+                    this.props.history.push(getDistrictListUriFromTag(tag.tag))
+                  }}
+                />
+              </TagContainer>
+            ))}
           </Columns>
         </Container>
       </>
