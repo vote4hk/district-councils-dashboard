@@ -8,6 +8,7 @@ import { UnstyledNavLink } from '../atoms/Link'
 import {
   getColorFromPoliticalAffiliation,
   getCouncillorMeta,
+  formatNumber,
 } from 'utils/helper'
 
 const Councillor = props => {
@@ -96,7 +97,7 @@ const Councillor = props => {
                           0.05
                         ? '險'
                         : ''
-                    }勝${meta.lastParticipated.votesDiff}票`}
+                    }勝${formatNumber(meta.lastParticipated.votesDiff)}票`}
                 </Typography>
               </Box>
             </Box>

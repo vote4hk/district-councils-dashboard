@@ -113,9 +113,12 @@ const DCCAElectionResult = props => {
             {candidate.votes > 0 ? (
               <>
                 <Rows>
-                  <Typography variant="h5">
-                    {candidate.votes}（{candidate.vote_percentage}%）
-                  </Typography>
+                  <VoteText>
+                    {formatNumber(candidate.votes)}票{' '}
+                    <span className="vote-percentage">
+                      （{candidate.vote_percentage}%）
+                    </span>
+                  </VoteText>
                 </Rows>
                 <Rows>
                   <VotePercentageBar

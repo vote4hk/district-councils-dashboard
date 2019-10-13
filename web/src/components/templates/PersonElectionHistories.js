@@ -7,6 +7,7 @@ import { Box, Grid } from '@material-ui/core'
 import { SuccessText, FailureText } from '../atoms/Text'
 import { UnstyledNavLink } from '../atoms/Link'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
+import { formatNumber } from 'utils/helper'
 
 const PersonElectionHistoriesTitle = styled.div`
   && {
@@ -65,10 +66,10 @@ const PersonElectionHistories = props => {
                 <Grid item xs={3}>
                   {m.is_won ? (
                     <SuccessText>
-                      {m.votes > 0 ? `${m.votes}票` : '自動當選'}
+                      {m.votes > 0 ? `${formatNumber(m.votes)}票` : '自動當選'}
                     </SuccessText>
                   ) : (
-                    <FailureText>{`${m.votes}票`}</FailureText>
+                    <FailureText>{`${formatNumber(m.votes)}票`}</FailureText>
                   )}
                 </Grid>
               )}

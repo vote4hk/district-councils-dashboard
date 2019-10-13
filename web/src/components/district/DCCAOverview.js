@@ -13,7 +13,7 @@ import Rows from 'components/atoms/Rows'
 import Box from '@material-ui/core/Box'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
-import { getDistrictListUriFromTag } from 'utils/helper'
+import { getDistrictListUriFromTag, formatNumber } from 'utils/helper'
 import { withRouter } from 'react-router-dom'
 import { SuccessText, FailureText } from 'components/atoms/Text'
 
@@ -106,7 +106,8 @@ class DCCAOverview extends Component {
             </Columns>
             <UnstyledButton onClick={this.toggleGraph.bind(this)}>
               <Typography variant="h6">
-                選民人數 {voterData.aggregations.all_voters} {' ('}
+                選民人數 {formatNumber(voterData.aggregations.all_voters)}{' '}
+                {' ('}
                 {new_voters_percentage > 0 ? (
                   <SuccessText display="inline">
                     +{new_voters_percentage}%
