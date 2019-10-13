@@ -7,7 +7,6 @@ import { ReactTinyLink } from 'react-tiny-link'
 
 const StyledCard = styled(Card)`
   && {
-    padding: 16px;
     margin: 16px;
     background-color: ${props => props.color || '#fff'};
   }
