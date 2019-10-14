@@ -12,7 +12,6 @@ import ContextStore from 'ContextStore'
 import { withRouter } from 'react-router-dom'
 import { Query } from 'react-apollo'
 import { QUERY_GET_AREA } from 'queries/gql'
-import Grid from '@material-ui/core/Grid'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import AreaTabs from 'components/organisms/AreaTabs'
 import {
@@ -54,12 +53,6 @@ const DistrictExpansionPanelDetails = styled(ExpansionPanelDetails)`
   }
 `
 
-const DistrictWrapper = styled(Grid)`
-  && {
-    margin: 0 5px;
-  }
-`
-
 const DistrictSelector = props => {
   const {
     drawer: { dispatch },
@@ -98,9 +91,12 @@ const DistrictSelector = props => {
 
   const renderArea = area => {
     return (
-      <DistrictWrapper key={area.area_code}>
+      <>
         {area.districts.map((d, index) => (
-          <DistrictExpansionPanel key={`district-panel-${d.dc_code}`}>
+          <DistrictExpansionPanel
+            key={`district-panel-${d.dc_code}`}
+            TransitionProps={{ unmountOnExit: true }}
+          >
             <DistrictExpansionPanelSummary
               aria-controls="panel1a-content"
               id="panel1a-header"
@@ -113,7 +109,7 @@ const DistrictSelector = props => {
             </DistrictExpansionPanelDetails>
           </DistrictExpansionPanel>
         ))}
-      </DistrictWrapper>
+      </>
     )
   }
 
