@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import ScrollableTabs from 'components/organisms/ScrollableTabs'
 import gql from 'graphql-tag'
@@ -8,7 +7,6 @@ import { Typography } from '@material-ui/core'
 import DCCAElectionResult from 'components/templates/DCCAElectionResult'
 import Box from '@material-ui/core/Box'
 import { COLORS } from 'ui/theme'
-import Divider from '@material-ui/core/Divider'
 
 import { getColorFromCamp } from 'utils/helper'
 
