@@ -59,7 +59,9 @@ const Summary = props => {
           )
 
           result.no_competition =
-            result.stat['0'].length + result.stat['1'].length
+            result.stat['0'] &&
+            result.stat['0'].length + result.stat['1'] &&
+            result.stat['1'].length
         }
 
         return (
