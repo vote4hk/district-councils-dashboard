@@ -58,8 +58,11 @@ const Summary = props => {
             { no_of_candidates: 0, stat: {}, more_than_2: [], max: 0 }
           )
 
-          result.no_competition =
-            result.stat['0'].length + result.stat['1'].length
+          result.no_competition = result.stat['0']
+            ? result.stat['0'].length
+            : 0 + result.stat['1']
+            ? result.stat['1'].length
+            : 0
         }
 
         return (

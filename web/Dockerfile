@@ -13,23 +13,16 @@ RUN if [ -z $REACT_APP_HOST_URI ]; then echo 'build arguments not set' && exit 1
 WORKDIR /tmp
 
 # Install app dependencies
-COPY package.json .
+COPY . .
 
 RUN npm install
 
-WORKDIR /app
-
-RUN ls /tmp
+RUN npm run build
 
 # copy production node_modules aside
-RUN cp -R /tmp/node_modules /app/node_modules
-
-COPY . .
-
-RUN npm run build
 
 FROM nginx:latest
 
-COPY --from=base /app/build/ /usr/share/nginx/html
+COPY --from=base /tmp/build/ /usr/share/nginx/html
 
-COPY --from=base /app/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=base /tmp/nginx.conf /etc/nginx/conf.d/default.conf
