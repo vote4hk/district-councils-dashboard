@@ -61,17 +61,15 @@ const PersonElectionHistories = props => {
                   m.camp
                 }）`}</Typography>
               </Grid>
-              {m.votes > 0 && (
-                <Grid item xs={3}>
-                  {m.is_won ? (
-                    <SuccessText>
-                      {m.votes > 0 ? `${m.votes}票` : '自動當選'}
-                    </SuccessText>
-                  ) : (
-                    <FailureText>{`${m.votes}票`}</FailureText>
-                  )}
-                </Grid>
-              )}
+              <Grid item xs={3}>
+                {m.is_won ? (
+                  <SuccessText>
+                    {m.votes > 0 ? `${m.votes}票` : '自動當選'}
+                  </SuccessText>
+                ) : (
+                  <FailureText>{m.votes > 0 && `${m.votes}票`}</FailureText>
+                )}
+              </Grid>
             </Grid>
             <Grid container>
               <Grid item xs={4}>
