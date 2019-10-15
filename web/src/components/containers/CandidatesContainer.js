@@ -134,7 +134,7 @@ const CandidatesContainer = props => {
                                 {candidate.person.name_zh}
                               </CandidateName>
 
-                              <Typography variant="h6">
+                              <Typography variant="body2">
                                 {candidate.political_affiliation}
                               </Typography>
                             </Candidate>
