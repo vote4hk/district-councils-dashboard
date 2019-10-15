@@ -30,7 +30,7 @@ const StyledButton = styled(Button)`
 `
 
 const FCPersonData = props => {
-  const { fcUuid, name } = props
+  const { fcUuid, name, filterFunc } = props
   const [events, setEvents] = useState([])
   useEffect(() => {
     async function fetchData() {
@@ -38,7 +38,7 @@ const FCPersonData = props => {
         `https://api.hkfactcheck.io/persons/${fcUuid}/events`
       )
 
-      setEvents(result.data)
+      setEvents(result.data.filter(filterFunc).filter((_, i) => i < 5))
     }
     fetchData()
   }, [])
@@ -70,11 +70,9 @@ const FCPersonData = props => {
         )}
       </Container>
       <Rows>
-        {events
-          .filter(event => event.eventType !== 'MEDIA')
-          .map(event => (
-            <PersonEvent key={event.eventId} {...event}></PersonEvent>
-          ))}
+        {events.map(event => (
+          <PersonEvent key={event.eventId} {...event}></PersonEvent>
+        ))}
         {events.length > 0 && (
           <Container>
             <StyledButton
@@ -95,6 +93,7 @@ const FCPersonData = props => {
 FCPersonData.propsType = {
   uuid: PropTypes.string,
   fcUuid: PropTypes.string,
+  filterFunc: PropTypes.func.isRequired,
 }
 
 export default FCPersonData
