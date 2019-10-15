@@ -321,12 +321,15 @@ class ProfilePage extends Component {
               (currentTerm && currentTerm.career) || lastElection.occupation,
           })
 
-          const titles = ['參選紀錄']
+          const titles = []
 
           if (person.fc_uuid) {
             titles.push('個人立場')
             titles.push('媒體報導')
           }
+
+          titles.push('參選紀錄')
+
           if (hasMeetings) titles.push('會議出席率')
 
           const electionStatusText = currentTerm
@@ -454,7 +457,6 @@ class ProfilePage extends Component {
                   ].background
                 }
               >
-                <PersonElectionHistoriesContainer personId={person.id} />
                 {person.fc_uuid && (
                   <FCPersonData
                     fcUuid={person.fc_uuid}
@@ -469,6 +471,7 @@ class ProfilePage extends Component {
                     filterFunc={record => record.eventType === 'MEDIA'}
                   />
                 )}
+                <PersonElectionHistoriesContainer personId={person.id} />
                 {hasMeetings && (
                   <CouncillorMeetingAttendanceContainer personId={person.id} />
                 )}
