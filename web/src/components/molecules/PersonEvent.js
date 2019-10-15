@@ -31,8 +31,16 @@ const trimDescription = description => {
     : description
 }
 
+const validateUrl = url => {
+  const patt = /(http|https):\/\/.*/
+  const match = patt.exec(url)
+  return match ? match[0] : null
+}
+
 const PersonEvent = props => {
   const { title, eventType, date, description, url } = props
+  const validatedUrl = validateUrl(url)
+
   return (
     <StyledCard>
       <CardContent>
@@ -41,13 +49,13 @@ const PersonEvent = props => {
         </Text>
         <Text gutterBottom>{date}</Text>
         <Text color="textSecondary">{trimDescription(description)}</Text>
-        {eventType === 'MEDIA' && url && (
+        {eventType === 'MEDIA' && validatedUrl && (
           <ReactTinyLink
             cardSize="small"
             showGraphic={true}
             maxLine={2}
             minLine={1}
-            url={url}
+            url={validatedUrl}
           />
         )}
       </CardContent>
