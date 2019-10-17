@@ -9,6 +9,7 @@ import DistrictPage from 'components/pages/district'
 import DistrictListPage from 'components/pages/district/list'
 import BattleGroundPage from 'components/pages/battleground'
 import DisclaimerPage from 'components/pages/disclaimer'
+import AboutDCPage from 'components/pages/about/dc'
 import NotfoundPage from 'components/pages/notfound'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
@@ -118,6 +119,10 @@ const App = props => {
                     <Route
                       path="/disclaimer"
                       component={withTracker(DisclaimerPage)}
+                    />
+                    <Route
+                      path="/about-dc"
+                      component={withTracker(AboutDCPage)}
                     />
                     <Route component={withTracker(NotfoundPage)} />
                   </Switch>
