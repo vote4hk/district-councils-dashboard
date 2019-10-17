@@ -375,7 +375,7 @@ class ProfilePage extends Component {
                         }}
                       >
                         <Typography color="textPrimary">
-                          {lastElection.constituency.name_zh} (
+                          {lastElection.constituency.name_zh}（
                           {lastElection.constituency.code}）
                         </Typography>
                       </UnstyledLink>
