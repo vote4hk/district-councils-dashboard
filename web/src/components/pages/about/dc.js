@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
-import { DefaultLink } from 'components/atoms/Link'
 
 const Container = styled(Paper)`
   && {
