@@ -375,7 +375,7 @@ class ProfilePage extends Component {
                         }}
                       >
                         <Typography color="textPrimary">
-                          {lastElection.constituency.name_zh} (
+                          {lastElection.constituency.name_zh}（
                           {lastElection.constituency.code}）
                         </Typography>
                       </UnstyledLink>
@@ -461,7 +461,10 @@ class ProfilePage extends Component {
                   <FCPersonData
                     fcUuid={person.fc_uuid}
                     name={person.name_zh || person.name_en}
-                    filterFunc={record => record.eventType !== 'MEDIA'}
+                    filterFunc={record =>
+                      record.eventType !== 'MEDIA' &&
+                      record.eventType !== 'OTHER'
+                    }
                   />
                 )}
                 {person.fc_uuid && (

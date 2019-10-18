@@ -131,10 +131,11 @@ const CandidatesContainer = props => {
                                 </CandidateNumber>
                               )}
                               <CandidateName variant="h5">
-                                {candidate.person.name_zh}
+                                {candidate.person.name_zh ||
+                                  candidate.person.name_en}
                               </CandidateName>
 
-                              <Typography variant="h6">
+                              <Typography variant="body2">
                                 {candidate.political_affiliation}
                               </Typography>
                             </Candidate>

@@ -3,12 +3,19 @@ import { Card, CardContent } from '@material-ui/core'
 import Text from '../atoms/Text'
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ReactTinyLink } from 'react-tiny-link'
+import Microlink from '@microlink/react'
 
 const StyledCard = styled(Card)`
   && {
     margin: 16px;
     background-color: ${props => props.color || '#fff'};
+  }
+`
+
+const StyledMicrolink = styled(Microlink)`
+  && {
+    width: 100%;
+    max-width: calc(100vw - 64px);
   }
 `
 
@@ -18,14 +25,13 @@ const getEventTypeText = type => {
       return '[投票]'
     case 'SPEECH':
       return '[言論]'
-    case 'MEDIA':
-      return '[媒體]'
     default:
       return ''
   }
 }
 
 const trimDescription = description => {
+  if (!description) return ''
   return description.length > 100
     ? description.substring(0, 100) + '...'
     : description
@@ -44,19 +50,16 @@ const PersonEvent = props => {
   return (
     <StyledCard>
       <CardContent>
-        <Text variant="h5" gutterBottom>
-          {`${getEventTypeText(eventType)} ${title}`}
-        </Text>
         <Text gutterBottom>{date}</Text>
-        <Text color="textSecondary">{trimDescription(description)}</Text>
-        {eventType === 'MEDIA' && validatedUrl && (
-          <ReactTinyLink
-            cardSize="small"
-            showGraphic={true}
-            maxLine={2}
-            minLine={1}
-            url={validatedUrl}
-          />
+        {eventType === 'MEDIA' && validatedUrl ? (
+          <StyledMicrolink url={validatedUrl} size="large" />
+        ) : (
+          <>
+            <Text variant="h5" gutterBottom>
+              {`${getEventTypeText(eventType)} ${title}`}
+            </Text>
+            <Text color="textSecondary">{trimDescription(description)}</Text>
+          </>
         )}
       </CardContent>
     </StyledCard>

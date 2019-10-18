@@ -79,11 +79,13 @@ export default function ScrollableTabs(props) {
       {// TODO: support single tab
       children &&
         children.length > 0 &&
-        children.map((child, index) => (
-          <TabPanel key={index} hidden={selectedTab !== index}>
-            {child}
-          </TabPanel>
-        ))}
+        children
+          .filter(child => child)
+          .map((child, index) => (
+            <TabPanel key={index} hidden={selectedTab !== index}>
+              {child}
+            </TabPanel>
+          ))}
     </>
   )
 }
