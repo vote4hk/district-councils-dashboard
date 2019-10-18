@@ -135,11 +135,11 @@ class BattleGroundPage extends Component {
                     </Typography>
                   </Breadcrumbs>
                 </BreadcrumbsContainer>
-                <Alert>
+                {/* <Alert>
                   <Typography variant="h6" gutterBottom>
                     區議會選舉提名期現已展開，至10月17日結束。
                   </Typography>
-                </Alert>
+                </Alert> */}
                 <Container>
                   <CandidatesContainer year={year} code={district.code} />
                 </Container>
