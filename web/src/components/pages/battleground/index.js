@@ -160,10 +160,7 @@ class BattleGroundPage extends Component {
                   {showMap ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                 </ToggleMapButton>
                 <Collapse in={showMap}>
-                  <Box
-                    width={{ sm: '100%', md: '960px' }}
-                    height={{ sm: '300px', md: '400px' }}
-                  >
+                  <Box width={'100%'} height={{ sm: '300px', md: '400px' }}>
                     <DCCACompareMap
                       year={year}
                       code={code}
