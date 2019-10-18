@@ -7,6 +7,7 @@ import Columns from 'components/atoms/Columns'
 import Rows from 'components/atoms/Rows'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import { COLORS } from 'ui/theme'
+import { UnstyledNavLink } from 'components/atoms/Link'
 
 import { formatNumber, getColorFromCamp } from 'utils/helper'
 
@@ -93,70 +94,75 @@ const DCCAElectionResult = props => {
         {electionResult.code}）
       </Typography>
       {sortedCandidates.map((candidate, index) => (
-        <CandiateBox key={index}>
-          <CandidateAvatar>
-            <PeopleAvatar
-              dimension="60px"
-              borderwidth={'3'}
-              camp={getColorFromCamp(candidate.camp)}
-              src={`${IMAGE_HOST_URI}/static/images/avatar/${candidate.person.uuid}.jpg`}
-              imgProps={{
-                onError: e => {
-                  e.target.src =
-                    IMAGE_HOST_URI + '/static/images/avatar/default.png'
-                },
-              }}
-            />
-            {candidate.candidate_number > 0 && (
-              <CandidateNumber
-                dimension="16px"
+        <UnstyledNavLink
+          to={`/profile/${candidate.person.name_zh ||
+            candidate.person.name_en}/${candidate.person.uuid}`}
+        >
+          <CandiateBox key={index}>
+            <CandidateAvatar>
+              <PeopleAvatar
+                dimension="60px"
+                borderwidth={'3'}
                 camp={getColorFromCamp(candidate.camp)}
-              >
-                {candidate.candidate_number}
-              </CandidateNumber>
-            )}
-            {/* {candidate.is_won && 'win'} */}
-          </CandidateAvatar>
-          <CandidateName>
-            <Rows>
-              <Typography variant="h5" className="person-name">
-                {candidate.person.name_zh}
-              </Typography>
-            </Rows>
-            <Rows>
-              <Typography variant="body2">
-                {candidate.political_affiliation} （{candidate.camp}）
-              </Typography>
-            </Rows>
-          </CandidateName>
-          <Columns>
-            {candidate.votes > 0 ? (
-              <>
-                <Rows>
-                  <VoteText>
-                    {formatNumber(candidate.votes)}票{' '}
-                    <span className="vote-percentage">
-                      （{candidate.vote_percentage}%）
-                    </span>
-                  </VoteText>
-                </Rows>
-                <Rows>
-                  <VotePercentageBar
-                    variant="determinate"
-                    camp={getColorFromCamp(candidate.camp)}
-                    value={
-                      (candidate.vote_percentage /
-                        sortedCandidates[0].vote_percentage) *
-                      100
-                    }
-                  />
-                </Rows>
-              </>
-            ) : (
-              <Typography variant="h5">自動當選</Typography>
-            )}
-          </Columns>
-        </CandiateBox>
+                src={`${IMAGE_HOST_URI}/static/images/avatar/${candidate.person.uuid}.jpg`}
+                imgProps={{
+                  onError: e => {
+                    e.target.src =
+                      IMAGE_HOST_URI + '/static/images/avatar/default.png'
+                  },
+                }}
+              />
+              {candidate.candidate_number > 0 && (
+                <CandidateNumber
+                  dimension="16px"
+                  camp={getColorFromCamp(candidate.camp)}
+                >
+                  {candidate.candidate_number}
+                </CandidateNumber>
+              )}
+              {/* {candidate.is_won && 'win'} */}
+            </CandidateAvatar>
+            <CandidateName>
+              <Rows>
+                <Typography variant="h5" className="person-name">
+                  {candidate.person.name_zh}
+                </Typography>
+              </Rows>
+              <Rows>
+                <Typography variant="body2">
+                  {candidate.political_affiliation} （{candidate.camp}）
+                </Typography>
+              </Rows>
+            </CandidateName>
+            <Columns>
+              {candidate.votes > 0 ? (
+                <>
+                  <Rows>
+                    <VoteText>
+                      {formatNumber(candidate.votes)}票{' '}
+                      <span className="vote-percentage">
+                        （{candidate.vote_percentage}%）
+                      </span>
+                    </VoteText>
+                  </Rows>
+                  <Rows>
+                    <VotePercentageBar
+                      variant="determinate"
+                      camp={getColorFromCamp(candidate.camp)}
+                      value={
+                        (candidate.vote_percentage /
+                          sortedCandidates[0].vote_percentage) *
+                        100
+                      }
+                    />
+                  </Rows>
+                </>
+              ) : (
+                <Typography variant="h5">自動當選</Typography>
+              )}
+            </Columns>
+          </CandiateBox>
+        </UnstyledNavLink>
       ))}
     </Container>
   )
