@@ -283,22 +283,23 @@ class ProfilePage extends Component {
     let tags = []
     let primaryText
 
-    if (currentTerm) {
-      primaryText = '競逐連任'
-    } else if (
-      person.candidates.length === 1 &&
+    if (
       person.candidates[0].year === 2019 &&
       person.candidates[0].election_type === 'ordinary'
     ) {
-      primaryText = '首度參選'
-    } else if (person.candidates.length > 1) {
-      if (
-        !person.candidates.find(p => p.is_won) &&
-        person.candidates.length > 2
-      ) {
-        primaryText = '屢敗屢戰'
-      } else if (!person.candidates[1].is_won) {
-        primaryText = '捲土重來'
+      if (currentTerm) {
+        primaryText = '競逐連任'
+      } else if (person.candidates.length === 1) {
+        primaryText = '首度參選'
+      } else if (person.candidates.length > 1) {
+        if (
+          !person.candidates.find(p => p.is_won) &&
+          person.candidates.length > 2
+        ) {
+          primaryText = '屢敗屢戰'
+        } else if (!person.candidates[1].is_won) {
+          primaryText = '捲土重來'
+        }
       }
     }
 
