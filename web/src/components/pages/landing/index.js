@@ -57,11 +57,11 @@ class IndexPage extends Component {
   render() {
     return (
       <>
-        <Alert>
+        {/* <Alert>
           <Typography variant="h6" gutterBottom>
             區議會選舉提名期現已展開，至10月17日結束。
           </Typography>
-        </Alert>
+        </Alert> */}
         <TopSection>
           {Date.parse(new Date(electionDate)) > Date.parse(new Date()) && (
             <CountdownContainer>

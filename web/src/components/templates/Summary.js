@@ -76,14 +76,14 @@ const Summary = props => {
 
                 <Typography variant="h6" gutterBottom>
                   本網頁已收錄<b>{result.no_of_candidates}</b>
-                  名參選人資料，現時全港有<b>{result.no_competition}</b>
-                  個選區未有競爭，而以下<b>{result.more_than_2.length}</b>
+                  名參選人資料，暫時全港所有選區均有競爭，其中
+                  <b>{result.more_than_2.length}</b>
                   個選區多於兩人參選。
                 </Typography>
 
                 {[...Array(result.max + 1).keys()]
                   .reverse()
-                  .filter(a => a > 2)
+                  .filter(a => a > 3)
                   .map((noc, i) => (
                     <Typography variant="h6" gutterBottom key={i}>
                       {noc}人參選：
