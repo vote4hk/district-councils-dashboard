@@ -489,6 +489,7 @@ class ProfilePage extends Component {
                     getColorFromCamp(lastElection && lastElection.camp)
                   ].background
                 }
+                variant="scrollable"
               >
                 {person.fc_uuid && (
                   <FCPersonData
