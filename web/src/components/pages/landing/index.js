@@ -57,11 +57,11 @@ class IndexPage extends Component {
   render() {
     return (
       <>
-        {/* <Alert>
+        <Alert>
           <Typography variant="h6" gutterBottom>
-            區議會選舉提名期現已展開，至10月17日結束。
+            上屆區選，68人自動當選，今屆罕有出現零「白區」！
           </Typography>
-        </Alert> */}
+        </Alert>
         <TopSection>
           {Date.parse(new Date(electionDate)) > Date.parse(new Date()) && (
             <CountdownContainer>
