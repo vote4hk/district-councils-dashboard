@@ -88,6 +88,7 @@ class DCCAElectionHistories extends Component {
             }}
           </Query>
         ))}
+        variant="fullWidth"
       >
         {filteredHistories.map((history, index) => (
           <Query

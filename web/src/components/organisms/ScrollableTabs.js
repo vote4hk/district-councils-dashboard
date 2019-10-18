@@ -49,6 +49,7 @@ export default function ScrollableTabs(props) {
     buttonLayout,
     indicatorcolor,
     tabnumber = 0,
+    variant,
   } = props
   const [selectedTab, setSelectedTab] = React.useState(tabnumber)
   function handleChange(event, newValue) {
@@ -64,7 +65,8 @@ export default function ScrollableTabs(props) {
           value={selectedTab}
           onChange={handleChange}
           centered={shouldCenter}
-          variant="fullWidth"
+          variant={variant || 'scrollable'} // 'centered', 'scrollable', 'fullWidth'
+          scrollButtons="auto"
         >
           {titles.map((title, index) => (
             <Tab
