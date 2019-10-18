@@ -74,6 +74,7 @@ const GET_PEOPLE_PROFILE = gql`
         camp
         election_type
         year
+        votes
       }
     }
   }
@@ -258,6 +259,54 @@ class ProfilePage extends Component {
     )
   }
 
+  renderElectionStatusText = (person, currentTerm) => {
+    let tags = []
+    let primaryText
+
+    if (currentTerm) {
+      primaryText = '競逐連任'
+    } else if (
+      person.candidates.length === 1 &&
+      person.candidates[0].year === 2019 &&
+      person.candidates[0].election_type === 'ordinary'
+    ) {
+      primaryText = '首度參選'
+    } else if (person.candidates.length > 1) {
+      if (
+        !person.candidates.find(p => p.is_won) &&
+        person.candidates.length > 2
+      ) {
+        primaryText = '屢敗屢戰'
+      } else if (!person.candidates[1].is_won) {
+        primaryText = '捲土重來'
+      }
+    }
+
+    if (primaryText) tags.push(primaryText)
+
+    if (person.candidates.length > 1) {
+      if (person.candidates[1].is_won && person.candidates[1].votes === 0) {
+        tags.push('上屆自動當選')
+      }
+
+      if (person.candidates[0].cacode[0] !== person.candidates[1].cacode[0]) {
+        tags.push('跨區參選')
+      }
+    }
+
+    if (tags.length > 0) {
+      return (
+        <ElectionStatus>
+          {tags.map(tag => (
+            <Tag value={tag} borderwidth={1} backgroundcolor={'transparent'} />
+          ))}
+        </ElectionStatus>
+      )
+    }
+
+    return null
+  }
+
   render() {
     const {
       match: {
@@ -332,14 +381,6 @@ class ProfilePage extends Component {
 
           if (hasMeetings) titles.push('會議出席率')
 
-          const electionStatusText = currentTerm
-            ? '競逐連任'
-            : person.candidates.length === 1 &&
-              lastElection.year === 2019 &&
-              lastElection.election_type === 'ordinary'
-            ? '首度參選'
-            : undefined
-
           return (
             <>
               {lastElection.year === 2019 &&
@@ -389,15 +430,7 @@ class ProfilePage extends Component {
               <CandidateHeaderContainer
                 camp={getColorFromCamp(lastElection && lastElection.camp)}
               >
-                {electionStatusText && (
-                  <ElectionStatus>
-                    <Tag
-                      value={electionStatusText}
-                      borderwidth={1}
-                      backgroundcolor={'transparent'}
-                    />
-                  </ElectionStatus>
-                )}
+                {this.renderElectionStatusText(person, currentTerm)}
                 <CandidateAvatorContainer>
                   <PeopleAvatar
                     dimension={'84px'}
