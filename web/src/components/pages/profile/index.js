@@ -272,11 +272,7 @@ class ProfilePage extends Component {
       text = `${electionResult}${person.candidates[0].year}年${person.candidates[0].constituency.district.dc_name_zh}區議員（${person.candidates[0].constituency.name_zh}）`
     }
 
-    return (
-      <Typography variant="h6" color="secondary">
-        {text}
-      </Typography>
-    )
+    return <Typography variant="h6">{text}</Typography>
   }
 
   renderElectionStatusText = (person, currentTerm) => {
@@ -468,12 +464,27 @@ class ProfilePage extends Component {
                   <PersonName
                     camp={getColorFromCamp(lastElection && lastElection.camp)}
                   >
-                    <Typography variant="h3" style={{ marginBottom: '2px' }}>
-                      {person.name_zh || ''}
-                    </Typography>
-                    <Typography variant="h5" style={{ marginBottom: '8px' }}>
-                      {person.name_en || ''}
-                    </Typography>
+                    {person.name_en ? (
+                      <>
+                        <Typography
+                          variant="h3"
+                          style={{ marginBottom: '5px' }}
+                        >
+                          {person.name_zh || person.name_en}
+                        </Typography>
+                        <Typography
+                          variant="h5"
+                          style={{ marginBottom: '5px' }}
+                        >
+                          {person.name_en || ''}
+                        </Typography>
+                      </>
+                    ) : (
+                      <Typography variant="h3" style={{ marginBottom: '3px' }}>
+                        {person.name_zh || person.name_en}
+                      </Typography>
+                    )}
+
                     {this.renderIntroText(person, currentTerm)}
                   </PersonName>
                 </Box>
