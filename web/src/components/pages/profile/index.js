@@ -259,6 +259,26 @@ class ProfilePage extends Component {
     )
   }
 
+  renderIntroText = (person, currentTerm) => {
+    let text
+    if (
+      currentTerm &&
+      currentTerm.term_to &&
+      Date.parse(new Date()) < Date.parse(currentTerm.term_to)
+    ) {
+      text = `現任${currentTerm.district.dc_name_zh}區議員（${currentTerm.constituency.name_zh}）`
+    } else {
+      const electionResult = person.candidates[0].is_won ? '當選' : '參選'
+      text = `${electionResult}${person.candidates[0].year}年${person.candidates[0].constituency.district.dc_name_zh}區議員（${person.candidates[0].constituency.name_zh}）`
+    }
+
+    return (
+      <Typography variant="h6" color="secondary">
+        {text}
+      </Typography>
+    )
+  }
+
   renderElectionStatusText = (person, currentTerm) => {
     let tags = []
     let primaryText
@@ -453,15 +473,7 @@ class ProfilePage extends Component {
                     <Typography variant="h5" style={{ marginBottom: '8px' }}>
                       {person.name_en || ''}
                     </Typography>
-                    {currentTerm &&
-                      currentTerm.term_to &&
-                      Date.parse(new Date()) <
-                        Date.parse(currentTerm.term_to) && (
-                        <Typography
-                          variant="h6"
-                          color="secondary"
-                        >{`現任${currentTerm.district.dc_name_zh}區議員（${currentTerm.constituency.name_zh}）`}</Typography>
-                      )}
+                    {this.renderIntroText(person, currentTerm)}
                   </PersonName>
                 </Box>
               </CandidateHeaderContainer>
