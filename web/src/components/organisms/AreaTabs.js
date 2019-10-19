@@ -4,14 +4,23 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 import styled from 'styled-components'
+import { COLORS } from 'ui/theme'
 
 const AreasTabs = styled(Tabs)`
   && {
   }
 `
-
+// Updated 2019-10-19 Hackathon - make the AreasTab look like a button
 const AreasTab = styled(Tab)`
   && {
+    background-color: ${COLORS.main.primary};
+    color: ${COLORS.main.background};
+    margin: 3px 5px;
+    :hover {
+      color: ${COLORS.main.primary};
+      background-color: ${COLORS.main.background};
+      border-color: 1px ${COLORS.main.primary} solid;
+    }
   }
 `
 
