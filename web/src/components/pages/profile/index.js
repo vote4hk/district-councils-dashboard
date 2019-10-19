@@ -5,9 +5,11 @@ import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import Breadcrumbs from '@material-ui/core/Breadcrumbs'
+import Avatar from '@material-ui/core/Avatar'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/Link'
 import { PeopleAvatar } from 'components/atoms/Avatar'
+import { UnstyledButton } from 'components/atoms/Button'
 import ScrollableTabs from 'components/organisms/ScrollableTabs'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
@@ -67,6 +69,7 @@ const GET_PEOPLE_PROFILE = gql`
         }
         candidate_number
         is_won
+        fb_id
         occupation
         political_affiliation
         age
@@ -135,6 +138,21 @@ const ElectionStatus = styled(Box)`
   }
 `
 
+const FacebookPageButton = styled(UnstyledLink)`
+  && {
+    display: block;
+    position: relative;
+    width: 0px;
+    height: 0px;
+    right: 40px;
+    bottom: -50px;
+    img {
+      height: 16px;
+      width: 16px;
+    }
+  }
+`
+
 const PersonHighlightContainer = styled(FlexRowContainer)`
   && {
     padding: 16px;
@@ -194,6 +212,26 @@ class ProfilePage extends Component {
 
   handleElectionDetailButton = (year, code) => {
     this.props.history.push(`/district/${year}/${code}`)
+  }
+
+  renderFacebook = person => {
+    let url = 'https://fb.me/'
+    let fb_id = person.candidates[0].fb_id
+    if (fb_id && fb_id != 'n/a') {
+      const homeUrl = process.env.REACT_APP_HOST_URI
+      url += fb_id
+      return (
+        <FacebookPageButton target="_blank" href={url} aria-label="Facebook">
+          <Avatar
+            width={'8px'}
+            height={'8px'}
+            borderwidth={'0'}
+            src={`/static/images/facebook.svg`}
+          />
+        </FacebookPageButton>
+      )
+    }
+    return
   }
 
   renderIntroText = (person, currentTerm) => {
@@ -424,6 +462,7 @@ class ProfilePage extends Component {
 
                     {this.renderIntroText(person, currentTerm)}
                   </PersonName>
+                  {this.renderFacebook(person)}
                 </Box>
               </CandidateHeaderContainer>
 
