@@ -3,10 +3,10 @@ import GroupedBarChart from 'components/atoms/charts/GroupedBarChart'
 import { Query } from 'react-apollo'
 import _ from 'lodash'
 import { QUERY_CONSTITUENCY_STATS } from 'queries/gql'
-import { Button, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 
 export default props => {
-  const [filterIndex, setFilterIndex] = useState(0)
+  const [filterIndex] = useState(0)
 
   const getDataForChat = voteStats => {
     /**
