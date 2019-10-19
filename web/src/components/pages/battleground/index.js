@@ -19,7 +19,7 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/Link'
 import { Alert } from 'components/atoms/Alert'
-import { getDistrictOverviewUriFromTag } from 'utils/helper'
+import { getDistrictOverviewUriFromTag, getParameterByName } from 'utils/helper'
 import { getAllFeaturesFromPoint } from 'utils/features'
 import DCCAElectionHistories from 'components/templates/DCCAElectionHistories'
 
@@ -118,7 +118,14 @@ class BattleGroundPage extends Component {
       match: {
         params: { year = 2019, code },
       },
+      location: { search },
     } = this.props
+
+    // Preset Tab for election history by matching query ?year=<year>
+    const queryYear = getParameterByName('year', search)
+    const presetTabIndex = ['2003', '2007', '2011', '2015'].findIndex(
+      year => year === queryYear
+    )
 
     return (
       <>
@@ -217,7 +224,10 @@ class BattleGroundPage extends Component {
                     </Typography>
                   </Container>
                 )}
-                <DCCAElectionHistories histories={pointHistory} />
+                <DCCAElectionHistories
+                  histories={pointHistory}
+                  presetTabIndex={presetTabIndex}
+                />
                 <PlainCard>
                   <Typography variant="h6">現任區議員</Typography>
                   {previousDistricts.length > 1 && (

@@ -59,7 +59,7 @@ class DCCAElectionHistories extends Component {
   }
 
   render() {
-    const { histories } = this.props
+    const { histories, presetTabIndex } = this.props
 
     const filteredHistories = histories.filter(
       history => history.year !== '2019'
@@ -68,7 +68,11 @@ class DCCAElectionHistories extends Component {
     return (
       <ScrollableTabs
         tabnumber={
-          filteredHistories.length > 0 ? filteredHistories.length - 1 : 0
+          presetTabIndex < 0
+            ? filteredHistories.length > 0
+              ? filteredHistories.length - 1
+              : 0
+            : presetTabIndex
         }
         indicatorcolor={COLORS.main.primary}
         titles={filteredHistories.map(history => (

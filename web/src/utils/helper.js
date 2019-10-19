@@ -200,3 +200,13 @@ export const getProfilePath = person => {
 
 export const formatNumber = num =>
   num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+
+export const getParameterByName = (name, url) => {
+  if (!url) url = window.location.href
+  name = name.replace(/[[\]]/g, '\\$&')
+  const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+    results = regex.exec(url)
+  if (!results) return null
+  if (!results[2]) return ''
+  return decodeURIComponent(results[2].replace(/\+/g, ' '))
+}
