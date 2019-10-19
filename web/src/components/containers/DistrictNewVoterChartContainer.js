@@ -4,6 +4,7 @@ import { Query } from 'react-apollo'
 import _ from 'lodash'
 import { QUERY_CONSTITUENCY_STATS } from 'queries/gql'
 import { Typography } from '@material-ui/core'
+import { COLORS } from 'ui/theme'
 
 export default props => {
   const [filterIndex] = useState(0)
@@ -159,7 +160,11 @@ export default props => {
                 性選民增加了
                 {_.round(meta.mostIncreasedGroup.max * 100, 2)}%
               </Typography>
-              <GroupedBarChart data={chartData} />
+              <GroupedBarChart
+                data={chartData}
+                firstColor={COLORS.main.secondary}
+                secondColor={COLORS.main.primary}
+              />
             </>
           )
         }}

@@ -12,7 +12,12 @@ export default props => {
       return
     }
 
-    const color = d3.scaleOrdinal().range(['#ca0020', '#f4a582'])
+    const color = d3
+      .scaleOrdinal()
+      .range([
+        props.firstColor ? props.firstColor : '#ca0020',
+        props.secondColor ? props.secondColor : '#f4a582',
+      ])
 
     const margin = { top: 50, right: 20, bottom: 30, left: 40 }
 
