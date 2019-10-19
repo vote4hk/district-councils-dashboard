@@ -22,7 +22,7 @@ const Container = styled.div`
 
 const PredictionChartHeader = styled(Box)`
   && {
-    display: flex;
+    display: block;
     justify-content: space-between;
     align-items: center;
   }
@@ -30,6 +30,7 @@ const PredictionChartHeader = styled(Box)`
 
 const StyledLoadingButton = styled(LoadingButton)`
   && {
+    width: 100%;
     background-color: ${COLORS.main.primary};
     color: ${COLORS.main.background};
     padding: 5px 16px;
@@ -284,15 +285,16 @@ const CampCompareChartContainer = props => {
                         ? '2019選舉結果預測'
                         : '現屆區議會勢力分布'}
                     </Text>
+                    <br />
                     {!predictEnabled && (
                       <StyledLoadingButton
-                        style={{ float: 'right' }}
                         isLoading={loading}
                         onClick={() => setPredictEnabled(true)}
                         label="預測結果"
                       />
                     )}
                   </PredictionChartHeader>
+                  <br />
                   {!loading && predictEnabled && (
                     <PredictionChartPanel
                       settings={settings}
