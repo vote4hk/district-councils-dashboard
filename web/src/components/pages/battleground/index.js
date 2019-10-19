@@ -20,6 +20,8 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/Link'
 import { Alert } from 'components/atoms/Alert'
 import { getDistrictOverviewUriFromTag } from 'utils/helper'
+import { getAllFeaturesFromPoint } from 'utils/features'
+import DCCAElectionHistories from 'components/templates/DCCAElectionHistories'
 
 const groupVoteStat = voteStats => {
   const data = _.groupBy(voteStats, stat => stat.subtype)
@@ -57,6 +59,10 @@ class BattleGroundPage extends Component {
     super(props)
     this.state = {
       showMap: true,
+      currentPoint: {
+        lng: 114.17056164035003,
+        lat: 22.312613750860297,
+      },
     }
   }
 
@@ -70,6 +76,24 @@ class BattleGroundPage extends Component {
     this.props.history.push(`/district/${year}/${code}`)
   }
 
+  handleMapClick = coordinate => {
+    const point = {
+      lng: coordinate[0],
+      lat: coordinate[1],
+    }
+
+    this.setState({ currentPoint: point })
+  }
+
+  handleMapLoaded = props => {
+    const { centroid } = props
+    const point = {
+      lng: centroid[0],
+      lat: centroid[1],
+    }
+
+    this.setState({ currentPoint: point })
+  }
   onPrevElection() {
     const {
       match: {
@@ -109,6 +133,14 @@ class BattleGroundPage extends Component {
                 district.intersect_area > 1000
             )
 
+            const pointHistory = getAllFeaturesFromPoint(
+              this.state.currentPoint
+            )
+
+            const DCCAStatus =
+              district.tags &&
+              district.tags.find(tag => tag.type === 'boundary')
+
             return (
               <>
                 <BreadcrumbsContainer>
@@ -135,11 +167,15 @@ class BattleGroundPage extends Component {
                     </Typography>
                   </Breadcrumbs>
                 </BreadcrumbsContainer>
-                <Alert>
-                  <Typography variant="h6" gutterBottom>
-                    區議會選舉提名期現已展開，至10月17日結束。
-                  </Typography>
-                </Alert>
+                {DCCAStatus && (
+                  <Alert>
+                    <Typography variant="h6" gutterBottom>
+                      {DCCAStatus.tag === '改劃界'
+                        ? `此選區於2019年更改劃界`
+                        : `此選區為2019年${DCCAStatus.tag}`}
+                    </Typography>
+                  </Alert>
+                )}
                 <Container>
                   <CandidatesContainer year={year} code={district.code} />
                 </Container>
@@ -160,18 +196,28 @@ class BattleGroundPage extends Component {
                   {showMap ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                 </ToggleMapButton>
                 <Collapse in={showMap}>
-                  <Box
-                    width={{ sm: '100%', md: '960px' }}
-                    height={{ sm: '300px', md: '400px' }}
-                  >
+                  <Box width={'100%'} height={{ sm: '300px', md: '400px' }}>
                     <DCCACompareMap
                       year={year}
                       code={code}
                       changeDistrict={this.handleChangeDistrict}
+                      handleMapClick={this.handleMapClick}
+                      handleMapLoaded={this.handleMapLoaded}
                     />
                   </Box>
                 </Collapse>
                 <MainAreas areas={district.main_areas || []} />
+
+                {DCCAStatus && (
+                  <Container>
+                    <Typography variant="h6">
+                      {DCCAStatus.tag === '改劃界'
+                        ? `此選區於2019年更改劃界`
+                        : `此選區為2019年${DCCAStatus.tag}`}
+                    </Typography>
+                  </Container>
+                )}
+                <DCCAElectionHistories histories={pointHistory} />
                 <PlainCard>
                   <Typography variant="h6">現任區議員</Typography>
                   {previousDistricts.length > 1 && (

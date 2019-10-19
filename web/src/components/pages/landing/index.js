@@ -59,7 +59,7 @@ class IndexPage extends Component {
       <>
         <Alert>
           <Typography variant="h6" gutterBottom>
-            區議會選舉提名期現已展開，至10月17日結束。
+            上屆區選，68人自動當選，今屆罕有出現零「白區」！
           </Typography>
         </Alert>
         <TopSection>

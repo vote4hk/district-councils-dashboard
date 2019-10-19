@@ -20,7 +20,7 @@ const LeftMargin = styled(ExpandedRow)`
   && {
     min-height: 48px;
     align-items: center;
-    padding: 0 24px 0 24px;
+    padding: 0 16px 0 16px;
     cursor: pointer;
   }
 `
@@ -29,19 +29,45 @@ const SearchMenu = props => {
     drawer: { dispatch },
   } = React.useContext(ContextStore)
 
-  function goToHomePage() {
-    props.history.push('/')
+  function goToPage(route) {
+    props.history.push(route)
     dispatch({ type: DRAWER_CLOSE })
   }
 
   return (
     <>
       <LeftMargin>
-        <Typography variant="h6" color="secondary" onClick={goToHomePage}>
+        <Typography
+          variant="h5"
+          color="secondary"
+          onClick={() => goToPage('/')}
+        >
           返回首頁
         </Typography>
       </LeftMargin>
 
+      <LeftMargin>
+        <Typography
+          variant="h5"
+          color="secondary"
+          onClick={() => goToPage('/about-dc')}
+        >
+          關於區議會選舉
+        </Typography>
+      </LeftMargin>
+
+      <LeftMargin>
+        <Typography
+          variant="h5"
+          color="secondary"
+          onClick={() =>
+            (window.location.href =
+              'https://docs.google.com/forms/u/1/d/e/1FAIpQLSdXtbdry3w8hkmZuN0MJaj2CP2X3RUUnCTWLnOujsfx1pHDrw/viewform?usp=send_form')
+          }
+        >
+          反映意見
+        </Typography>
+      </LeftMargin>
       <SearchTab />
     </>
   )

@@ -11,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/Search'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import * as AddressParser from 'hk-address-parser-lib'
-import { getAllFeaturesFromPoint } from 'utils/features'
+import { getSingleFeatureFromPoint } from 'utils/features'
 import _ from 'lodash'
 
 function renderInputComponent(inputProps) {
@@ -163,7 +163,7 @@ class IntegrationAutosuggest extends React.Component {
     event,
     { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }
   ) => {
-    const constituency = getAllFeaturesFromPoint(suggestion.coordinate)
+    const constituency = getSingleFeatureFromPoint(suggestion.coordinate)
     // TODO: better to use action to dispatch this event
     this.props.handleAddressSelected(constituency)
 

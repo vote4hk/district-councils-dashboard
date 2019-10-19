@@ -13,7 +13,7 @@ import Rows from 'components/atoms/Rows'
 import Box from '@material-ui/core/Box'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
-import { getDistrictListUriFromTag } from 'utils/helper'
+import { getDistrictListUriFromTag, formatNumber } from 'utils/helper'
 import { withRouter } from 'react-router-dom'
 import { SuccessText, FailureText } from 'components/atoms/Text'
 
@@ -86,27 +86,10 @@ class DCCAOverview extends Component {
       <>
         <Container>
           <Rows>
-            <Columns>
-              <Box>
-                {sortedTags
-                  .filter(tag => tag.type === 'boundary')
-                  .map((tag, index) => (
-                    <Tag
-                      key={index}
-                      value={tag.tag}
-                      variant="default"
-                      handleClick={() => {
-                        this.props.history.push(
-                          getDistrictListUriFromTag(tag.tag)
-                        )
-                      }}
-                    />
-                  ))}
-              </Box>
-            </Columns>
             <UnstyledButton onClick={this.toggleGraph.bind(this)}>
               <Typography variant="h6">
-                選民人數 {voterData.aggregations.all_voters} {' ('}
+                選民人數 {formatNumber(voterData.aggregations.all_voters)}{' '}
+                {' ('}
                 {new_voters_percentage > 0 ? (
                   <SuccessText display="inline">
                     +{new_voters_percentage}%
@@ -129,20 +112,16 @@ class DCCAOverview extends Component {
             )}
           </Rows>
           <Columns>
-            {sortedTags
-              .filter(tag => tag.type !== 'boundary')
-              .map((tag, index) => (
-                <TagContainer key={index}>
-                  <Tag
-                    value={tag.tag}
-                    handleClick={() => {
-                      this.props.history.push(
-                        getDistrictListUriFromTag(tag.tag)
-                      )
-                    }}
-                  />
-                </TagContainer>
-              ))}
+            {sortedTags.map((tag, index) => (
+              <TagContainer key={index}>
+                <Tag
+                  value={tag.tag}
+                  handleClick={() => {
+                    this.props.history.push(getDistrictListUriFromTag(tag.tag))
+                  }}
+                />
+              </TagContainer>
+            ))}
           </Columns>
         </Container>
       </>

@@ -197,3 +197,6 @@ export const getProfilePath = person => {
   const { name_en, name_zh, uuid } = person
   return `/profile/${name_zh || name_en}/${uuid}`
 }
+
+export const formatNumber = num =>
+  num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
