@@ -60,6 +60,7 @@ export const COLORS = {
   main: {
     text: '#000',
     primary: '#7B68EE', // mediumslateblue
+    secondary: '#CCC4F8', // 2019-10-19 Hackathon - secondary color to voter bar chart
     background: '#fff',
   },
   mainText: 'black',
