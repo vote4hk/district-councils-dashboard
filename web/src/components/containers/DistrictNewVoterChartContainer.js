@@ -3,19 +3,10 @@ import GroupedBarChart from 'components/atoms/charts/GroupedBarChart'
 import { Query } from 'react-apollo'
 import _ from 'lodash'
 import { QUERY_CONSTITUENCY_STATS } from 'queries/gql'
-import { Button, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 
 export default props => {
-  const filters = [null, 'FEMALE', 'MALE']
-  const [filterIndex, setFilterIndex] = useState(0)
-
-  const changeFilter = () => {
-    let index = filterIndex + 1
-    if (index === filters.length) {
-      index = 0
-    }
-    setFilterIndex(index)
-  }
+  const [filterIndex] = useState(0)
 
   const getDataForChat = voteStats => {
     /**
@@ -57,6 +48,32 @@ export default props => {
      */
 
     return data
+  }
+
+  const getTransformedData = data => {
+    const newData = []
+    const valueDict = {}
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].category_2 === '18-20' || data[i].category_2 === '71+') {
+        newData.push(data[i])
+      } else {
+        const ageGroupPrefix = data[i].category_2[0] // e.g. 21-25 and 26-30 will have the same first digit
+        const dictKey =
+          ageGroupPrefix +
+          data[i].category_1 /* gender */ +
+          data[i].subtype /* VOTERS, NEW_VOTERS */
+        if (typeof valueDict[dictKey] === 'undefined') {
+          // no existing count for this key
+          valueDict[dictKey] = data[i].count
+        } else {
+          data[i].count += valueDict[dictKey]
+          data[i].category_2 =
+            ageGroupPrefix + '1-' + (parseInt(ageGroupPrefix) + 1) + '0'
+          newData.push(data[i])
+        }
+      }
+    }
+    return newData
   }
 
   const getMeta = voteStats => {
@@ -123,29 +140,25 @@ export default props => {
             console.error(`cannot find constituency. code: ${props.code}`)
             return `Error!`
           }
-          // transform the data to desire format
-          const chartData = getDataForChat(
+
+          // 2019-10-19 Hackathon - Reduce grouping for voters bar chart
+          const transformedData = getTransformedData(
             data.dcd_constituencies[0].vote_stats
           )
-          const meta = getMeta(data.dcd_constituencies[0].vote_stats)
+          // transform the data to desire format
+          const chartData = getDataForChat(transformedData)
+          const meta = getMeta(transformedData)
           return (
             <>
               <Typography variant="h2">
-                選民增加{_.round(meta.increased * 100, 2)}%
+                選民人數增加{_.round(meta.increased * 100, 2)}%
               </Typography>
               <Typography variant="h4">
-                {meta.mostIncreasedGroup.age}歲的
+                最大增幅組別：{meta.mostIncreasedGroup.age}歲的
                 {meta.mostIncreasedGroup.gender === 'MALE' ? '男' : '女'}
                 性選民增加了
                 {_.round(meta.mostIncreasedGroup.max * 100, 2)}%
               </Typography>
-              <Button onClick={changeFilter}>
-                {filterIndex === 0
-                  ? '顯示所有'
-                  : filterIndex === 1
-                  ? '只顯示男性選民'
-                  : '只顯示女性選民'}
-              </Button>
               <GroupedBarChart data={chartData} />
             </>
           )

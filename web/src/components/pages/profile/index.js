@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
@@ -15,7 +14,6 @@ import { getColorFromCamp } from 'utils/helper'
 import CouncillorMeetingAttendanceContainer from 'components/containers/CouncillorMeetingAttendanceContainer'
 import PersonElectionHistoriesContainer from 'components/containers/PersonElectionHistoriesContainer'
 import FCPersonData from 'components/templates/FCPersonData'
-import { SuccessText, FailureText } from 'components/atoms/Text'
 import { COLORS } from 'ui/theme'
 import { Tag } from 'components/atoms/Tag'
 import {
@@ -74,6 +72,7 @@ const GET_PEOPLE_PROFILE = gql`
         camp
         election_type
         year
+        votes
       }
     }
   }
@@ -114,15 +113,6 @@ const PersonName = styled.div`
   }
 `
 
-const YearDiv = styled.div`
-  && {
-    font-size: 24px;
-    font-weight: 600;
-    color: #9b9b9b;
-    margin-bottom: 20px;
-  }
-`
-
 const ElectionStatus = styled(Box)`
   && {
     display: flex;
@@ -137,43 +127,6 @@ const ElectionStatus = styled(Box)`
 const PersonHighlightContainer = styled(FlexRowContainer)`
   && {
     padding: 16px;
-  }
-`
-
-const ElectionHistoryPaper = styled(Paper)`
-  && {
-    padding: 20px;
-  }
-`
-
-const ElectionHistoryContentGrid = styled(Grid)`
-  && {
-    padding: 15px;
-  }
-`
-
-const ElectionHistoryContentSpan = styled(Grid)`
-  && {
-    font-size: 18px;
-    color: #4a4a4a;
-  }
-`
-
-const ElectionHistoryContentHeaderSpan = styled(ElectionHistoryContentSpan)`
-  && {
-    font-weight: 500;
-  }
-`
-const ElectionDetailButton = styled.div`
-  && {
-    padding: 15px;
-    font-weight: 600;
-    color: #ffb700;
-    width: 100%;
-    text-align: center;
-    border-radius: 4px;
-    border: 2px solid #ffb700;
-    cursor: pointer;
   }
 `
 const BreadcrumbsContainer = styled(Box)`
@@ -195,67 +148,69 @@ class ProfilePage extends Component {
     this.props.history.push(`/district/${year}/${code}`)
   }
 
-  renderElectionInfoCard(election, yob) {
-    return (
-      <Grid item xs={12} md={4}>
-        <YearDiv>{`${election.year}年`}</YearDiv>
-        <ElectionHistoryPaper>
-          <ElectionHistoryContentGrid container spacing={1}>
-            <ElectionHistoryContentHeaderSpan item xs={12} md={4}>
-              地區
-            </ElectionHistoryContentHeaderSpan>
-            <ElectionHistoryContentSpan item xs={12} md={8}>
-              {' '}
-              {election.constituency && election.constituency.name
-                ? election.constituency.name
-                : '-'}{' '}
-            </ElectionHistoryContentSpan>
-          </ElectionHistoryContentGrid>
-          <hr />
-          <ElectionHistoryContentGrid container spacing={1}>
-            <ElectionHistoryContentHeaderSpan item xs={12} md={4}>
-              選區
-            </ElectionHistoryContentHeaderSpan>
-            <ElectionHistoryContentSpan item xs={12} md={8}>
-              {`${election.constituency.name_zh} （${election.cacode}）`}
-            </ElectionHistoryContentSpan>
-          </ElectionHistoryContentGrid>
-          <hr />
-          <ElectionHistoryContentGrid container spacing={1}>
-            <ElectionHistoryContentHeaderSpan item xs={12} md={4}>
-              陣營
-            </ElectionHistoryContentHeaderSpan>
-            <ElectionHistoryContentSpan item xs={12} md={8}>
-              {election.camp ? election.camp : '-'}
-            </ElectionHistoryContentSpan>
-          </ElectionHistoryContentGrid>
-          <hr />
-          <ElectionHistoryContentGrid container spacing={1}>
-            <ElectionHistoryContentHeaderSpan item xs={12} md={4}>
-              得票率
-            </ElectionHistoryContentHeaderSpan>
-            <ElectionHistoryContentSpan item xs={12} md={8}>
-              {`${election.vote_percentage}% （${
-                election.is_won ? (
-                  <SuccessText>當選</SuccessText>
-                ) : (
-                  <FailureText>落敗</FailureText>
-                )
-              }）`}
-            </ElectionHistoryContentSpan>
-          </ElectionHistoryContentGrid>
-          <ElectionHistoryContentGrid container spacing={1}>
-            <ElectionDetailButton
-              onClick={() => {
-                this.handleElectionDetailButton(election.year, election.cacode)
-              }}
-            >
-              查看選舉資料
-            </ElectionDetailButton>
-          </ElectionHistoryContentGrid>
-        </ElectionHistoryPaper>
-      </Grid>
-    )
+  renderIntroText = (person, currentTerm) => {
+    let text
+    if (
+      currentTerm &&
+      currentTerm.term_to &&
+      Date.parse(new Date()) < Date.parse(currentTerm.term_to)
+    ) {
+      text = `現任${currentTerm.district.dc_name_zh}區議員（${currentTerm.constituency.name_zh}）`
+    } else {
+      const electionResult = person.candidates[0].is_won ? '當選' : '參選'
+      text = `${electionResult}${person.candidates[0].year}年${person.candidates[0].constituency.district.dc_name_zh}區議員（${person.candidates[0].constituency.name_zh}）`
+    }
+
+    return <Typography variant="h6">{text}</Typography>
+  }
+
+  renderElectionStatusText = (person, currentTerm) => {
+    let tags = []
+    let primaryText
+
+    if (
+      person.candidates[0].year === 2019 &&
+      person.candidates[0].election_type === 'ordinary'
+    ) {
+      if (currentTerm) {
+        primaryText = '競逐連任'
+      } else if (person.candidates.length === 1) {
+        primaryText = '首度參選'
+      } else if (person.candidates.length > 1) {
+        if (
+          !person.candidates.find(p => p.is_won) &&
+          person.candidates.length > 2
+        ) {
+          primaryText = '屢敗屢戰'
+        } else if (!person.candidates[1].is_won) {
+          primaryText = '捲土重來'
+        }
+      }
+    }
+
+    if (primaryText) tags.push(primaryText)
+
+    if (person.candidates.length > 1) {
+      if (person.candidates[1].is_won && person.candidates[1].votes === 0) {
+        tags.push('上屆自動當選')
+      }
+
+      if (person.candidates[0].cacode[0] !== person.candidates[1].cacode[0]) {
+        tags.push('跨區參選')
+      }
+    }
+
+    if (tags.length > 0) {
+      return (
+        <ElectionStatus>
+          {tags.map(tag => (
+            <Tag value={tag} borderwidth={1} backgroundcolor={'transparent'} />
+          ))}
+        </ElectionStatus>
+      )
+    }
+
+    return null
   }
 
   render() {
@@ -332,14 +287,6 @@ class ProfilePage extends Component {
 
           if (hasMeetings) titles.push('會議出席率')
 
-          const electionStatusText = currentTerm
-            ? '競逐連任'
-            : person.candidates.length === 1 &&
-              lastElection.year === 2019 &&
-              lastElection.election_type === 'ordinary'
-            ? '首度參選'
-            : undefined
-
           return (
             <>
               {lastElection.year === 2019 &&
@@ -389,15 +336,7 @@ class ProfilePage extends Component {
               <CandidateHeaderContainer
                 camp={getColorFromCamp(lastElection && lastElection.camp)}
               >
-                {electionStatusText && (
-                  <ElectionStatus>
-                    <Tag
-                      value={electionStatusText}
-                      borderwidth={1}
-                      backgroundcolor={'transparent'}
-                    />
-                  </ElectionStatus>
-                )}
+                {this.renderElectionStatusText(person, currentTerm)}
                 <CandidateAvatorContainer>
                   <PeopleAvatar
                     dimension={'84px'}
@@ -414,21 +353,28 @@ class ProfilePage extends Component {
                   <PersonName
                     camp={getColorFromCamp(lastElection && lastElection.camp)}
                   >
-                    <Typography variant="h3" style={{ marginBottom: '2px' }}>
-                      {person.name_zh || ''}
-                    </Typography>
-                    <Typography variant="h5" style={{ marginBottom: '8px' }}>
-                      {person.name_en || ''}
-                    </Typography>
-                    {currentTerm &&
-                      currentTerm.term_to &&
-                      Date.parse(new Date()) <
-                        Date.parse(currentTerm.term_to) && (
+                    {person.name_en ? (
+                      <>
                         <Typography
-                          variant="h6"
-                          color="secondary"
-                        >{`現任${currentTerm.district.dc_name_zh}區議員（${currentTerm.constituency.name_zh}）`}</Typography>
-                      )}
+                          variant="h3"
+                          style={{ marginBottom: '5px' }}
+                        >
+                          {person.name_zh || person.name_en}
+                        </Typography>
+                        <Typography
+                          variant="h5"
+                          style={{ marginBottom: '5px' }}
+                        >
+                          {person.name_en || ''}
+                        </Typography>
+                      </>
+                    ) : (
+                      <Typography variant="h3" style={{ marginBottom: '3px' }}>
+                        {person.name_zh || person.name_en}
+                      </Typography>
+                    )}
+
+                    {this.renderIntroText(person, currentTerm)}
                   </PersonName>
                 </Box>
               </CandidateHeaderContainer>
@@ -456,6 +402,7 @@ class ProfilePage extends Component {
                     getColorFromCamp(lastElection && lastElection.camp)
                   ].background
                 }
+                variant="scrollable"
               >
                 {person.fc_uuid && (
                   <FCPersonData

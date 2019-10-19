@@ -8,6 +8,7 @@ import styled from 'styled-components'
 
 const StyledAppBar = styled(AppBar)`
   && {
+    box-shadow: none;
     background: white;
     .MuiTabs-indicator {
       background: ${props => props.indicatorcolor || 'black'};
@@ -42,8 +43,15 @@ ScrollableTabs.defaultProps = {
 }
 
 export default function ScrollableTabs(props) {
-  const [selectedTab, setSelectedTab] = React.useState(0)
-  const { titles, children, buttonLayout, indicatorcolor } = props
+  const {
+    titles,
+    children,
+    buttonLayout,
+    indicatorcolor,
+    tabnumber = 0,
+    variant,
+  } = props
+  const [selectedTab, setSelectedTab] = React.useState(tabnumber)
   function handleChange(event, newValue) {
     setSelectedTab(newValue)
   }
@@ -57,6 +65,8 @@ export default function ScrollableTabs(props) {
           value={selectedTab}
           onChange={handleChange}
           centered={shouldCenter}
+          variant={variant || 'scrollable'} // 'centered', 'scrollable', 'fullWidth'
+          scrollButtons="auto"
         >
           {titles.map((title, index) => (
             <Tab
