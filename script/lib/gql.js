@@ -45,7 +45,6 @@ const QUERY_GET_CANDIDATES = `query {
     candidate_number
     occupation
     votes
-    vote_percentage
     is_won  	
   }
 }`;
