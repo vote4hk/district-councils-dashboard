@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import Avatar from '@material-ui/core/Avatar'
@@ -17,7 +16,6 @@ import { getColorFromCamp } from 'utils/helper'
 import CouncillorMeetingAttendanceContainer from 'components/containers/CouncillorMeetingAttendanceContainer'
 import PersonElectionHistoriesContainer from 'components/containers/PersonElectionHistoriesContainer'
 import FCPersonData from 'components/templates/FCPersonData'
-import { SuccessText, FailureText } from 'components/atoms/Text'
 import { COLORS } from 'ui/theme'
 import { Tag } from 'components/atoms/Tag'
 import {
@@ -118,15 +116,6 @@ const PersonName = styled.div`
   }
 `
 
-const YearDiv = styled.div`
-  && {
-    font-size: 24px;
-    font-weight: 600;
-    color: #9b9b9b;
-    margin-bottom: 20px;
-  }
-`
-
 const ElectionStatus = styled(Box)`
   && {
     display: flex;
@@ -156,43 +145,6 @@ const FacebookPageButton = styled(UnstyledLink)`
 const PersonHighlightContainer = styled(FlexRowContainer)`
   && {
     padding: 16px;
-  }
-`
-
-const ElectionHistoryPaper = styled(Paper)`
-  && {
-    padding: 20px;
-  }
-`
-
-const ElectionHistoryContentGrid = styled(Grid)`
-  && {
-    padding: 15px;
-  }
-`
-
-const ElectionHistoryContentSpan = styled(Grid)`
-  && {
-    font-size: 18px;
-    color: #4a4a4a;
-  }
-`
-
-const ElectionHistoryContentHeaderSpan = styled(ElectionHistoryContentSpan)`
-  && {
-    font-weight: 500;
-  }
-`
-const ElectionDetailButton = styled.div`
-  && {
-    padding: 15px;
-    font-weight: 600;
-    color: #ffb700;
-    width: 100%;
-    text-align: center;
-    border-radius: 4px;
-    border: 2px solid #ffb700;
-    cursor: pointer;
   }
 `
 const BreadcrumbsContainer = styled(Box)`

@@ -59,7 +59,7 @@ class IndexPage extends Component {
       <>
         <Alert>
           <Typography variant="h6" gutterBottom>
-            上屆區選，68人自動當選，今屆罕有出現零「白區」！
+            上屆區選有68人自動當選，今屆現時各區均有競爭。
           </Typography>
         </Alert>
         <TopSection>
