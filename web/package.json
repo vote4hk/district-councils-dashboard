@@ -79,7 +79,7 @@
   "scripts": {
     "deploy": "npm run build && gh-pages -d build -b master -r https://github.com/hkvoteguide/hkvoteguide.github.io.git",
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "node --max-old-space-size=2048 scripts/build.js",
     "test": "node scripts/test.js",
     "lint:fix": "eslint src/*.js --fix",
     "lint": "eslint src/*.js",
