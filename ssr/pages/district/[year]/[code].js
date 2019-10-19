@@ -6,31 +6,31 @@ import withData from '../../../lib/apollo'
 import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 
-const QUERY_FETCH_PROFILE = gql`
-query fetch_user($uuid: uuid!){
-  dcd_people(where:{uuid: {_eq: $uuid}}) {
-    name_zh
-    name_en
-    candidates {
-      cacode
-      occupation
-      political_affiliation
+const QUERY_FETCH_DISTRICT = gql`
+query fetch_district($year: Int!, $code: String!){
+  dcd_constituencies(where:{
+    year: {_eq: $year}
+    code: {_eq: $code}
+  }) {
+    code
+    district {
+      dc_name_zh
+      lc_name_zh
     }
+    name_zh
   }
 }`
 
-const Profile = () => {
+const District = () => {
   const router = useRouter()
-  const { id, name } = router.query
+  const { year, code } = router.query
 
-  console.log(id);
-  console.log(name);
+  const url = `https://vote4.hk/district/${year}/${code}`
 
-  const url = `https://vote4.hk/profile/${name}/${id}`
-
-  const { loading, error, data } = useQuery(QUERY_FETCH_PROFILE, {
+  const { loading, error, data } = useQuery(QUERY_FETCH_DISTRICT, {
     variables: {
-      uuid: id
+      year,
+      code,
     }
   })
 
@@ -65,4 +65,4 @@ const Profile = () => {
 //   return {}
 // }
 
-export default withData(Profile)
+export default withData(District)
