@@ -294,7 +294,9 @@ export default props => {
         .data(d => d)
         .join('text')
         .text(function(d, i, groups, f) {
-          return d.count === 0 ? '' : `${d.count}席`
+          return d.count === 0
+            ? ''
+            : d.count + (d.count / d.data.total > 0.1 ? '席' : '')
         })
         .attr('opacity', 0)
         .attr('x', d => {
