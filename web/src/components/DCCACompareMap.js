@@ -116,6 +116,7 @@ class DCCACompareMap extends Component {
         center: [114.2029, 22.3844],
         zoom: 13,
       }),
+      controls: [],
     })
 
     this.featureOverlay = new VectorLayer({
