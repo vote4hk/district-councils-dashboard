@@ -29,6 +29,15 @@ const GET_DCCA_ELECTION_HISTORIES = gql`
         political_affiliation
       }
     }
+    dcd_candidates_aggregate(
+      where: { year: { _eq: $year }, cacode: { _eq: $code } }
+    ) {
+      aggregate {
+        sum {
+          votes
+        }
+      }
+    }
   }
 `
 const DCCAElectionResultContainer = styled(Box)`
@@ -50,7 +59,7 @@ class DCCAElectionHistories extends Component {
   }
 
   render() {
-    const { histories } = this.props
+    const { histories, presetTabIndex } = this.props
 
     const filteredHistories = histories.filter(
       history => history.year !== '2019'
@@ -59,7 +68,11 @@ class DCCAElectionHistories extends Component {
     return (
       <ScrollableTabs
         tabnumber={
-          filteredHistories.length > 0 ? filteredHistories.length - 1 : 0
+          presetTabIndex < 0
+            ? filteredHistories.length > 0
+              ? filteredHistories.length - 1
+              : 0
+            : presetTabIndex
         }
         indicatorcolor={COLORS.main.primary}
         titles={filteredHistories.map(history => (
@@ -101,6 +114,8 @@ class DCCAElectionHistories extends Component {
               if (error) return `Error! ${error}`
 
               const electionResult = data.dcd_constituencies[0]
+              electionResult.vote_sum =
+                data.dcd_candidates_aggregate.aggregate.sum.votes
 
               return (
                 <DCCAElectionResultContainer>

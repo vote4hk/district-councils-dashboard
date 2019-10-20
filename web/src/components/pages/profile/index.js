@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import Breadcrumbs from '@material-ui/core/Breadcrumbs'
+import Avatar from '@material-ui/core/Avatar'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/Link'
 import { PeopleAvatar } from 'components/atoms/Avatar'
@@ -15,7 +15,6 @@ import { getColorFromCamp } from 'utils/helper'
 import CouncillorMeetingAttendanceContainer from 'components/containers/CouncillorMeetingAttendanceContainer'
 import PersonElectionHistoriesContainer from 'components/containers/PersonElectionHistoriesContainer'
 import FCPersonData from 'components/templates/FCPersonData'
-import { SuccessText, FailureText } from 'components/atoms/Text'
 import { COLORS } from 'ui/theme'
 import { Tag } from 'components/atoms/Tag'
 import {
@@ -67,6 +66,7 @@ const GET_PEOPLE_PROFILE = gql`
         }
         candidate_number
         is_won
+        fb_id
         occupation
         political_affiliation
         age
@@ -115,15 +115,6 @@ const PersonName = styled.div`
   }
 `
 
-const YearDiv = styled.div`
-  && {
-    font-size: 24px;
-    font-weight: 600;
-    color: #9b9b9b;
-    margin-bottom: 20px;
-  }
-`
-
 const ElectionStatus = styled(Box)`
   && {
     display: flex;
@@ -135,46 +126,24 @@ const ElectionStatus = styled(Box)`
   }
 `
 
+const FacebookPageButton = styled(UnstyledLink)`
+  && {
+    display: block;
+    position: relative;
+    width: 0px;
+    height: 0px;
+    right: 40px;
+    bottom: -50px;
+    img {
+      height: 16px;
+      width: 16px;
+    }
+  }
+`
+
 const PersonHighlightContainer = styled(FlexRowContainer)`
   && {
     padding: 16px;
-  }
-`
-
-const ElectionHistoryPaper = styled(Paper)`
-  && {
-    padding: 20px;
-  }
-`
-
-const ElectionHistoryContentGrid = styled(Grid)`
-  && {
-    padding: 15px;
-  }
-`
-
-const ElectionHistoryContentSpan = styled(Grid)`
-  && {
-    font-size: 18px;
-    color: #4a4a4a;
-  }
-`
-
-const ElectionHistoryContentHeaderSpan = styled(ElectionHistoryContentSpan)`
-  && {
-    font-weight: 500;
-  }
-`
-const ElectionDetailButton = styled.div`
-  && {
-    padding: 15px;
-    font-weight: 600;
-    color: #ffb700;
-    width: 100%;
-    text-align: center;
-    border-radius: 4px;
-    border: 2px solid #ffb700;
-    cursor: pointer;
   }
 `
 const BreadcrumbsContainer = styled(Box)`
@@ -196,67 +165,23 @@ class ProfilePage extends Component {
     this.props.history.push(`/district/${year}/${code}`)
   }
 
-  renderElectionInfoCard(election, yob) {
-    return (
-      <Grid item xs={12} md={4}>
-        <YearDiv>{`${election.year}年`}</YearDiv>
-        <ElectionHistoryPaper>
-          <ElectionHistoryContentGrid container spacing={1}>
-            <ElectionHistoryContentHeaderSpan item xs={12} md={4}>
-              地區
-            </ElectionHistoryContentHeaderSpan>
-            <ElectionHistoryContentSpan item xs={12} md={8}>
-              {' '}
-              {election.constituency && election.constituency.name
-                ? election.constituency.name
-                : '-'}{' '}
-            </ElectionHistoryContentSpan>
-          </ElectionHistoryContentGrid>
-          <hr />
-          <ElectionHistoryContentGrid container spacing={1}>
-            <ElectionHistoryContentHeaderSpan item xs={12} md={4}>
-              選區
-            </ElectionHistoryContentHeaderSpan>
-            <ElectionHistoryContentSpan item xs={12} md={8}>
-              {`${election.constituency.name_zh} （${election.cacode}）`}
-            </ElectionHistoryContentSpan>
-          </ElectionHistoryContentGrid>
-          <hr />
-          <ElectionHistoryContentGrid container spacing={1}>
-            <ElectionHistoryContentHeaderSpan item xs={12} md={4}>
-              陣營
-            </ElectionHistoryContentHeaderSpan>
-            <ElectionHistoryContentSpan item xs={12} md={8}>
-              {election.camp ? election.camp : '-'}
-            </ElectionHistoryContentSpan>
-          </ElectionHistoryContentGrid>
-          <hr />
-          <ElectionHistoryContentGrid container spacing={1}>
-            <ElectionHistoryContentHeaderSpan item xs={12} md={4}>
-              得票率
-            </ElectionHistoryContentHeaderSpan>
-            <ElectionHistoryContentSpan item xs={12} md={8}>
-              {`${election.vote_percentage}% （${
-                election.is_won ? (
-                  <SuccessText>當選</SuccessText>
-                ) : (
-                  <FailureText>落敗</FailureText>
-                )
-              }）`}
-            </ElectionHistoryContentSpan>
-          </ElectionHistoryContentGrid>
-          <ElectionHistoryContentGrid container spacing={1}>
-            <ElectionDetailButton
-              onClick={() => {
-                this.handleElectionDetailButton(election.year, election.cacode)
-              }}
-            >
-              查看選舉資料
-            </ElectionDetailButton>
-          </ElectionHistoryContentGrid>
-        </ElectionHistoryPaper>
-      </Grid>
-    )
+  renderFacebook = person => {
+    let url = 'https://fb.me/'
+    let fb_id = person.candidates[0].fb_id
+    if (fb_id && fb_id !== 'n/a') {
+      url += fb_id
+      return (
+        <FacebookPageButton target="_blank" href={url} aria-label="Facebook">
+          <Avatar
+            width={'8px'}
+            height={'8px'}
+            borderwidth={'0'}
+            src={`/static/images/facebook.svg`}
+          />
+        </FacebookPageButton>
+      )
+    }
+    return
   }
 
   renderIntroText = (person, currentTerm) => {
@@ -487,6 +412,7 @@ class ProfilePage extends Component {
 
                     {this.renderIntroText(person, currentTerm)}
                   </PersonName>
+                  {this.renderFacebook(person)}
                 </Box>
               </CandidateHeaderContainer>
 

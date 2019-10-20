@@ -1,0 +1,23 @@
+{
+  "name": "ssr",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@apollo/react-hooks": "^3.0.1",
+    "@apollo/react-ssr": "^3.0.1",
+    "@emotion/core": "^10.0.10",
+    "@emotion/styled": "^10.0.12",
+    "apollo-boost": "^0.4.4",
+    "graphql": "^14.3.1",
+    "isomorphic-fetch": "^2.2.1",
+    "next": "9.1.1",
+    "next-apollo": "^3.1.5",
+    "react": "16.10.2",
+    "react-dom": "16.10.2"
+  }
+}
