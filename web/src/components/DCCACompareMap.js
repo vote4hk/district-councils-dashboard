@@ -7,6 +7,7 @@ import VectorSource from 'ol/source/Vector'
 import XYZ from 'ol/source/XYZ'
 import GeoJSON from 'ol/format/GeoJSON'
 import { Style, Stroke, Fill, Text } from 'ol/style'
+import { pointerMove } from 'ol/events/condition.js'
 import Select from 'ol/interaction/Select'
 import styled from 'styled-components'
 import { COLORS } from 'ui/theme'
@@ -62,9 +63,31 @@ const highlightStyle = new Style({
   }),
 })
 
+const hoverStyle = new Style({
+  stroke: new Stroke({
+    color: COLORS.main.primary,
+    width: 2,
+  }),
+  fill: new Fill({
+    color: 'rgba(255,255,0,0.2)',
+  }),
+  text: new Text({
+    font: 'bold 16px Noto Sans TC, sans-serif',
+    fill: new Fill({
+      color: COLORS.main.primary,
+    }),
+    stroke: new Stroke({
+      color: 'white',
+      width: 3,
+    }),
+  }),
+})
+
 class DCCACompareMap extends Component {
   featureOverlay
+  featureHover
   highlightedFeature
+  hoveredFeature
 
   constructor(props) {
     super(props)
@@ -127,6 +150,15 @@ class DCCACompareMap extends Component {
       },
     })
 
+    this.featureHover = new VectorLayer({
+      source: new VectorSource(),
+      map: map,
+      style: function(feature) {
+        hoverStyle.getText().setText(`${feature.getProperties().CNAME}`)
+        return hoverStyle
+      },
+    })
+
     if (isDCDataExist) {
       // Fit to feature
       const features = this.featureSource.getFeatures()
@@ -159,12 +191,15 @@ class DCCACompareMap extends Component {
       featuresLayer: isDCDataExist ? featuresLayer : null,
     })
 
-    const select = new Select()
+    const selectBySingleClick = new Select()
+    map.addInteraction(selectBySingleClick)
+    selectBySingleClick.on('select', this.mapClick)
 
-    if (select !== null) {
-      map.addInteraction(select)
-      select.on('select', this.mapClick)
-    }
+    const selectByHover = new Select({
+      condition: pointerMove,
+    })
+    map.addInteraction(selectByHover)
+    selectByHover.on('select', this.mapHover)
   }
 
   highlightFeature(feature) {
@@ -174,6 +209,15 @@ class DCCACompareMap extends Component {
 
     this.featureOverlay.getSource().addFeature(feature)
     this.highlightedFeature = feature
+  }
+
+  highlightHoveredFeature(feature) {
+    if (this.hoveredFeature) {
+      this.featureHover.getSource().removeFeature(this.hoveredFeature)
+    }
+
+    this.featureHover.getSource().addFeature(feature)
+    this.hoveredFeature = feature
   }
 
   mapClick = e => {
@@ -188,6 +232,15 @@ class DCCACompareMap extends Component {
       this.state.map.getView().fit(selectedFeature.getGeometry().getExtent(), {
         duration: 200,
       })
+    }
+  }
+
+  mapHover = e => {
+    //const { year, changeDistrict, handleMapClick } = this.props
+    const selectedFeature = e.target.getFeatures().item(0)
+
+    if (selectedFeature) {
+      this.highlightHoveredFeature(selectedFeature)
     }
   }
 
