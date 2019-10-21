@@ -18,6 +18,10 @@ query fetch_district($year: Int!, $code: String!){
       lc_name_zh
     }
     name_zh
+    candidates {
+      id
+    }
+    main_areas
   }
 }`
 
@@ -35,17 +39,23 @@ const District = () => {
   })
 
   if (!loading) {
+    const constituency = data.dcd_constituencies.length > 0 ? data.dcd_constituencies[0] : {}
+    const displayName = `${constituency.name_zh}｜${constituency.district.dc_name_zh}`
+    const candidates = constituency.candidates || []
+    const main_area = constituency.main_areas.map(a => Object.values(a)[0]).join(', ')
+    const description = `${candidates.length > 0 && `${candidates.length}名候選人｜`}${main_area}`
     return (
       <div>
         <Head>
-          <title>Vote4HK - {name}</title>
+          <title>{`${displayName}｜Vote4HK 區議會投票指南 ✋🏻💜⚡`}</title>
           <link rel='icon' href='/favicon.ico' />
-          <meta property="og:title" content="2019區議會選舉 | 投票指南 | 候選人資料 | 選區分界地圖 | 選情數據分析 " />
-          <meta property="og:description" content="2019區議會選舉於11月24日投票，選出18區452名區議員，提供區選最新消息，輸入地址或搜尋候選人，了解身處選區的背景資料丶候選人政綱及表現。" />
+          <meta property="og:title" content={`${displayName}｜Vote4HK 區議會投票指南`} />
+          <meta property="og:description" content={`${description}｜了解區選最新消息，選區背景資料丶候選人政綱及表現`} />
           <meta property="og:type" content="article" />
+          <meta property="og:image" content={`https://vote4.hk/og-image.png`} />
           <meta property="og:url" content={url} />
-          <meta property="article:section" content="政情" />
-          <meta property="article:tag" content="政治, 立法會, 特首, 林鄭月娥, 議員, 選舉, 行政會議, 區議會, 撥款, 委員會, 林鄭月娥, 特首, 候任特首, 特區政府, 高官, 問責官員, 班子, 內閣, 司長, 局長" />
+          <meta property="article:section" content="候選人資料｜選區分界地圖｜選情數據分析" />
+          <meta property="article:tag" content={`${displayName}, 政治, 區議會, 立法會, 林鄭月娥, 議員, 選舉, 候選人, 選區, 分界, 地圖, 選情, 數據, 分析`} />　
         </Head>
       </div>
     )
