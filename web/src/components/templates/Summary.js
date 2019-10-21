@@ -7,7 +7,6 @@ import { Typography } from '@material-ui/core'
 import Box from '@material-ui/core/Box'
 import { DefaultLink } from 'components/atoms/Link'
 import Columns from 'components/atoms/Columns'
-import { Alert } from 'components/atoms/Alert'
 
 const Container = styled(Box)`
   && {
@@ -87,7 +86,9 @@ const Summary = props => {
                   .filter(a => a > 3)
                   .map((noc, i) => (
                     <Typography variant="h6" gutterBottom key={i}>
-                      <Alert>{noc}人參選：</Alert>
+                      <Typography variant="h6" gutterBottom>
+                        {noc}人參選：
+                      </Typography>
                       <Columns>
                         {result.stat[noc].map((district, index) => (
                           <FlexLink
