@@ -1,11 +1,13 @@
 import styled from 'styled-components'
 import Chip from '@material-ui/core/Chip'
 import React from 'react'
+import { COLORS } from 'ui/theme'
 
 const StyledChip = styled(Chip)`
   && {
     font-size: ${props => props.fontsize || 12}px;
-    background: ${props => props.backgroundcolor || '#e0e0e0'};
+    background: ${props => props.backgroundcolor || COLORS.main.primary};
+    color: ${props => props.color || COLORS.main.background};
     border: ${props => props.borderwidth || 0}px
       ${props => props.bordercolor || 'rgba(0, 0, 0, 0.5)'} solid;
   }
