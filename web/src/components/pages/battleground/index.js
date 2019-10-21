@@ -207,6 +207,7 @@ class BattleGroundPage extends Component {
                     <DCCACompareMap
                       year={year}
                       code={code}
+                      currentPoint={this.state.currentPoint}
                       changeDistrict={this.handleChangeDistrict}
                       handleMapClick={this.handleMapClick}
                       handleMapLoaded={this.handleMapLoaded}

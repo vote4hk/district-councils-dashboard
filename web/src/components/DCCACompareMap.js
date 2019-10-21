@@ -6,8 +6,10 @@ import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import XYZ from 'ol/source/XYZ'
 import GeoJSON from 'ol/format/GeoJSON'
-import { Style, Stroke, Fill, Text } from 'ol/style'
+import { Style, Stroke, Fill, Text, Circle as CircleStyle } from 'ol/style'
 import Select from 'ol/interaction/Select'
+import Feature from 'ol/Feature'
+import Point from 'ol/geom/Point'
 import styled from 'styled-components'
 import { COLORS } from 'ui/theme'
 
@@ -78,6 +80,8 @@ class DCCACompareMap extends Component {
     )
     let isDCDataExist = dc ? true : false
     let featuresLayer
+    let vectorLayer
+    let geoMarker
 
     if (isDCDataExist) {
       this.featureSource = new VectorSource({
@@ -128,6 +132,25 @@ class DCCACompareMap extends Component {
       },
     })
 
+    // Add layer for placing marker, set marker's style
+    let markerCoordinates = this.props.currentPoint
+    vectorLayer = new VectorLayer({
+      source: new VectorSource(),
+      style: function(feature) {
+        return new Style({
+          image: new CircleStyle({
+            radius: 7,
+            fill: new Fill({ color: 'black' }),
+            stroke: new Stroke({
+              color: 'white',
+              width: 2,
+            }),
+          }),
+        })
+      },
+    })
+    map.addLayer(vectorLayer)
+
     if (isDCDataExist) {
       // Fit to feature
       const features = this.featureSource.getFeatures()
@@ -153,6 +176,13 @@ class DCCACompareMap extends Component {
         }
       }
     }
+
+    // Add marker to the place user clicked
+    geoMarker = new Feature({
+      type: 'geoMarker',
+      geometry: new Point([markerCoordinates['lng'], markerCoordinates['lat']]),
+    })
+    vectorLayer.getSource().addFeature(geoMarker)
 
     this.setState({
       map,
