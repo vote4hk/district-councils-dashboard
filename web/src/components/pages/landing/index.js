@@ -75,13 +75,13 @@ class IndexPage extends Component {
               <Countdown date={electionDate} />
             </CountdownContainer>
           )}
-          <Summary />
           {/* <LandingIcon /> */}
         </TopSection>
         <Container>
           <StyledSearchTab />
           <StyledCampCompareChartContainer />
         </Container>
+        <Summary />
       </>
     )
   }
