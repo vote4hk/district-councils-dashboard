@@ -240,7 +240,12 @@ class ProfilePage extends Component {
       return (
         <ElectionStatus>
           {tags.map(tag => (
-            <Tag value={tag} borderwidth={1} backgroundcolor={'transparent'} />
+            <Tag
+              textcolor="black"
+              value={tag}
+              borderwidth={1}
+              backgroundcolor={'transparent'}
+            />
           ))}
         </ElectionStatus>
       )
