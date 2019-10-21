@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Query } from 'react-apollo'
 import Summary from 'components/templates/Summary'
 import CampCompareChartContainer from 'components/templates/CampCompareChartContainer'
 import Countdown from 'components/atoms/Countdown'
@@ -6,6 +7,7 @@ import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
 import { Alert } from 'components/atoms/Alert'
 import SearchTab from 'components/organisms/SearchTab'
+import { QUERY_GET_LANDING_ALERT } from 'queries/gql'
 
 const Container = styled.div`
   width: 100%;
@@ -57,11 +59,20 @@ class IndexPage extends Component {
   render() {
     return (
       <>
-        <Alert>
-          <Typography variant="h6" gutterBottom>
-            上屆區選有68人自動當選，今屆現時各區均有競爭。
-          </Typography>
-        </Alert>
+        <Query query={QUERY_GET_LANDING_ALERT}>
+          {({ loading, error, data }) => {
+            if (loading || error) return null
+            return data.dcd_config[0] ? (
+              <Alert>
+                <Typography variant="h6" gutterBottom>
+                  {data.dcd_config[0].value.text}
+                </Typography>
+              </Alert>
+            ) : (
+              <></>
+            )
+          }}
+        </Query>
         <TopSection>
           {Date.parse(new Date(electionDate)) > Date.parse(new Date()) && (
             <CountdownContainer>

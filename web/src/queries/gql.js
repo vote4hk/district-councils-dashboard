@@ -261,3 +261,11 @@ export const QUERY_GET_NOMINATION_SUMMARY = gql`
     }
   }
 `
+
+export const QUERY_GET_LANDING_ALERT = gql`
+  query {
+    dcd_config(where: { key: { _eq: "landing_alert" } }) {
+      value
+    }
+  }
+`
