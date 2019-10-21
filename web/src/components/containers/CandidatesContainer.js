@@ -136,7 +136,8 @@ const CandidatesContainer = props => {
                               </CandidateName>
 
                               <Typography variant="body2">
-                                {candidate.political_affiliation}
+                                {candidate.political_affiliation ||
+                                  '未報稱政治聯繫'}
                               </Typography>
                             </Candidate>
                           </UnstyledNavLink>
