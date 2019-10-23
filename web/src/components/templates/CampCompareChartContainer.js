@@ -75,7 +75,7 @@ function convertToD3Compatible(data, sortFunc) {
         return {
           name: DCREGION[d.code].zh_hk,
           建制: DCREGION[d.code].unelected_dc_seat + (d.count['建制'] || 0), // 當然議員
-          非建制: d.count['民主'] || 0,
+          民主: d.count['民主'] || 0,
           其他: d.count['其他'] || 0,
           total: Object.values(d.count).reduce((acc, c) => {
             acc += c
@@ -88,7 +88,7 @@ function convertToD3Compatible(data, sortFunc) {
           ? sortFunc
           : (a, b) => b['建制'] / b.total - a['建制'] / a.total
       ), // default sort by established count
-    columns: ['name', '建制', '其他', '非建制'],
+    columns: ['name', '建制', '其他', '民主'],
   }
   return res
 }
