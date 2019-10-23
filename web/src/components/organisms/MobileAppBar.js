@@ -3,11 +3,12 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
-import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
-import { DRAWER_OPEN } from '../../reducers/drawer'
+import styled from 'styled-components'
 import ContextStore from 'ContextStore'
+import { DRAWER_OPEN } from '../../reducers/drawer'
 import { UnstyledNavLink } from '../atoms/Link'
+import ShareButton from './ShareButton'
 
 const StyledAppBar = styled(AppBar)`
   && {
@@ -35,6 +36,7 @@ function MobileAppBar(props) {
     <>
       <StyledAppBar position="sticky">
         <Toolbar disableGutters>
+          <ShareButton />
           <AppBarTitle to={'/'}>
             <Typography variant="h1" align="center">
               <span role="img" aria-label="區議會 2019">
