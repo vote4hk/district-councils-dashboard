@@ -275,7 +275,7 @@ const CampCompareChartContainer = props => {
 
         if (!isLoadingPrediction && predictEnabled) {
           const expectedDataForGraph = groupExpectDataByRegionAndCamp(
-            predictoinData.data.dcd_constituencies,
+            predictoinData.dcd_constituencies,
             settings
           )
           d3Data = convertToD3Compatible(
