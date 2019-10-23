@@ -121,6 +121,11 @@ const CandidatesContainer = props => {
                                       '/static/images/avatar/default.png'
                                   },
                                 }}
+                                opacity={
+                                  candidate.nominate_status === 'disqualified'
+                                    ? 0.1
+                                    : 1
+                                }
                               />
                               {candidate.candidate_number > 0 && (
                                 <CandidateNumber
@@ -139,6 +144,12 @@ const CandidatesContainer = props => {
                                 {candidate.political_affiliation ||
                                   '未報稱政治聯繫'}
                               </Typography>
+
+                              {candidate.nominate_status === 'disqualified' && (
+                                <Typography variant="body2">
+                                  取消資格
+                                </Typography>
+                              )}
                             </Candidate>
                           </UnstyledNavLink>
                         </Grid>

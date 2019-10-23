@@ -213,6 +213,7 @@ export const QUERY_GET_CANDIDATES = gql`
       political_affiliation
       election_type
       camp
+      nominate_status
       person {
         id
         uuid
