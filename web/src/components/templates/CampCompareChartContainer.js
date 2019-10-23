@@ -255,9 +255,10 @@ const CampCompareChartContainer = props => {
   useEffect(() => {
     async function fetchData() {
       const result = await axios(`/static/data/prediction.json`)
-      console.log(result.status)
-      setPredictionData(result.data.data)
-      setIsLoadingPrediction(false)
+      if (result.status === 200) {
+        setPredictionData(result.data.data)
+        setIsLoadingPrediction(false)
+      }
     }
     fetchData()
   }, [])
