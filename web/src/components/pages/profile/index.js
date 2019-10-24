@@ -337,9 +337,15 @@ class ProfilePage extends Component {
                       separator={<NavigateNextIcon fontSize="small" />}
                       aria-label="breadcrumb"
                     >
-                      <Typography color="textPrimary">
-                        {lastElection.year}
-                      </Typography>
+                      <UnstyledLink
+                        onClick={() => {
+                          this.props.history.push(`/district/2019`)
+                        }}
+                      >
+                        <Typography color="textPrimary">
+                          {lastElection.year}
+                        </Typography>
+                      </UnstyledLink>
                       <UnstyledLink
                         onClick={() => {
                           this.props.history.push(
