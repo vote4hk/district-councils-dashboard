@@ -35,6 +35,31 @@ tags {
 }
 `
 
+const DISTRICT_DATA = `
+area_code
+area_name_zh
+dc_code
+dc_name_zh
+constituencies( where: { year: { _eq: $year } }, order_by: {code: asc} ) {
+  id
+  name_zh
+  code
+  candidates( where: { year: { _eq: $year } } ) {
+    candidate_number
+    is_won
+    political_affiliation
+    election_type
+    camp
+    person {
+      id
+      uuid
+      name_zh
+      related_organization
+    }
+  }
+}
+`
+
 export const QUERY_CONSTITUENCIES = gql`
 query($year: Int!, $code: String!) {
   dcd_constituencies(where: { year: { _eq: $year }, code: { _eq: $code } }) {
@@ -76,14 +101,16 @@ export const QUERY_CONSTITUENCY_STATS = gql`
 
 export const QUERY_GET_DISTRICT = gql`
   query($year: Int!, $code: String!) {
-    dcd_districts( where: { dc_code: { _eq: $code} }) {
-      area_code
-      area_name_zh
-      dc_code
-      dc_name_zh
-      constituencies( where: { year: { _eq: $year } }, order_by: {code: asc} ) {
-        ${CONSTITUENCIES_DATA}
-      }
+    dcd_districts( where: { dc_code: { _eq: $code} } ) {
+      ${DISTRICT_DATA}
+    }
+  }
+`
+
+export const QUERY_GET_ALL_DISTRICTS = gql`
+  query($year: Int!) {
+    dcd_districts {
+      ${DISTRICT_DATA}
     }
   }
 `

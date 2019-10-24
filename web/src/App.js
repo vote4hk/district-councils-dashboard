@@ -25,6 +25,7 @@ import ContextStore, { drawerInitialState } from 'ContextStore'
 import withTracker from './WithTracker'
 import SearchDrawer from 'components/pages/SearchDrawer'
 import DistrictOverviewPage from 'components/pages/district/overview'
+import DistrictAllPage from 'components/pages/district/all'
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_URI,
@@ -115,6 +116,10 @@ const App = props => {
                     <Route
                       path="/district/:year/:code"
                       component={withTracker(DistrictPage)}
+                    />
+                    <Route
+                      path="/district/:year"
+                      component={withTracker(DistrictAllPage)}
                     />
                     <Route
                       path="/disclaimer"
