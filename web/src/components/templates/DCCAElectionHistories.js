@@ -7,39 +7,8 @@ import { Typography } from '@material-ui/core'
 import DCCAElectionResult from 'components/templates/DCCAElectionResult'
 import Box from '@material-ui/core/Box'
 import { COLORS } from 'ui/theme'
-
 import { getColorFromCamp } from 'utils/helper'
 
-const GET_DCCA_ELECTION_HISTORIES = gql`
-  query($year: Int!, $code: String!) {
-    dcd_constituencies(where: { year: { _eq: $year }, code: { _eq: $code } }) {
-      code
-      year
-      name_zh
-      candidates(where: { year: { _eq: $year }, cacode: { _eq: $code } }) {
-        person {
-          name_zh
-          uuid
-        }
-        candidate_number
-        camp
-        votes
-        vote_percentage
-        is_won
-        political_affiliation
-      }
-    }
-    dcd_candidates_aggregate(
-      where: { year: { _eq: $year }, cacode: { _eq: $code } }
-    ) {
-      aggregate {
-        sum {
-          votes
-        }
-      }
-    }
-  }
-`
 const DCCAElectionResultContainer = styled(Box)`
   && {
     padding: 0 16px;
@@ -58,74 +27,132 @@ class DCCAElectionHistories extends Component {
     this.state = {}
   }
 
+  createQuery(history) {
+    const queries = history.map(
+      ({ CACODE: code, year }) => `
+    dcd_constituencies_${year}_${code}: dcd_constituencies(where: { year: { _eq: $year${year} }, code: { _eq: $code${code} } }) {
+      code
+      year
+      name_zh
+      candidates(where: { year: { _eq: $year${year} }, cacode: { _eq: $code${code} } }) {
+        person {
+          name_zh
+          uuid
+        }
+        candidate_number
+        camp
+        votes
+        vote_percentage
+        is_won
+        political_affiliation
+      }
+    }
+    dcd_candidates_aggregate_${year}_${code}: dcd_candidates_aggregate(
+      where: { year: { _eq: $year${year} }, cacode: { _eq: $code${code} } }
+    ) {
+      aggregate {
+        sum {
+          votes
+        }
+      }
+    }
+`
+    )
+
+    const variables = history.reduce((obj, { CACODE: code, year }) => {
+      obj[`code${code}`] = code
+      obj[`year${year}`] = year
+      return obj
+    }, {})
+
+    const variableLine = Object.keys(variables).map(
+      key => `$${key}: ${key.startsWith('year') ? 'Int' : 'String'}!`
+    )
+
+    const query = gql`
+  query(${variableLine.join(', ')}) {
+    ${queries.join('\n')}
+  }`
+    return {
+      query,
+      variables,
+    }
+  }
+
   render() {
     const { histories, presetTabIndex } = this.props
-
     const filteredHistories = histories.filter(
       history => history.year !== '2019'
     )
 
+    const { query, variables } = this.createQuery(filteredHistories)
+
     return (
-      <ScrollableTabs
-        tabnumber={
-          presetTabIndex < 0
-            ? filteredHistories.length > 0
-              ? filteredHistories.length - 1
-              : 0
-            : presetTabIndex
-        }
-        indicatorcolor={COLORS.main.primary}
-        titles={filteredHistories.map(history => (
-          <Query
-            query={GET_DCCA_ELECTION_HISTORIES}
-            variables={{ year: history.year, code: history.CACODE }}
-          >
-            {({ loading, error, data }) => {
-              if (loading) return null
-              if (error) return `Error! ${error}`
+      <Query query={query} variables={variables}>
+        {({ loading, error, data }) => {
+          if (loading) return null
+          if (error) return `Error! ${error}`
 
-              const electionResult = data.dcd_constituencies[0]
+          const constituencies = []
+          const year_vote_sum = {}
 
-              return (
-                <>
-                  <CampText
-                    camp={getColorFromCamp(
-                      electionResult.candidates.find(candi => candi.is_won).camp
-                    )}
-                  >
-                    {electionResult.candidates.find(candi => candi.is_won).camp}
-                  </CampText>
-                  <Typography variant="body2">{history.year}</Typography>
-                </>
-              )
-            }}
-          </Query>
-        ))}
-        variant="fullWidth"
-      >
-        {filteredHistories.map((history, index) => (
-          <Query
-            key={index}
-            query={GET_DCCA_ELECTION_HISTORIES}
-            variables={{ year: history.year, code: history.CACODE }}
-          >
-            {({ loading, error, data }) => {
-              if (loading) return null
-              if (error) return `Error! ${error}`
+          const keys = Object.keys(data)
+          for (const key of keys) {
+            if (key.includes('dcd_constituencies')) {
+              constituencies.push(data[key][0])
+            }
 
-              const electionResult = data.dcd_constituencies[0]
-              electionResult.vote_sum =
-                data.dcd_candidates_aggregate.aggregate.sum.votes
+            if (key.includes('dcd_candidates_aggregate')) {
+              const year = key.split('_')[3]
+              year_vote_sum[year] = data[key].aggregate.sum
+            }
+          }
 
-              return (
-                <DCCAElectionResultContainer>
-                  <DCCAElectionResult electionResult={electionResult} />
-                </DCCAElectionResultContainer>
-              )
-            }}
-          </Query>
-        ))}
-      </ScrollableTabs>
+          return (
+            <ScrollableTabs
+              tabnumber={
+                presetTabIndex < 0
+                  ? filteredHistories.length > 0
+                    ? filteredHistories.length - 1
+                    : 0
+                  : presetTabIndex
+              }
+              indicatorcolor={COLORS.main.primary}
+              variant="fullWidth"
+              titles={constituencies.map(electionResult => {
+                return (
+                  <React.Fragment key={electionResult.year}>
+                    <CampText
+                      camp={getColorFromCamp(
+                        electionResult.candidates.find(candi => candi.is_won)
+                          .camp
+                      )}
+                    >
+                      {
+                        electionResult.candidates.find(candi => candi.is_won)
+                          .camp
+                      }
+                    </CampText>
+                    <Typography variant="body2">
+                      {electionResult.year}
+                    </Typography>
+                  </React.Fragment>
+                )
+              })}
+            >
+              {constituencies.map(electionResult => {
+                electionResult.vote_sum =
+                  year_vote_sum[electionResult.year].votes
+                return (
+                  <DCCAElectionResultContainer key={electionResult.year}>
+                    <DCCAElectionResult electionResult={electionResult} />
+                  </DCCAElectionResultContainer>
+                )
+              })}
+            </ScrollableTabs>
+          )
+        }}
+      </Query>
     )
   }
 }

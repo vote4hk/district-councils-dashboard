@@ -166,7 +166,7 @@ class ProfilePage extends Component {
   }
 
   renderFacebook = person => {
-    let url = 'https://fb.me/'
+    let url = 'https://facebook.com/'
     let fb_id = person.candidates[0].fb_id
     if (fb_id && fb_id !== 'n/a') {
       url += fb_id
@@ -240,7 +240,12 @@ class ProfilePage extends Component {
       return (
         <ElectionStatus>
           {tags.map(tag => (
-            <Tag value={tag} borderwidth={1} backgroundcolor={'transparent'} />
+            <Tag
+              textcolor="black"
+              value={tag}
+              borderwidth={1}
+              backgroundcolor={'transparent'}
+            />
           ))}
         </ElectionStatus>
       )

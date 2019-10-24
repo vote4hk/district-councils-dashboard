@@ -213,6 +213,7 @@ export const QUERY_GET_CANDIDATES = gql`
       political_affiliation
       election_type
       camp
+      nominate_status
       person {
         id
         uuid
@@ -258,6 +259,14 @@ export const QUERY_GET_NOMINATION_SUMMARY = gql`
         camp
         nominated_at
       }
+    }
+  }
+`
+
+export const QUERY_GET_LANDING_ALERT = gql`
+  query {
+    dcd_config(where: { key: { _eq: "landing_alert" } }) {
+      value
     }
   }
 `

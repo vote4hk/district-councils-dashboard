@@ -86,7 +86,9 @@ const Summary = props => {
                   .filter(a => a > 3)
                   .map((noc, i) => (
                     <Typography variant="h6" gutterBottom key={i}>
-                      {noc}人參選：
+                      <Typography variant="h6" gutterBottom>
+                        {noc}人參選：
+                      </Typography>
                       <Columns>
                         {result.stat[noc].map((district, index) => (
                           <FlexLink

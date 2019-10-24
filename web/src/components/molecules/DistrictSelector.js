@@ -89,29 +89,27 @@ const DistrictSelector = props => {
     )
   }
 
-  const renderArea = area => {
-    return (
-      <>
-        {area.districts.map((d, index) => (
-          <DistrictExpansionPanel
-            key={`district-panel-${d.dc_code}`}
-            TransitionProps={{ unmountOnExit: true }}
+  const renderArea = (area, i) => (
+    <div key={`area-${i}`}>
+      {area.districts.map((d, index) => (
+        <DistrictExpansionPanel
+          key={`district-panel-${d.dc_code}`}
+          TransitionProps={{ unmountOnExit: true }}
+        >
+          <DistrictExpansionPanelSummary
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+            expandIcon={<ExpandMoreIcon />}
           >
-            <DistrictExpansionPanelSummary
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-              expandIcon={<ExpandMoreIcon />}
-            >
-              <Typography variant="h5">{d.dc_name_zh}</Typography>
-            </DistrictExpansionPanelSummary>
-            <DistrictExpansionPanelDetails>
-              {renderDCCA(d)}
-            </DistrictExpansionPanelDetails>
-          </DistrictExpansionPanel>
-        ))}
-      </>
-    )
-  }
+            <Typography variant="h5">{d.dc_name_zh}</Typography>
+          </DistrictExpansionPanelSummary>
+          <DistrictExpansionPanelDetails>
+            {renderDCCA(d)}
+          </DistrictExpansionPanelDetails>
+        </DistrictExpansionPanel>
+      ))}
+    </div>
+  )
 
   return (
     <Container>
@@ -139,8 +137,8 @@ const DistrictSelector = props => {
 
           return (
             <AreaTabs titles={areaNames} expanded={props.expanded}>
-              {areasWithDistricts.map(a => {
-                return renderArea(a)
+              {areasWithDistricts.map((a, index) => {
+                return renderArea(a, index)
               })}
             </AreaTabs>
           )
