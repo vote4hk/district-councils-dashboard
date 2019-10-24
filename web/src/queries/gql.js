@@ -40,6 +40,7 @@ area_code
 area_name_zh
 dc_code
 dc_name_zh
+dc_description_zh
 constituencies( where: { year: { _eq: $year } }, order_by: {code: asc} ) {
   id
   name_zh

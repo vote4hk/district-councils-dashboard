@@ -96,10 +96,10 @@ const CandidatesTableContent = props => {
             <CandidateGrid key={candidate.person.id} candidate={candidate} />
           </StyledTableCell>
           <StyledTableCell>
-            {candidate.person.related_organization || '/'}
+            {candidate.person.related_organization || '-'}
           </StyledTableCell>
           <StyledTableCell>
-            {candidate.political_affiliation || '/'}
+            {candidate.political_affiliation || '-'}
           </StyledTableCell>
           <StyledTableCell></StyledTableCell>
         </StyledTableRow>

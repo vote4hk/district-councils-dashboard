@@ -23,6 +23,14 @@ const DistrictTableContent = props => {
       >
         <TableCell colSpan={5}>
           <Typography variant="h4">{district.dc_name_zh}</Typography>
+          <Typography variant="body2" gutterBottom>
+            {district.constituencies.length}個選區
+          </Typography>
+          {district.dc_description_zh && (
+            <Typography variant="body1">
+              {district.dc_description_zh}
+            </Typography>
+          )}
         </TableCell>
       </DistrictNameTableRow>
       {district.constituencies.map(constituency => {

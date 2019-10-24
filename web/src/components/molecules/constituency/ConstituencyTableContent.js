@@ -23,7 +23,7 @@ const ConstituencyTableContent = props => {
         }}
       >
         <TableCell colSpan={5}>
-          <Typography variant="h5">
+          <Typography variant="h6">
             {constituency.name_zh}（{constituency.code}）
           </Typography>
         </TableCell>

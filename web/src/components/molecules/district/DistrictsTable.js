@@ -22,7 +22,7 @@ class DistrictsTable extends Component {
             <TableCell>候選人</TableCell>
             <TableCell>相關組織</TableCell>
             <TableCell>報稱政治聯繫</TableCell>
-            <TableCell>得票</TableCell>
+            {/* <TableCell>得票</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
