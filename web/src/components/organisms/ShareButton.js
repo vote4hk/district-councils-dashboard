@@ -1,6 +1,7 @@
 import React from 'react'
 import IconButton from '@material-ui/core/IconButton'
 import ShareIcon from '@material-ui/icons/Share'
+import CopyIcon from '@material-ui/icons/FileCopy'
 import styled from 'styled-components'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -18,6 +19,13 @@ const RightIconButton = styled(IconButton)`
   && {
     position: absolute;
     right: 0;
+  }
+`
+
+const StyledCopyIcon = styled(CopyIcon)`
+  && {
+    width: 64px;
+    height: 64px;
   }
 `
 
@@ -61,6 +69,13 @@ function ShareButton(props) {
         </MenuItem>
         <MenuItem onClick={handleShareButtonClose}>
           <WhatsappShareButton url={url} children={<WhatsappIcon />} />
+        </MenuItem>
+        <MenuItem onClick={handleShareButtonClose}>
+          <StyledCopyIcon
+            onClick={() => {
+              navigator.clipboard.writeText(url)
+            }}
+          />
         </MenuItem>
       </Menu>
     </>
