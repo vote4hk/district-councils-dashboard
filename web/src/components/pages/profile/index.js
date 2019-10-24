@@ -4,10 +4,8 @@ import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Breadcrumbs from '@material-ui/core/Breadcrumbs'
-import Tooltip from '@material-ui/core/Tooltip'
 import Avatar from '@material-ui/core/Avatar'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
-import InfoIcon from '@material-ui/icons/Info'
 import { UnstyledLink } from 'components/atoms/Link'
 import { PeopleAvatar } from 'components/atoms/Avatar'
 import ScrollableTabs from 'components/organisms/ScrollableTabs'
@@ -19,6 +17,7 @@ import PersonElectionHistoriesContainer from 'components/containers/PersonElecti
 import FCPersonData from 'components/templates/FCPersonData'
 import { COLORS } from 'ui/theme'
 import { Tag } from 'components/atoms/Tag'
+import { HtmlTooltip } from 'components/atoms/Tooltip'
 import {
   getDistrictOverviewUriFromTag,
   getConstituencyUriFromTag,
@@ -154,31 +153,6 @@ const BreadcrumbsContainer = styled(Box)`
     padding: 4px 16px;
   }
 `
-
-const InfoIconSvg = styled(InfoIcon)`
-  && {
-    font-size: 21px;
-    vertical-align: bottom;
-  }
-`
-
-const HtmlTooltip = styled(props => (
-  <Tooltip
-    classes={{ popper: props.className, tooltip: 'tooltip' }}
-    {...props}
-  />
-))`
-  && {
-    margin-left: 2px;
-  }
-  & .tooltip {
-    margin: 2px 0;
-    border: 1px solid #000;
-    background-color: #fff;
-    color: #000;
-  }
-`
-
 class ProfilePage extends Component {
   constructor(props) {
     super(props)
@@ -473,19 +447,10 @@ class ProfilePage extends Component {
                         <HtmlTooltip
                           disableFocusListener
                           disableTouchListener
-                          title={
-                            <React.Fragment>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html: highlight.tips,
-                                }}
-                              />
-                            </React.Fragment>
-                          }
+                          text={highlight.tips}
                           placement="bottom"
-                        >
-                          <InfoIconSvg />
-                        </HtmlTooltip>
+                          fontsize={21}
+                        />
                       </Typography>
                     </Grid>
                   ))}
