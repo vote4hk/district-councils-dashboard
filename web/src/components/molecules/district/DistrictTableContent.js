@@ -30,6 +30,7 @@ const DistrictTableContent = props => {
           <ConstituencyTableContent
             key={constituency.id}
             constituency={constituency}
+            year={year}
           />
         )
       })}
