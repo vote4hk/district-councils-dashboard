@@ -7,7 +7,6 @@ import VectorSource from 'ol/source/Vector'
 import XYZ from 'ol/source/XYZ'
 import GeoJSON from 'ol/format/GeoJSON'
 import { Style, Stroke, Fill, Text, Icon } from 'ol/style'
-import { pointerMove } from 'ol/events/condition.js'
 import Select from 'ol/interaction/Select'
 import Feature from 'ol/Feature'
 import Point from 'ol/geom/Point'
@@ -19,9 +18,6 @@ import dc2007 from '../data/DCCA_2007'
 import dc2011 from '../data/DCCA_2011'
 import dc2015 from '../data/DCCA_2015'
 import dc2019 from '../data/DCCA_2019'
-
-const IMAGE_HOST_URI =
-  process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'
 
 const MapContainer = styled.div`
   width: 100%;
