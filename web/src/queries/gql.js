@@ -110,7 +110,7 @@ export const QUERY_GET_DISTRICT = gql`
 
 export const QUERY_GET_ALL_DISTRICTS = gql`
   query($year: Int!) {
-    dcd_districts {
+    dcd_districts(order_by: {dc_code: asc}) {
       ${DISTRICT_DATA}
     }
   }
