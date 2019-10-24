@@ -6,6 +6,7 @@ import DistrictTableContent from 'components/molecules/district/DistrictTableCon
 import TableHead from '@material-ui/core/TableHead'
 import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
+import { HtmlTooltip } from 'components/atoms/Tooltip'
 
 class DistrictsTable extends Component {
   static propTypes = {
@@ -21,7 +22,16 @@ class DistrictsTable extends Component {
           <TableRow>
             <TableCell>候選人</TableCell>
             <TableCell>相關組織</TableCell>
-            <TableCell>報稱政治聯繫</TableCell>
+            <TableCell>
+              報稱政治聯繫
+              <HtmlTooltip
+                disableFocusListener
+                disableTouchListener
+                text="根據候選人提名表格上所填報的政治聯繫"
+                placement="bottom"
+                fontsize={20}
+              />
+            </TableCell>
             {/* <TableCell>得票</TableCell> */}
           </TableRow>
         </TableHead>
