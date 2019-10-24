@@ -41,7 +41,7 @@ const AddressSearchContainer = styled(Box)`
     position: relative;
     left: 0;
     right: 0;
-    padding: 21px 16px 21px 16px;
+    padding: 21px 0px;
   }
 `
 

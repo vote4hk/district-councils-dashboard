@@ -210,3 +210,7 @@ export const getParameterByName = (name, url) => {
   if (!results[2]) return ''
   return decodeURIComponent(results[2].replace(/\+/g, ' '))
 }
+
+export const getCurrentUrl = () => {
+  return window.location.href
+}
