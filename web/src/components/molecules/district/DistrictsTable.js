@@ -7,7 +7,16 @@ import TableHead from '@material-ui/core/TableHead'
 import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
+import styled from 'styled-components'
 
+const StyledTableCell = styled(TableCell)`
+  && {
+    padding: 6px 0px 6px 16px;
+    :last-child {
+      padding: 6px 0px 6px 16px;
+    }
+  }
+`
 class DistrictsTable extends Component {
   static propTypes = {
     districts: PropTypes.array.isRequired,
@@ -20,9 +29,9 @@ class DistrictsTable extends Component {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>候選人</TableCell>
-            <TableCell>相關組織</TableCell>
-            <TableCell>
+            <StyledTableCell>候選人</StyledTableCell>
+            <StyledTableCell>相關組織</StyledTableCell>
+            <StyledTableCell>
               報稱政治聯繫
               <HtmlTooltip
                 disableFocusListener
@@ -31,7 +40,7 @@ class DistrictsTable extends Component {
                 placement="bottom"
                 fontsize={20}
               />
-            </TableCell>
+            </StyledTableCell>
             {/* <TableCell>得票</TableCell> */}
           </TableRow>
         </TableHead>

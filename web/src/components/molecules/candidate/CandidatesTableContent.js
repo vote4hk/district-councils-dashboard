@@ -45,6 +45,7 @@ const CandidateGrid = props => {
       justify="flex-start"
       alignItems="center"
       spacing={1}
+      style={{ minWidth: '120px' }}
     >
       {candidate.candidate_number > 0 && (
         <Grid item>
