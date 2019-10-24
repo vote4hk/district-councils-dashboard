@@ -63,7 +63,7 @@ function PredictionChartPanel(props) {
     <div>
       <Tabs titles={['投票取向', '投票率', '設定']} buttonLayout="centered">
         <TabSection>
-          <Text variant="h5">非建制支持率</Text>
+          <Text variant="h5">民主支持率</Text>
           <StyledValueSlider
             label={'18-30歲'}
             value={settings.camp_rate[0]}
