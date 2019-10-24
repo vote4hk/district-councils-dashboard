@@ -4,8 +4,10 @@ import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Breadcrumbs from '@material-ui/core/Breadcrumbs'
+import Tooltip from '@material-ui/core/Tooltip'
 import Avatar from '@material-ui/core/Avatar'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
+import InfoIcon from '@material-ui/icons/Info'
 import { UnstyledLink } from 'components/atoms/Link'
 import { PeopleAvatar } from 'components/atoms/Avatar'
 import ScrollableTabs from 'components/organisms/ScrollableTabs'
@@ -150,6 +152,30 @@ const BreadcrumbsContainer = styled(Box)`
   && {
     flex-grow: 1;
     padding: 4px 16px;
+  }
+`
+
+const InfoIconSvg = styled(InfoIcon)`
+  && {
+    font-size: 21px;
+    vertical-align: bottom;
+  }
+`
+
+const HtmlTooltip = styled(props => (
+  <Tooltip
+    classes={{ popper: props.className, tooltip: 'tooltip' }}
+    {...props}
+  />
+))`
+  && {
+    margin-left: 2px;
+  }
+  & .tooltip {
+    margin: 2px 0;
+    border: 1px solid #000;
+    background-color: #fff;
+    color: #000;
   }
 `
 
@@ -300,6 +326,7 @@ class ProfilePage extends Component {
             personHighlight.push({
               xs: 2,
               title: '年齡',
+              tips: '根據候選人簡介的年齡推算',
               text: `${2019 - person.estimated_yob}歲`,
             })
           }
@@ -307,12 +334,15 @@ class ProfilePage extends Component {
           personHighlight.push({
             xs: 5,
             title: '相關組織',
+            tips: '候選人或議員的所屬政黨或社區組織，來源綜合媒體報道',
             text: person.related_organization || '-',
           })
 
           personHighlight.push({
             xs: 5,
             title: '職業',
+            tips:
+              '候選人：取自最近選舉的候選人簡介<br />議員：取自區議會網頁<br />',
             text:
               (currentTerm && currentTerm.career) || lastElection.occupation,
           })
@@ -438,7 +468,25 @@ class ProfilePage extends Component {
                 <Grid container>
                   {personHighlight.map((highlight, index) => (
                     <Grid item key={index} xs={highlight.xs} pr={1}>
-                      <Typography variant="h6">{highlight.title}</Typography>
+                      <Typography variant="h6">
+                        {highlight.title}
+                        <HtmlTooltip
+                          disableFocusListener
+                          disableTouchListener
+                          title={
+                            <React.Fragment>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html: highlight.tips,
+                                }}
+                              />
+                            </React.Fragment>
+                          }
+                          placement="bottom"
+                        >
+                          <InfoIconSvg />
+                        </HtmlTooltip>
+                      </Typography>
                     </Grid>
                   ))}
                 </Grid>
