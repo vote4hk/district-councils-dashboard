@@ -1,7 +1,7 @@
 import React from 'react'
 import IconButton from '@material-ui/core/IconButton'
 import ShareIcon from '@material-ui/icons/Share'
-import CopyIcon from '@material-ui/icons/FileCopy'
+import CopyIcon from '@material-ui/icons/Link'
 import styled from 'styled-components'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -10,9 +10,11 @@ import {
   FacebookShareButton,
   TelegramShareButton,
   WhatsappShareButton,
+  TwitterShareButton,
   FacebookIcon,
   TelegramIcon,
   WhatsappIcon,
+  TwitterIcon,
 } from 'react-share'
 
 const RightIconButton = styled(IconButton)`
@@ -24,8 +26,8 @@ const RightIconButton = styled(IconButton)`
 
 const StyledCopyIcon = styled(CopyIcon)`
   && {
-    width: 64px;
-    height: 64px;
+    width: 32px;
+    height: 32px;
   }
 `
 
@@ -62,13 +64,28 @@ function ShareButton(props) {
         onClose={handleShareButtonClose}
       >
         <MenuItem>
-          <FacebookShareButton url={url} children={<FacebookIcon />} />
+          <FacebookShareButton
+            url={url}
+            children={<FacebookIcon size={32} round={true} />}
+          />
         </MenuItem>
         <MenuItem onClick={handleShareButtonClose}>
-          <TelegramShareButton url={url} children={<TelegramIcon />} />
+          <TelegramShareButton
+            url={url}
+            children={<TelegramIcon size={32} round={true} />}
+          />
         </MenuItem>
         <MenuItem onClick={handleShareButtonClose}>
-          <WhatsappShareButton url={url} children={<WhatsappIcon />} />
+          <WhatsappShareButton
+            url={url}
+            children={<WhatsappIcon size={32} round={true} />}
+          />
+        </MenuItem>
+        <MenuItem onClick={handleShareButtonClose}>
+          <TwitterShareButton
+            url={url}
+            children={<TwitterIcon size={32} round={true} />}
+          />
         </MenuItem>
         <MenuItem onClick={handleShareButtonClose}>
           <StyledCopyIcon
