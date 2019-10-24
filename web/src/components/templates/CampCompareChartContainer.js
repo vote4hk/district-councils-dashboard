@@ -12,6 +12,7 @@ import axios from 'axios'
 import Box from '@material-ui/core/Box'
 import { COLORS } from 'ui/theme'
 import { DefaultLink } from 'components/atoms/Link'
+import { fireEvent } from 'utils/ga_fireevent'
 
 const Container = styled.div`
   && {
@@ -323,7 +324,14 @@ const CampCompareChartContainer = props => {
               {!predictEnabled && (
                 <StyledLoadingButton
                   isLoading={loading}
-                  onClick={() => setPredictEnabled(true)}
+                  onClick={() => {
+                    setPredictEnabled(true)
+                    fireEvent({
+                      ca: 'DC2019',
+                      ac: 'click',
+                      lb: 'predict_button',
+                    })
+                  }}
                   label="預測結果"
                 />
               )}
