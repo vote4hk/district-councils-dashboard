@@ -1,18 +1,18 @@
 import React from 'react'
 import { Query } from 'react-apollo'
-import { QUERY_GET_DISTRICT } from 'queries/gql'
+import { QUERY_GET_ALL_DISTRICTS } from 'queries/gql'
 import { Loading } from 'components/atoms/Loading'
 import DistrictsTable from 'components/molecules/district/DistrictsTable'
 
-const DistrictOverviewPage = props => {
+const DistrictAllPage = props => {
   const {
     match: {
-      params: { year, code },
+      params: { year },
     },
   } = props
 
   return (
-    <Query query={QUERY_GET_DISTRICT} variables={{ code, year }}>
+    <Query query={QUERY_GET_ALL_DISTRICTS} variables={{ year }}>
       {({ loading, error, data }) => {
         if (loading) return <Loading />
         if (error) return `Error! ${error}`
@@ -25,4 +25,4 @@ const DistrictOverviewPage = props => {
   )
 }
 
-export default DistrictOverviewPage
+export default DistrictAllPage

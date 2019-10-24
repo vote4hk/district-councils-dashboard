@@ -60,7 +60,7 @@ const DistrictSelector = props => {
 
   const renderDCCA = district => {
     return (
-      <div>
+      <div key={district.dc_code}>
         <DistrictContainer
           key={district.dc_code}
           onClick={() => {
