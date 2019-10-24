@@ -9,6 +9,7 @@ import ContextStore from 'ContextStore'
 import { DRAWER_OPEN } from '../../reducers/drawer'
 import { UnstyledNavLink } from '../atoms/Link'
 import ShareButton from './ShareButton'
+import { fireEvent } from 'utils/ga_fireevent'
 
 const StyledAppBar = styled(AppBar)`
   && {
@@ -49,9 +50,25 @@ function MobileAppBar(props) {
             aria-label="Search"
             onClick={() => dispatch({ type: DRAWER_OPEN })}
           >
-            <MenuIcon />
+            <MenuIcon
+              onClick={() =>
+                fireEvent({
+                  ca: 'general',
+                  ac: 'click',
+                  lb: 'menu_drawer',
+                })
+              }
+            />
           </IconButton>
-          <ShareButton />
+          <ShareButton
+            onClick={() =>
+              fireEvent({
+                ca: 'general',
+                ac: 'click',
+                lb: 'share_button',
+              })
+            }
+          />
         </Toolbar>
       </StyledAppBar>
     </>

@@ -327,9 +327,9 @@ const CampCompareChartContainer = props => {
                   onClick={() => {
                     setPredictEnabled(true)
                     fireEvent({
-                      ca: 'DC2019',
+                      ca: 'simulation',
                       ac: 'click',
-                      lb: 'predict_button',
+                      lb: 'start_simulate',
                     })
                   }}
                   label="預測結果"
