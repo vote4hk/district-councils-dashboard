@@ -20,7 +20,10 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/Link'
 import { Alert } from 'components/atoms/Alert'
 import { getDistrictOverviewUriFromTag, getParameterByName } from 'utils/helper'
-import { getAllFeaturesFromPoint } from 'utils/features'
+import {
+  getCentroidFromYearAndCode,
+  getAllFeaturesFromPoint,
+} from 'utils/features'
 import DCCAElectionHistories from 'components/templates/DCCAElectionHistories'
 
 const groupVoteStat = voteStats => {
@@ -57,11 +60,12 @@ const ToggleMapButton = styled(UnstyledButton)`
 class BattleGroundPage extends Component {
   constructor(props) {
     super(props)
+    const centroid = getCentroidFromYearAndCode(2019, props.match.params.code)
     this.state = {
       showMap: true,
       currentPoint: {
-        lng: 114.17056164035003,
-        lat: 22.312613750860297,
+        lng: centroid[0],
+        lat: centroid[1],
       },
     }
   }

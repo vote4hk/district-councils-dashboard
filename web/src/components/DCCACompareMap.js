@@ -6,7 +6,7 @@ import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import XYZ from 'ol/source/XYZ'
 import GeoJSON from 'ol/format/GeoJSON'
-import { Style, Stroke, Fill, Text, Circle as CircleStyle } from 'ol/style'
+import { Style, Stroke, Fill, Text, Icon } from 'ol/style'
 import { pointerMove } from 'ol/events/condition.js'
 import Select from 'ol/interaction/Select'
 import Feature from 'ol/Feature'
@@ -19,6 +19,9 @@ import dc2007 from '../data/DCCA_2007'
 import dc2011 from '../data/DCCA_2011'
 import dc2015 from '../data/DCCA_2015'
 import dc2019 from '../data/DCCA_2019'
+
+const IMAGE_HOST_URI =
+  process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'
 
 const MapContainer = styled.div`
   width: 100%;
@@ -158,16 +161,14 @@ class DCCACompareMap extends Component {
     // Add layer for placing marker, set marker's style
     let markerCoordinates = this.props.currentPoint
     vectorLayer = new VectorLayer({
+      name: 'marker',
       source: new VectorSource(),
       style: function(feature) {
         return new Style({
-          image: new CircleStyle({
-            radius: 7,
-            fill: new Fill({ color: 'black' }),
-            stroke: new Stroke({
-              color: 'white',
-              width: 2,
-            }),
+          image: new Icon({
+            anchor: [0.5, 1],
+            scale: 0.25,
+            src: '/static/images/marker.png',
           }),
         })
       },
@@ -214,6 +215,8 @@ class DCCACompareMap extends Component {
       type: 'geoMarker',
       geometry: new Point([markerCoordinates['lng'], markerCoordinates['lat']]),
     })
+    geoMarker.setProperties({ ENAME: '', CNAME: '' })
+
     vectorLayer.getSource().addFeature(geoMarker)
 
     this.setState({
@@ -226,11 +229,11 @@ class DCCACompareMap extends Component {
     map.addInteraction(selectBySingleClick)
     selectBySingleClick.on('select', this.mapClick)
 
-    const selectByHover = new Select({
-      condition: pointerMove,
-    })
-    map.addInteraction(selectByHover)
-    selectByHover.on('select', this.mapHover)
+    // const selectByHover = new Select({
+    //   condition: pointerMove,
+    // })
+    // map.addInteraction(selectByHover)
+    // selectByHover.on('select', this.mapHover)
   }
 
   highlightFeature(feature) {
@@ -255,6 +258,18 @@ class DCCACompareMap extends Component {
     const { year, changeDistrict, handleMapClick } = this.props
     const selectedFeature = e.target.getFeatures().item(0)
 
+    let geoMarker = new Feature({
+      type: 'geoMarker',
+      geometry: new Point(e.mapBrowserEvent.coordinate),
+    })
+    geoMarker.setProperties({ ENAME: '', CNAME: '' })
+
+    this.state.map.getLayers().forEach(layer => {
+      if (layer.get('name') !== undefined && layer.get('name') === 'marker') {
+        layer.getSource().clear()
+        layer.getSource().addFeature(geoMarker)
+      }
+    })
     handleMapClick(e.mapBrowserEvent.coordinate)
 
     if (selectedFeature) {
@@ -264,6 +279,9 @@ class DCCACompareMap extends Component {
         duration: 200,
       })
     }
+
+    // No more select polygon
+    e.target.getFeatures().clear()
   }
 
   mapHover = e => {
