@@ -36,7 +36,6 @@ function MobileAppBar(props) {
     <>
       <StyledAppBar position="sticky">
         <Toolbar disableGutters>
-          <ShareButton />
           <AppBarTitle to={'/'}>
             <Typography variant="h1" align="center">
               <span role="img" aria-label="區議會 2019">
@@ -44,7 +43,6 @@ function MobileAppBar(props) {
               </span>
             </Typography>
           </AppBarTitle>
-
           <IconButton
             color="inherit"
             component="span"
@@ -53,6 +51,7 @@ function MobileAppBar(props) {
           >
             <MenuIcon />
           </IconButton>
+          <ShareButton />
         </Toolbar>
       </StyledAppBar>
     </>
