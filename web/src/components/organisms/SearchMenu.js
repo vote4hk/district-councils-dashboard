@@ -68,7 +68,9 @@ const SearchMenu = props => {
           反映意見
         </Typography>
       </LeftMargin>
-      <SearchTab />
+      <LeftMargin>
+        <SearchTab />
+      </LeftMargin>
     </>
   )
 }
