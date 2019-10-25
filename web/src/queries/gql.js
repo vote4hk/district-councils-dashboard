@@ -55,6 +55,7 @@ constituencies( where: { year: { _eq: $year } }, order_by: {code: asc} ) {
       id
       uuid
       name_zh
+      name_en
       related_organization
     }
   }
