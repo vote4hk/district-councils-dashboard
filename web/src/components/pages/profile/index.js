@@ -469,10 +469,7 @@ class ProfilePage extends Component {
                   <FCPersonData
                     fcUuid={person.fc_uuid}
                     name={person.name_zh || person.name_en}
-                    filterFunc={record =>
-                      record.eventType !== 'MEDIA' &&
-                      record.eventType !== 'OTHER'
-                    }
+                    filterFunc={record => record.eventType !== 'MEDIA'}
                   />
                 )}
                 {person.fc_uuid && (
