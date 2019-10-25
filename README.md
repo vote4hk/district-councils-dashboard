@@ -17,7 +17,7 @@ And the web app requires a graphql backend to serve the data
 Now it is hosted at [https://gql.opencultures.life/graphql](https://gql.opencultures.life/graphql)
 
 ## Development
-
+### Website
 ```bash
 cd web
 
@@ -28,6 +28,15 @@ cp .env-sample .env
 npm i
 
 npm start
+```
+
+### SSR
+```bash
+cd ssr
+
+npm i
+
+npm run dev
 ```
 
 ## Reference
