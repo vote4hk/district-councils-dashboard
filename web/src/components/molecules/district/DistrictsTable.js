@@ -30,7 +30,16 @@ class DistrictsTable extends Component {
         <TableHead>
           <TableRow>
             <StyledTableCell>候選人</StyledTableCell>
-            <StyledTableCell>相關組織</StyledTableCell>
+            <StyledTableCell>
+              相關組織
+              <HtmlTooltip
+                disableFocusListener
+                disableTouchListener
+                text="候選人或議員的所屬政黨或社區組織，來源綜合媒體報道"
+                placement="bottom"
+                fontsize={20}
+              />
+            </StyledTableCell>
             <StyledTableCell>
               報稱政治聯繫
               <HtmlTooltip
