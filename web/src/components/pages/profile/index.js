@@ -316,7 +316,7 @@ class ProfilePage extends Component {
             xs: 5,
             title: '職業',
             tips:
-              '候選人：取自最近選舉的候選人簡介<br />議員：取自區議會網頁<br />',
+              '候選人：取自最近選舉的候選人簡介<br />議員：取自區議會網頁<br />來源綜合媒體報道',
             text:
               (currentTerm && currentTerm.career) || lastElection.occupation,
           })
