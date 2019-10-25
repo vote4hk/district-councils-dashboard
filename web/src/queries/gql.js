@@ -291,9 +291,9 @@ export const QUERY_GET_NOMINATION_SUMMARY = gql`
   }
 `
 
-export const QUERY_GET_LANDING_ALERT = gql`
-  query {
-    dcd_config(where: { key: { _eq: "landing_alert" } }) {
+export const QUERY_GET_CONFIG = gql`
+  query fetch_config($key: String!) {
+    dcd_config(where: { key: { _eq: $key } }) {
       value
     }
   }

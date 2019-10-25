@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
 import { Alert } from 'components/atoms/Alert'
 import SearchTab from 'components/organisms/SearchTab'
-import { QUERY_GET_LANDING_ALERT } from 'queries/gql'
+import { QUERY_GET_CONFIG } from 'queries/gql'
 
 const Container = styled.div`
   width: 100%;
@@ -56,23 +56,29 @@ class IndexPage extends Component {
   async componentDidMount() {}
   onTabSelected(type) {}
 
+  renderAlert = () => {
+    return (
+      <Query query={QUERY_GET_CONFIG} variables={{ key: 'landing_alert' }}>
+        {({ loading, error, data }) => {
+          if (loading || error) return null
+          return data.dcd_config[0] ? (
+            <Alert>
+              <Typography variant="h6" gutterBottom>
+                {data.dcd_config[0].value.text}
+              </Typography>
+            </Alert>
+          ) : (
+            <></>
+          )
+        }}
+      </Query>
+    )
+  }
+
   render() {
     return (
       <>
-        <Query query={QUERY_GET_LANDING_ALERT}>
-          {({ loading, error, data }) => {
-            if (loading || error) return null
-            return data.dcd_config[0] ? (
-              <Alert>
-                <Typography variant="h6" gutterBottom>
-                  {data.dcd_config[0].value.text}
-                </Typography>
-              </Alert>
-            ) : (
-              <></>
-            )
-          }}
-        </Query>
+        {this.renderAlert()}
         <TopSection>
           {Date.parse(new Date(electionDate)) > Date.parse(new Date()) && (
             <CountdownContainer>
