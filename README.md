@@ -1,7 +1,6 @@
-# District Councils Dashboard
+# 2019區議會選舉｜投票指南 ✋🏻🧡⚡
 
-District Councils Dashboard
-https://cswbrian.github.io/district-councils-dashboard
+[vote4.hk](https://vote4.hk)
 
 ## Stack
 
@@ -9,6 +8,10 @@ https://cswbrian.github.io/district-councils-dashboard
 - framework: react
 - chart: d3/zingchart
 - graphql: apollo
+- ssr: next.js
+
+## Source data
+https://github.com/nandiheath/dc-data  
 
 And the web app requires a graphql backend to serve the data
 Now it is hosted at [https://gql.opencultures.life/graphql](https://gql.opencultures.life/graphql)
@@ -25,17 +28,6 @@ cp .env-sample .env
 npm i
 
 npm start
-```
-
-## Deploy to github page
-
-```bash
-cd web
-
-# Make sure .env.production is setup correctly
-npm run deploy
-
-# this will build the project and publish to https://github.com/hkvoteguide/hkvoteguide.github.io.git
 ```
 
 ## Reference
