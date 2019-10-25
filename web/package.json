@@ -1,7 +1,7 @@
 {
   "name": "web",
   "version": "0.1.0",
-  "homepage": "https://dc2019.g0vhk.io/",
+  "homepage": "https://vote4.hk/",
   "dependencies": {
     "@babel/core": "7.2.2",
     "@material-ui/core": "^4.0.1",
