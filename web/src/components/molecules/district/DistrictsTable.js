@@ -37,7 +37,7 @@ class DistrictsTable extends Component {
                 disableTouchListener
                 text="候選人或議員的所屬政黨或社區組織，來源綜合媒體報道"
                 placement="bottom"
-                fontsize={20}
+                size={20}
               />
             </StyledTableCell>
             <StyledTableCell>
@@ -47,7 +47,7 @@ class DistrictsTable extends Component {
                 disableTouchListener
                 text="根據候選人提名表格上所填報的政治聯繫"
                 placement="bottom"
-                fontsize={20}
+                size={20}
               />
             </StyledTableCell>
             {/* <TableCell>得票</TableCell> */}

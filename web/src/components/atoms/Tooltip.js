@@ -5,7 +5,14 @@ import InfoIcon from '@material-ui/icons/InfoOutlined'
 
 const InfoIconSvg = styled(InfoIcon)`
   && {
-    font-size: ${props => props.fontsize || 16}px;
+    font-size: ${props => props.size || 16}px;
+    vertical-align: bottom;
+  }
+`
+
+const ErrorIconSvg = styled(InfoIcon)`
+  && {
+    font-size: ${props => props.size || 16}px;
     vertical-align: bottom;
   }
 `
@@ -24,7 +31,11 @@ export const HtmlTooltip = styled(props => (
     }
     {...props}
   >
-    <InfoIconSvg />
+    {props.type === 'error' ? (
+      <ErrorIconSvg size={props.size || 16} />
+    ) : (
+      <InfoIconSvg size={props.size || 16} />
+    )}
   </Tooltip>
 ))`
   && {

@@ -449,7 +449,7 @@ class ProfilePage extends Component {
                           disableTouchListener
                           text={highlight.tips}
                           placement="bottom"
-                          fontsize={21}
+                          size={21}
                         />
                       </Typography>
                     </Grid>
