@@ -42,12 +42,10 @@ const ToggleButton = styled(UnstyledButton)`
     width: 100%;
     font-size: 14px;
     text-align: center;
-    padding: 10px 0px;
-    margin: 5px 0px;
-    background: ${COLORS.main.primary};
-    color: ${COLORS.main.background};
+    padding: 5px 0px;
+    color: color: ${COLORS.main.text};
     :hover {
-      color: ${COLORS.main.text};
+      color: ${COLORS.main.primary};
     }
   }
 `
