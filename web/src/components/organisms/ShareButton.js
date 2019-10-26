@@ -65,25 +65,25 @@ function ShareButton(props) {
       >
         <MenuItem>
           <FacebookShareButton
-            url={url}
+            url={`${url}?utm_source=facebook`}
             children={<FacebookIcon size={32} round={true} />}
           />
         </MenuItem>
         <MenuItem onClick={handleShareButtonClose}>
           <TelegramShareButton
-            url={url}
+            url={`${url}?utm_source=telegram`}
             children={<TelegramIcon size={32} round={true} />}
           />
         </MenuItem>
         <MenuItem onClick={handleShareButtonClose}>
           <WhatsappShareButton
-            url={url}
+            url={`${url}?utm_source=whatsapp`}
             children={<WhatsappIcon size={32} round={true} />}
           />
         </MenuItem>
         <MenuItem onClick={handleShareButtonClose}>
           <TwitterShareButton
-            url={url}
+            url={`${url}?utm_source=twitter`}
             children={<TwitterIcon size={32} round={true} />}
           />
         </MenuItem>
