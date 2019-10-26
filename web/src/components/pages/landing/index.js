@@ -8,6 +8,7 @@ import { Typography } from '@material-ui/core'
 import { Alert } from 'components/atoms/Alert'
 import SearchTab from 'components/organisms/SearchTab'
 import { QUERY_GET_CONFIG } from 'queries/gql'
+import { COLORS } from 'ui/theme'
 
 const Container = styled.div`
   width: 100%;
@@ -42,6 +43,16 @@ const StyledSearchTab = styled(SearchTab)`
     padding: 100px;
   }
 `
+const ConfigCenterText = styled.div`
+  && {
+    width: 100%;
+    text-align: center;
+    a {
+      text-decoration: none;
+      color: ${COLORS.main.primary};
+    }
+  }
+`
 
 const electionDate = 'Nov 24, 2019 07:30:00'
 class IndexPage extends Component {
@@ -74,6 +85,30 @@ class IndexPage extends Component {
     )
   }
 
+  renderCenterText = () => {
+    return (
+      <Query
+        query={QUERY_GET_CONFIG}
+        variables={{ key: 'landing_center_text' }}
+      >
+        {({ loading, error, data }) => {
+          if (loading || error) return null
+          return data.dcd_config[0] ? (
+            <ConfigCenterText variant="h6" gutterBottom>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: data.dcd_config[0].value.html_text,
+                }}
+              />
+            </ConfigCenterText>
+          ) : (
+            <></>
+          )
+        }}
+      </Query>
+    )
+  }
+
   render() {
     return (
       <>
@@ -94,6 +129,7 @@ class IndexPage extends Component {
           {/* <LandingIcon /> */}
         </TopSection>
         <Container>
+          {this.renderCenterText()}
           <StyledSearchTab />
           <StyledCampCompareChartContainer />
         </Container>
