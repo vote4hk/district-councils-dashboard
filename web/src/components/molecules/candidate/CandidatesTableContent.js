@@ -33,6 +33,9 @@ const StyledTableRow = styled(TableRow)`
   && {
     cursor: pointer;
     padding: 0 10px;
+    td {
+      color: ${props => props.textcolor || 'black'};
+    }
   }
 `
 
@@ -71,9 +74,29 @@ const CandidateGrid = props => {
                 IMAGE_HOST_URI + '/static/images/avatar/default.png'
             },
           }}
+          opacity={
+            candidate.nominate_status === 'disqualified' ||
+            candidate.nominate_status === 'suspended'
+              ? 0.1
+              : 1
+          }
         />
       </Grid>
-      <Grid item>{candidate.person.name_zh || candidate.person.name_en}</Grid>
+      <Grid item>
+        {candidate.person.name_zh || candidate.person.name_en}
+        {candidate.nominate_status === 'disqualified' && (
+          <>
+            <br />
+            <span>(取消資格)</span>
+          </>
+        )}
+        {candidate.nominate_status === 'suspended' && (
+          <>
+            <br />
+            <span>(棄選)</span>
+          </>
+        )}
+      </Grid>
     </Grid>
   )
 }
@@ -92,6 +115,12 @@ const CandidatesTableContent = props => {
                 candidate.person.name_en}/${candidate.person.uuid}`
             )
           }}
+          textcolor={
+            candidate.nominate_status === 'disqualified' ||
+            candidate.nominate_status === 'suspended'
+              ? 'grey'
+              : 'black'
+          }
         >
           <StyledTableCell>
             <CandidateGrid key={candidate.person.id} candidate={candidate} />
