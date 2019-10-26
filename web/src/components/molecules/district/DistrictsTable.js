@@ -17,6 +17,7 @@ const StyledTableCell = styled(TableCell)`
     }
   }
 `
+
 class DistrictsTable extends Component {
   static propTypes = {
     districts: PropTypes.array.isRequired,
@@ -31,23 +32,23 @@ class DistrictsTable extends Component {
           <TableRow>
             <StyledTableCell>候選人</StyledTableCell>
             <StyledTableCell>
-              相關組織
+              相關組織{' '}
               <HtmlTooltip
                 disableFocusListener
                 disableTouchListener
                 text="候選人或議員的所屬政黨或社區組織，來源綜合媒體報道"
                 placement="bottom"
-                fontsize={20}
+                size={20}
               />
             </StyledTableCell>
             <StyledTableCell>
-              報稱政治聯繫
+              報稱政治聯繫{' '}
               <HtmlTooltip
                 disableFocusListener
                 disableTouchListener
                 text="根據候選人提名表格上所填報的政治聯繫"
                 placement="bottom"
-                fontsize={20}
+                size={20}
               />
             </StyledTableCell>
             {/* <TableCell>得票</TableCell> */}

@@ -100,10 +100,11 @@ const DCCAElectionResult = props => {
         ).toFixed(1)
         return (
           <UnstyledNavLink
+            key={index}
             to={`/profile/${candidate.person.name_zh ||
               candidate.person.name_en}/${candidate.person.uuid}`}
           >
-            <CandiateBox key={index}>
+            <CandiateBox>
               <CandidateAvatar>
                 <PeopleAvatar
                   dimension="60px"

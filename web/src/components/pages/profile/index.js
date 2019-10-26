@@ -307,14 +307,14 @@ class ProfilePage extends Component {
 
           personHighlight.push({
             xs: 5,
-            title: '相關組織',
+            title: '相關組織 ',
             tips: '候選人或議員的所屬政黨或社區組織，來源綜合媒體報道',
             text: person.related_organization || '-',
           })
 
           personHighlight.push({
             xs: 5,
-            title: '職業',
+            title: '職業 ',
             tips:
               '候選人：取自最近選舉的候選人簡介<br />議員：取自區議會網頁<br />來源綜合媒體報道',
             text:
@@ -449,7 +449,7 @@ class ProfilePage extends Component {
                           disableTouchListener
                           text={highlight.tips}
                           placement="bottom"
-                          fontsize={21}
+                          size={21}
                         />
                       </Typography>
                     </Grid>

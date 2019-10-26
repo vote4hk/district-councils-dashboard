@@ -5,6 +5,7 @@ import { PeopleAvatar } from 'components/atoms/Avatar'
 import { UnstyledNavLink } from 'components/atoms/Link'
 import Rows from 'components/atoms/Rows'
 import Columns from 'components/atoms/Columns'
+import CandidateTags from 'components/molecules/CandidateTags'
 import { Box, Typography, Grid } from '@material-ui/core'
 import styled from 'styled-components'
 import { getColorFromCamp } from 'utils/helper'
@@ -53,6 +54,19 @@ const CandidateNumber = styled(Box)`
     height: ${props => props.dimension};
     background-color: ${props => COLORS.camp[props.camp].background};
     color: ${props => COLORS.camp[props.camp].text};
+    text-align: center;
+  }
+`
+
+const StyledCandidateTags = styled(CandidateTags)`
+  && {
+    position: absolute;
+    top: 56px;
+    right: 10px;
+    border-radius: 50%;
+    background-color: white;
+    width: 30px;
+    height: 30px;
     text-align: center;
   }
 `
@@ -142,6 +156,9 @@ const CandidatesContainer = props => {
                                 >
                                   {candidate.candidate_number}
                                 </CandidateNumber>
+                              )}
+                              {candidate.tags.length > 0 && (
+                                <StyledCandidateTags tags={candidate.tags} />
                               )}
                               <CandidateName variant="h5">
                                 {candidate.person.name_zh ||
