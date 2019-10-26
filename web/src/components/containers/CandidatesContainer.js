@@ -5,6 +5,7 @@ import { PeopleAvatar } from 'components/atoms/Avatar'
 import { UnstyledNavLink } from 'components/atoms/Link'
 import Rows from 'components/atoms/Rows'
 import Columns from 'components/atoms/Columns'
+import CandidateTags from 'components/molecules/CandidateTags'
 import { Box, Typography, Grid } from '@material-ui/core'
 import styled from 'styled-components'
 import { getColorFromCamp } from 'utils/helper'
@@ -142,6 +143,9 @@ const CandidatesContainer = props => {
                                 >
                                   {candidate.candidate_number}
                                 </CandidateNumber>
+                              )}
+                              {candidate.tags.length > 0 && (
+                                <CandidateTags tags={candidate.tags} />
                               )}
                               <CandidateName variant="h5">
                                 {candidate.person.name_zh ||
