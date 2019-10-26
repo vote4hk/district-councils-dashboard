@@ -25,6 +25,12 @@ const CandidateList = styled(Grid)`
   }
 `
 
+const CandidateGrid = styled(Grid)`
+  && {
+    margin-bottom: 8px;
+  }
+`
+
 const Candidate = styled(Box)`
   && {
     position: relative;
@@ -89,7 +95,7 @@ const CandidatesContainer = props => {
                     <CandidateList container direction="row">
                       {/* Max 3 columns and always centered */}
                       {candidates.map(candidate => (
-                        <Grid
+                        <CandidateGrid
                           key={candidate.person.id}
                           item
                           xs={
@@ -122,7 +128,9 @@ const CandidatesContainer = props => {
                                   },
                                 }}
                                 opacity={
-                                  candidate.nominate_status === 'disqualified'
+                                  candidate.nominate_status ===
+                                    'disqualified' ||
+                                  candidate.nominate_status === 'suspended'
                                     ? 0.1
                                     : 1
                                 }
@@ -150,9 +158,14 @@ const CandidatesContainer = props => {
                                   取消資格
                                 </Typography>
                               )}
+                              {candidate.nominate_status === 'suspended' && (
+                                <Typography variant="body2">
+                                  宣布棄選
+                                </Typography>
+                              )}
                             </Candidate>
                           </UnstyledNavLink>
-                        </Grid>
+                        </CandidateGrid>
                       ))}
                     </CandidateList>
                   </Columns>

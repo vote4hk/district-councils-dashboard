@@ -29,6 +29,7 @@ query fetch_constituency($year: Int!, $code: String!){
     name_zh
     candidates {
       camp
+      nominate_status
     }
     main_areas
   }
@@ -89,7 +90,7 @@ const District = () => {
 
       const constituency = data.dcd_constituencies.length > 0 ? data.dcd_constituencies[0] : {}
       const displayName = `${constituency.name_zh}｜${constituency.district.dc_name_zh}`
-      const candidates = constituency.candidates || []
+      const candidates = constituency.candidates.filter(candidate => candidate.nominate_status !== 'disqualified') || []
       const main_area = constituency.main_areas.map(a => Object.values(a)[0]).join(', ')
       const candi_camp_count = {}
       candidates.forEach(candidate => {
