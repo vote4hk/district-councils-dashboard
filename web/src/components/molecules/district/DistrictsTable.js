@@ -17,6 +17,7 @@ const StyledTableCell = styled(TableCell)`
     }
   }
 `
+
 class DistrictsTable extends Component {
   static propTypes = {
     districts: PropTypes.array.isRequired,
@@ -31,7 +32,7 @@ class DistrictsTable extends Component {
           <TableRow>
             <StyledTableCell>候選人</StyledTableCell>
             <StyledTableCell>
-              相關組織
+              相關組織{' '}
               <HtmlTooltip
                 disableFocusListener
                 disableTouchListener
@@ -41,7 +42,7 @@ class DistrictsTable extends Component {
               />
             </StyledTableCell>
             <StyledTableCell>
-              報稱政治聯繫
+              報稱政治聯繫{' '}
               <HtmlTooltip
                 disableFocusListener
                 disableTouchListener
