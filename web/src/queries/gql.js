@@ -244,12 +244,17 @@ export const QUERY_GET_CANDIDATES = gql`
       election_type
       camp
       nominate_status
+      tags {
+        tag
+        type
+      }
       person {
         id
         uuid
         name_zh
         name_en
         related_organization
+        description
       }
     }
   }

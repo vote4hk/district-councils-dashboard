@@ -48,17 +48,16 @@ function MobileAppBar(props) {
             color="inherit"
             component="span"
             aria-label="Search"
-            onClick={() => dispatch({ type: DRAWER_OPEN })}
+            onClick={() => {
+              dispatch({ type: DRAWER_OPEN })
+              fireEvent({
+                ca: 'general',
+                ac: 'click',
+                lb: 'menu_drawer',
+              })
+            }}
           >
-            <MenuIcon
-              onClick={() =>
-                fireEvent({
-                  ca: 'general',
-                  ac: 'click',
-                  lb: 'menu_drawer',
-                })
-              }
-            />
+            <MenuIcon />
           </IconButton>
           <ShareButton
             onClick={() =>
