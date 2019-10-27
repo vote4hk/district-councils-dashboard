@@ -46,6 +46,7 @@ const Candidate = styled(Box)`
 const CandidateNumber = styled(Box)`
   && {
     position: relative;
+    margin-bottom: -18px !important;
     top: -19px;
     left: -28px;
     border-radius: 50%;
