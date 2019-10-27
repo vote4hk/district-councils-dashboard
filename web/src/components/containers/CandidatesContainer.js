@@ -45,9 +45,9 @@ const Candidate = styled(Box)`
 
 const CandidateNumber = styled(Box)`
   && {
-    position: absolute;
-    top: 64px;
-    left: 3px;
+    position: relative;
+    top: -19px;
+    left: -28px;
     border-radius: 50%;
     font-weight: 700;
     width: ${props => props.dimension};
