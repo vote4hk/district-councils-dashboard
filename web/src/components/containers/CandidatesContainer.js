@@ -60,14 +60,8 @@ const CandidateNumber = styled(Box)`
 
 const StyledCandidateTags = styled(CandidateTags)`
   && {
-    position: absolute;
-    top: 56px;
-    right: 10px;
-    border-radius: 50%;
-    background-color: white;
-    width: 30px;
-    height: 30px;
-    text-align: center;
+    margin-left: 2px;
+    display: inline;
   }
 `
 
@@ -157,12 +151,12 @@ const CandidatesContainer = props => {
                                   {candidate.candidate_number}
                                 </CandidateNumber>
                               )}
-                              {candidate.tags.length > 0 && (
-                                <StyledCandidateTags tags={candidate.tags} />
-                              )}
                               <CandidateName variant="h5">
                                 {candidate.person.name_zh ||
                                   candidate.person.name_en}
+                                {candidate.tags.length > 0 && (
+                                  <StyledCandidateTags tags={candidate.tags} />
+                                )}
                               </CandidateName>
 
                               <Typography variant="body2">
