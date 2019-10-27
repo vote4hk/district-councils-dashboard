@@ -158,19 +158,12 @@ const BreadcrumbsContainer = styled(Box)`
     padding: 4px 16px;
   }
 `
-
-const PersonDescriptionTitle = styled(Typography)`
-  && {
-    margin-top: 16px;
-    padding-left: 16px;
-  }
-`
 const PersonDescriptionParagraph = styled(HtmlParagraph)`
   && {
-    margin-top: 8px;
+    margin-top: 0px;
     padding-left: 16px;
     padding-right: 16px;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
   }
 `
 
@@ -478,13 +471,7 @@ class ProfilePage extends Component {
                 </Grid>
               </PersonHighlightContainer>
               {person.description && (
-                <>
-                  <Divider />
-                  <PersonDescriptionTitle variant="h5" caption>
-                    備註
-                  </PersonDescriptionTitle>
-                  <PersonDescriptionParagraph text={person.description} />
-                </>
+                <PersonDescriptionParagraph text={person.description} />
               )}
               <ScrollableTabs
                 titles={titles}
