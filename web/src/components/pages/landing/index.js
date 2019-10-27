@@ -4,7 +4,9 @@ import Summary from 'components/templates/Summary'
 import CampCompareChartContainer from 'components/templates/CampCompareChartContainer'
 import Countdown from 'components/atoms/Countdown'
 import styled from 'styled-components'
-import { Typography } from '@material-ui/core'
+import { Typography, Fab } from '@material-ui/core'
+import { ThumbUpAlt } from '@material-ui/icons'
+
 import { Alert } from 'components/atoms/Alert'
 import SearchTab from 'components/organisms/SearchTab'
 import { QUERY_GET_CONFIG } from 'queries/gql'
@@ -51,6 +53,15 @@ const ConfigCenterText = styled.div`
       text-decoration: none;
       color: ${COLORS.main.primary};
     }
+  }
+`
+
+const SupportUsButton = styled(Fab)`
+  && {
+    z-index: 9999;
+    right: 20px;
+    bottom: 20px;
+    position: absolute;
   }
 `
 
@@ -112,6 +123,15 @@ class IndexPage extends Component {
   render() {
     return (
       <>
+        <SupportUsButton
+          size="small"
+          color="secondary"
+          variant="extended"
+          aria-label="add"
+        >
+          <ThumbUpAlt />
+          支持我們
+        </SupportUsButton>
         {this.renderAlert()}
         <TopSection>
           {Date.parse(new Date(electionDate)) > Date.parse(new Date()) && (
