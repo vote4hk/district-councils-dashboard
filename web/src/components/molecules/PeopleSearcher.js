@@ -20,7 +20,7 @@ const GET_PEOPLE = gql`
       where: {
         _or: [
           { name_zh: { _like: $nameRegex } }
-          { name_en: { _like: $nameRegex } }
+          { name_en: { _ilike: $nameRegex } }
         ]
       }
       limit: 50
