@@ -56,6 +56,9 @@ export default function ScrollableTabs(props) {
   function handleChange(event, newValue) {
     setSelectedTab(newValue)
   }
+  function handleChangeIndex(newValue) {
+    setSelectedTab(newValue)
+  }
 
   const shouldCenter = buttonLayout === 'centered' ? true : false
 
@@ -79,7 +82,7 @@ export default function ScrollableTabs(props) {
           ))}
         </Tabs>
       </StyledAppBar>
-      <SwipeableViews index={selectedTab}>
+      <SwipeableViews index={selectedTab} onChangeIndex={handleChangeIndex}>
         {// TODO: support single tab
         children &&
           children.length > 0 &&
