@@ -31,6 +31,12 @@ export const HtmlTooltip = styled(props => (
       </>
     }
     {...props}
+    onClick={evt => {
+      evt.preventDefault()
+      evt.stopPropagation()
+      evt.nativeEvent.stopPropagation()
+      evt.nativeEvent.stopImmediatePropagation()
+    }}
   >
     {props.type === 'error' ? (
       <ErrorIconSvg size={props.size || 16} />
