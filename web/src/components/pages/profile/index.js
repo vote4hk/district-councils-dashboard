@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
-import Breadcrumbs from '@material-ui/core/Breadcrumbs'
-import Avatar from '@material-ui/core/Avatar'
+import {
+  Typography,
+  Divider,
+  Grid,
+  Breadcrumbs,
+  Avatar,
+} from '@material-ui/core'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/Link'
 import { PeopleAvatar } from 'components/atoms/Avatar'
+import HtmlParagraph from 'components/atoms/HtmlParagraph'
 import ScrollableTabs from 'components/organisms/ScrollableTabs'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
@@ -35,6 +39,7 @@ const GET_PEOPLE_PROFILE = gql`
       gender
       related_organization
       estimated_yob
+      description
       councillors {
         meeting_attendances {
           id
@@ -153,6 +158,22 @@ const BreadcrumbsContainer = styled(Box)`
     padding: 4px 16px;
   }
 `
+
+const PersonDescriptionTitle = styled(Typography)`
+  && {
+    margin-top: 16px;
+    padding-left: 16px;
+  }
+`
+const PersonDescriptionParagraph = styled(HtmlParagraph)`
+  && {
+    margin-top: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-bottom: 16px;
+  }
+`
+
 class ProfilePage extends Component {
   constructor(props) {
     super(props)
@@ -456,6 +477,15 @@ class ProfilePage extends Component {
                   ))}
                 </Grid>
               </PersonHighlightContainer>
+              {person.description && (
+                <>
+                  <Divider />
+                  <PersonDescriptionTitle variant="h5" caption>
+                    備註
+                  </PersonDescriptionTitle>
+                  <PersonDescriptionParagraph text={person.description} />
+                </>
+              )}
               <ScrollableTabs
                 titles={titles}
                 indicatorcolor={
