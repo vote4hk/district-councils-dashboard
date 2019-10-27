@@ -4,7 +4,8 @@ import Autosuggest from 'react-autosuggest'
 import { Box, TextField } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
 import MenuItem from '@material-ui/core/MenuItem'
-import Avatar from '@material-ui/core/Avatar'
+//import Avatar from '@material-ui/core/Avatar'
+import { PeopleAvatar } from 'components/atoms/Avatar'
 import { withStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/Search'
@@ -13,22 +14,31 @@ import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
 import _ from 'lodash'
 import styled from 'styled-components'
+import { getColorFromCamp } from 'utils/helper'
 
 const GET_PEOPLE = gql`
   query($nameRegex: String) {
-    dcd_people(
+    dcd_candidates(
       where: {
-        _or: [
-          { name_zh: { _like: $nameRegex } }
-          { name_en: { _ilike: $nameRegex } }
-        ]
+        person: {
+          _or: [
+            { name_zh: { _like: $nameRegex } }
+            { name_en: { _ilike: $nameRegex } }
+          ]
+        }
       }
       limit: 50
+      order_by: { person_id: asc, year: desc }
+      distinct_on: person_id
     ) {
-      id
-      uuid
-      name_zh
-      name_en
+      person {
+        id
+        uuid
+        name_zh
+        name_en
+      }
+      camp
+      year
     }
   }
 `
@@ -121,7 +131,8 @@ const PeopleSearcher = props => {
         nameRegex: `%${keyword}%`,
       },
     })
-    return data.dcd_people
+    data.dcd_candidates.sort((a, b) => b.year - a.year)
+    return data.dcd_candidates
   }
 
   const onSuggestionsFetchRequested = ({ value }) => {
@@ -146,7 +157,8 @@ const PeopleSearcher = props => {
 
   const renderSuggestion = (suggestion, { query, isHighlighted }) => {
     const homeUrl = process.env.REACT_APP_HOST_URI
-    const { uuid, name_zh, name_en } = suggestion
+    const { person, camp } = suggestion
+    const { uuid, name_zh, name_en } = person
     const avatarPath = uuid
       ? `${homeUrl}/static/images/avatar/${uuid}.jpg`
       : `${homeUrl}/static/images/avatar/default.png`
@@ -166,7 +178,9 @@ const PeopleSearcher = props => {
 
     return (
       <MenuItem selected={isHighlighted} component="div">
-        <Avatar
+        <PeopleAvatar
+          borderwidth={2}
+          camp={getColorFromCamp(camp)}
           src={avatarPath}
           imgProps={{
             onError: e => {
@@ -203,7 +217,7 @@ const PeopleSearcher = props => {
   )
 
   const onSuggestionSelected = (evt, { suggestion }) => {
-    handlePeopleSelected(suggestion)
+    handlePeopleSelected(suggestion.person)
   }
 
   // Autosuggest will pass through all these props to the input.
