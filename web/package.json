@@ -1,7 +1,7 @@
 {
   "name": "web",
   "version": "0.1.0",
-  "homepage": "https://dc2019.g0vhk.io/",
+  "homepage": "https://vote4.hk/",
   "dependencies": {
     "@babel/core": "7.2.2",
     "@material-ui/core": "^4.0.1",
@@ -23,7 +23,6 @@
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "css-loader": "1.0.0",
     "d3": "^5.9.7",
-    "dotenv": "6.0.0",
     "dotenv-expand": "4.2.0",
     "eslint": "5.12.0",
     "eslint-config-react-app": "^3.0.8",
@@ -86,7 +85,8 @@
     "lint": "eslint src/*.js",
     "prettier": "prettier --write \"src/**/*.js\"",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "build-sitemap": "node scripts/sitemap.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -98,13 +98,15 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "husky": ">=1",
-    "lint-staged": ">=8",
-    "prettier": "1.18.2",
     "@storybook/addon-actions": "^5.2.1",
     "@storybook/addon-links": "^5.2.1",
     "@storybook/addons": "^5.2.1",
-    "@storybook/react": "^5.2.1"
+    "@storybook/react": "^5.2.1",
+    "bluebird": "^3.7.1",
+    "dotenv": "^6.2.0",
+    "husky": ">=1",
+    "lint-staged": ">=8",
+    "prettier": "1.18.2"
   },
   "husky": {
     "hooks": {
