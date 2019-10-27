@@ -59,6 +59,10 @@ constituencies( where: { year: { _eq: $year } }, order_by: {code: asc} ) {
       related_organization
     }
     nominate_status
+    tags {
+      tag
+      type
+    }
   }
 }
 `

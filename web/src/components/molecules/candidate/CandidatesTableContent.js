@@ -7,6 +7,7 @@ import { getColorFromCamp } from 'utils/helper'
 import { COLORS } from 'ui/theme'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
+import { HtmlTooltip } from 'components/atoms/Tooltip'
 
 const IMAGE_HOST_URI =
   process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'
@@ -25,7 +26,7 @@ const CandidateNumber = styled(Box)`
 
 const StyledTableCell = styled(TableCell)`
   && {
-    padding: 6px 12px;
+    padding: 6px 6px 6px 12px;
   }
 `
 
@@ -38,6 +39,12 @@ const StyledTableRow = styled(TableRow)`
     }
   }
 `
+// const StyledCandidateTags = styled(CandidateTags)`
+//   && {
+//     display: inline;
+//     margin-left: 2px;
+//   }
+// `
 
 const CandidateGrid = props => {
   const { candidate } = props
@@ -48,7 +55,7 @@ const CandidateGrid = props => {
       justify="flex-start"
       alignItems="center"
       spacing={1}
-      style={{ minWidth: '120px' }}
+      style={{ minWidth: '140px' }}
     >
       {candidate.candidate_number > 0 && (
         <Grid item>
@@ -84,6 +91,17 @@ const CandidateGrid = props => {
       </Grid>
       <Grid item>
         {candidate.person.name_zh || candidate.person.name_en}
+        {candidate.tags.findIndex(
+          tag => tag.type === 'camp' && tag.tag === '有爭議'
+        ) > -1 && (
+          <HtmlTooltip
+            disableFocusListener
+            disableTouchListener
+            text="侯選人立場有爭議"
+            placement="bottom"
+            size={16}
+          />
+        )}
         {candidate.nominate_status === 'disqualified' && (
           <>
             <br />
