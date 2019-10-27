@@ -44,4 +44,7 @@ export const HtmlTooltip = styled(props => (
     background-color: #fff;
     color: #000;
   }
+  & .MuiTooltip-tooltipPlacementBottom {
+    margin: 5px 0px 0px;
+  }
 `
