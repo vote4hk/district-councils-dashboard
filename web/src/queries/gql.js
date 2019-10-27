@@ -45,7 +45,7 @@ constituencies( where: { year: { _eq: $year } }, order_by: {code: asc} ) {
   id
   name_zh
   code
-  candidates( where: { year: { _eq: $year } } ) {
+  candidates( where: { year: { _eq: $year } }, order_by: {candidate_number: asc} ) {
     candidate_number
     is_won
     political_affiliation
