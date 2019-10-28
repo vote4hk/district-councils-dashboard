@@ -188,10 +188,13 @@ const PeopleSearcher = props => {
       ...boldStyle,
     }
     const suggestionDistrictStyle = {
+      marginLeft: '8px',
+      fontWeight: 500,
+      fontSize: '14px',
       color: '#777777',
       float: 'right',
       textAlign: 'right',
-      lineHeight: '45px',
+      lineHeight: '46px',
     }
     const selectedSuggestionDistrictStyle = {
       ...suggestionDistrictStyle,
@@ -231,7 +234,7 @@ const PeopleSearcher = props => {
             }
           >
             {district
-              ? district['dc_name_zh'] + ' | ' + constituency['name_zh']
+              ? `${district['dc_name_zh']}｜${constituency['name_zh']}`
               : ''}
           </span>
         </div>
