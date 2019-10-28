@@ -26,7 +26,6 @@ const TagContainer = styled(Box)`
 
 const ConstituencyTableContent = props => {
   const { year, constituency } = props
-  console.log(constituency.candidates)
   const tags = getConstituencyTagsByCandidateCamps(constituency.candidates)
   return (
     <>

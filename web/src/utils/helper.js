@@ -184,7 +184,6 @@ export const getConstituencyTagsByCandidateCamps = candidates => {
   }
 
   const groupedCamps = _.groupBy(candidates, c => c.camp)
-  console.log(groupedCamps)
   if (groupedCamps['民主'] && groupedCamps['民主'].length > 1) {
     tags.push('民主撞區')
   }
