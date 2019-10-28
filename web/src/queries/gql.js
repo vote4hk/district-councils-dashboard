@@ -297,6 +297,8 @@ export const QUERY_GET_NOMINATION_SUMMARY = gql`
       candidates {
         camp
         nominated_at
+        nominate_status
+        election_type
       }
     }
   }

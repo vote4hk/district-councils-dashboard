@@ -129,11 +129,11 @@ class IndexPage extends Component {
           {/* <LandingIcon /> */}
         </TopSection>
         <Container>
+          <Summary />
           {this.renderCenterText()}
           <StyledSearchTab />
           <StyledCampCompareChartContainer />
         </Container>
-        <Summary />
       </>
     )
   }
