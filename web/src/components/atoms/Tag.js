@@ -24,6 +24,7 @@ export const Tag = props => {
       label={props.value}
       size="small"
       onClick={props.handleClick}
+      className={props.className}
     />
   )
 }
