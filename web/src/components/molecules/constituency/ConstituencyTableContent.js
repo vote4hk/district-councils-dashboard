@@ -13,7 +13,7 @@ const ConstituencyNameTableRow = styled(TableRow)`
 `
 
 const ConstituencyTableContent = props => {
-  const { year, constituency } = props
+  const { year, constituency, showEstablishment, showDemocracy, showBlank, showOthers } = props
 
   return (
     <>
@@ -31,6 +31,10 @@ const ConstituencyTableContent = props => {
       <CandidatesTableContent
         candidates={constituency.candidates}
         year={year}
+        showEstablishment={showEstablishment}
+        showDemocracy={showDemocracy}
+        showBlank={showBlank}
+        showOthers={showOthers}
       />
     </>
   )
