@@ -39,6 +39,15 @@ const GET_PEOPLE = gql`
       }
       camp
       year
+      constituency {
+        code
+        name_zh
+        name_en
+        district {
+          dc_name_zh
+          dc_name_en
+        }
+      }
     }
   }
 `
@@ -157,14 +166,17 @@ const PeopleSearcher = props => {
 
   const renderSuggestion = (suggestion, { query, isHighlighted }) => {
     const homeUrl = process.env.REACT_APP_HOST_URI
-    const { person, camp } = suggestion
+    const { person, camp, year, constituency } = suggestion
     const { uuid, name_zh, name_en } = person
+    const district = constituency['district']
+
     const avatarPath = uuid
       ? `${homeUrl}/static/images/avatar/${uuid}.jpg`
       : `${homeUrl}/static/images/avatar/default.png`
 
     // keyword this is not accessible here. so define the style here
     const suggestionNameStyle = {
+      float: 'left',
       marginLeft: '20px',
       lineHeight: '45px',
     }
@@ -173,6 +185,16 @@ const PeopleSearcher = props => {
     }
     const selectedSuggestionNameStyle = {
       ...suggestionNameStyle,
+      ...boldStyle,
+    }
+    const suggestionDistrictStyle = {
+      color: '#777777',
+      float: 'right',
+      textAlign: 'right',
+      lineHeight: '45px',
+    }
+    const selectedSuggestionDistrictStyle = {
+      ...suggestionDistrictStyle,
       ...boldStyle,
     }
 
@@ -190,16 +212,29 @@ const PeopleSearcher = props => {
           style={{
             width: '48px',
             height: '48px',
-            borderRadius: 0,
+            borderRadius: '24px',
           }}
         />
-        <span
-          style={
-            isHighlighted ? suggestionNameStyle : selectedSuggestionNameStyle
-          }
-        >
-          {name_zh ? name_zh : name_en}
-        </span>
+        <div>
+          <span
+            style={
+              isHighlighted ? suggestionNameStyle : selectedSuggestionNameStyle
+            }
+          >
+            {name_zh ? name_zh : name_en}
+          </span>
+          <span
+            style={
+              isHighlighted
+                ? suggestionDistrictStyle
+                : selectedSuggestionDistrictStyle
+            }
+          >
+            {district
+              ? district['dc_name_zh'] + ' | ' + constituency['name_zh']
+              : ''}
+          </span>
+        </div>
       </MenuItem>
     )
   }
