@@ -1,7 +1,6 @@
 import Box from '@material-ui/core/Box'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormGroup from '@material-ui/core/FormGroup'
-import FormLabel from '@material-ui/core/FormLabel'
 import { withStyles } from '@material-ui/core/styles'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import { COLORS } from 'ui/theme'
@@ -16,11 +15,6 @@ const styles = {
   democracy: {
     '& svg': {
       fill: COLORS.camp['democracy'].background,
-    },
-  },
-  blank: {
-    '& svg': {
-      fill: COLORS.camp['uncertain'].background,
     },
   },
   others: {
@@ -43,14 +37,12 @@ class CampSelector extends Component {
       },
       { name: 'establishment', text: '建制', className: classes.establishment },
       { name: 'others', text: '其他', className: classes.others },
-      { name: 'blank', text: '空白', className: classes.blank },
     ]
     this.state = {
       checked: {
         democracy: true,
         establishment: true,
         others: true,
-        blank: true,
       },
     }
   }
@@ -65,8 +57,7 @@ class CampSelector extends Component {
       onChange(
         this.state.checked.democracy,
         this.state.checked.establishment,
-        this.state.checked.others,
-        this.state.checked.blank
+        this.state.checked.others
       )
     }
   }
