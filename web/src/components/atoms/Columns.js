@@ -11,3 +11,14 @@ export default styled(Box)`
     margin: auto;
   }
 `
+
+export const SeperatedColumns = styled(Box)`
+  && {
+    margin-top: 8px;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+`

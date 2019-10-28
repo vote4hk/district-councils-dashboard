@@ -1,4 +1,5 @@
 import { DCREGION } from 'constants/dcregion'
+import _ from 'lodash'
 
 export const getDistrictListUriFromTag = tag => `/district/2019/tags/${tag}`
 
@@ -66,45 +67,6 @@ export const getCouncillorMeta = councillor => {
       type: e.election_type,
     }
   }
-  // if (person.candidates) {
-  //   const sortedElections = person.candidates.sort((a, b) => b.year - a.year)
-  //   result.lastParticipatedYear = sortedElections[0].year
-  //   result.participationCount = sortedElections.length
-
-  //   let relectedCount = 0
-  //   for (let i = 0; i < sortedElections.length; i++) {
-  //     const { is_won } = sortedElections[i]
-  //     if (!is_won) {
-  //       break
-  //     }
-  //     relectedCount++
-  //   }
-
-  //   result.relectedCount = relectedCount - 1
-
-  //   sortedElections.forEach(election => {
-  //     const year = election.year
-  //     const yearResult = {}
-
-  //     yearResult.uncontested =
-  //       election.constituency.candidates.length === 1 ? true : false
-
-  //     const myVotes = election.constituency.candidates.find(
-  //       c => c.person_id === person.id
-  //     ).votes
-  //     const highestVotes = election.constituency.candidates
-  //       .filter(c => c.person_id !== person.id)
-  //       .map(c => c.votes)
-  //       .reduce((c, v) => Math.max(c, v), 0)
-
-  //     yearResult.votes = myVotes
-  //     yearResult.diff = myVotes - highestVotes
-
-  //     result[year] = yearResult
-  //   })
-  // }
-
-  // console.log(result)
   return result
 }
 
@@ -213,4 +175,22 @@ export const getParameterByName = (name, url) => {
 
 export const getCurrentUrl = () => {
   return window.location.href
+}
+
+export const getConstituencyTagsByCandidateCamps = candidates => {
+  const tags = []
+  if (candidates.length >= 3) {
+    tags.push('多人混戰')
+  }
+
+  const groupedCamps = _.groupBy(candidates, c => c.camp)
+  if (groupedCamps['民主'] && groupedCamps['民主'].length > 1) {
+    tags.push('民主撞區')
+  }
+
+  if (groupedCamps['建制'] && groupedCamps['建制'].length > 1) {
+    tags.push('建制撞區')
+  }
+
+  return tags
 }
