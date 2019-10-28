@@ -5,7 +5,7 @@ import { PeopleAvatar } from 'components/atoms/Avatar'
 import { UnstyledNavLink } from 'components/atoms/Link'
 import Rows from 'components/atoms/Rows'
 import Columns from 'components/atoms/Columns'
-import CandidateTags from 'components/molecules/CandidateTags'
+import { HtmlTooltip } from 'components/atoms/Tooltip'
 import { Box, Typography, Grid } from '@material-ui/core'
 import styled from 'styled-components'
 import { getColorFromCamp } from 'utils/helper'
@@ -45,9 +45,10 @@ const Candidate = styled(Box)`
 
 const CandidateNumber = styled(Box)`
   && {
-    position: absolute;
-    top: 64px;
-    left: 3px;
+    position: relative;
+    margin-bottom: -18px !important;
+    top: -19px;
+    left: -28px;
     border-radius: 50%;
     font-weight: 700;
     width: ${props => props.dimension};
@@ -58,19 +59,14 @@ const CandidateNumber = styled(Box)`
   }
 `
 
-const StyledCandidateTags = styled(CandidateTags)`
+const ControversialAlert = styled.div`
   && {
-    position: absolute;
-    top: 56px;
-    right: 10px;
-    border-radius: 50%;
-    background-color: white;
-    width: 30px;
-    height: 30px;
-    text-align: center;
+    position: relative;
+    margin-bottom: -21px !important;
+    top: -21px;
+    left: 30px;
   }
 `
-
 const CandidateName = styled(Typography)`
   && {
     margin-top: 5px;
@@ -157,8 +153,19 @@ const CandidatesContainer = props => {
                                   {candidate.candidate_number}
                                 </CandidateNumber>
                               )}
-                              {candidate.tags.length > 0 && (
-                                <StyledCandidateTags tags={candidate.tags} />
+                              {candidate.tags.findIndex(
+                                tag =>
+                                  tag.type === 'camp' && tag.tag === '有爭議'
+                              ) > -1 && (
+                                <ControversialAlert>
+                                  <HtmlTooltip
+                                    disableFocusListener
+                                    disableTouchListener
+                                    text="侯選人立場有爭議"
+                                    placement="bottom"
+                                    size={21}
+                                  />
+                                </ControversialAlert>
                               )}
                               <CandidateName variant="h5">
                                 {candidate.person.name_zh ||

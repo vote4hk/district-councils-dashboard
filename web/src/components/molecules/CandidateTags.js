@@ -27,7 +27,7 @@ export default function CandidateTags(props) {
           text={getTextByTagAndType(tag.tag, tag.type)}
           placement="bottom"
           type="error"
-          size={30}
+          size={21}
           onClick={evt => {
             evt.preventDefault()
             evt.stopPropagation()

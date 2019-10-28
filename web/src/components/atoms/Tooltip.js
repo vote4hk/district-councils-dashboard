@@ -31,6 +31,12 @@ export const HtmlTooltip = styled(props => (
       </>
     }
     {...props}
+    onClick={evt => {
+      evt.preventDefault()
+      evt.stopPropagation()
+      evt.nativeEvent.stopPropagation()
+      evt.nativeEvent.stopImmediatePropagation()
+    }}
   >
     {props.type === 'error' ? (
       <ErrorIconSvg size={props.size || 16} />
@@ -43,5 +49,8 @@ export const HtmlTooltip = styled(props => (
     border: 1px solid #000;
     background-color: #fff;
     color: #000;
+  }
+  & .MuiTooltip-tooltipPlacementBottom {
+    margin: 5px 0px 0px;
   }
 `
