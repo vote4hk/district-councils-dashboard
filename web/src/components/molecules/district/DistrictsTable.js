@@ -7,6 +7,7 @@ import TableHead from '@material-ui/core/TableHead'
 import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
+import CampSelector from 'components/atoms/CampSelector'
 import styled from 'styled-components'
 
 const StyledTableCell = styled(TableCell)`
@@ -24,46 +25,73 @@ class DistrictsTable extends Component {
     year: PropTypes.string.isRequired,
   }
 
+  constructor(props) {
+    super(props)
+    const { classes } = props
+    this.state = {
+      checked: {
+        democracy: true,
+        establishment: true,
+        others: true,
+        blank: true,
+      },
+    }
+  }
+
+  handleChange(democracy, establishment, others, blank) {
+    const checked = { democracy, establishment, others, blank }
+    this.setState({ ...this.state, checked: checked })
+  }
+
   render() {
     const { districts, year } = this.props
+    const { state } = this
+    const { democracy, establishment, others, blank } = state.checked
     return (
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>候選人</StyledTableCell>
-            <StyledTableCell>
-              相關組織{' '}
-              <HtmlTooltip
-                disableFocusListener
-                disableTouchListener
-                text="候選人或議員的所屬政黨或社區組織，來源綜合媒體報道"
-                placement="bottom"
-                size={20}
+      <div>
+        <CampSelector onChange={this.handleChange.bind(this)} />
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>候選人</StyledTableCell>
+              <StyledTableCell>
+                相關組織{' '}
+                <HtmlTooltip
+                  disableFocusListener
+                  disableTouchListener
+                  text="候選人或議員的所屬政黨或社區組織，來源綜合媒體報道"
+                  placement="bottom"
+                  size={20}
+                />
+              </StyledTableCell>
+              <StyledTableCell>
+                報稱政治聯繫{' '}
+                <HtmlTooltip
+                  disableFocusListener
+                  disableTouchListener
+                  text="根據候選人提名表格上所填報的政治聯繫"
+                  placement="bottom"
+                  size={20}
+                />
+              </StyledTableCell>
+              {/* <TableCell>得票</TableCell> */}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {districts.map(district => (
+              <DistrictTableContent
+                showEstablishment={establishment}
+                showDemocracy={democracy}
+                showOthers={others}
+                showBlank={blank}
+                key={district.dc_code}
+                district={district}
+                year={year}
               />
-            </StyledTableCell>
-            <StyledTableCell>
-              報稱政治聯繫{' '}
-              <HtmlTooltip
-                disableFocusListener
-                disableTouchListener
-                text="根據候選人提名表格上所填報的政治聯繫"
-                placement="bottom"
-                size={20}
-              />
-            </StyledTableCell>
-            {/* <TableCell>得票</TableCell> */}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {districts.map(district => (
-            <DistrictTableContent
-              key={district.dc_code}
-              district={district}
-              year={year}
-            />
-          ))}
-        </TableBody>
-      </Table>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     )
   }
 }
