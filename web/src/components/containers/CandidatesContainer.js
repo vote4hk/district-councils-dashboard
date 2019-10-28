@@ -126,7 +126,7 @@ const CandidatesContainer = props => {
                   </SeperatedColumns>
                 </Rows>
                 <Rows>
-                  <Columns>
+                  <SeperatedColumns>
                     <CandidateList container direction="row">
                       {/* Max 3 columns and always centered */}
                       {candidates.map(candidate => (
@@ -217,7 +217,7 @@ const CandidatesContainer = props => {
                         </CandidateGrid>
                       ))}
                     </CandidateList>
-                  </Columns>
+                  </SeperatedColumns>
                 </Rows>
               </>
             )}
