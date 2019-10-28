@@ -120,40 +120,21 @@ const CandidateGrid = props => {
 }
 
 class CandidatesTableContent extends Component {
-  matchCamp(
-    candidate,
-    showDemocracy,
-    showEstablishment,
-    showBlank,
-    showOthers
-  ) {
-    if (showDemocracy && candidate.camp == '民主') return true
-    if (showEstablishment && candidate.camp == '建制') return true
-    if (showOthers && candidate.camp == '其他') return true
-    if (showBlank && candidate.camp == '') return true
+  matchCamp(candidate, showDemocracy, showEstablishment, showOthers) {
+    if (showDemocracy && candidate.camp === '民主') return true
+    if (showEstablishment && candidate.camp === '建制') return true
+    if (showOthers && candidate.camp === '其他') return true
     return false
   }
 
   render() {
     const { props, matchCamp } = this
-    const {
-      candidates,
-      showEstablishment,
-      showDemocracy,
-      showBlank,
-      showOthers,
-    } = props
+    const { candidates, showEstablishment, showDemocracy, showOthers } = props
     return (
       <>
         {candidates
           .filter(candidate =>
-            matchCamp(
-              candidate,
-              showDemocracy,
-              showEstablishment,
-              showBlank,
-              showOthers
-            )
+            matchCamp(candidate, showDemocracy, showEstablishment, showOthers)
           )
           .map(candidate => (
             <StyledTableRow
