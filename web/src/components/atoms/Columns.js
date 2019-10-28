@@ -14,7 +14,7 @@ export default styled(Box)`
 
 export const SeperatedColumns = styled(Box)`
   && {
-    margin-top: 20px;
+    margin-top: 16px;
     display: flex;
     width: 100%;
     flex-direction: row;
