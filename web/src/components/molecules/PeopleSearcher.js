@@ -262,7 +262,7 @@ const PeopleSearcher = props => {
   const inputProps = {
     classes,
     placeholder: '輸入候選人姓名...',
-    value,
+    value: value || '',
     onChange,
     InputLabelProps: {
       shrink: true,
