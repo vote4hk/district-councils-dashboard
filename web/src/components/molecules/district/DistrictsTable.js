@@ -27,7 +27,7 @@ class DistrictsTable extends Component {
 
   constructor(props) {
     super(props)
-    const { classes } = props
+
     this.state = {
       checked: {
         democracy: true,
