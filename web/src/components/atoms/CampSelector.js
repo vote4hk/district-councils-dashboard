@@ -68,7 +68,7 @@ class CampSelector extends Component {
       <div>
         <FormGroup row>
           <Box m={2} />
-          <FormControlLabel control={<div></div>} label="顯示: " />
+          <FormControlLabel control={<div></div>} label="顯示：" />
           {this.camps.map(c => (
             <FormControlLabel
               control={
