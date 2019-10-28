@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
-import {
-  Typography,
-  Divider,
-  Grid,
-  Breadcrumbs,
-  Avatar,
-} from '@material-ui/core'
+import { Typography, Grid, Breadcrumbs, Avatar } from '@material-ui/core'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/Link'
 import { PeopleAvatar } from 'components/atoms/Avatar'
