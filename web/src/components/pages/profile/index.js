@@ -144,7 +144,7 @@ const FacebookPageButton = styled(UnstyledLink)`
 const PersonHighlightContainer = styled(FlexRowContainer)`
   && {
     padding: 16px;
-    text-align: center;
+    text-align: left;
   }
 `
 const BreadcrumbsContainer = styled(Box)`
@@ -307,7 +307,7 @@ class ProfilePage extends Component {
 
           if (person.estimated_yob) {
             personHighlight.push({
-              xs: 3,
+              xs: 2,
               title: '年齡',
               tips: '根據候選人簡介的年齡推算',
               text: `${2019 - person.estimated_yob}歲`,
@@ -322,7 +322,7 @@ class ProfilePage extends Component {
           })
 
           personHighlight.push({
-            xs: 3,
+            xs: 4,
             title: '職業 ',
             tips:
               '候選人：取自最近選舉的候選人簡介<br />議員：取自區議會網頁<br />來源綜合媒體報道',
