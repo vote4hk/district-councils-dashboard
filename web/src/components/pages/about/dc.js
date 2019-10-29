@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
+import { useTranslation } from 'react-i18next'
 
 const Container = styled(Paper)`
   && {
@@ -25,9 +26,12 @@ const Container = styled(Paper)`
 `
 
 const DisclaimerPage = props => {
+  const { t } = useTranslation()
+
   return (
     <>
       <Container>
+        {t('Example')}
         <Typography variant="h5">關於區議會選舉</Typography>
         <p>
           2019年區議會選舉將於2019年11月24日舉行，屆時將會選出香港十八區區議會共452個民選議席及27個當然議員，任期為四年，由2020年1月1日至2023年12月31日。
