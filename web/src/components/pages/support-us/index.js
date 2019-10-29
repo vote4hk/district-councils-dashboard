@@ -25,53 +25,48 @@ const Container = styled(Paper)`
   }
 `
 
-const DisclaimerPage = props => {
+const SupportUsPage = props => {
   return (
     <>
       <Container>
-        <Typography variant="h3">關於我們</Typography>
-        <br />
+        <Typography variant="h5">我們是誰？</Typography>
+        <p>我們是一群香港人，相信開放數據及公民科技能推動社會進步。</p>
         <p>
-          我們是一群普通人，沒有任何政黨背景，也沒有接受任何捐助，是以數月工餘時間建立這個網站的一群人。
-        </p>
-        <p>
-          我們相信開放數據，相信公民科技能為社會帶來改變。 因此我們於
+          2019年4月，眾人於一次
           <DefaultLink target="_blank" href="https://g0vhk.io/">
             g0vhk
           </DefaultLink>
-          舉辦的hackathon中認識，由4月開始製作這個網站。
+          舉辦的hackathon認識。為讓市民於選舉期間更掌握自己選區及未來代議士的資訊，我們於工餘抽空籌備此項目。
         </p>
         <br />
-        <Typography variant="h3">關於g0vhk</Typography>
-        <br />
+        <Typography variant="h5">關於 g0vhk</Typography>
         <p>
           <DefaultLink target="_blank" href="https://g0vhk.io/">
             g0vhk
           </DefaultLink>{' '}
-          受台灣「零時政府」（g0v.tw）的理念啟發。目的是透過技術解決社會問題，以項目形式推動社會進步。以開放數據為例，透過開放源碼程式編寫
+          受台灣「零時政府」（g0v.tw）的理念啟發，目標是以技術解決社會問題，以項目形式推動社會進步。以開放數據為例，編寫開放源碼程式
           (Open Source Program) 或群眾外包 (Crowd Sourcing)
-          ，令不同範疇的數據透明化，解決資訊不流通問題，以擴大公民的知情權。
+          ，令不同範疇的數據更透明，解決資訊不流通問題，提升公民的知情權。
         </p>
         <br />
-        <Typography variant="h3">支持我們</Typography>
-        <br />
+        <Typography variant="h5">支持我們</Typography>
         <p>
-          你的捐款可以贊助g0vhk將來所舉辦的hackathon，亦可為將來的公民科技項目提供起動資金。
-          本項目目前亦利用g0vhk贊助的服務器運行，而收到的捐款亦會有一部份作為雲端服務的支出。
+          你的捐款，有助我們 g0vhk
+          舉辦更多活動，推廣公民科技，同時為未來的項目提供起動資金。本網站亦於g0vhk贊助的服務器運行，收到的捐款有一部份將用補貼雲端服務的支出。
         </p>
         <p>
-          捐款可以到
+          如你認同我們的理念，請到
           <DefaultLink
             target="_blank"
             href="https://www.collaction.hk/s/g0vhk/fund"
           >
             collaction
           </DefaultLink>
-          以小額支持
+          小額捐款
         </p>
       </Container>
     </>
   )
 }
 
-export default DisclaimerPage
+export default SupportUsPage
