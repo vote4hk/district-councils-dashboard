@@ -11,6 +11,7 @@ import { Alert } from 'components/atoms/Alert'
 import SearchTab from 'components/organisms/SearchTab'
 import { QUERY_GET_CONFIG } from 'queries/gql'
 import { COLORS } from 'ui/theme'
+import { UnstyledNavLink } from 'components/atoms/Link'
 
 const Container = styled.div`
   width: 100%;
@@ -62,6 +63,13 @@ const SupportUsButton = styled(Fab)`
     right: 20px;
     bottom: 20px;
     position: absolute;
+  }
+`
+
+const ThumbIcon = styled(ThumbUpAlt)`
+  && {
+    font-size: large;
+    margin-right: 4px;
   }
 `
 
@@ -123,15 +131,17 @@ class IndexPage extends Component {
   render() {
     return (
       <>
-        <SupportUsButton
-          size="small"
-          color="secondary"
-          variant="extended"
-          aria-label="add"
-        >
-          <ThumbUpAlt />
-          支持我們
-        </SupportUsButton>
+        <UnstyledNavLink to={`/support-us`}>
+          <SupportUsButton
+            size="small"
+            color="secondary"
+            variant="extended"
+            aria-label="add"
+          >
+            <ThumbIcon />
+            支持我們
+          </SupportUsButton>
+        </UnstyledNavLink>
         {this.renderAlert()}
         <TopSection>
           {Date.parse(new Date(electionDate)) > Date.parse(new Date()) && (

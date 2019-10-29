@@ -10,6 +10,7 @@ import BattleGroundPage from 'components/pages/battleground'
 import DisclaimerPage from 'components/pages/disclaimer'
 import AboutDCPage from 'components/pages/about/dc'
 import NotfoundPage from 'components/pages/notfound'
+import SupportUsPage from 'components/pages/support-us'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 import theme from 'ui/theme'
@@ -105,6 +106,10 @@ const App = props => {
                     <Route
                       path="/about-dc"
                       component={withTracker(AboutDCPage)}
+                    />
+                    <Route
+                      path="/support-us"
+                      component={withTracker(SupportUsPage)}
                     />
                     <Route component={withTracker(NotfoundPage)} />
                   </Switch>
