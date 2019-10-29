@@ -60,9 +60,12 @@ const ConfigCenterText = styled.div`
 const SupportUsButton = styled(Fab)`
   && {
     z-index: 9999;
-    right: 20px;
-    bottom: 20px;
+    right: 16px;
+    bottom: 16px;
     position: absolute;
+    padding: 100px;
+    font-size: 14px;
+    padding: 0 16px !important;
   }
 `
 
