@@ -18,13 +18,6 @@ import { COLORS } from 'ui/theme'
 const IMAGE_HOST_URI =
   process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'
 
-const Container = styled(Box)`
-  && {
-    width: 100%;
-    padding: 0 0px 16px;
-  }
-`
-
 const CandidateList = styled(Grid)`
   && {
   }
@@ -108,7 +101,7 @@ const CandidatesContainer = props => {
 
         const tags = getConstituencyTagsByCandidateCamps(candidates)
         return (
-          <Container>
+          <>
             {candidates.length > 0 && (
               <>
                 <Rows>
@@ -221,7 +214,7 @@ const CandidatesContainer = props => {
                 </Rows>
               </>
             )}
-          </Container>
+          </>
         )
       }}
     </Query>

@@ -8,7 +8,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import { UnstyledButton } from 'components/atoms/Button'
 import { Tag } from 'components/atoms/Tag'
 import DistrictNewVoterChartContainer from 'components/containers/DistrictNewVoterChartContainer'
-import Columns from 'components/atoms/Columns'
+import Columns, { SeperatedColumns } from 'components/atoms/Columns'
 import Rows from 'components/atoms/Rows'
 import Box from '@material-ui/core/Box'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
@@ -74,7 +74,7 @@ class DCCAOverview extends Component {
   }
 
   render() {
-    const { code, tags, voterData } = this.props
+    const { code, tags, voterData, description } = this.props
     const sortedTags = tags.sort((a, b) =>
       a.type === 'boundary' ? -1 : a.type === b.type ? 0 : 1
     )
@@ -85,32 +85,39 @@ class DCCAOverview extends Component {
     return (
       <>
         <Container>
-          <Rows>
-            <UnstyledButton onClick={this.toggleGraph.bind(this)}>
-              <Typography variant="h6">
-                選民人數 {formatNumber(voterData.aggregations.all_voters)}{' '}
-                {' ('}
-                {new_voters_percentage > 0 ? (
-                  <SuccessText display="inline">
-                    +{new_voters_percentage}%
-                  </SuccessText>
+          {description && (
+            <SeperatedColumns>
+              <Typography variant="h6">{description}</Typography>
+            </SeperatedColumns>
+          )}
+          <SeperatedColumns>
+            <Rows>
+              <UnstyledButton onClick={this.toggleGraph.bind(this)}>
+                <Typography variant="h6">
+                  選民人數 {formatNumber(voterData.aggregations.all_voters)}{' '}
+                  {' ('}
+                  {new_voters_percentage > 0 ? (
+                    <SuccessText display="inline">
+                      +{new_voters_percentage}%
+                    </SuccessText>
+                  ) : (
+                    <FailureText display="inline">
+                      -{new_voters_percentage}%
+                    </FailureText>
+                  )}
+                  )
+                </Typography>
+                {this.state.showGraph ? (
+                  <KeyboardArrowUp fontSize="small" />
                 ) : (
-                  <FailureText display="inline">
-                    -{new_voters_percentage}%
-                  </FailureText>
+                  <ExpandMoreIcon fontSize="small" />
                 )}
-                )
-              </Typography>
-              {this.state.showGraph ? (
-                <KeyboardArrowUp fontSize="small" />
-              ) : (
-                <ExpandMoreIcon fontSize="small" />
+              </UnstyledButton>
+              {this.state.showGraph && (
+                <DistrictNewVoterChartContainer code={code} />
               )}
-            </UnstyledButton>
-            {this.state.showGraph && (
-              <DistrictNewVoterChartContainer code={code} />
-            )}
-          </Rows>
+            </Rows>
+          </SeperatedColumns>
           <Columns>
             {sortedTags.map((tag, index) => (
               <TagContainer key={index}>

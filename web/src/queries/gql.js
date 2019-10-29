@@ -16,6 +16,7 @@ code
 deviation_percentage
 expected_population
 main_areas
+description
 vote_stats {
   count
   type
