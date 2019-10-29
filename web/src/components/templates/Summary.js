@@ -56,7 +56,7 @@ const Summary = props => {
           c => c.district.dc_name_zh
         )
 
-        const object_array = obj =>
+        const object2array = obj =>
           Object.keys(obj).map(key => {
             return {
               dc_name_zh: key,
@@ -64,13 +64,17 @@ const Summary = props => {
             }
           })
 
-        const demo_clash_grouped_array = object_array(demo_clash_grouped)
+        const demo_clash_grouped_array = object2array(demo_clash_grouped)
 
         demo_clash_grouped_array.sort(
           (a, b) => b.clashed.length - a.clashed.length
         )
 
-        console.log(demo_clash_grouped_array)
+        const estab_clash_grouped_array = object2array(estab_clash_grouped)
+
+        estab_clash_grouped_array.sort(
+          (a, b) => b.clashed.length - a.clashed.length
+        )
 
         // const candi_5 = result.filter(r => r.tags.includes('多人混戰')).filter(district => district.candidates.length === 5)
         // const candi_4 = result.filter(r => r.tags.includes('多人混戰')).filter(district => district.candidates.length === 4)
@@ -85,21 +89,11 @@ const Summary = props => {
                 </Typography> */}
 
                 <SeperatedColumns>
-                  <Typography variant="h6" gutterBottom>
+                  <Typography variant="h5" gutterBottom>
                     民主派撞區 - {demo_clash.length}區
                   </Typography>
                 </SeperatedColumns>
                 <Columns>
-                  {demo_clash.map((district, index) => (
-                    <FlexLink
-                      key={index}
-                      onClick={() =>
-                        props.history.push(`district/2019/${district.code}`)
-                      }
-                    >
-                      {`${district.name_zh}`}
-                    </FlexLink>
-                  ))}
                   {demo_clash_grouped_array.map(district => {
                     const dcca = district.clashed.map((d, i) => (
                       <FlexLink
@@ -113,8 +107,8 @@ const Summary = props => {
                     ))
                     return (
                       <Columns>
-                        <Typography variant="h6" gutterBottom>
-                          {district.dc_name_zh}
+                        <Typography variant="h6">
+                          {district.dc_name_zh} -
                         </Typography>
                         {dcca}
                       </Columns>
@@ -123,21 +117,31 @@ const Summary = props => {
                 </Columns>
 
                 <SeperatedColumns>
-                  <Typography variant="h6" gutterBottom>
+                  <Typography variant="h5" gutterBottom>
                     建制派撞區 - {estab_clash.length}區
                   </Typography>
                 </SeperatedColumns>
                 <Columns>
-                  {estab_clash.map((district, index) => (
-                    <FlexLink
-                      key={index}
-                      onClick={() =>
-                        props.history.push(`district/2019/${district.code}`)
-                      }
-                    >
-                      {`${district.name_zh}`}
-                    </FlexLink>
-                  ))}
+                  {estab_clash_grouped_array.map(district => {
+                    const dcca = district.clashed.map((d, i) => (
+                      <FlexLink
+                        key={i}
+                        onClick={() =>
+                          props.history.push(`district/2019/${d.code}`)
+                        }
+                      >
+                        {`${d.name_zh}`}
+                      </FlexLink>
+                    ))
+                    return (
+                      <Columns>
+                        <Typography variant="h6">
+                          {district.dc_name_zh} -
+                        </Typography>
+                        {dcca}
+                      </Columns>
+                    )
+                  })}
                 </Columns>
 
                 {/* <Typography variant="h6" gutterBottom>
