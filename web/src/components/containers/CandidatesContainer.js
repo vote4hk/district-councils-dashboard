@@ -3,23 +3,20 @@ import { Query } from 'react-apollo'
 import { QUERY_GET_CANDIDATES } from 'queries/gql'
 import { PeopleAvatar } from 'components/atoms/Avatar'
 import { UnstyledNavLink } from 'components/atoms/Link'
+import { Tag } from 'components/atoms/Tag'
 import Rows from 'components/atoms/Rows'
-import Columns from 'components/atoms/Columns'
+import { SeperatedColumns } from 'components/atoms/Columns'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
 import { Box, Typography, Grid } from '@material-ui/core'
 import styled from 'styled-components'
-import { getColorFromCamp } from 'utils/helper'
+import {
+  getColorFromCamp,
+  getConstituencyTagsByCandidateCamps,
+} from 'utils/helper'
 import { COLORS } from 'ui/theme'
 
 const IMAGE_HOST_URI =
   process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'
-
-const Container = styled(Box)`
-  && {
-    width: 100%;
-    padding: 0 0px 16px;
-  }
-`
 
 const CandidateList = styled(Grid)`
   && {
@@ -29,6 +26,17 @@ const CandidateList = styled(Grid)`
 const CandidateGrid = styled(Grid)`
   && {
     margin-bottom: 8px;
+  }
+`
+
+const TagContainer = styled(Box)`
+  && {
+  }
+`
+
+const StyledTag = styled(Tag)`
+  && {
+    margin-left: 4px;
   }
 `
 
@@ -63,7 +71,8 @@ const ControversialAlert = styled.div`
   && {
     position: relative;
     margin-bottom: -21px !important;
-    top: -21px;
+    top: -21px;import { Tag } from 'components/atoms/Tag';
+
     left: 30px;
   }
 `
@@ -89,19 +98,28 @@ const CandidatesContainer = props => {
         const candidates =
           data.dcd_candidates &&
           data.dcd_candidates.filter(c => c.election_type === 'ordinary')
+
+        const tags = getConstituencyTagsByCandidateCamps(candidates)
         return (
-          <Container>
+          <>
             {candidates.length > 0 && (
               <>
                 <Rows>
-                  <Columns>
+                  <SeperatedColumns>
                     <Typography variant="h6" gutterBottom>
                       已接獲提名
                     </Typography>
-                  </Columns>
+                    {tags.length > 0 && (
+                      <TagContainer>
+                        {tags.map((tag, index) => (
+                          <StyledTag value={tag} key={index} />
+                        ))}
+                      </TagContainer>
+                    )}
+                  </SeperatedColumns>
                 </Rows>
                 <Rows>
-                  <Columns>
+                  <SeperatedColumns>
                     <CandidateList container direction="row">
                       {/* Max 3 columns and always centered */}
                       {candidates.map(candidate => (
@@ -192,11 +210,11 @@ const CandidatesContainer = props => {
                         </CandidateGrid>
                       ))}
                     </CandidateList>
-                  </Columns>
+                  </SeperatedColumns>
                 </Rows>
               </>
             )}
-          </Container>
+          </>
         )
       }}
     </Query>

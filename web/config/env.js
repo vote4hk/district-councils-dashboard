@@ -50,7 +50,7 @@ dotenvFiles.forEach(dotenvFile => {
 // https://github.com/facebook/create-react-app/issues/1023#issuecomment-265344421
 // We also resolve them to make sure all tools using them work consistently.
 const appDirectory = fs.realpathSync(process.cwd())
-process.env.NODE_PATH = (process.env.NODE_PATH || '')
+process.env.NODE_PATH = 'src' // process.env.NODE_PATH || '' >> not working for NODE_PATH already set in env var
   .split(path.delimiter)
   .filter(folder => folder && !path.isAbsolute(folder))
   .map(folder => path.resolve(appDirectory, folder))

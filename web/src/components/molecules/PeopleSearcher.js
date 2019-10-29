@@ -166,7 +166,7 @@ const PeopleSearcher = props => {
 
   const renderSuggestion = (suggestion, { query, isHighlighted }) => {
     const homeUrl = process.env.REACT_APP_HOST_URI
-    const { person, camp, year, constituency } = suggestion
+    const { person, camp, constituency } = suggestion
     const { uuid, name_zh, name_en } = person
     const district = constituency['district']
 
@@ -234,7 +234,7 @@ const PeopleSearcher = props => {
             }
           >
             {district
-              ? district['dc_name_zh'] + ' | ' + constituency['name_zh']
+              ? `${district['dc_name_zh']}｜${constituency['name_zh']}`
               : ''}
           </span>
         </div>
@@ -262,7 +262,7 @@ const PeopleSearcher = props => {
   const inputProps = {
     classes,
     placeholder: '輸入候選人姓名...',
-    value,
+    value: value || '',
     onChange,
     InputLabelProps: {
       shrink: true,
