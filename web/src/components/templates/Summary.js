@@ -32,12 +32,7 @@ const Summary = props => {
         let result = []
         if (data && data.dcd_constituencies) {
           data.dcd_constituencies.forEach(dcca => {
-            const candidates = dcca.candidates.filter(
-              c =>
-                c.election_type === 'ordinary' &&
-                c.nominate_status === 'confirmed'
-            )
-            const tags = getConstituencyTagsByCandidateCamps(candidates)
+            const tags = getConstituencyTagsByCandidateCamps(dcca.candidates)
 
             if (tags.length > 0) {
               result.push({

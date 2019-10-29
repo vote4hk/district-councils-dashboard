@@ -179,11 +179,15 @@ export const getCurrentUrl = () => {
 
 export const getConstituencyTagsByCandidateCamps = candidates => {
   const tags = []
-  if (candidates.length >= 3) {
+  const filteredCandidates = candidates.filter(
+    c => c.election_type === 'ordinary' && c.nominate_status === 'confirmed'
+  )
+
+  if (filteredCandidates.length >= 3) {
     tags.push('多人混戰')
   }
 
-  const groupedCamps = _.groupBy(candidates, c => c.camp)
+  const groupedCamps = _.groupBy(filteredCandidates, c => c.camp)
   if (groupedCamps['民主'] && groupedCamps['民主'].length > 1) {
     tags.push('民主撞區')
   }
