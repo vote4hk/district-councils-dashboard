@@ -301,6 +301,9 @@ export const QUERY_GET_NOMINATION_SUMMARY = gql`
         nominate_status
         election_type
       }
+      district {
+        dc_name_zh
+      }
     }
   }
 `
