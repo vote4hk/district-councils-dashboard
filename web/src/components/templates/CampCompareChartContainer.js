@@ -289,7 +289,7 @@ const CampCompareChartContainer = props => {
           <Container className={className}>
             <PredictionChartHeader>
               <Text variant="h5">
-                {predictEnabled ? '2019選舉結果預測' : '現屆區議會勢力分布'}
+                {predictEnabled ? '2019選舉結果模擬' : '現屆區議會勢力分布'}
               </Text>
               <br />
               <Text variant="body2">
@@ -332,7 +332,7 @@ const CampCompareChartContainer = props => {
                       lb: 'start_simulate',
                     })
                   }}
-                  label="預測結果"
+                  label="模擬結果"
                 />
               )}
             </PredictionChartHeader>
