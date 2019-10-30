@@ -204,6 +204,7 @@ class BattleGroundPage extends Component {
                   code={district.code}
                   tags={district.tags}
                   voterData={groupVoteStat(district.vote_stats)}
+                  description={district.description}
                 />
                 {/* TODO Refactor style for ToggleMap Button */}
                 <ToggleMapButton

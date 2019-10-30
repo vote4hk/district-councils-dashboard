@@ -1,23 +1,29 @@
 # 2019區議會選舉｜投票指南 ✋🏻🧡⚡
 
-[vote4.hk](https://vote4.hk)
+This is the repository for [vote4.hk](https://vote4.hk)
+
+## About us
+
+- g0vhk [https://g0vhk.io/](https://g0vhk.io/)
 
 ## Stack
 
-- langauage: javascript
-- framework: react
-- chart: d3/zingchart
-- graphql: apollo
-- ssr: next.js
+Our frontend is using:
 
-## Source data
-https://github.com/nandiheath/dc-data  
+- frontend using react
+- a server side rendering meta server using next.js
 
-And the web app requires a graphql backend to serve the data
-Now it is hosted at [https://gql.opencultures.life/graphql](https://gql.opencultures.life/graphql)
+Our open source data is at [https://github.com/nandiheath/dc-data](dc-data)
+
+Our backend is using:
+
+- [hasura graphql server](https://hasura.io/)
+- patroni - HA supported psql server (with postgix supported)
 
 ## Development
-### Website
+
+### React Frontend
+
 ```bash
 cd web
 
@@ -30,7 +36,10 @@ npm i
 npm start
 ```
 
-### SSR
+And navigate to `localhost:3000` for testing
+
+### Meta Server
+
 ```bash
 cd ssr
 

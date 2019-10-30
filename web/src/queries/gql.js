@@ -16,6 +16,7 @@ code
 deviation_percentage
 expected_population
 main_areas
+description
 vote_stats {
   count
   type
@@ -297,6 +298,8 @@ export const QUERY_GET_NOMINATION_SUMMARY = gql`
       candidates {
         camp
         nominated_at
+        nominate_status
+        election_type
       }
     }
   }
