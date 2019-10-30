@@ -9,6 +9,7 @@ import Divider from '@material-ui/core/Divider'
 import Box from '@material-ui/core/Box'
 import PropTypes from 'prop-types'
 import { bps } from 'ui/responsive'
+import { SeperatedColumns } from 'components/atoms/Columns'
 
 const Container = styled(Paper)`
   && {
@@ -71,17 +72,6 @@ const StyledDivier = styled(Divider)`
   }
 `
 
-const SeperatedRow = styled(Box)`
-  && {
-    margin-top: 20px;
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-`
-
 class DistrictCard extends Component {
   static propTypes = {
     year: PropTypes.number.isRequired,
@@ -127,35 +117,35 @@ class DistrictCard extends Component {
     return (
       <Container>
         <InnerContainer border={0} color="primary.minor">
-          <SeperatedRow>
+          <SeperatedColumns>
             {this.renderPrevElectionButton(year)}
             <YearText variant="button" gutterBottom>
               {year}
             </YearText>
             {this.renderNextElectionButton(year)}
-          </SeperatedRow>
+          </SeperatedColumns>
           <RegionText>{district.dc_name_zh}</RegionText>
           <Typography variant="h3">{name_zh}</Typography>
           <CodeText>{code}</CodeText>
           <StyledDivier />
-          <SeperatedRow>
+          <SeperatedColumns>
             <Typography variant="h6">區議員</Typography>
             <Typography>
               {councillor.person ? councillor.person.name_zh : '-'}
             </Typography>
-          </SeperatedRow>
-          <SeperatedRow>
+          </SeperatedColumns>
+          <SeperatedColumns>
             <Typography variant="h6">政治聯繫</Typography>
             <Typography>{councillor.political_affiliation || '-'}</Typography>
-          </SeperatedRow>
-          <SeperatedRow>
+          </SeperatedColumns>
+          <SeperatedColumns>
             <Typography variant="h6">投票站</Typography>
             {stations.map((station, index) => (
               <Typography key={index} variant="subtitle2">
                 {station.name_zh}
               </Typography>
             ))}
-          </SeperatedRow>
+          </SeperatedColumns>
         </InnerContainer>
       </Container>
     )

@@ -2,7 +2,6 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
-import { makeStyles } from '@material-ui/core/styles'
 import IndexPage from 'components/pages/landing'
 import ProfilePage from 'components/pages/profile'
 import DistrictPage from 'components/pages/district'
@@ -17,11 +16,9 @@ import theme from 'ui/theme'
 import './App.css'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
-import Drawer from '@material-ui/core/Drawer'
 import MobileAppBar from 'components/organisms/MobileAppBar'
 import Footer from 'components/organisms/Footer'
-import drawerReducer from 'reducers/drawer'
-import ContextStore, { drawerInitialState } from 'ContextStore'
+import { ContextStoreProvider } from 'ContextStore'
 import withTracker from './WithTracker'
 import SearchDrawer from 'components/pages/SearchDrawer'
 import DistrictOverviewPage from 'components/pages/district/overview'
@@ -30,13 +27,6 @@ import DistrictAllPage from 'components/pages/district/all'
 const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_URI,
 })
-
-const useStyles = makeStyles(theme => ({
-  drawerPaper: {
-    width: '500px',
-    maxWidth: '100%',
-  },
-}))
 
 const Root = styled(Box)`
   && {
@@ -71,24 +61,11 @@ const App = props => {
   if (!process.env.REACT_APP_GRAPHQL_URI) {
     throw new Error('Graphql host not yet set')
   }
-  const classes = useStyles()
-
-  const [drawerState, drawerDispatch] = React.useReducer(
-    drawerReducer,
-    drawerInitialState
-  )
 
   return (
     <ApolloProvider client={client}>
       <MuiThemeProvider theme={theme}>
-        <ContextStore.Provider
-          value={{
-            drawer: {
-              state: drawerState,
-              dispatch: drawerDispatch,
-            },
-          }}
-        >
+        <ContextStoreProvider>
           <Root>
             <ContentContainer>
               <CssBaseline />
@@ -135,18 +112,9 @@ const App = props => {
               </Wrapper>
               <Footer />
             </ContentContainer>
-            <Drawer
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-              anchor="left"
-              open={drawerState.open}
-              variant="persistent"
-            >
-              <SearchDrawer />
-            </Drawer>
+            <SearchDrawer />
           </Root>
-        </ContextStore.Provider>
+        </ContextStoreProvider>
       </MuiThemeProvider>
     </ApolloProvider>
   )

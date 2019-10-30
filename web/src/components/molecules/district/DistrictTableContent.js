@@ -13,7 +13,14 @@ const DistrictNameTableRow = styled(TableRow)`
 `
 
 const DistrictTableContent = props => {
-  const { district, year } = props
+  const {
+    district,
+    year,
+    showEstablishment,
+    showDemocracy,
+    showBlank,
+    showOthers,
+  } = props
   return (
     <>
       <DistrictNameTableRow
@@ -39,6 +46,10 @@ const DistrictTableContent = props => {
             key={constituency.id}
             constituency={constituency}
             year={year}
+            showEstablishment={showEstablishment}
+            showDemocracy={showDemocracy}
+            showBlank={showBlank}
+            showOthers={showOthers}
           />
         )
       })}

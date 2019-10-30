@@ -5,6 +5,7 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 import styled from 'styled-components'
+import SwipeableViews from 'react-swipeable-views'
 
 const StyledAppBar = styled(AppBar)`
   && {
@@ -55,6 +56,9 @@ export default function ScrollableTabs(props) {
   function handleChange(event, newValue) {
     setSelectedTab(newValue)
   }
+  function handleChangeIndex(newValue) {
+    setSelectedTab(newValue)
+  }
 
   const shouldCenter = buttonLayout === 'centered' ? true : false
 
@@ -78,16 +82,14 @@ export default function ScrollableTabs(props) {
           ))}
         </Tabs>
       </StyledAppBar>
-      {// TODO: support single tab
-      children &&
-        children.length > 0 &&
-        children
-          .filter(child => child)
-          .map((child, index) => (
-            <TabPanel key={index} hidden={selectedTab !== index}>
-              {child}
-            </TabPanel>
-          ))}
+      <SwipeableViews index={selectedTab} onChangeIndex={handleChangeIndex}>
+        {// TODO: support single tab
+        children &&
+          children.length > 0 &&
+          children
+            .filter(child => child)
+            .map((child, index) => <TabPanel key={index}>{child}</TabPanel>)}
+      </SwipeableViews>
     </>
   )
 }

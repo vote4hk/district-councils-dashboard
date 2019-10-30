@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { PeopleAvatar } from 'components/atoms/Avatar'
 import { withRouter } from 'react-router-dom'
 import { Box, Grid } from '@material-ui/core'
@@ -97,7 +97,7 @@ const CandidateGrid = props => {
           <HtmlTooltip
             disableFocusListener
             disableTouchListener
-            text="侯選人立場有爭議"
+            text="侯選人政治立場未明"
             placement="bottom"
             size={16}
           />
@@ -119,41 +119,56 @@ const CandidateGrid = props => {
   )
 }
 
-const CandidatesTableContent = props => {
-  const { candidates } = props
+class CandidatesTableContent extends Component {
+  matchCamp(candidate, showDemocracy, showEstablishment, showOthers) {
+    if (showDemocracy && candidate.camp === '民主') return true
+    if (showEstablishment && candidate.camp === '建制') return true
+    if (showOthers && candidate.camp === '其他') return true
+    return false
+  }
 
-  return (
-    <>
-      {candidates.map(candidate => (
-        <StyledTableRow
-          key={candidate.person.id}
-          onClick={() => {
-            props.history.push(
-              `/profile/${candidate.person.name_zh ||
-                candidate.person.name_en}/${candidate.person.uuid}`
-            )
-          }}
-          textcolor={
-            candidate.nominate_status === 'disqualified' ||
-            candidate.nominate_status === 'suspended'
-              ? 'grey'
-              : 'black'
-          }
-        >
-          <StyledTableCell>
-            <CandidateGrid key={candidate.person.id} candidate={candidate} />
-          </StyledTableCell>
-          <StyledTableCell>
-            {candidate.person.related_organization || '-'}
-          </StyledTableCell>
-          <StyledTableCell>
-            {candidate.political_affiliation || '-'}
-          </StyledTableCell>
-          <StyledTableCell></StyledTableCell>
-        </StyledTableRow>
-      ))}
-    </>
-  )
+  render() {
+    const { props, matchCamp } = this
+    const { candidates, showEstablishment, showDemocracy, showOthers } = props
+    return (
+      <>
+        {candidates
+          .filter(candidate =>
+            matchCamp(candidate, showDemocracy, showEstablishment, showOthers)
+          )
+          .map(candidate => (
+            <StyledTableRow
+              key={candidate.person.id}
+              onClick={() => {
+                props.history.push(
+                  `/profile/${candidate.person.name_zh ||
+                    candidate.person.name_en}/${candidate.person.uuid}`
+                )
+              }}
+              textcolor={
+                candidate.nominate_status === 'disqualified' ||
+                candidate.nominate_status === 'suspended'
+                  ? 'grey'
+                  : 'black'
+              }
+            >
+              <StyledTableCell>
+                <CandidateGrid
+                  key={candidate.person.id}
+                  candidate={candidate}
+                />
+              </StyledTableCell>
+              <StyledTableCell>
+                {candidate.person.related_organization || '-'}
+              </StyledTableCell>
+              <StyledTableCell>
+                {candidate.political_affiliation || '-'}
+              </StyledTableCell>
+            </StyledTableRow>
+          ))}
+      </>
+    )
+  }
 }
 
 export default withRouter(CandidatesTableContent)
