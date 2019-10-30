@@ -9,7 +9,7 @@ CandidateTags.propTypes = {
 
 function getTextByTagAndType(tag, type) {
   if (type === 'camp' && tag === '有爭議') {
-    return '侯選人立場有爭議'
+    return '侯選人政治立場未明'
   }
   return ''
 }

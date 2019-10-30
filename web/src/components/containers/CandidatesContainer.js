@@ -179,7 +179,7 @@ const CandidatesContainer = props => {
                                   <HtmlTooltip
                                     disableFocusListener
                                     disableTouchListener
-                                    text="侯選人立場有爭議"
+                                    text="侯選人政治立場未明"
                                     placement="bottom"
                                     size={21}
                                   />
