@@ -21,6 +21,12 @@ const Container = styled.div`
   }
 `
 
+const StyledRows = styled(Rows)`
+  && {
+    align-items: normal;
+  }
+`
+
 const StyledButton = styled(Button)`
   && {
     border: 1px black solid;
@@ -69,7 +75,7 @@ const FCPersonData = props => {
           </Typography>
         )}
       </Container>
-      <Rows>
+      <StyledRows>
         {events.map(event => (
           <PersonEvent key={event.eventId} {...event}></PersonEvent>
         ))}
@@ -85,7 +91,7 @@ const FCPersonData = props => {
             </StyledButton>
           </Container>
         )}
-      </Rows>
+      </StyledRows>
     </>
   )
 }
