@@ -12,6 +12,9 @@
 /.next/
 /out/
 
+#.express
+/.express/
+
 # production
 /build
 
