@@ -40,7 +40,7 @@ export const Disclaimer = props => {
         <DefaultLink href="https://forms.gle/irD6tEznWPNda6w59" target="_blank">
           此鏈結
         </DefaultLink>
-        回報。
+        匯報。
       </Typography>
       <Typography variant="body2">
         本網站與任何2019年區議會選舉候選人或其助選成員無關，刊載資料目的非為促使或阻礙任何候選人在選舉中當選。
