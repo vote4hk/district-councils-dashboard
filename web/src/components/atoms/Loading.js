@@ -5,7 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 const Placeholder = styled.div`
   && {
     width: 100%;
-    height: 100%;
+    height: calc(100vh - 56px);
     display: flex;
     align-items: center;
     justify-content: center;
