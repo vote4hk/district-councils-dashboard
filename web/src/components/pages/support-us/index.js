@@ -49,13 +49,13 @@ const SupportUsPage = props => {
           ，令不同範疇的數據更透明，解決資訊不流通問題，提升公民的知情權。
         </p>
         <br />
-        <Typography variant="h5">支持我們</Typography>
+        <Typography variant="h5">支持g0vhk</Typography>
         <p>
-          你的捐款，有助我們 g0vhk
+          你的捐款，有助g0vhk
           舉辦更多活動，推廣公民科技，同時為未來的項目提供起動資金。本網站亦於g0vhk贊助的服務器運行，收到的捐款有一部份將用補貼雲端服務的支出。
         </p>
         <p>
-          如你認同我們的理念，請到
+          如你認同g0vhk的理念，請到
           <DefaultLink
             target="_blank"
             href="https://www.collaction.hk/s/g0vhk/fund"

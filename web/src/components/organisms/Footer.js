@@ -107,6 +107,21 @@ function Footer(props) {
             </StyledFooterLink>
           </LinkBox>
           <LinkBox>
+            <StyledFooterLink target="_blank" href="https://hkfactcheck.io/">
+              選區事實處
+            </StyledFooterLink>
+          </LinkBox>
+          <LinkBox>
+            <StyledFooterLink
+              onClick={
+                () => props.history.push(`/support-us`)
+                // console.log(props)
+              }
+            >
+              關於我們
+            </StyledFooterLink>
+          </LinkBox>
+          <LinkBox>
             <div
               className="fb-like"
               data-href="https://dc2019.g0vhk.io"

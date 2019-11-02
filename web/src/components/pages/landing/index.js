@@ -4,14 +4,11 @@ import Summary from 'components/templates/Summary'
 import CampCompareChartContainer from 'components/templates/CampCompareChartContainer'
 import Countdown from 'components/atoms/Countdown'
 import styled from 'styled-components'
-import { Typography, Fab } from '@material-ui/core'
-import { ThumbUpAlt } from '@material-ui/icons'
-
+import { Typography } from '@material-ui/core'
 import { Alert } from 'components/atoms/Alert'
 import SearchTab from 'components/organisms/SearchTab'
 import { QUERY_GET_CONFIG } from 'queries/gql'
 import { COLORS } from 'ui/theme'
-import { UnstyledNavLink } from 'components/atoms/Link'
 
 const Container = styled.div`
   width: 100%;
@@ -54,25 +51,6 @@ const ConfigCenterText = styled.div`
       text-decoration: none;
       color: ${COLORS.main.primary};
     }
-  }
-`
-
-const SupportUsButton = styled(Fab)`
-  && {
-    z-index: 9999;
-    right: 16px;
-    bottom: 16px;
-    position: absolute;
-    padding: 100px;
-    font-size: 14px;
-    padding: 0 16px !important;
-  }
-`
-
-const ThumbIcon = styled(ThumbUpAlt)`
-  && {
-    font-size: large;
-    margin-right: 4px;
   }
 `
 
@@ -134,17 +112,6 @@ class IndexPage extends Component {
   render() {
     return (
       <>
-        <UnstyledNavLink to={`/support-us`}>
-          <SupportUsButton
-            size="small"
-            color="secondary"
-            variant="extended"
-            aria-label="add"
-          >
-            <ThumbIcon />
-            支持我們
-          </SupportUsButton>
-        </UnstyledNavLink>
         {this.renderAlert()}
         <TopSection>
           {Date.parse(new Date(electionDate)) > Date.parse(new Date()) && (
