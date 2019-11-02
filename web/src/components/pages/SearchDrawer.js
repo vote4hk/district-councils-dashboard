@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import Box from '@material-ui/core/Box'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
+import { makeStyles } from '@material-ui/core/styles'
+import Drawer from '@material-ui/core/Drawer'
 
 import { withRouter } from 'react-router-dom'
 import ContextStore from 'ContextStore'
@@ -33,27 +35,44 @@ const NavBarButton = styled(IconButton)`
   }
 `
 
+const useStyles = makeStyles(theme => ({
+  drawerPaper: {
+    width: '500px',
+    maxWidth: '100%',
+  },
+}))
+
 function AppDrawer(props) {
   const {
-    drawer: { dispatch },
+    drawer: { dispatch, state },
   } = React.useContext(ContextStore)
+  const classes = useStyles()
 
   return (
-    <Container>
-      <NavBarButton
-        color="inherit"
-        component="span"
-        aria-label="Menu"
-        onClick={() => {
-          dispatch({ type: DRAWER_CLOSE })
-        }}
-      >
-        <CloseIcon fontSize="small" />
-      </NavBarButton>
-      <MenuContainer>
-        <SearchMenu />
-      </MenuContainer>
-    </Container>
+    <Drawer
+      classes={{
+        paper: classes.drawerPaper,
+      }}
+      anchor="left"
+      open={state.open}
+      variant="persistent"
+    >
+      <Container>
+        <NavBarButton
+          color="inherit"
+          component="span"
+          aria-label="Menu"
+          onClick={() => {
+            dispatch({ type: DRAWER_CLOSE })
+          }}
+        >
+          <CloseIcon fontSize="small" />
+        </NavBarButton>
+        <MenuContainer>
+          <SearchMenu />
+        </MenuContainer>
+      </Container>
+    </Drawer>
   )
 }
 

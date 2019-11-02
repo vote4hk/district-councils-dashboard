@@ -3,11 +3,13 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
-import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
-import { DRAWER_OPEN } from '../../reducers/drawer'
+import styled from 'styled-components'
 import ContextStore from 'ContextStore'
+import { DRAWER_OPEN } from '../../reducers/drawer'
 import { UnstyledNavLink } from '../atoms/Link'
+import ShareButton from './ShareButton'
+import { fireEvent } from 'utils/ga_fireevent'
 
 const StyledAppBar = styled(AppBar)`
   && {
@@ -42,15 +44,30 @@ function MobileAppBar(props) {
               </span>
             </Typography>
           </AppBarTitle>
-
           <IconButton
             color="inherit"
             component="span"
             aria-label="Search"
-            onClick={() => dispatch({ type: DRAWER_OPEN })}
+            onClick={() => {
+              dispatch({ type: DRAWER_OPEN })
+              fireEvent({
+                ca: 'general',
+                ac: 'click',
+                lb: 'menu_drawer',
+              })
+            }}
           >
             <MenuIcon />
           </IconButton>
+          <ShareButton
+            onClick={() =>
+              fireEvent({
+                ca: 'general',
+                ac: 'click',
+                lb: 'share_button',
+              })
+            }
+          />
         </Toolbar>
       </StyledAppBar>
     </>

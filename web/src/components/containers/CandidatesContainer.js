@@ -3,25 +3,40 @@ import { Query } from 'react-apollo'
 import { QUERY_GET_CANDIDATES } from 'queries/gql'
 import { PeopleAvatar } from 'components/atoms/Avatar'
 import { UnstyledNavLink } from 'components/atoms/Link'
+import { Tag } from 'components/atoms/Tag'
 import Rows from 'components/atoms/Rows'
-import Columns from 'components/atoms/Columns'
+import { SeperatedColumns } from 'components/atoms/Columns'
+import { HtmlTooltip } from 'components/atoms/Tooltip'
 import { Box, Typography, Grid } from '@material-ui/core'
 import styled from 'styled-components'
-import { getColorFromCamp } from 'utils/helper'
+import {
+  getColorFromCamp,
+  getConstituencyTagsByCandidateCamps,
+} from 'utils/helper'
 import { COLORS } from 'ui/theme'
 
 const IMAGE_HOST_URI =
   process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'
 
-const Container = styled(Box)`
+const CandidateList = styled(Grid)`
   && {
-    width: 100%;
-    padding: 0 0px 16px;
   }
 `
 
-const CandidateList = styled(Grid)`
+const CandidateGrid = styled(Grid)`
   && {
+    margin-bottom: 8px;
+  }
+`
+
+const TagContainer = styled(Box)`
+  && {
+  }
+`
+
+const StyledTag = styled(Tag)`
+  && {
+    margin-left: 4px;
   }
 `
 
@@ -38,9 +53,10 @@ const Candidate = styled(Box)`
 
 const CandidateNumber = styled(Box)`
   && {
-    position: absolute;
-    top: 64px;
-    left: 3px;
+    position: relative;
+    margin-bottom: -18px !important;
+    top: -19px;
+    left: -28px;
     border-radius: 50%;
     font-weight: 700;
     width: ${props => props.dimension};
@@ -51,6 +67,15 @@ const CandidateNumber = styled(Box)`
   }
 `
 
+const ControversialAlert = styled.div`
+  && {
+    position: relative;
+    margin-bottom: -21px !important;
+    top: -21px;import { Tag } from 'components/atoms/Tag';
+
+    left: 30px;
+  }
+`
 const CandidateName = styled(Typography)`
   && {
     margin-top: 5px;
@@ -73,23 +98,32 @@ const CandidatesContainer = props => {
         const candidates =
           data.dcd_candidates &&
           data.dcd_candidates.filter(c => c.election_type === 'ordinary')
+
+        const tags = getConstituencyTagsByCandidateCamps(candidates)
         return (
-          <Container>
+          <>
             {candidates.length > 0 && (
               <>
                 <Rows>
-                  <Columns>
+                  <SeperatedColumns>
                     <Typography variant="h6" gutterBottom>
                       已接獲提名
                     </Typography>
-                  </Columns>
+                    {tags.length > 0 && (
+                      <TagContainer>
+                        {tags.map((tag, index) => (
+                          <StyledTag value={tag} key={index} />
+                        ))}
+                      </TagContainer>
+                    )}
+                  </SeperatedColumns>
                 </Rows>
                 <Rows>
-                  <Columns>
+                  <SeperatedColumns>
                     <CandidateList container direction="row">
                       {/* Max 3 columns and always centered */}
                       {candidates.map(candidate => (
-                        <Grid
+                        <CandidateGrid
                           key={candidate.person.id}
                           item
                           xs={
@@ -121,6 +155,13 @@ const CandidatesContainer = props => {
                                       '/static/images/avatar/default.png'
                                   },
                                 }}
+                                opacity={
+                                  candidate.nominate_status ===
+                                    'disqualified' ||
+                                  candidate.nominate_status === 'suspended'
+                                    ? 0.1
+                                    : 1
+                                }
                               />
                               {candidate.candidate_number > 0 && (
                                 <CandidateNumber
@@ -130,24 +171,50 @@ const CandidatesContainer = props => {
                                   {candidate.candidate_number}
                                 </CandidateNumber>
                               )}
+                              {candidate.tags.findIndex(
+                                tag =>
+                                  tag.type === 'camp' && tag.tag === '有爭議'
+                              ) > -1 && (
+                                <ControversialAlert>
+                                  <HtmlTooltip
+                                    disableFocusListener
+                                    disableTouchListener
+                                    text="侯選人政治立場未明"
+                                    placement="bottom"
+                                    size={21}
+                                  />
+                                </ControversialAlert>
+                              )}
                               <CandidateName variant="h5">
                                 {candidate.person.name_zh ||
                                   candidate.person.name_en}
                               </CandidateName>
 
                               <Typography variant="body2">
-                                {candidate.political_affiliation}
+                                {candidate.political_affiliation ||
+                                  '未報稱政治聯繫'}
                               </Typography>
+
+                              {candidate.nominate_status === 'disqualified' && (
+                                <Typography variant="body2">
+                                  取消資格
+                                </Typography>
+                              )}
+                              {candidate.nominate_status === 'suspended' && (
+                                <Typography variant="body2">
+                                  宣布棄選
+                                </Typography>
+                              )}
                             </Candidate>
                           </UnstyledNavLink>
-                        </Grid>
+                        </CandidateGrid>
                       ))}
                     </CandidateList>
-                  </Columns>
+                  </SeperatedColumns>
                 </Rows>
               </>
             )}
-          </Container>
+          </>
         )
       }}
     </Query>

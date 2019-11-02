@@ -52,11 +52,11 @@ export default props => {
       // },
       {
         camp: 'democracy',
-        label: '非建制',
+        label: '民主',
         color: CAMP_COLORS[2],
-        count: res.data.map(d => d['非建制']).reduce((c, v) => c + v, 0),
+        count: res.data.map(d => d['民主']).reduce((c, v) => c + v, 0),
         overhalf_count: res.data
-          .map(d => (d['非建制'] > d.total / 2 ? 1 : 0))
+          .map(d => (d['民主'] > d.total / 2 ? 1 : 0))
           .reduce((c, v) => c + v, 0),
       },
     ]
@@ -71,7 +71,7 @@ export default props => {
       .attr('class', 'legend')
       .attr(
         'transform',
-        (d, i) => `translate(${i * (dimensions.width - 100)}, 8)`
+        (d, i) => `translate(${i * (dimensions.width - 90)}, 8)`
       )
 
     legend
@@ -117,7 +117,7 @@ export default props => {
     const width = dimensions.width
     const height = data.length * ROW_HEIGHT + margin.top + margin.bottom
 
-    const labels = ['建制', '其他', '非建制']
+    const labels = ['建制', '其他', '民主']
     const series = d3
       .stack()
       .keys(columns.slice(1))
@@ -203,7 +203,9 @@ export default props => {
         .data(d => d)
         .join('text')
         .text(function(d, i, groups, f) {
-          return d.count === 0 ? '' : `${d.count}席`
+          return d.count === 0
+            ? ''
+            : d.count + (d.count / d.data.total > 0.1 ? '席' : '')
         })
         .attr('x', d => {
           switch (d.index) {
@@ -294,7 +296,9 @@ export default props => {
         .data(d => d)
         .join('text')
         .text(function(d, i, groups, f) {
-          return d.count === 0 ? '' : `${d.count}席`
+          return d.count === 0
+            ? ''
+            : d.count + (d.count / d.data.total > 0.1 ? '席' : '')
         })
         .attr('opacity', 0)
         .attr('x', d => {

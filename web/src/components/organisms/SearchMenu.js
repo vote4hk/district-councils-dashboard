@@ -50,6 +50,16 @@ const SearchMenu = props => {
         <Typography
           variant="h5"
           color="secondary"
+          onClick={() => goToPage('/district/2019')}
+        >
+          全港選區一覽
+        </Typography>
+      </LeftMargin>
+
+      <LeftMargin>
+        <Typography
+          variant="h5"
+          color="secondary"
           onClick={() => goToPage('/about-dc')}
         >
           關於區議會選舉
@@ -68,7 +78,9 @@ const SearchMenu = props => {
           反映意見
         </Typography>
       </LeftMargin>
-      <SearchTab />
+      <LeftMargin>
+        <SearchTab />
+      </LeftMargin>
     </>
   )
 }

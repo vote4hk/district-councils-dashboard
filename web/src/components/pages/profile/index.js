@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
-import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
-import Grid from '@material-ui/core/Grid'
-import Breadcrumbs from '@material-ui/core/Breadcrumbs'
+import { Typography, Grid, Breadcrumbs, Avatar } from '@material-ui/core'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/Link'
 import { PeopleAvatar } from 'components/atoms/Avatar'
+import HtmlParagraph from 'components/atoms/HtmlParagraph'
 import ScrollableTabs from 'components/organisms/ScrollableTabs'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
@@ -15,9 +13,9 @@ import { getColorFromCamp } from 'utils/helper'
 import CouncillorMeetingAttendanceContainer from 'components/containers/CouncillorMeetingAttendanceContainer'
 import PersonElectionHistoriesContainer from 'components/containers/PersonElectionHistoriesContainer'
 import FCPersonData from 'components/templates/FCPersonData'
-import { SuccessText, FailureText } from 'components/atoms/Text'
 import { COLORS } from 'ui/theme'
 import { Tag } from 'components/atoms/Tag'
+import { HtmlTooltip } from 'components/atoms/Tooltip'
 import {
   getDistrictOverviewUriFromTag,
   getConstituencyUriFromTag,
@@ -35,6 +33,7 @@ const GET_PEOPLE_PROFILE = gql`
       gender
       related_organization
       estimated_yob
+      description
       councillors {
         meeting_attendances {
           id
@@ -67,6 +66,7 @@ const GET_PEOPLE_PROFILE = gql`
         }
         candidate_number
         is_won
+        fb_id
         occupation
         political_affiliation
         age
@@ -115,15 +115,6 @@ const PersonName = styled.div`
   }
 `
 
-const YearDiv = styled.div`
-  && {
-    font-size: 24px;
-    font-weight: 600;
-    color: #9b9b9b;
-    margin-bottom: 20px;
-  }
-`
-
 const ElectionStatus = styled(Box)`
   && {
     display: flex;
@@ -135,52 +126,39 @@ const ElectionStatus = styled(Box)`
   }
 `
 
+const FacebookPageButton = styled(UnstyledLink)`
+  && {
+    display: block;
+    position: relative;
+    width: 0px;
+    height: 0px;
+    right: 40px;
+    bottom: -50px;
+    img {
+      height: 16px;
+      width: 16px;
+    }
+  }
+`
+
 const PersonHighlightContainer = styled(FlexRowContainer)`
   && {
     padding: 16px;
-  }
-`
-
-const ElectionHistoryPaper = styled(Paper)`
-  && {
-    padding: 20px;
-  }
-`
-
-const ElectionHistoryContentGrid = styled(Grid)`
-  && {
-    padding: 15px;
-  }
-`
-
-const ElectionHistoryContentSpan = styled(Grid)`
-  && {
-    font-size: 18px;
-    color: #4a4a4a;
-  }
-`
-
-const ElectionHistoryContentHeaderSpan = styled(ElectionHistoryContentSpan)`
-  && {
-    font-weight: 500;
-  }
-`
-const ElectionDetailButton = styled.div`
-  && {
-    padding: 15px;
-    font-weight: 600;
-    color: #ffb700;
-    width: 100%;
-    text-align: center;
-    border-radius: 4px;
-    border: 2px solid #ffb700;
-    cursor: pointer;
+    text-align: left;
   }
 `
 const BreadcrumbsContainer = styled(Box)`
   && {
     flex-grow: 1;
     padding: 4px 16px;
+  }
+`
+const PersonDescriptionParagraph = styled(HtmlParagraph)`
+  && {
+    margin-top: 0px;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-bottom: 8px;
   }
 `
 
@@ -194,6 +172,25 @@ class ProfilePage extends Component {
 
   handleElectionDetailButton = (year, code) => {
     this.props.history.push(`/district/${year}/${code}`)
+  }
+
+  renderFacebook = person => {
+    let url = 'https://facebook.com/'
+    let fb_id = person.candidates[0].fb_id
+    if (fb_id && fb_id !== 'n/a') {
+      url += fb_id
+      return (
+        <FacebookPageButton target="_blank" href={url} aria-label="Facebook">
+          <Avatar
+            width={'8px'}
+            height={'8px'}
+            borderwidth={'0'}
+            src={`/static/images/facebook.svg`}
+          />
+        </FacebookPageButton>
+      )
+    }
+    return
   }
 
   renderIntroText = (person, currentTerm) => {
@@ -252,7 +249,12 @@ class ProfilePage extends Component {
       return (
         <ElectionStatus>
           {tags.map(tag => (
-            <Tag value={tag} borderwidth={1} backgroundcolor={'transparent'} />
+            <Tag
+              textcolor="black"
+              value={tag}
+              borderwidth={1}
+              backgroundcolor={'transparent'}
+            />
           ))}
         </ElectionStatus>
       )
@@ -307,19 +309,23 @@ class ProfilePage extends Component {
             personHighlight.push({
               xs: 2,
               title: '年齡',
+              tips: '根據候選人簡介的年齡推算',
               text: `${2019 - person.estimated_yob}歲`,
             })
           }
 
           personHighlight.push({
-            xs: 5,
-            title: '相關組織',
+            xs: 6,
+            title: '相關組織 ',
+            tips: '候選人或議員的所屬政黨或社區組織，來源綜合媒體報道',
             text: person.related_organization || '-',
           })
 
           personHighlight.push({
-            xs: 5,
-            title: '職業',
+            xs: 4,
+            title: '職業 ',
+            tips:
+              '候選人：取自最近選舉的候選人簡介<br />議員：取自區議會網頁<br />來源綜合媒體報道',
             text:
               (currentTerm && currentTerm.career) || lastElection.occupation,
           })
@@ -344,9 +350,15 @@ class ProfilePage extends Component {
                       separator={<NavigateNextIcon fontSize="small" />}
                       aria-label="breadcrumb"
                     >
-                      <Typography color="textPrimary">
-                        {lastElection.year}
-                      </Typography>
+                      <UnstyledLink
+                        onClick={() => {
+                          this.props.history.push(`/district/2019`)
+                        }}
+                      >
+                        <Typography color="textPrimary">
+                          {lastElection.year}
+                        </Typography>
+                      </UnstyledLink>
                       <UnstyledLink
                         onClick={() => {
                           this.props.history.push(
@@ -424,6 +436,7 @@ class ProfilePage extends Component {
 
                     {this.renderIntroText(person, currentTerm)}
                   </PersonName>
+                  {this.renderFacebook(person)}
                 </Box>
               </CandidateHeaderContainer>
 
@@ -438,11 +451,23 @@ class ProfilePage extends Component {
                 <Grid container>
                   {personHighlight.map((highlight, index) => (
                     <Grid item key={index} xs={highlight.xs} pr={1}>
-                      <Typography variant="h6">{highlight.title}</Typography>
+                      <Typography variant="h6">
+                        {highlight.title}
+                        <HtmlTooltip
+                          disableFocusListener
+                          disableTouchListener
+                          text={highlight.tips}
+                          placement="bottom"
+                          size={21}
+                        />
+                      </Typography>
                     </Grid>
                   ))}
                 </Grid>
               </PersonHighlightContainer>
+              {person.description && (
+                <PersonDescriptionParagraph text={person.description} />
+              )}
               <ScrollableTabs
                 titles={titles}
                 indicatorcolor={
@@ -456,10 +481,7 @@ class ProfilePage extends Component {
                   <FCPersonData
                     fcUuid={person.fc_uuid}
                     name={person.name_zh || person.name_en}
-                    filterFunc={record =>
-                      record.eventType !== 'MEDIA' &&
-                      record.eventType !== 'OTHER'
-                    }
+                    filterFunc={record => record.eventType !== 'MEDIA'}
                   />
                 )}
                 {person.fc_uuid && (

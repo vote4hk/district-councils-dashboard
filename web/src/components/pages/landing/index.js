@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Query } from 'react-apollo'
 import Summary from 'components/templates/Summary'
 import CampCompareChartContainer from 'components/templates/CampCompareChartContainer'
 import Countdown from 'components/atoms/Countdown'
@@ -6,6 +7,8 @@ import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
 import { Alert } from 'components/atoms/Alert'
 import SearchTab from 'components/organisms/SearchTab'
+import { QUERY_GET_CONFIG } from 'queries/gql'
+import { COLORS } from 'ui/theme'
 
 const Container = styled.div`
   width: 100%;
@@ -32,13 +35,22 @@ const StyledCampCompareChartContainer = styled(CampCompareChartContainer)`
 const CountdownContainer = styled.div`
   && {
     width: 100%;
-    margin: 0 auto 16px;
   }
 `
 
 const StyledSearchTab = styled(SearchTab)`
   && {
     padding: 100px;
+  }
+`
+const ConfigCenterText = styled.div`
+  && {
+    width: 100%;
+    text-align: center;
+    a {
+      text-decoration: none;
+      color: ${COLORS.main.primary};
+    }
   }
 `
 
@@ -54,14 +66,53 @@ class IndexPage extends Component {
   async componentDidMount() {}
   onTabSelected(type) {}
 
+  renderAlert = () => {
+    return (
+      <Query query={QUERY_GET_CONFIG} variables={{ key: 'landing_alert' }}>
+        {({ loading, error, data }) => {
+          if (loading || error) return null
+          return data.dcd_config[0] ? (
+            <Alert>
+              <Typography variant="h6" gutterBottom>
+                {data.dcd_config[0].value.text}
+              </Typography>
+            </Alert>
+          ) : (
+            <></>
+          )
+        }}
+      </Query>
+    )
+  }
+
+  renderCenterText = () => {
+    return (
+      <Query
+        query={QUERY_GET_CONFIG}
+        variables={{ key: 'landing_center_text' }}
+      >
+        {({ loading, error, data }) => {
+          if (loading || error) return null
+          return data.dcd_config[0] ? (
+            <ConfigCenterText variant="h6" gutterBottom>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: data.dcd_config[0].value.html_text,
+                }}
+              />
+            </ConfigCenterText>
+          ) : (
+            <></>
+          )
+        }}
+      </Query>
+    )
+  }
+
   render() {
     return (
       <>
-        <Alert>
-          <Typography variant="h6" gutterBottom>
-            上屆區選，68人自動當選，今屆罕有出現零「白區」！
-          </Typography>
-        </Alert>
+        {this.renderAlert()}
         <TopSection>
           {Date.parse(new Date(electionDate)) > Date.parse(new Date()) && (
             <CountdownContainer>
@@ -75,10 +126,11 @@ class IndexPage extends Component {
               <Countdown date={electionDate} />
             </CountdownContainer>
           )}
-          <Summary />
           {/* <LandingIcon /> */}
         </TopSection>
         <Container>
+          <Summary />
+          {this.renderCenterText()}
           <StyledSearchTab />
           <StyledCampCompareChartContainer />
         </Container>

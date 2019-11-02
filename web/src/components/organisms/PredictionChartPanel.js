@@ -8,6 +8,10 @@ import { COLORS } from 'ui/theme'
 import Text from 'components/atoms/Text'
 import Rows from 'components/atoms/Rows'
 import { Box } from '@material-ui/core'
+import Collapse from '@material-ui/core/Collapse'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import ExpandLessIcon from '@material-ui/icons/ExpandLess'
+import { UnstyledButton } from 'components/atoms/Button'
 
 const StyledValueSlider = styled(ValueSlider)`
   && {
@@ -32,6 +36,20 @@ const StyledCheckBox = styled(CheckBox)`
   }
 `
 
+const ToggleButton = styled(UnstyledButton)`
+  && {
+    border-radius: 0;
+    width: 100%;
+    font-size: 14px;
+    text-align: center;
+    padding: 5px 0px;
+    color: color: ${COLORS.main.text};
+    :hover {
+      color: ${COLORS.main.primary};
+    }
+  }
+`
+
 PredictionChartPanel.propTypes = {
   settings: PropTypes.object.isRequired,
   setSettings: PropTypes.func.isRequired,
@@ -40,6 +58,15 @@ PredictionChartPanel.propTypes = {
 function PredictionChartPanel(props) {
   const { settings, setSettings } = props
 
+  const [showSettings, setShowSettings] = React.useState(false)
+
+  const handleClose = reason => {
+    if (reason === 'clickaway') {
+      return
+    }
+    setShowSettings(!showSettings)
+  }
+
   const setSettingConfigFunc = field => flag => {
     setSettings({
       config: Object.assign(settings.config, { [field]: flag }),
@@ -47,6 +74,7 @@ function PredictionChartPanel(props) {
       vote_rate: [...settings.vote_rate],
     })
   }
+
   const setSettingFunc = (x, y) => value =>
     setSettings({
       config: {
@@ -59,11 +87,41 @@ function PredictionChartPanel(props) {
         x === 1 && y === i ? value : v
       ),
     })
+
+  /* 
+     20191026 @wingkwong: 
+        <Tabs> iterates each children so that we cannot just place the compnent between <Tabs> and <TabSection>
+    */
+  const renderSettings = () => {
+    return (
+      <>
+        <ToggleButton onClick={handleClose}>
+          {showSettings ? '隱藏設定' : '顯示設定'}
+          {showSettings ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        </ToggleButton>
+        <Collapse in={showSettings}>
+          <Rows>
+            <StyledCheckBox
+              label="只計算新增選民，同時假設上屆投票選民維持相冋政治取向"
+              checked={settings.config.reference_last_election}
+              setChecked={setSettingConfigFunc('reference_last_election')}
+            ></StyledCheckBox>
+            <StyledCheckBox
+              label="為上屆自動當選議員加入對立陣營對手"
+              checked={settings.config.auto_won_add_components}
+              setChecked={setSettingConfigFunc('auto_won_add_components')}
+            ></StyledCheckBox>
+          </Rows>
+        </Collapse>
+      </>
+    )
+  }
   return (
     <div>
-      <Tabs titles={['投票取向', '投票率', '設定']} buttonLayout="centered">
+      <Tabs titles={['投票取向', '投票率']} buttonLayout="centered">
         <TabSection>
-          <Text variant="h5">非建制支持率</Text>
+          {renderSettings()}
+          <Text variant="h5">民主支持率</Text>
           <StyledValueSlider
             label={'18-30歲'}
             value={settings.camp_rate[0]}
@@ -81,6 +139,7 @@ function PredictionChartPanel(props) {
           ></StyledValueSlider>
         </TabSection>
         <TabSection>
+          {renderSettings()}
           <Text variant="h5">已登記選民投票率</Text>
           <StyledValueSlider
             label={'18-30歲'}
@@ -97,20 +156,6 @@ function PredictionChartPanel(props) {
             value={settings.vote_rate[2]}
             setValue={setSettingFunc(1, 2)}
           ></StyledValueSlider>
-        </TabSection>
-        <TabSection>
-          <Rows>
-            <StyledCheckBox
-              label="只計算新增選民，同時假設上屆投票選民維持相冋政治取向"
-              checked={settings.config.reference_last_election}
-              setChecked={setSettingConfigFunc('reference_last_election')}
-            ></StyledCheckBox>
-            <StyledCheckBox
-              label="為上屆自動當選議員加入對立陣營對手"
-              checked={settings.config.auto_won_add_components}
-              setChecked={setSettingConfigFunc('auto_won_add_components')}
-            ></StyledCheckBox>
-          </Rows>
         </TabSection>
       </Tabs>
     </div>

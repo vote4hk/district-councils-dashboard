@@ -47,3 +47,20 @@ export const getAllFeaturesFromPoint = (
 
   return result
 }
+
+export const getCentroidFromYearAndCode = (year, code) => {
+  const featuresArray = [dc2003, dc2007, dc2011, dc2015, dc2019]
+  const selectedIndex = [2003, 2007, 2011, 2015, 2019].findIndex(
+    y => y === year
+  )
+
+  if (selectedIndex > -1) {
+    const selectedFeature = featuresArray[selectedIndex]
+    const polygon = selectedFeature.features.find(
+      feature => feature.properties.CACODE === code
+    )
+    const centroid = turf.centroid(polygon)
+    return centroid.geometry.coordinates
+  }
+  return
+}

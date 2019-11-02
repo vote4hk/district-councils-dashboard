@@ -25,7 +25,7 @@ jobs:
         provider: pages
         skip-cleanup: true
         repo: hkvoteguide/hkvoteguide.github.io
-        fqdn: dc2019.g0vhk.io
+        fqdn: vote4.hk
         github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
         keep-history: true
         committer_from_gh: true

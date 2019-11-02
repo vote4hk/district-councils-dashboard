@@ -12,6 +12,7 @@ import ContextStore from 'ContextStore'
 import { DRAWER_CLOSE } from 'reducers/drawer'
 import { getProfilePath } from 'utils/helper'
 import DistrictSelector from 'components/molecules/DistrictSelector'
+import { fireEvent } from 'utils/ga_fireevent'
 
 const Container = styled(Paper)`
   && {
@@ -41,7 +42,7 @@ const AddressSearchContainer = styled(Box)`
     position: relative;
     left: 0;
     right: 0;
-    padding: 21px 16px 21px 16px;
+    padding: 21px 0px;
   }
 `
 
@@ -91,6 +92,11 @@ function SearchTab(props) {
 
   function onTabSelected(tab) {
     return () => {
+      fireEvent({
+        ca: 'search',
+        ac: 'click',
+        lb: `by_${tab}`,
+      })
       setSelectedTab(tab)
     }
   }

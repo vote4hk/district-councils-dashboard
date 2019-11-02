@@ -19,8 +19,11 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/Link'
 import { Alert } from 'components/atoms/Alert'
-import { getDistrictOverviewUriFromTag } from 'utils/helper'
-import { getAllFeaturesFromPoint } from 'utils/features'
+import { getDistrictOverviewUriFromTag, getParameterByName } from 'utils/helper'
+import {
+  getCentroidFromYearAndCode,
+  getAllFeaturesFromPoint,
+} from 'utils/features'
 import DCCAElectionHistories from 'components/templates/DCCAElectionHistories'
 
 const groupVoteStat = voteStats => {
@@ -57,11 +60,12 @@ const ToggleMapButton = styled(UnstyledButton)`
 class BattleGroundPage extends Component {
   constructor(props) {
     super(props)
+    const centroid = getCentroidFromYearAndCode(2019, props.match.params.code)
     this.state = {
       showMap: true,
       currentPoint: {
-        lng: 114.17056164035003,
-        lat: 22.312613750860297,
+        lng: centroid[0],
+        lat: centroid[1],
       },
     }
   }
@@ -118,7 +122,14 @@ class BattleGroundPage extends Component {
       match: {
         params: { year = 2019, code },
       },
+      location: { search },
     } = this.props
+
+    // Preset Tab for election history by matching query ?year=<year>
+    const queryYear = getParameterByName('year', search)
+    const presetTabIndex = ['2003', '2007', '2011', '2015'].findIndex(
+      year => year === queryYear
+    )
 
     return (
       <>
@@ -148,7 +159,13 @@ class BattleGroundPage extends Component {
                     separator={<NavigateNextIcon fontSize="small" />}
                     aria-label="breadcrumb"
                   >
-                    <Typography color="textPrimary"> {year}</Typography>
+                    <UnstyledLink
+                      onClick={() => {
+                        this.props.history.push(`/district/2019`)
+                      }}
+                    >
+                      <Typography color="textPrimary"> {year}</Typography>
+                    </UnstyledLink>
                     <UnstyledLink
                       onClick={() => {
                         this.props.history.push(
@@ -187,6 +204,7 @@ class BattleGroundPage extends Component {
                   code={district.code}
                   tags={district.tags}
                   voterData={groupVoteStat(district.vote_stats)}
+                  description={district.description}
                 />
                 {/* TODO Refactor style for ToggleMap Button */}
                 <ToggleMapButton
@@ -200,6 +218,7 @@ class BattleGroundPage extends Component {
                     <DCCACompareMap
                       year={year}
                       code={code}
+                      currentPoint={this.state.currentPoint}
                       changeDistrict={this.handleChangeDistrict}
                       handleMapClick={this.handleMapClick}
                       handleMapLoaded={this.handleMapLoaded}
@@ -217,7 +236,10 @@ class BattleGroundPage extends Component {
                     </Typography>
                   </Container>
                 )}
-                <DCCAElectionHistories histories={pointHistory} />
+                <DCCAElectionHistories
+                  histories={pointHistory}
+                  presetTabIndex={presetTabIndex}
+                />
                 <PlainCard>
                   <Typography variant="h6">現任區議員</Typography>
                   {previousDistricts.length > 1 && (

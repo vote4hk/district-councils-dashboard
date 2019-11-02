@@ -126,6 +126,10 @@ class IntegrationAutosuggest extends React.Component {
           coordinate: record.coordinate(),
           label: record.fullAddress(AddressParser.Address.LANG_ZH),
         }))
+        .filter(
+          (ele, index, self) =>
+            index === self.findIndex(record => record.label === ele.label)
+        )
 
       return result
     }

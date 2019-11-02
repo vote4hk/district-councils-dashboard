@@ -19,10 +19,33 @@ const StyledMicrolink = styled(Microlink)`
   }
 `
 
-const getEventTypeText = type => {
+const getPersonVoteText = personVote => {
+  switch (personVote) {
+    case 'MOVE':
+      return '動議'
+    case 'SECOND':
+      return '和議'
+    case 'YES':
+      return '贊成'
+    case 'NO':
+      return '否決'
+    case 'ABSTAIN':
+      return '棄權'
+    case 'ABSENT':
+      return '缺席'
+    case 'NORECORD':
+      return '無紀錄'
+    case 'PRESENT':
+      return '與席'
+    default:
+      return ''
+  }
+}
+
+const getEventTypeText = (type, personVote) => {
   switch (type) {
     case 'VOTE':
-      return '[投票]'
+      return `[投票 - ${getPersonVoteText(personVote)}]`
     case 'SPEECH':
       return '[言論]'
     default:
@@ -44,7 +67,7 @@ const validateUrl = url => {
 }
 
 const PersonEvent = props => {
-  const { title, eventType, date, description, url } = props
+  const { title, eventType, date, description, url, personVote } = props
   const validatedUrl = validateUrl(url)
 
   return (
@@ -56,7 +79,7 @@ const PersonEvent = props => {
         ) : (
           <>
             <Text variant="h5" gutterBottom>
-              {`${getEventTypeText(eventType)} ${title}`}
+              {`${getEventTypeText(eventType, personVote)} ${title}`}
             </Text>
             <Text color="textSecondary">{trimDescription(description)}</Text>
           </>

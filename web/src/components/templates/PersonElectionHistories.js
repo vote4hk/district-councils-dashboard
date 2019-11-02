@@ -8,6 +8,10 @@ import { SuccessText, FailureText } from '../atoms/Text'
 import { UnstyledNavLink } from '../atoms/Link'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { formatNumber } from 'utils/helper'
+import {
+  getCentroidFromYearAndCode,
+  getAllFeaturesFromPoint,
+} from 'utils/features'
 
 const PersonElectionHistoriesTitle = styled.div`
   && {
@@ -16,6 +20,34 @@ const PersonElectionHistoriesTitle = styled.div`
     align-items: center;
   }
 `
+
+const createQueryStringToBattlegroundPage = election => {
+  let targetPath = `/district/2019/${election.constituency.code}`
+  switch (election.year) {
+    case 2019:
+      return targetPath
+    case 2015:
+    case 2011:
+    case 2007:
+    case 2003:
+      const coordinates = getCentroidFromYearAndCode(
+        election.year,
+        election.constituency.code
+      )
+      const point = {
+        lng: coordinates[0],
+        lat: coordinates[1],
+      }
+      const dccaHistories = getAllFeaturesFromPoint(point)
+      targetPath = `/district/2019/${
+        dccaHistories.find(history => history.year === '2019').CACODE
+      }`
+      return targetPath + `?year=${election.year}`
+    default:
+      return '#'
+  }
+}
+
 const PersonElectionHistories = props => {
   const { histories } = props
 
@@ -34,11 +66,7 @@ const PersonElectionHistories = props => {
       {histories.map((m, index) => (
         <UnstyledNavLink
           key={index}
-          to={
-            m.year === 2019 &&
-            m.election_type === 'ordinary' &&
-            `/district/2019/${m.constituency.code}`
-          }
+          to={createQueryStringToBattlegroundPage(m)}
         >
           <PlainCard color="#fafafa">
             <PersonElectionHistoriesTitle>
@@ -48,7 +76,7 @@ const PersonElectionHistories = props => {
                 </Typography>
               </Box>
               <Box>
-                {m.year === 2019 && m.election_type === 'ordinary' && (
+                {createQueryStringToBattlegroundPage(m) !== '#' && (
                   <NavigateNextIcon />
                 )}
               </Box>

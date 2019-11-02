@@ -6,8 +6,10 @@ import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import XYZ from 'ol/source/XYZ'
 import GeoJSON from 'ol/format/GeoJSON'
-import { Style, Stroke, Fill, Text } from 'ol/style'
+import { Style, Stroke, Fill, Text, Icon } from 'ol/style'
 import Select from 'ol/interaction/Select'
+import Feature from 'ol/Feature'
+import Point from 'ol/geom/Point'
 import styled from 'styled-components'
 import { COLORS } from 'ui/theme'
 
@@ -62,9 +64,31 @@ const highlightStyle = new Style({
   }),
 })
 
+const hoverStyle = new Style({
+  stroke: new Stroke({
+    color: COLORS.main.primary,
+    width: 2,
+  }),
+  fill: new Fill({
+    color: 'rgba(255,255,0,0.2)',
+  }),
+  text: new Text({
+    font: 'bold 16px Noto Sans TC, sans-serif',
+    fill: new Fill({
+      color: COLORS.main.primary,
+    }),
+    stroke: new Stroke({
+      color: 'white',
+      width: 3,
+    }),
+  }),
+})
+
 class DCCACompareMap extends Component {
   featureOverlay
+  featureHover
   highlightedFeature
+  hoveredFeature
 
   constructor(props) {
     super(props)
@@ -78,6 +102,8 @@ class DCCACompareMap extends Component {
     )
     let isDCDataExist = dc ? true : false
     let featuresLayer
+    let vectorLayer
+    let geoMarker
 
     if (isDCDataExist) {
       this.featureSource = new VectorSource({
@@ -116,6 +142,7 @@ class DCCACompareMap extends Component {
         center: [114.2029, 22.3844],
         zoom: 13,
       }),
+      controls: [],
     })
 
     this.featureOverlay = new VectorLayer({
@@ -124,6 +151,32 @@ class DCCACompareMap extends Component {
       style: function(feature) {
         highlightStyle.getText().setText(`${feature.getProperties().CNAME}`)
         return highlightStyle
+      },
+    })
+
+    // Add layer for placing marker, set marker's style
+    let markerCoordinates = this.props.currentPoint
+    vectorLayer = new VectorLayer({
+      name: 'marker',
+      source: new VectorSource(),
+      style: function(feature) {
+        return new Style({
+          image: new Icon({
+            anchor: [0.5, 1],
+            scale: 0.25,
+            src: '/static/images/marker.png',
+          }),
+        })
+      },
+    })
+    map.addLayer(vectorLayer)
+
+    this.featureHover = new VectorLayer({
+      source: new VectorSource(),
+      map: map,
+      style: function(feature) {
+        hoverStyle.getText().setText(`${feature.getProperties().CNAME}`)
+        return hoverStyle
       },
     })
 
@@ -153,18 +206,30 @@ class DCCACompareMap extends Component {
       }
     }
 
+    // Add marker to the place user clicked
+    geoMarker = new Feature({
+      type: 'geoMarker',
+      geometry: new Point([markerCoordinates['lng'], markerCoordinates['lat']]),
+    })
+    geoMarker.setProperties({ ENAME: '', CNAME: '' })
+
+    vectorLayer.getSource().addFeature(geoMarker)
+
     this.setState({
       map,
       view: map.getView(),
       featuresLayer: isDCDataExist ? featuresLayer : null,
     })
 
-    const select = new Select()
+    const selectBySingleClick = new Select()
+    map.addInteraction(selectBySingleClick)
+    selectBySingleClick.on('select', this.mapClick)
 
-    if (select !== null) {
-      map.addInteraction(select)
-      select.on('select', this.mapClick)
-    }
+    // const selectByHover = new Select({
+    //   condition: pointerMove,
+    // })
+    // map.addInteraction(selectByHover)
+    // selectByHover.on('select', this.mapHover)
   }
 
   highlightFeature(feature) {
@@ -176,10 +241,31 @@ class DCCACompareMap extends Component {
     this.highlightedFeature = feature
   }
 
+  highlightHoveredFeature(feature) {
+    if (this.hoveredFeature) {
+      this.featureHover.getSource().removeFeature(this.hoveredFeature)
+    }
+
+    this.featureHover.getSource().addFeature(feature)
+    this.hoveredFeature = feature
+  }
+
   mapClick = e => {
     const { year, changeDistrict, handleMapClick } = this.props
     const selectedFeature = e.target.getFeatures().item(0)
 
+    let geoMarker = new Feature({
+      type: 'geoMarker',
+      geometry: new Point(e.mapBrowserEvent.coordinate),
+    })
+    geoMarker.setProperties({ ENAME: '', CNAME: '' })
+
+    this.state.map.getLayers().forEach(layer => {
+      if (layer.get('name') !== undefined && layer.get('name') === 'marker') {
+        layer.getSource().clear()
+        layer.getSource().addFeature(geoMarker)
+      }
+    })
     handleMapClick(e.mapBrowserEvent.coordinate)
 
     if (selectedFeature) {
@@ -188,6 +274,18 @@ class DCCACompareMap extends Component {
       this.state.map.getView().fit(selectedFeature.getGeometry().getExtent(), {
         duration: 200,
       })
+    }
+
+    // No more select polygon
+    e.target.getFeatures().clear()
+  }
+
+  mapHover = e => {
+    //const { year, changeDistrict, handleMapClick } = this.props
+    const selectedFeature = e.target.getFeatures().item(0)
+
+    if (selectedFeature) {
+      this.highlightHoveredFeature(selectedFeature)
     }
   }
 

@@ -16,6 +16,7 @@ code
 deviation_percentage
 expected_population
 main_areas
+description
 vote_stats {
   count
   type
@@ -32,6 +33,38 @@ stations {
 tags {
   tag
   type
+}
+`
+
+const DISTRICT_DATA = `
+area_code
+area_name_zh
+dc_code
+dc_name_zh
+dc_description_zh
+constituencies( where: { year: { _eq: $year } }, order_by: {code: asc} ) {
+  id
+  name_zh
+  code
+  candidates( where: { year: { _eq: $year } }, order_by: {candidate_number: asc} ) {
+    candidate_number
+    is_won
+    political_affiliation
+    election_type
+    camp
+    person {
+      id
+      uuid
+      name_zh
+      name_en
+      related_organization
+    }
+    nominate_status
+    tags {
+      tag
+      type
+    }
+  }
 }
 `
 
@@ -76,14 +109,16 @@ export const QUERY_CONSTITUENCY_STATS = gql`
 
 export const QUERY_GET_DISTRICT = gql`
   query($year: Int!, $code: String!) {
-    dcd_districts( where: { dc_code: { _eq: $code} }) {
-      area_code
-      area_name_zh
-      dc_code
-      dc_name_zh
-      constituencies( where: { year: { _eq: $year } }, order_by: {code: asc} ) {
-        ${CONSTITUENCIES_DATA}
-      }
+    dcd_districts( where: { dc_code: { _eq: $code} } ) {
+      ${DISTRICT_DATA}
+    }
+  }
+`
+
+export const QUERY_GET_ALL_DISTRICTS = gql`
+  query($year: Int!) {
+    dcd_districts(order_by: {dc_code: asc}) {
+      ${DISTRICT_DATA}
     }
   }
 `
@@ -213,12 +248,18 @@ export const QUERY_GET_CANDIDATES = gql`
       political_affiliation
       election_type
       camp
+      nominate_status
+      tags {
+        tag
+        type
+      }
       person {
         id
         uuid
         name_zh
         name_en
         related_organization
+        description
       }
     }
   }
@@ -257,7 +298,17 @@ export const QUERY_GET_NOMINATION_SUMMARY = gql`
       candidates {
         camp
         nominated_at
+        nominate_status
+        election_type
       }
+    }
+  }
+`
+
+export const QUERY_GET_CONFIG = gql`
+  query fetch_config($key: String!) {
+    dcd_config(where: { key: { _eq: $key } }) {
+      value
     }
   }
 `

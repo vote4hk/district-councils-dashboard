@@ -1,0 +1,33 @@
+{
+  "name": "ssr",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "babel-node server/app.js",
+    "build": "next build && NODE_ENV=production babel --copy-files --out-dir .express server",
+    "start": "NODE_ENV=production node .express/app.js"
+  },
+  "dependencies": {
+    "@apollo/react-hooks": "^3.0.1",
+    "@apollo/react-ssr": "^3.0.1",
+    "@emotion/core": "^10.0.10",
+    "@emotion/styled": "^10.0.12",
+    "apollo-boost": "^0.4.4",
+    "cross-fetch": "^3.0.4",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "graphql": "^14.3.1",
+    "isomorphic-fetch": "^2.2.1",
+    "next": "9.1.1",
+    "next-apollo": "^3.1.5",
+    "react": "16.10.2",
+    "react-dom": "16.10.2",
+    "sitemap": "^5.0.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/node": "^7.6.3",
+    "@babel/preset-env": "^7.6.3"
+  }
+}
