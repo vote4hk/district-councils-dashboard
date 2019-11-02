@@ -211,8 +211,6 @@ class ProfilePage extends Component {
   }
 
   renderElectionStatusText = (person, currentTerm) => {
-    const { t } = this.props
-
     let tags = []
     let primaryText
 
