@@ -314,7 +314,7 @@ const CampCompareChartContainer = props => {
                         target="_blank"
                         href="https://forms.gle/irD6tEznWPNda6w59"
                       >
-                        回報
+                        匯報
                       </DefaultLink>
                       。
                     </p>

@@ -23,6 +23,7 @@ import withTracker from './WithTracker'
 import SearchDrawer from 'components/pages/SearchDrawer'
 import DistrictOverviewPage from 'components/pages/district/overview'
 import DistrictAllPage from 'components/pages/district/all'
+import GlobalDisclaimer from 'components/organisms/GlobalDisclaimer'
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_URI,
@@ -71,6 +72,7 @@ const App = props => {
               <CssBaseline />
               <Wrapper>
                 <MobileAppBar />
+                <GlobalDisclaimer />
                 <main>
                   <Switch>
                     <Route exact path="/" component={withTracker(IndexPage)} />
