@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Box from '@material-ui/core/Box'
-import AddressSearcher from 'components/molecules/AddressSearcher'
+import SearchAllBox from 'components/organisms/SearchAllBox'
 import PeopleSearcher from 'components/molecules/PeopleSearcher'
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
@@ -109,7 +109,7 @@ function SearchTab(props) {
       <ContentRowContainer>
         <DistrictSelector expanded={false} />
         <AddressSearchContainer>
-          <AddressSearcher handleAddressSelected={handleAddressSelected} />
+          <SearchAllBox handleAddressSelected={handleAddressSelected} />
         </AddressSearchContainer>
       </ContentRowContainer>
     )
