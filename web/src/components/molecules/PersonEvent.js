@@ -53,6 +53,7 @@ const getPersonVoteText = personVote => {
 }
 
 const getEventTypeText = (type, personVote) => {
+  const { t } = useTranslation()
   switch (type) {
     case 'VOTE':
       // return `[投票 - ${getPersonVoteText(personVote)}]`

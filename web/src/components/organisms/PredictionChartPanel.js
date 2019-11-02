@@ -89,12 +89,12 @@ function PredictionChartPanel(props) {
       ),
     })
 
+  const { t } = useTranslation()
   /* 
      20191026 @wingkwong: 
         <Tabs> iterates each children so that we cannot just place the compnent between <Tabs> and <TabSection>
     */
   const renderSettings = () => {
-    const { t } = useTranslation()
     return (
       <>
         <ToggleButton onClick={handleClose}>
@@ -123,6 +123,7 @@ function PredictionChartPanel(props) {
       </>
     )
   }
+
   return (
     <div>
       <Tabs titles={['投票取向', '投票率']} buttonLayout="centered">

@@ -61,7 +61,6 @@ const Container = styled(Box)`
 
 function renderInputComponent(inputProps) {
   const { classes, inputRef = () => {}, ref, ...other } = inputProps
-  const { t } = useTranslation()
 
   return (
     <>
@@ -129,6 +128,7 @@ const PeopleSearcher = props => {
   const { classes, handlePeopleSelected } = props
   const [value, setValue] = useState('')
   const [suggestions, setSuggestions] = useState([])
+  const { t } = useTranslation()
   let debounced = null
 
   const onChange = (event, { newValue }) => {

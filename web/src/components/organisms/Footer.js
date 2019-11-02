@@ -71,7 +71,8 @@ function Footer(props) {
               href="https://forms.gle/irD6tEznWPNda6w59"
             >
               {/* 反映意見 */}
-              {t('footer.link.text2')} //TODO: i18n reuse
+              //TODO: i18n reuse
+              {t('footer.link.text2')}
             </StyledFooterLink>
           </LinkBox>
           <LinkBox>

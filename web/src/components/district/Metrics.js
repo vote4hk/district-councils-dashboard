@@ -117,6 +117,7 @@ class MainAreas extends Component {
 
   render() {
     const { year, code } = this.props
+    const { t } = useTranslation()
     return (
       <Query
         query={QUERY_FETCH_VOTES}
