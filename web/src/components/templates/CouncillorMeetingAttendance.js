@@ -6,6 +6,7 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 const MobileTableCell = styled(TableCell)`
   && {
@@ -15,15 +16,28 @@ const MobileTableCell = styled(TableCell)`
 
 const CouncillorMeetingAttendace = props => {
   const { meetings } = props
+  const { t } = useTranslation()
 
   return (
     <Table>
       <TableHead>
         <TableRow>
-          <MobileTableCell align="left">會議</MobileTableCell>
-          <MobileTableCell align="left">性質</MobileTableCell>
-          <MobileTableCell align="left">年份</MobileTableCell>
-          <MobileTableCell align="left">與席</MobileTableCell>
+          <MobileTableCell align="left">
+            {/* 會議 */}
+            {t('councillorMeetingAttendace.table.text1')}
+          </MobileTableCell>
+          <MobileTableCell align="left">
+            {/* 性質 */}
+            {t('councillorMeetingAttendace.table.text2')}
+          </MobileTableCell>
+          <MobileTableCell align="left">
+            {/* 年份 */}
+            {t('councillorMeetingAttendace.table.text3')}
+          </MobileTableCell>
+          <MobileTableCell align="left">
+            {/* 與席 */}
+            {t('councillorMeetingAttendace.table.text4')}
+          </MobileTableCell>
         </TableRow>
       </TableHead>
       <TableBody>

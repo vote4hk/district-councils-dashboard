@@ -12,6 +12,7 @@ import Collapse from '@material-ui/core/Collapse'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 import { UnstyledButton } from 'components/atoms/Button'
+import { useTranslation } from 'react-i18next'
 
 const StyledValueSlider = styled(ValueSlider)`
   && {
@@ -93,21 +94,27 @@ function PredictionChartPanel(props) {
         <Tabs> iterates each children so that we cannot just place the compnent between <Tabs> and <TabSection>
     */
   const renderSettings = () => {
+    const { t } = useTranslation()
     return (
       <>
         <ToggleButton onClick={handleClose}>
-          {showSettings ? '隱藏設定' : '顯示設定'}
+          {/* {showSettings ? '隱藏設定' : '顯示設定'} */}
+          {showSettings
+            ? t('predictionChartPanel.button.hide')
+            : t('predictionChartPanel.button.show')}
           {showSettings ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </ToggleButton>
         <Collapse in={showSettings}>
           <Rows>
             <StyledCheckBox
-              label="只計算新增選民，同時假設上屆投票選民維持相冋政治取向"
+              // label="只計算新增選民，同時假設上屆投票選民維持相冋政治取向"
+              label={t('predictionChartPanel.checkbox.label1')}
               checked={settings.config.reference_last_election}
               setChecked={setSettingConfigFunc('reference_last_election')}
             ></StyledCheckBox>
             <StyledCheckBox
-              label="為上屆自動當選議員加入對立陣營對手"
+              // label="為上屆自動當選議員加入對立陣營對手"
+              label={t('predictionChartPanel.checkbox.label2')}
               checked={settings.config.auto_won_add_components}
               setChecked={setSettingConfigFunc('auto_won_add_components')}
             ></StyledCheckBox>
@@ -121,7 +128,10 @@ function PredictionChartPanel(props) {
       <Tabs titles={['投票取向', '投票率']} buttonLayout="centered">
         <TabSection>
           {renderSettings()}
-          <Text variant="h5">民主支持率</Text>
+          <Text variant="h5">
+            {/* 民主支持率 */}
+            {t('predictionChartPanel.tabSection.title1')}
+          </Text>
           <StyledValueSlider
             label={'18-30歲'}
             value={settings.camp_rate[0]}
@@ -140,7 +150,10 @@ function PredictionChartPanel(props) {
         </TabSection>
         <TabSection>
           {renderSettings()}
-          <Text variant="h5">已登記選民投票率</Text>
+          <Text variant="h5">
+            {/* 已登記選民投票率 */}
+            {t('predictionChartPanel.tabSection.title2')}
+          </Text>
           <StyledValueSlider
             label={'18-30歲'}
             value={settings.vote_rate[0]}

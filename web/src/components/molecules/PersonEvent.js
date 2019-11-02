@@ -4,6 +4,7 @@ import Text from '../atoms/Text'
 import React from 'react'
 import PropTypes from 'prop-types'
 import Microlink from '@microlink/react'
+import { useTranslation } from 'react-i18next'
 
 const StyledCard = styled(Card)`
   && {
@@ -20,23 +21,32 @@ const StyledMicrolink = styled(Microlink)`
 `
 
 const getPersonVoteText = personVote => {
+  const { t } = useTranslation()
   switch (personVote) {
     case 'MOVE':
-      return '動議'
+      // return '動議'
+      return t('personVote.move')
     case 'SECOND':
-      return '和議'
+      // return '和議'
+      return t('personVote.second')
     case 'YES':
-      return '贊成'
+      // return '贊成'
+      return t('personVote.yes')
     case 'NO':
-      return '否決'
+      // return '否決'
+      return t('personVote.no')
     case 'ABSTAIN':
-      return '棄權'
+      // return '棄權'
+      return t('personVote.abstain')
     case 'ABSENT':
-      return '缺席'
+      // return '缺席'
+      return t('personVote.absent')
     case 'NORECORD':
-      return '無紀錄'
+      // return '無紀錄'
+      return t('personVote.noRecord')
     case 'PRESENT':
-      return '與席'
+      // return '與席'
+      return t('personVote.present')
     default:
       return ''
   }
@@ -45,9 +55,11 @@ const getPersonVoteText = personVote => {
 const getEventTypeText = (type, personVote) => {
   switch (type) {
     case 'VOTE':
-      return `[投票 - ${getPersonVoteText(personVote)}]`
+      // return `[投票 - ${getPersonVoteText(personVote)}]`
+      return `${t('personVote.vote')} ${getPersonVoteText(personVote)}`
     case 'SPEECH':
-      return '[言論]'
+      // return '[言論]'
+      return t('personVote.speech')
     default:
       return ''
   }
