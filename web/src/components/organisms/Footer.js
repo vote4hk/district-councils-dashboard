@@ -69,12 +69,23 @@ function Footer(props) {
         <Columns>
           <LinkBox>
             <StyledFooterLink
+              onClick={
+                () => props.history.push(`/about-us`)
+                // console.log(props)
+              }
+            >
+              關於我們
+            </StyledFooterLink>
+          </LinkBox>
+          <LinkBox>
+            <StyledFooterLink
               target="_blank"
               href="https://www.facebook.com/g0vhk.io"
             >
               g0vhk.io
             </StyledFooterLink>
           </LinkBox>
+
           <LinkBox>
             <StyledFooterLink
               onClick={
@@ -111,16 +122,7 @@ function Footer(props) {
               選區事實處
             </StyledFooterLink>
           </LinkBox>
-          <LinkBox>
-            <StyledFooterLink
-              onClick={
-                () => props.history.push(`/about-us`)
-                // console.log(props)
-              }
-            >
-              關於我們
-            </StyledFooterLink>
-          </LinkBox>
+
           <LinkBox>
             <div
               className="fb-like"
