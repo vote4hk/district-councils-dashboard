@@ -17,6 +17,10 @@ i18n.use(initReactI18next).init({
       translation: translationZH,
     },
   },
+  react: {
+    wait: true,
+  },
+  keySeparator: '-',
 })
 
 export default i18n
