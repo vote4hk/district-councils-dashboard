@@ -61,8 +61,7 @@ function Footer(props) {
                 // console.log(props)
               }
             >
-              {/* 關於候選人陣營 */}
-              {t('footer.link.text1')}
+              關於候選人陣營
             </StyledFooterLink>
           </LinkBox>
           <LinkBox>
@@ -70,9 +69,7 @@ function Footer(props) {
               target="_blank"
               href="https://forms.gle/irD6tEznWPNda6w59"
             >
-              {/* 反映意見 */}
-              {/* TODO: i18n */}
-              {t('footer.link.text2')}
+              反映意見
             </StyledFooterLink>
           </LinkBox>
           <LinkBox>
