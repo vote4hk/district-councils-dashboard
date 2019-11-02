@@ -6,6 +6,7 @@ import { UnstyledLink } from 'components/atoms/Link'
 import Columns from 'components/atoms/Columns'
 import { withRouter } from 'react-router-dom'
 import { Disclaimer } from 'components/templates/Disclaimer'
+import { useTranslation } from 'react-i18next'
 
 const StyledFooter = styled(Box)`
   && {
@@ -37,6 +38,7 @@ const LinkBox = styled(Box)`
 `
 
 function Footer(props) {
+  const { t } = useTranslation()
   return (
     <>
       <StyledFooter>
@@ -80,7 +82,8 @@ function Footer(props) {
           </LinkBox>
           <LinkBox>
             <StyledFooterLink target="_blank" href="https://hkfactcheck.io/">
-              選區事實處
+              {/* 選區事實處 */}
+              {t('thirdParty.dfo')}
             </StyledFooterLink>
           </LinkBox>
           <LinkBox>

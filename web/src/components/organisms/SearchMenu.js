@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import { withRouter } from 'react-router-dom'
 import ContextStore from 'ContextStore'
 import { DRAWER_CLOSE } from 'reducers/drawer'
+import { useTranslation } from 'react-i18next'
 
 const ExpandedRow = styled(Box)`
   && {
@@ -25,6 +26,7 @@ const LeftMargin = styled(ExpandedRow)`
   }
 `
 const SearchMenu = props => {
+  const { t } = useTranslation()
   const {
     drawer: { dispatch },
   } = React.useContext(ContextStore)
@@ -42,7 +44,8 @@ const SearchMenu = props => {
           color="secondary"
           onClick={() => goToPage('/')}
         >
-          返回首頁
+          {/* 返回首頁 */}
+          {t('searchMenu.text1')}
         </Typography>
       </LeftMargin>
 
@@ -52,7 +55,8 @@ const SearchMenu = props => {
           color="secondary"
           onClick={() => goToPage('/district/2019')}
         >
-          全港選區一覽
+          {/* 全港選區一覽 */}
+          {t('searchMenu.text2')}
         </Typography>
       </LeftMargin>
 
@@ -62,7 +66,8 @@ const SearchMenu = props => {
           color="secondary"
           onClick={() => goToPage('/about-dc')}
         >
-          關於區議會選舉
+          {/* 關於區議會選舉 */}
+          {t('searchMenu.text3')}
         </Typography>
       </LeftMargin>
 
@@ -75,6 +80,7 @@ const SearchMenu = props => {
               'https://docs.google.com/forms/u/1/d/e/1FAIpQLSdXtbdry3w8hkmZuN0MJaj2CP2X3RUUnCTWLnOujsfx1pHDrw/viewform?usp=send_form')
           }
         >
+          {/* TODO: i18n */}
           反映意見
         </Typography>
       </LeftMargin>
