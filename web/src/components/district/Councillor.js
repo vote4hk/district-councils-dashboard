@@ -8,6 +8,7 @@ import { PlainCard } from '../molecules/Card'
 import { Tag } from '../atoms/Tag'
 import { UnstyledNavLink } from '../atoms/Link'
 import { COLORS } from 'ui/theme'
+import { useTranslation } from 'react-i18next'
 import {
   getColorFromPoliticalAffiliation,
   getElectionResults,
@@ -65,9 +66,14 @@ class Councillor extends Component {
     }
 
     const tags = [] // ['競逐連任'] //getTagsForPerson(councillor.person)
+    const { t } = useTranslation()
+
     return (
       <PlainCard>
-        <Typography variant="h6">現任區議員</Typography>
+        <Typography variant="h6">
+          {/* 現任區議員 */}
+          {t('currentTerm.councilor')}
+        </Typography>
         {filteredDistricts.length > 1 && (
           <Typography variant="h6">{`此區與上屆${filteredDistricts.length}個選區重疊`}</Typography>
         )}
