@@ -5,7 +5,7 @@ require('cross-fetch/polyfill')
 
 const cache = new InMemoryCache()
 const link = new HttpLink({
-  uri: 'https://vote4.hk/graphql',
+  uri: process.env.GRAPHQL_URL,
 })
 
 const apolloClient = new ApolloClient({ cache, link })

@@ -11,7 +11,7 @@ const handleSitemap = ({ server }) => {
 
     try {
       const smStream = new SitemapStream({
-        hostname: 'https://vote4.hk/',
+        hostname: process.env.PUBLIC_URL,
       })
       const pipeline = smStream.pipe(createGzip())
 
@@ -25,7 +25,7 @@ const handleSitemap = ({ server }) => {
         // cache the response
         streamToPromise(pipeline).then(sm => sitemap = sm)
         // stream the response
-        pipeline.pipe(res).on('error', (err) => {throw err})
+        pipeline.pipe(res).on('error', (err) => { throw err })
       })
     } catch (err) {
       console.error(err)
