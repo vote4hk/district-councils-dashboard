@@ -108,7 +108,7 @@ const App = props => {
                       component={withTracker(AboutDCPage)}
                     />
                     <Route
-                      path="/support-us"
+                      path="/about-us"
                       component={withTracker(SupportUsPage)}
                     />
                     <Route component={withTracker(NotfoundPage)} />

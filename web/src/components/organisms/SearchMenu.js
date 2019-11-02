@@ -70,7 +70,7 @@ const SearchMenu = props => {
         <Typography
           variant="h5"
           color="secondary"
-          onClick={() => goToPage('/support-us')}
+          onClick={() => goToPage('/about-us')}
         >
           我們是誰？
         </Typography>

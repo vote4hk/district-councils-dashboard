@@ -114,7 +114,7 @@ function Footer(props) {
           <LinkBox>
             <StyledFooterLink
               onClick={
-                () => props.history.push(`/support-us`)
+                () => props.history.push(`/about-us`)
                 // console.log(props)
               }
             >
