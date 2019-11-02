@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Typography, Grid } from '@material-ui/core'
-import { useTranslation } from 'react-i18next'
+import { withTranslation } from 'react-i18next'
 
 const TimeGrid = styled(Grid)`
   && {
@@ -98,7 +98,7 @@ class Countdown extends Component {
 
   render() {
     const countDown = this.state
-    const { t } = useTranslation()
+    const { t } = this.props
     return (
       <>
         <Grid container>
@@ -150,4 +150,4 @@ Countdown.defaultProps = {
   date: new Date(),
 }
 
-export default Countdown
+export default withTranslation()(Countdown)

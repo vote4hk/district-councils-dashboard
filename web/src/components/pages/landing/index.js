@@ -9,7 +9,7 @@ import { Alert } from 'components/atoms/Alert'
 import SearchTab from 'components/organisms/SearchTab'
 import { QUERY_GET_CONFIG } from 'queries/gql'
 import { COLORS } from 'ui/theme'
-import { useTranslation } from 'react-i18next'
+import { withTranslation } from 'react-i18next'
 
 const Container = styled.div`
   width: 100%;
@@ -111,7 +111,7 @@ class IndexPage extends Component {
   }
 
   render() {
-    const { t } = useTranslation()
+    const { t } = this.props
     return (
       <>
         {this.renderAlert()}
@@ -142,4 +142,4 @@ class IndexPage extends Component {
   }
 }
 
-export default IndexPage
+export default withTranslation()(IndexPage)
