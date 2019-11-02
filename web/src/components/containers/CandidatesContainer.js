@@ -176,7 +176,7 @@ const CandidatesContainer = props => {
                               )}
                               {candidate.tags.findIndex(
                                 tag =>
-                                  tag.type === 'camp' && tag.tag === '有爭議' //TODO: i18n
+                                  tag.type === 'camp' && tag.tag === '有爭議'
                               ) > -1 && (
                                 <ControversialAlert>
                                   <HtmlTooltip
@@ -197,18 +197,15 @@ const CandidatesContainer = props => {
                               <Typography variant="body2">
                                 {candidate.political_affiliation ||
                                   '未報稱政治聯繫'}{' '}
-                                //TODO: i18n
                               </Typography>
 
                               {candidate.nominate_status === 'disqualified' && (
                                 <Typography variant="body2">
-                                  取消資格 //TODO: i18n
+                                  取消資格
                                 </Typography>
                               )}
                               {candidate.nominate_status === 'suspended' && (
-                                <Typography variant="body2">
-                                  宣布棄選 //TODO: i18n
-                                </Typography>
+                                <Typography variant="body2"></Typography>
                               )}
                             </Candidate>
                           </UnstyledNavLink>

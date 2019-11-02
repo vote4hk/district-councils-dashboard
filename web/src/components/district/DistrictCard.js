@@ -132,7 +132,8 @@ class DistrictCard extends Component {
           <StyledDivier />
           <SeperatedColumns>
             <Typography variant="h6">
-              {/* 區議員 */} //TODO: i18n - check councilors or councilor
+              {/* 區議員 */}
+              {/* TODO: i18n - check councilors or councilor */}
               {t('councilor')}
             </Typography>
             <Typography>
