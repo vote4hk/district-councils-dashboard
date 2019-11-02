@@ -16,7 +16,7 @@ import FCPersonData from 'components/templates/FCPersonData'
 import { COLORS } from 'ui/theme'
 import { Tag } from 'components/atoms/Tag'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
-import { useTranslation } from 'react-i18next'
+import { withTranslation } from 'react-i18next'
 import {
   getDistrictOverviewUriFromTag,
   getConstituencyUriFromTag,
@@ -211,7 +211,7 @@ class ProfilePage extends Component {
   }
 
   renderElectionStatusText = (person, currentTerm) => {
-    const { t } = useTranslation()
+    const { t } = this.props
 
     let tags = []
     let primaryText
@@ -271,10 +271,10 @@ class ProfilePage extends Component {
       match: {
         params: { uuid },
       },
+      t,
     } = this.props
 
     const homeUrl = process.env.REACT_APP_HOST_URI
-    const { t } = useTranslation()
 
     return (
       <Query query={GET_PEOPLE_PROFILE} variables={{ uuid }}>
@@ -526,4 +526,4 @@ class ProfilePage extends Component {
   }
 }
 
-export default ProfilePage
+export default withTranslation()(ProfilePage)

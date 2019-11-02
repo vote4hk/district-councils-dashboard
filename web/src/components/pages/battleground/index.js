@@ -25,7 +25,7 @@ import {
   getAllFeaturesFromPoint,
 } from 'utils/features'
 import DCCAElectionHistories from 'components/templates/DCCAElectionHistories'
-import { useTranslation } from 'react-i18next'
+import { withTranslation } from 'react-i18next'
 
 const groupVoteStat = voteStats => {
   const data = _.groupBy(voteStats, stat => stat.subtype)
@@ -124,6 +124,7 @@ class BattleGroundPage extends Component {
         params: { year = 2019, code },
       },
       location: { search },
+      t,
     } = this.props
 
     // Preset Tab for election history by matching query ?year=<year>
@@ -131,7 +132,6 @@ class BattleGroundPage extends Component {
     const presetTabIndex = ['2003', '2007', '2011', '2015'].findIndex(
       year => year === queryYear
     )
-    const { t } = useTranslation()
 
     return (
       <>
@@ -274,4 +274,4 @@ class BattleGroundPage extends Component {
   }
 }
 
-export default BattleGroundPage
+export default withTranslation()(BattleGroundPage)

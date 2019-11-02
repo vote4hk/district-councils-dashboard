@@ -230,4 +230,4 @@ IntegrationAutosuggest.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(withTranslation(IntegrationAutosuggest))
+export default withStyles(styles)(withTranslation()(IntegrationAutosuggest))
