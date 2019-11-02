@@ -6,6 +6,7 @@ import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 // import VoterTurnoutChart from './VoterTurnoutChart'
 import WaffleChart from 'components/atoms/charts/WaffleChart'
+import { useTranslation } from 'react-i18next'
 
 // TODO: change this to dcd data
 const QUERY_FETCH_VOTES = gql`
@@ -53,6 +54,7 @@ const Container = styled.div`
 `
 
 const getDataForWaffleChart = (voteStat, candidates) => {
+  const { t } = useTranslation()
   const {
     total_votes,
     total_voters,
@@ -74,18 +76,21 @@ const getDataForWaffleChart = (voteStat, candidates) => {
 
   const voteStats = [
     {
-      name: '不能投票',
+      // name: '不能投票',
+      name: t('voteStats.text1'),
       // population: population_excluded_foreign_worker - population_excluded_foreign_worker_lte_age_15,
       population: population_excluded_foreign_worker - total_voters,
     },
     {
-      name: '沒有投票',
+      // name: '沒有投票',
+      name: t('voteStats.text2'),
       population:
         population_excluded_foreign_worker_lte_age_15 - total_voted_voters,
       // total_votes - total_voted_voters = registered but didn't vote?
     },
     {
-      name: '投票失效',
+      // name: '投票失效',
+      name: t('voteStats.text3'),
       population: total_voted_voters - total_votes,
       // total_votes - total_voted_voters = registered but didn't vote?
     },
@@ -93,7 +98,8 @@ const getDataForWaffleChart = (voteStat, candidates) => {
 
   candidates.forEach(({ votes, person: { name_zh, name_en } }) => {
     voteStats.push({
-      name: `投給${name_zh || name_en}`,
+      // name: `投給 ${name_zh || name_en}`,
+      name: `${t('voteStats.text4')} ${name_zh || name_en}`,
       population: votes,
       // total_votes - total_voted_voters = registered but didn't vote?
     })
@@ -111,6 +117,7 @@ class MainAreas extends Component {
 
   render() {
     const { year, code } = this.props
+    const { t } = useTranslation()
     return (
       <Query
         query={QUERY_FETCH_VOTES}
@@ -143,7 +150,10 @@ class MainAreas extends Component {
           }, 0)
           return (
             <Container>
-              <Typography variant="h4">人口資料</Typography>
+              <Typography variant="h4">
+                {/* 人口資料 */}
+                {t('metrics.text1')}
+              </Typography>
               {/* <VoterTurnoutChart
                 id={`${year}_${code}_voter_turnout`}
                 data={barVote}
