@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Typography, Grid } from '@material-ui/core'
+import { useTranslation } from 'react-i18next'
 
 const TimeGrid = styled(Grid)`
   && {
@@ -97,7 +98,7 @@ class Countdown extends Component {
 
   render() {
     const countDown = this.state
-
+    const { t } = useTranslation()
     return (
       <>
         <Grid container>
@@ -116,16 +117,28 @@ class Countdown extends Component {
         </Grid>
         <Grid container>
           <TimeGrid item xs={3}>
-            <Unit variant="h6">天</Unit>
+            <Unit variant="h6">
+              {/* 天 */}
+              {t('countdown.day')}
+            </Unit>
           </TimeGrid>
           <TimeGrid item xs={3}>
-            <Unit variant="h6">小時</Unit>
+            <Unit variant="h6">
+              {/* 小時 */}
+              {t('countdown.hour')}
+            </Unit>
           </TimeGrid>
           <TimeGrid item xs={3}>
-            <Unit variant="h6">分鐘</Unit>
+            <Unit variant="h6">
+              {/* 分鐘 */}
+              {t('countdown.minute')}
+            </Unit>
           </TimeGrid>
           <TimeGrid item xs={3}>
-            <Unit variant="h6">秒</Unit>
+            <Unit variant="h6">
+              {/* 秒 */}
+              {t('countdown.second')}
+            </Unit>
           </TimeGrid>
         </Grid>
       </>
