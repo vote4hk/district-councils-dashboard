@@ -302,20 +302,20 @@ const CampCompareChartContainer = props => {
                   <>
                     <p>
                       {/* 本模擬綜合2019年選民登記數字，18及19年間新增選民數字，以及2015區議會選舉實際投票結果。 */}
-                      {t('PredictionChartHeader.paragraph1')}
+                      {t('predictionChartHeader.paragraph1')}
                     </p>
                     <p>
                       {/* 首先將15年區選各選區投票結果歸納為分為「建制」、「民主」及「其他」三陣營，並假設選民維持投票取向，並按其比例將各陣營得票分配至2018的選民登記數字。 */}
-                      {t('PredictionChartHeader.paragraph2')}
+                      {t('predictionChartHeader.paragraph2')}
                     </p>
                     <p>
                       {/* 滑桿只調較2018及19年間新增選民的投票取向及投票率，如欲直接調較19年選民的取態，請到「設定
                       」取消「只計算新增選民，同時假設上屆投票選民維持相冋政治取向」一項。 */}
-                      {t('PredictionChartHeader.paragraph3')}
+                      {t('predictionChartHeader.paragraph3')}
                     </p>
                     <p>
                       {/* 是次選舉將選出452個民選議席，連同新界區27名當然議員共479席。當然議員即各區鄉事委員會主席，故這些議席全歸類為建制派。 */}
-                      {t('PredictionChartHeader.paragraph4')}
+                      {t('predictionChartHeader.paragraph4')}
                     </p>
                     <p>
                       選舉結果由眾多因素影響，故模擬結果僅供參考，亦因數據來源限制而簡化，如有建議歡迎
@@ -342,7 +342,7 @@ const CampCompareChartContainer = props => {
                     })
                   }}
                   // label="模擬結果"
-                  label={t('PredictionChartHeader.button.label1')}
+                  label={t('predictionChartHeader.button.label1')}
                 />
               )}
             </PredictionChartHeader>
