@@ -11,7 +11,7 @@ import { HtmlTooltip } from 'components/atoms/Tooltip'
 import CampSelector from 'components/atoms/CampSelector'
 import { Loading } from 'components/atoms/Loading'
 import styled from 'styled-components'
-import { withTranslation } from 'react-i18next'
+import { withTranslation, useTranslation } from 'react-i18next'
 
 const StyledTableCell = styled(TableCell)`
   && {
@@ -107,6 +107,8 @@ class DistrictsTable extends Component {
   }
 
   render() {
+    const { t } = useTranslation()
+
     return (
       <div>
         <CampSelector onChange={this.handleChange.bind(this)} />
