@@ -127,8 +127,10 @@ export const QUERY_GET_AREA = gql`
   query {
     dcd_districts {
       area_code
+      area_name_en
       area_name_zh
       dc_code
+      dc_name_en
       dc_name_zh
       constituencies(where: { year: { _eq: 2019 } }) {
         code
@@ -294,6 +296,7 @@ export const QUERY_GET_NOMINATION_SUMMARY = gql`
   query {
     c2019: dcd_constituencies(where: { year: { _eq: 2019 } }) {
       code
+      name_en
       name_zh
       candidates {
         camp
