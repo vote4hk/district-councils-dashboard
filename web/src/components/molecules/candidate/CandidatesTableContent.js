@@ -100,7 +100,7 @@ const CandidateGrid = props => {
             disableFocusListener
             disableTouchListener
             // text="侯選人政治立場未明"
-            text={t('candidate.unknownPosition')}
+            text={t('candidate.noPoliticalAffiliation')}
             placement="bottom"
             size={16}
           />

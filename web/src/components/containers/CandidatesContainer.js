@@ -183,7 +183,7 @@ const CandidatesContainer = props => {
                                     disableFocusListener
                                     disableTouchListener
                                     // text="侯選人政治立場未明"
-                                    text={t('candidate.unknownPosition')}
+                                    text={t('candidate.noPoliticalAffiliation')}
                                     placement="bottom"
                                     size={21}
                                   />
@@ -197,7 +197,7 @@ const CandidatesContainer = props => {
                               <Typography variant="body2">
                                 {candidate.political_affiliation ||
                                   // '未報稱政治聯繫'}{' '}
-                                  t('candidate.unknownPosition')}
+                                  t('candidate.noPoliticalAffiliation')}
                               </Typography>
 
                               {candidate.nominate_status === 'disqualified' && (

@@ -12,7 +12,7 @@ function getTextByTagAndType(tag, type) {
   const { t } = useTranslation()
   if (type === 'camp' && tag === '有爭議') {
     // return '侯選人政治立場未明'
-    return t('candidate.unknownPosition')
+    return t('candidate.noPoliticalAffiliation')
   }
   return ''
 }
