@@ -128,6 +128,7 @@ const PeopleSearcher = props => {
   const { classes, handlePeopleSelected } = props
   const [value, setValue] = useState('')
   const [suggestions, setSuggestions] = useState([])
+  const [imageLoadError, setImageLoadError] = useState(true)
   const { t } = useTranslation()
   let debounced = null
 
@@ -211,7 +212,11 @@ const PeopleSearcher = props => {
           src={avatarPath}
           imgProps={{
             onError: e => {
-              e.target.src = `${homeUrl}/static/images/avatar/default.png`
+              // wingkwong: avoid infinite callbacks if fallback image fails
+              if (imageLoadError) {
+                setImageLoadError(false)
+                e.target.src = `${homeUrl}/static/images/avatar/default.png`
+              }
             },
           }}
           style={{

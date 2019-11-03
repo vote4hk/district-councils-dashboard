@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -87,6 +87,9 @@ const DCCAElectionResult = props => {
   const sortedCandidates = electionResult.candidates.sort(
     (a, b) => b.votes - a.votes
   )
+
+  const [imageLoadError, setImageLoadError] = useState(true)
+
   return (
     <Container>
       <Typography variant="h6">
@@ -113,8 +116,12 @@ const DCCAElectionResult = props => {
                   src={`${IMAGE_HOST_URI}/static/images/avatar/${candidate.person.uuid}.jpg`}
                   imgProps={{
                     onError: e => {
-                      e.target.src =
-                        IMAGE_HOST_URI + '/static/images/avatar/default.png'
+                      // wingkwong: avoid infinite callbacks if fallback image fails
+                      if (imageLoadError) {
+                        setImageLoadError(false)
+                        e.target.src =
+                          IMAGE_HOST_URI + '/static/images/avatar/default.png'
+                      }
                     },
                   }}
                 />

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
@@ -24,6 +24,7 @@ const Councillor = props => {
     process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'
   const meta = getCouncillorMeta(councillor)
   const { t } = useTranslation()
+  const [imageLoadError, setImageLoadError] = useState(true)
 
   return (
     <UnstyledNavLink
@@ -57,8 +58,12 @@ const Councillor = props => {
               src={`${IMAGE_HOST_URI}/static/images/avatar/${councillor.person.uuid}.jpg`}
               imgProps={{
                 onError: e => {
-                  e.target.src =
-                    IMAGE_HOST_URI + '/static/images/avatar/default.png'
+                  // wingkwong: avoid infinite callbacks if fallback image fails
+                  if (imageLoadError) {
+                    setImageLoadError(false)
+                    e.target.src =
+                      IMAGE_HOST_URI + '/static/images/avatar/default.png'
+                  }
                 },
               }}
             />

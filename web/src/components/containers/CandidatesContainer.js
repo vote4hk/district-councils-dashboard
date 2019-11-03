@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Query } from 'react-apollo'
 import { QUERY_GET_CANDIDATES } from 'queries/gql'
 import { PeopleAvatar } from 'components/atoms/Avatar'
@@ -87,6 +87,7 @@ const CandidateName = styled(Typography)`
 const CandidatesContainer = props => {
   const { code, year } = props
   const { t } = useTranslation()
+  const [imageLoadError, setImageLoadError] = useState(true)
 
   return (
     <Query
@@ -153,9 +154,13 @@ const CandidatesContainer = props => {
                                 src={`${IMAGE_HOST_URI}/static/images/avatar/${candidate.person.uuid}.jpg`}
                                 imgProps={{
                                   onError: e => {
-                                    e.target.src =
-                                      IMAGE_HOST_URI +
-                                      '/static/images/avatar/default.png'
+                                    // wingkwong: avoid infinite callbacks if fallback image fails
+                                    if (imageLoadError) {
+                                      setImageLoadError(false)
+                                      e.target.src =
+                                        IMAGE_HOST_URI +
+                                        '/static/images/avatar/default.png'
+                                    }
                                   },
                                 }}
                                 opacity={
