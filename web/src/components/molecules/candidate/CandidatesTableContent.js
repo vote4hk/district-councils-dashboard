@@ -8,6 +8,7 @@ import { COLORS } from 'ui/theme'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
+import { useTranslation } from 'react-i18next'
 
 const IMAGE_HOST_URI =
   process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'
@@ -48,6 +49,7 @@ const StyledTableRow = styled(TableRow)`
 
 const CandidateGrid = props => {
   const { candidate } = props
+  const { t } = useTranslation()
   return (
     <Grid
       container
@@ -97,7 +99,8 @@ const CandidateGrid = props => {
           <HtmlTooltip
             disableFocusListener
             disableTouchListener
-            text="侯選人政治立場未明"
+            // text="侯選人政治立場未明"
+            text={t('candidate.noPoliticalAffiliation')}
             placement="bottom"
             size={16}
           />
@@ -105,13 +108,17 @@ const CandidateGrid = props => {
         {candidate.nominate_status === 'disqualified' && (
           <>
             <br />
-            <span>(取消資格)</span>
+            <span>
+              {/* (取消資格) */}({t('candidate.nominateStatus.disqualified')})
+            </span>
           </>
         )}
         {candidate.nominate_status === 'suspended' && (
           <>
             <br />
-            <span>(棄選)</span>
+            <span>
+              {/* (棄選) */}({t('candidate.nominateStatus.suspended')})
+            </span>
           </>
         )}
       </Grid>

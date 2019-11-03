@@ -13,6 +13,7 @@ import { DRAWER_CLOSE } from 'reducers/drawer'
 import { getProfilePath } from 'utils/helper'
 import DistrictSelector from 'components/molecules/DistrictSelector'
 import { fireEvent } from 'utils/ga_fireevent'
+import { useTranslation } from 'react-i18next'
 
 const Container = styled(Paper)`
   && {
@@ -73,6 +74,8 @@ function SearchTab(props) {
   const [selectedTab, setSelectedTab] = React.useState(
     props.selectedTab || 'district'
   )
+  const { t } = useTranslation()
+
   function handleAddressSelected(result) {
     /* TODO:
       Use context (?) to store the Global district result array
@@ -129,13 +132,19 @@ function SearchTab(props) {
           active={selectedTab === 'district' ? 'active' : 'inactive'}
           onClick={onTabSelected('district')}
         >
-          <Typography variant="h3">找選區</Typography>
+          <Typography variant="h3">
+            {/* 找選區 */}
+            {t('searchTab.text1')}
+          </Typography>
         </TabButton>
         <TabButton
           active={selectedTab === 'people' ? 'active' : 'inactive'}
           onClick={onTabSelected('people')}
         >
-          <Typography variant="h3">找候選人</Typography>
+          <Typography variant="h3">
+            {/* 找候選人 */}
+            {t('searchTab.text2')}
+          </Typography>
         </TabButton>
       </TabContainer>
       {selectedTab === 'district'

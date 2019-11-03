@@ -6,9 +6,12 @@ import DistrictTableContent from 'components/molecules/district/DistrictTableCon
 import TableHead from '@material-ui/core/TableHead'
 import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
+import { debounce } from 'lodash'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
 import CampSelector from 'components/atoms/CampSelector'
+import { Loading } from 'components/atoms/Loading'
 import styled from 'styled-components'
+import { withTranslation } from 'react-i18next'
 
 const StyledTableCell = styled(TableCell)`
   && {
@@ -16,6 +19,14 @@ const StyledTableCell = styled(TableCell)`
     :last-child {
       padding: 6px 0px 6px 16px;
     }
+  }
+`
+
+const StyledLoading = styled(Loading)`
+  && {
+    height: auto;
+    margin: 20px auto;
+    transform: scale(0.5);
   }
 `
 
@@ -35,7 +46,40 @@ class DistrictsTable extends Component {
         others: true,
         blank: true,
       },
+      toIndex: 0,
+      isLoading: true,
     }
+  }
+
+  componentDidMount() {
+    const { districts } = this.props
+
+    const addDistrict = index => {
+      this.setState({
+        toIndex: index,
+      })
+    }
+
+    const scrollHandler = debounce(event => {
+      if (
+        window.innerHeight + event.target.scrollTop >=
+        event.target.firstChild.clientHeight
+      ) {
+        let index = this.state.toIndex
+        if (index < districts.length) {
+          addDistrict(++index)
+        } else {
+          this.setState({
+            isLoading: false,
+          })
+        }
+      }
+    }, 200).bind(this)
+
+    addDistrict(1)
+    document
+      .querySelector('#contentContainer')
+      .addEventListener('scroll', scrollHandler)
   }
 
   handleChange(democracy, establishment, others, blank) {
@@ -43,33 +87,55 @@ class DistrictsTable extends Component {
     this.setState({ ...this.state, checked: checked })
   }
 
-  render() {
+  loadDistricts(toIndex) {
     const { districts, year } = this.props
-    const { state } = this
-    const { democracy, establishment, others, blank } = state.checked
+    const { democracy, establishment, others, blank } = this.state.checked
+    const districtsArray = districts.filter(
+      (district, index) => index <= toIndex
+    )
+    return districtsArray.map(district => (
+      <DistrictTableContent
+        showEstablishment={establishment}
+        showDemocracy={democracy}
+        showOthers={others}
+        showBlank={blank}
+        key={district.dc_code}
+        district={district}
+        year={year}
+      />
+    ))
+  }
+
+  render() {
+    const { t } = this.props
+
     return (
       <div>
         <CampSelector onChange={this.handleChange.bind(this)} />
-        <Table size="small">
+        <Table id="districtsTable" size="small" onScroll={this.handleScroll}>
           <TableHead>
             <TableRow>
               <StyledTableCell>候選人</StyledTableCell>
               <StyledTableCell>
-                相關組織{' '}
+                {/* 相關組織{' '} */}
+                {t('relatedOrganizations')}{' '}
                 <HtmlTooltip
                   disableFocusListener
                   disableTouchListener
-                  text="候選人或議員的所屬政黨或社區組織，來源綜合媒體報道"
+                  // text="候選人或議員的所屬政黨或社區組織，來源綜合媒體報道"
+                  text={t('relatedOrganizations.tips')}
                   placement="bottom"
                   size={20}
                 />
               </StyledTableCell>
               <StyledTableCell>
-                報稱政治聯繫{' '}
+                {/* 報稱政治聯繫{' '} */}
+                {t('reportedPoliticalAffiliation')}{' '}
                 <HtmlTooltip
                   disableFocusListener
                   disableTouchListener
-                  text="根據候選人提名表格上所填報的政治聯繫"
+                  // text="根據候選人提名表格上所填報的政治聯繫"
+                  text={t('reportedPoliticalAffiliation.tips')}
                   placement="bottom"
                   size={20}
                 />
@@ -77,23 +143,12 @@ class DistrictsTable extends Component {
               {/* <TableCell>得票</TableCell> */}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {districts.map(district => (
-              <DistrictTableContent
-                showEstablishment={establishment}
-                showDemocracy={democracy}
-                showOthers={others}
-                showBlank={blank}
-                key={district.dc_code}
-                district={district}
-                year={year}
-              />
-            ))}
-          </TableBody>
+          <TableBody>{this.loadDistricts(this.state.toIndex)}</TableBody>
         </Table>
+        {this.state.isLoading && <StyledLoading />}
       </div>
     )
   }
 }
 
-export default DistrictsTable
+export default withTranslation()(DistrictsTable)

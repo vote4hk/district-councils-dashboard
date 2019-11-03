@@ -20,7 +20,7 @@ const CentredCircularProgress = styled(CircularProgress)`
 
 export const Loading = props => {
   return (
-    <Placeholder>
+    <Placeholder className={props.className}>
       <CentredCircularProgress thickness={3} size={64} color="secondary" />
     </Placeholder>
   )

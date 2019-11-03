@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import { COLORS } from 'ui/theme'
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 
 const styles = {
   establishment: {
@@ -64,11 +65,16 @@ class CampSelector extends Component {
 
   render() {
     const { state } = this
+    const { t } = this.props
     return (
       <div>
         <FormGroup row>
           <Box m={2} />
-          <FormControlLabel control={<div></div>} label="顯示：" />
+          <FormControlLabel
+            control={<div></div>}
+            // label="顯示："
+            label={t('show')}
+          />
           {this.camps.map(c => (
             <FormControlLabel
               control={
@@ -88,4 +94,4 @@ class CampSelector extends Component {
   }
 }
 
-export default withStyles(styles)(CampSelector)
+export default withStyles(styles)(withTranslation()(CampSelector))

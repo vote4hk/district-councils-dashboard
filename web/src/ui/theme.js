@@ -1,10 +1,13 @@
 import { createMuiTheme } from '@material-ui/core/styles'
 import { red, green } from '@material-ui/core/colors'
-export const headingFontFamily = 'Noto Sans TC, sans-serif'
-export const bodyFontFamily = 'Noto Sans TC, sans-serif'
+export const headingFontFamily =
+  'Noto Sans TC, 微軟正黑體, 新細明體, sans-serif'
+export const bodyFontFamily = 'Noto Sans TC, 微軟正黑體, 新細明體, sans-serif'
 
 export const FONT_FAMILY = [
   'Noto Sans TC',
+  '微軟正黑體',
+  '新細明體',
   'sans-serif',
   '-apple-system',
   '"Helvetica Neue"',
