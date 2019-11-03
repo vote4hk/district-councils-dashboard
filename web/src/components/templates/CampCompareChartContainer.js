@@ -14,6 +14,7 @@ import { COLORS } from 'ui/theme'
 import { DefaultLink } from 'components/atoms/Link'
 import { fireEvent } from 'utils/ga_fireevent'
 import { useTranslation } from 'react-i18next'
+import { withLanguage } from 'utils/helper'
 
 const Container = styled.div`
   && {
@@ -50,6 +51,7 @@ const FETCH_CAMP_DATA = gql`
       cacode
       camp
       person {
+        name_en
         name_zh
       }
     }
@@ -75,7 +77,7 @@ function convertToD3Compatible(data, sortFunc) {
     data: data
       .map(d => {
         return {
-          name: DCREGION[d.code].zh_hk,
+          name: withLanguage(DCREGION[d.code].en_us, DCREGION[d.code].zh_hk),
           建制: DCREGION[d.code].unelected_dc_seat + (d.count['建制'] || 0), // 當然議員
           民主: d.count['民主'] || 0,
           其他: d.count['其他'] || 0,

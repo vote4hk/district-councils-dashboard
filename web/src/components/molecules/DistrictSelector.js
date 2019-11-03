@@ -17,6 +17,7 @@ import AreaTabs from 'components/organisms/AreaTabs'
 import {
   getDistrictOverviewUriFromTag,
   getConstituencyUriFromTag,
+  withLanguage,
 } from 'utils/helper'
 
 const Container = styled.div`
@@ -101,7 +102,9 @@ const DistrictSelector = props => {
             id="panel1a-header"
             expandIcon={<ExpandMoreIcon />}
           >
-            <Typography variant="h5">{d.dc_name_zh}</Typography>
+            <Typography variant="h5">
+              {withLanguage(d.dc_name_en, d.dc_name_zh)}
+            </Typography>
           </DistrictExpansionPanelSummary>
           <DistrictExpansionPanelDetails>
             {renderDCCA(d)}
@@ -121,7 +124,7 @@ const DistrictSelector = props => {
           const areas = _.uniqBy(
             data.dcd_districts.map(d => ({
               area_code: d.area_code,
-              area_name_zh: d.area_name_zh,
+              area_name_zh: withLanguage(d.area_name_en, d.area_name_zh),
             })),
             'area_code'
           )
@@ -129,11 +132,15 @@ const DistrictSelector = props => {
           const areasWithDistricts = areas.map(a => ({
             ...a,
             districts: data.dcd_districts.filter(
-              d => d.area_name_zh === a.area_name_zh
+              d =>
+                withLanguage(d.area_name_en, d.area_name_zh) ===
+                withLanguage(a.area_name_en, a.area_name_zh)
             ),
           }))
 
-          const areaNames = areas.map(a => a.area_name_zh)
+          const areaNames = areas.map(a =>
+            withLanguage(a.area_name_en, a.area_name_zh)
+          )
 
           return (
             <AreaTabs titles={areaNames} expanded={props.expanded}>
