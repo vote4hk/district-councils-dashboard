@@ -95,8 +95,8 @@ function Footer(props) {
               data-action="like"
               data-size="small"
               data-show-faces="false"
-              data-share="false">
-            </div>
+              data-share="false"
+            ></div>
             &nbsp;&nbsp;&nbsp;
             <div
               className="fb-share-button"
@@ -106,8 +106,10 @@ function Footer(props) {
             >
               <a
                 target="_blank"
+                rel="noopener noreferrer"
                 href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fvote4.hk%2F&amp;src=sdkpreparse"
-                className="fb-xfbml-parse-ignore">
+                className="fb-xfbml-parse-ignore"
+              >
                 Share
               </a>
             </div>

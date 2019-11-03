@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
+import { ThemeProvider } from '@material-ui/core/styles/'
 import IndexPage from 'components/pages/landing'
 import ProfilePage from 'components/pages/profile'
 import DistrictPage from 'components/pages/district'
@@ -109,10 +109,10 @@ const App = props => {
 
   return (
     <ApolloProvider client={client}>
-      <MuiThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
         <ContextStoreProvider>
           <Root>
-            <ContentContainer>
+            <ContentContainer id="contentContainer">
               <CssBaseline />
               <Wrapper>
                 <MobileAppBar />
@@ -130,7 +130,7 @@ const App = props => {
             <SearchDrawer />
           </Root>
         </ContextStoreProvider>
-      </MuiThemeProvider>
+      </ThemeProvider>
     </ApolloProvider>
   )
 }
