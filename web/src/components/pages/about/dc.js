@@ -8,6 +8,10 @@ const Container = styled(Paper)`
     width: 100%;
     padding: 16px;
     box-shadow: none;
+    h4,
+    h5 {
+      font-weight: 600;
+    }
     p {
       margin-bottom: 1rem;
     }
