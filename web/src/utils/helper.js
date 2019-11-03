@@ -202,5 +202,5 @@ export const getConstituencyTagsByCandidateCamps = candidates => {
 export const withLanguage = (name_en, name_zh) => {
   var lang = window.location.href.match(/(en|zh)$/)
   lang = lang ? lang[0] : 'zh'
-  return lang == 'en' && name_en ? name_en : name_zh
+  return lang === 'en' && name_en ? name_en : name_zh
 }
