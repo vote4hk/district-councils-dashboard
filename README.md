@@ -54,12 +54,15 @@ We are using react-i18next to assert that needed translations get loaded or that
 The translation json files for ``en`` and ``zh`` are located at ``web/src/locales/en/translation.json`` and ``web/src/locales/zh/translation.json`` respectively. By default, ``zh`` is used. If you have changes to the wording, please make sure they are added or updated in both json files. 
 
 Example: 
+
+web/src/locales/en/translation.json
 ````json
 {
     "candidate.nominateStatus.disqualified": "Disqualified"
 }
 ````
 
+web/src/locales/zh/translation.json
 ````json
 {
     "candidate.nominateStatus.disqualified": "取消資格"
