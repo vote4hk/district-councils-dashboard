@@ -49,17 +49,20 @@ npm run dev
 ```
 
 ### i18n
-We are using react-i18next to assert that needed translations get loaded or that your content gets rendered when the language changes. The full document is [here](https://react.i18next.com/). 
+We are using react-i18next to assert that needed translations get loaded or that your content gets rendered when the language changes. The full documentation is [here](https://react.i18next.com/). 
 
-The translation json files for ``en`` and ``zh`` are located at ``web/src/locales/en/translation.json`` and ``web/src/locales/zh/translation.json`` respectively. By default, ``zh`` is used. If you have changes to the wording, please make sure they are added / updated in both json files. 
+The translation json files for ``en`` and ``zh`` are located at ``web/src/locales/en/translation.json`` and ``web/src/locales/zh/translation.json`` respectively. By default, ``zh`` is used. If you have changes to the wording, please make sure they are added or updated in both json files. 
 
 Example: 
+
+web/src/locales/en/translation.json
 ````json
 {
     "candidate.nominateStatus.disqualified": "Disqualified"
 }
 ````
 
+web/src/locales/zh/translation.json
 ````json
 {
     "candidate.nominateStatus.disqualified": "取消資格"
@@ -103,8 +106,8 @@ import { withLanguage } from 'utils/helper'
 // if the lang is zh, district.name_zh will be used
 // if district.name_en is null, it will fall back to zh 
 withLanguage(district.name_en, district.name_zh)
-// if you are not sure what the field names for both language, check the query 
-// it can be found either in the same file or in web/src/queries/gql.js
+// if you are not sure what the field names for both language are, check the query 
+// which can be found either in the same file or in web/src/queries/gql.js
 ````
 
 ## Reference
