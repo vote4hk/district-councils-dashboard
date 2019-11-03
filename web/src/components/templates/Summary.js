@@ -7,7 +7,7 @@ import { Typography } from '@material-ui/core'
 import Box from '@material-ui/core/Box'
 import { DefaultLink } from 'components/atoms/Link'
 import Columns, { SeperatedColumns } from 'components/atoms/Columns'
-import { getConstituencyTagsByCandidateCamps } from 'utils/helper'
+import { getConstituencyTagsByCandidateCamps, withLanguage } from 'utils/helper'
 
 const Container = styled(Box)`
   && {
@@ -71,7 +71,7 @@ const Summary = props => {
                         props.history.push(`district/2019/${district.code}`)
                       }
                     >
-                      {`${district.name_zh}`}
+                      {withLanguage(district.name_en, district.name_zh)}
                     </FlexLink>
                   ))}
                 </Columns>
@@ -89,7 +89,7 @@ const Summary = props => {
                         props.history.push(`district/2019/${district.code}`)
                       }
                     >
-                      {`${district.name_zh}`}
+                      {withLanguage(district.name_en, district.name_zh)}
                     </FlexLink>
                   ))}
                 </Columns>
@@ -107,7 +107,7 @@ const Summary = props => {
                         )
                       }
                     >
-                      {`${district.name_zh}`}
+                      { withLanguage(district.name_en, district.name_zh) }
                     </FlexLink>
                   ))}
                 </Columns> */}
@@ -125,7 +125,7 @@ const Summary = props => {
                         )
                       }
                     >
-                      {`${district.name_zh}`}
+                      { withLanguage(district.name_en, district.name_zh) }
                     </FlexLink>
                   ))}
                 </Columns> */}
