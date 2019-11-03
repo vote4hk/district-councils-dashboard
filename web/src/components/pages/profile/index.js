@@ -195,6 +195,7 @@ class ProfilePage extends Component {
   }
 
   renderIntroText = (person, currentTerm) => {
+    const { t } = this.props
     let text
     if (
       currentTerm &&
@@ -203,7 +204,12 @@ class ProfilePage extends Component {
     ) {
       text = `現任${currentTerm.district.dc_name_zh}區議員（${currentTerm.constituency.name_zh}）`
     } else {
-      const electionResult = person.candidates[0].is_won ? '當選' : '參選'
+      const electionResult = person.candidates[0].is_won
+        ? // '當選' :
+          t('election.tag1')
+        : // '參選'
+          t('election.tag2')
+
       text = `${electionResult}${person.candidates[0].year}年${person.candidates[0].constituency.district.dc_name_zh}區議員（${person.candidates[0].constituency.name_zh}）`
     }
 

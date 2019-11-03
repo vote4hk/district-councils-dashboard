@@ -148,7 +148,8 @@ class Councillor extends Component {
                     <Box pr={1} alignSelf="flex-end">
                       <Typography variant="body2">
                         {councillor.electionResults.lastParticipatedYear}
-                        選舉結果
+                        {/* 選舉結果 */}
+                        {t('electionResults')}
                       </Typography>
                     </Box>
                     <Box>

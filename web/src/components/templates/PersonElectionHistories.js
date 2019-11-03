@@ -116,9 +116,15 @@ const PersonElectionHistories = props => {
               {m.votes > 0 ? (
                 <Grid item xs={3}>
                   {m.is_won ? (
-                    <SuccessText>當選</SuccessText>
+                    <SuccessText>
+                      {/* 當選 */}
+                      {t('election.tag1')}
+                    </SuccessText>
                   ) : (
-                    <FailureText>落敗</FailureText>
+                    <FailureText>
+                      {/* 落敗 */}
+                      {t('election.tag3')}
+                    </FailureText>
                   )}
                 </Grid>
               ) : (

@@ -85,7 +85,8 @@ const Councillor = props => {
               <Box pr={1} alignSelf="flex-end">
                 <Typography variant="body2">
                   {meta.lastParticipated.year}
-                  選舉結果
+                  {/* 選舉結果 */}
+                  {t('electionResults')}
                 </Typography>
               </Box>
               <Box>
