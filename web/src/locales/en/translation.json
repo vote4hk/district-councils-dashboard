@@ -147,5 +147,6 @@
   "summary.tag.text1": "Demonish zone",
   "summary.tag.text2": "Construct collision zone",
   "summary.tag.text3": "Demonish Zone - Zone n",
-  "summary.tag.text4": "Establishment faction collision zone - zone n"
+  "summary.tag.text4": "Establishment faction collision zone - zone n",
+  "show": "Show:"
 }
