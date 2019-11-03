@@ -8,6 +8,7 @@ import { withApollo } from 'react-apollo'
 import { getSingleFeatureFromPoint } from 'utils/features'
 import { useQuery } from '@apollo/react-hooks'
 import { QUERY_GET_ALL_DISTRICTS } from 'queries/gql'
+import { Search } from '@material-ui/icons'
 
 const GET_PEOPLE = gql`
   query($nameRegex: String) {
@@ -45,11 +46,20 @@ const GET_PEOPLE = gql`
   }
 `
 
+//TODO: move to atoms?
 const Group = props => (
   <div>
     <components.Group {...props} />
   </div>
 )
+
+const DropdownIndicator = props => {
+  return (
+    <components.DropdownIndicator {...props}>
+      <Search />
+    </components.DropdownIndicator>
+  )
+}
 
 const SearchAllBox = props => {
   const { client } = props
@@ -135,6 +145,7 @@ const SearchAllBox = props => {
       <AsyncSelect
         components={{
           Option: SearchBoxOption,
+          DropdownIndicator,
           Group,
         }}
         cacheOptions
