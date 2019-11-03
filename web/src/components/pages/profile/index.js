@@ -16,6 +16,7 @@ import FCPersonData from 'components/templates/FCPersonData'
 import { COLORS } from 'ui/theme'
 import { Tag } from 'components/atoms/Tag'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
+import { withTranslation } from 'react-i18next'
 import {
   getDistrictOverviewUriFromTag,
   getConstituencyUriFromTag,
@@ -194,6 +195,7 @@ class ProfilePage extends Component {
   }
 
   renderIntroText = (person, currentTerm) => {
+    const { t } = this.props
     let text
     if (
       currentTerm &&
@@ -202,7 +204,12 @@ class ProfilePage extends Component {
     ) {
       text = `現任${currentTerm.district.dc_name_zh}區議員（${currentTerm.constituency.name_zh}）`
     } else {
-      const electionResult = person.candidates[0].is_won ? '當選' : '參選'
+      const electionResult = person.candidates[0].is_won
+        ? // '當選' :
+          t('election.tag1')
+        : // '參選'
+          t('election.tag2')
+
       text = `${electionResult}${person.candidates[0].year}年${person.candidates[0].constituency.district.dc_name_zh}區議員（${person.candidates[0].constituency.name_zh}）`
     }
 
@@ -210,6 +217,8 @@ class ProfilePage extends Component {
   }
 
   renderElectionStatusText = (person, currentTerm) => {
+    const { t } = this.props
+
     let tags = []
     let primaryText
 
@@ -218,17 +227,21 @@ class ProfilePage extends Component {
       person.candidates[0].election_type === 'ordinary'
     ) {
       if (currentTerm) {
-        primaryText = '競逐連任'
+        // primaryText = '競逐連任'
+        primaryText = t('candidate.tag1')
       } else if (person.candidates.length === 1) {
-        primaryText = '首度參選'
+        // primaryText = '首度參選'
+        primaryText = t('candidate.tag2')
       } else if (person.candidates.length > 1) {
         if (
           !person.candidates.find(p => p.is_won) &&
           person.candidates.length > 2
         ) {
-          primaryText = '屢敗屢戰'
+          // primaryText = '屢敗屢戰'
+          primaryText = t('candidate.tag3')
         } else if (!person.candidates[1].is_won) {
-          primaryText = '捲土重來'
+          // primaryText = '捲土重來'
+          primaryText = t('candidate.tag4')
         }
       }
     }
@@ -237,11 +250,13 @@ class ProfilePage extends Component {
 
     if (person.candidates.length > 1) {
       if (person.candidates[1].is_won && person.candidates[1].votes === 0) {
-        tags.push('上屆自動當選')
+        // tags.push('上屆自動當選')
+        tags.push(t('candidate.tag5'))
       }
 
       if (person.candidates[0].cacode[0] !== person.candidates[1].cacode[0]) {
-        tags.push('跨區參選')
+        // tags.push('跨區參選')
+        tags.push(t('candidate.tag6'))
       }
     }
 
@@ -268,6 +283,7 @@ class ProfilePage extends Component {
       match: {
         params: { uuid },
       },
+      t,
     } = this.props
 
     const homeUrl = process.env.REACT_APP_HOST_URI
@@ -308,24 +324,29 @@ class ProfilePage extends Component {
           if (person.estimated_yob) {
             personHighlight.push({
               xs: 2,
-              title: '年齡',
-              tips: '根據候選人簡介的年齡推算',
+              // title: '年齡',
+              title: t('personHighlight.age.title'),
+              // tips: '根據候選人簡介的年齡推算',
+              tips: t('personHighlight.age.tips'),
               text: `${2019 - person.estimated_yob}歲`,
             })
           }
 
           personHighlight.push({
             xs: 6,
-            title: '相關組織 ',
-            tips: '候選人或議員的所屬政黨或社區組織，來源綜合媒體報道',
+            // title: '相關組織 ',
+            title: t('relatedOrganizations'),
+            // tips: '候選人或議員的所屬政黨或社區組織，來源綜合媒體報道',
+            tips: t('relatedOrganizations.tips'),
             text: person.related_organization || '-',
           })
 
           personHighlight.push({
             xs: 4,
-            title: '職業 ',
-            tips:
-              '候選人：取自最近選舉的候選人簡介<br />議員：取自區議會網頁<br />來源綜合媒體報道',
+            // title: '職業 ',
+            title: t('personHighlight.occupation.title'),
+            // tips: '候選人：取自最近選舉的候選人簡介<br />議員：取自區議會網頁<br />來源綜合媒體報道',
+            tips: t('personHighlight.occupation.tips'),
             text:
               (currentTerm && currentTerm.career) || lastElection.occupation,
           })
@@ -333,13 +354,26 @@ class ProfilePage extends Component {
           const titles = []
 
           if (person.fc_uuid) {
-            titles.push('個人立場')
-            titles.push('媒體報導')
+            titles.push(
+              // '個人立場'
+              t('fc.title1')
+            )
+            titles.push(
+              // '媒體報導'
+              t('fc.title2')
+            )
           }
 
-          titles.push('參選紀錄')
+          titles.push(
+            // '參選紀錄'
+            t('fc.title3')
+          )
 
-          if (hasMeetings) titles.push('會議出席率')
+          if (hasMeetings)
+            titles.push(
+              // '會議出席率'
+              t('fc.title4')
+            )
 
           return (
             <>
@@ -504,4 +538,4 @@ class ProfilePage extends Component {
   }
 }
 
-export default ProfilePage
+export default withTranslation()(ProfilePage)

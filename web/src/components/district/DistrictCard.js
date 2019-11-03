@@ -10,6 +10,7 @@ import Box from '@material-ui/core/Box'
 import PropTypes from 'prop-types'
 import { bps } from 'ui/responsive'
 import { SeperatedColumns } from 'components/atoms/Columns'
+import { useTranslation } from 'react-i18next'
 
 const Container = styled(Paper)`
   && {
@@ -114,6 +115,7 @@ class DistrictCard extends Component {
   render() {
     const { name_zh, year, code, councillors, district, stations } = this.props
     const councillor = councillors.length > 0 ? councillors[0] : {}
+    const { t } = useTranslation()
     return (
       <Container>
         <InnerContainer border={0} color="primary.minor">
@@ -129,17 +131,27 @@ class DistrictCard extends Component {
           <CodeText>{code}</CodeText>
           <StyledDivier />
           <SeperatedColumns>
-            <Typography variant="h6">區議員</Typography>
+            <Typography variant="h6">
+              {/* 區議員 */}
+              {/* TODO: i18n - check councilors or councilor */}
+              {t('councilor')}
+            </Typography>
             <Typography>
               {councillor.person ? councillor.person.name_zh : '-'}
             </Typography>
           </SeperatedColumns>
           <SeperatedColumns>
-            <Typography variant="h6">政治聯繫</Typography>
+            <Typography variant="h6">
+              {/* 政治聯繫 */}
+              {t('politicalAffiliation')}
+            </Typography>
             <Typography>{councillor.political_affiliation || '-'}</Typography>
           </SeperatedColumns>
           <SeperatedColumns>
-            <Typography variant="h6">投票站</Typography>
+            <Typography variant="h6">
+              {/* 投票站 */}
+              {t('districtCard.text2')}
+            </Typography>
             {stations.map((station, index) => (
               <Typography key={index} variant="subtitle2">
                 {station.name_zh}

@@ -12,6 +12,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import * as AddressParser from 'hk-address-parser-lib'
 import { getSingleFeatureFromPoint } from 'utils/features'
+import { withTranslation } from 'react-i18next'
 import _ from 'lodash'
 
 function renderInputComponent(inputProps) {
@@ -177,7 +178,7 @@ class IntegrationAutosuggest extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, t } = this.props
 
     const autosuggestProps = {
       renderInputComponent,
@@ -195,7 +196,8 @@ class IntegrationAutosuggest extends React.Component {
           {...autosuggestProps}
           inputProps={{
             classes,
-            placeholder: '輸入屋苑自動搜尋 !',
+            // placeholder: '輸入屋苑自動搜尋 !',
+            placeholder: t('addressSearcher.placeholder'),
             value: this.state.value,
             onChange: this.handleChange('value'),
             InputLabelProps: {
@@ -228,4 +230,4 @@ IntegrationAutosuggest.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(IntegrationAutosuggest)
+export default withStyles(styles)(withTranslation()(IntegrationAutosuggest))

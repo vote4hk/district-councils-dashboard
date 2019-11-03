@@ -16,6 +16,7 @@ import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
 import { getDistrictListUriFromTag, formatNumber } from 'utils/helper'
 import { withRouter } from 'react-router-dom'
 import { SuccessText, FailureText } from 'components/atoms/Text'
+import { withTranslation } from 'react-i18next'
 
 const Container = styled(Paper)`
   && {
@@ -74,7 +75,7 @@ class DCCAOverview extends Component {
   }
 
   render() {
-    const { code, tags, voterData, description } = this.props
+    const { code, tags, voterData, description, t } = this.props
     const sortedTags = tags.sort((a, b) =>
       a.type === 'boundary' ? -1 : a.type === b.type ? 0 : 1
     )
@@ -82,6 +83,7 @@ class DCCAOverview extends Component {
       (100 * voterData.aggregations.new_voters) /
       (voterData.aggregations.all_voters - voterData.aggregations.new_voters)
     ).toFixed(2)
+
     return (
       <>
         <Container>
@@ -94,8 +96,9 @@ class DCCAOverview extends Component {
             <Rows>
               <UnstyledButton onClick={this.toggleGraph.bind(this)}>
                 <Typography variant="h6">
-                  選民人數 {formatNumber(voterData.aggregations.all_voters)}{' '}
-                  {' ('}
+                  {/* 選民人數 */}
+                  {t('numberOfElectors')}{' '}
+                  {formatNumber(voterData.aggregations.all_voters)} {' ('}
                   {new_voters_percentage > 0 ? (
                     <SuccessText display="inline">
                       +{new_voters_percentage}%
@@ -136,4 +139,4 @@ class DCCAOverview extends Component {
   }
 }
 
-export default withRouter(DCCAOverview)
+export default withRouter(withTranslation()(DCCAOverview))
