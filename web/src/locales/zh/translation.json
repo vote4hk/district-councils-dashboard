@@ -9,7 +9,7 @@
   "candidate.noPoliticalAffiliation": "未報稱政治聯繫",
   "candidate.nominateStatus.disqualified": "取消資格",
   "candidate.nominateStatus.suspended": "宣布棄選",
-  "districtNewVoterchartContainer.text1": "選民人數增加n%",
+  "districtNewVoterchartContainer.text1": "選民人數增加{{ n }}%",
   "districtNewVoterchartContainer.text2": "最大增幅組別: n歲的(男|女)性選民增加了n%",
   "currentTerm.councilor": "現任區議員",
   "councilor.moreThanOneDistricts": "此區與上屆n個選區重疊",

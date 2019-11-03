@@ -157,8 +157,9 @@ export default props => {
             <>
               <Typography variant="h2">
                 {/* 選民人數增加 */}
-                {t('districtNewVoterchartContainer.text1')}{' '}
-                {_.round(meta.increased * 100, 2)}%
+                {t('districtNewVoterchartContainer.text1', {
+                  n: _.round(meta.increased * 100, 2),
+                })}
               </Typography>
               <Typography variant="h4">
                 最大增幅組別：{meta.mostIncreasedGroup.age}歲的

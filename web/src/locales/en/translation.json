@@ -9,7 +9,7 @@
   "candidate.noPoliticalAffiliation": "No political affiliation reported",
   "candidate.nominateStatus.disqualified": "Disqualified",
   "candidate.nominateStatus.suspended": "Campaign suspended",
-  "districtNewVoterchartContainer.text1": "Voters increased by n%",
+  "districtNewVoterchartContainer.text1": "Voters increased by {{ n }}%",
   "districtNewVoterchartContainer.text2": "Largest increase group: n year old (male | female) voters increased n%",
   "currentTerm.councilor": "District Council members",
   "councilor.moreThanOneDistricts": "This area overlaps the previous n constituencies",
