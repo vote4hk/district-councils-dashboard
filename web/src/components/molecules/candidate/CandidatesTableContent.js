@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import { PeopleAvatar } from 'components/atoms/Avatar'
 import { withRouter } from 'react-router-dom'
 import { Box, Grid } from '@material-ui/core'
@@ -50,6 +50,8 @@ const StyledTableRow = styled(TableRow)`
 const CandidateGrid = props => {
   const { candidate } = props
   const { t } = useTranslation()
+  const [imageLoadError, setImageLoadError] = useState(true)
+
   return (
     <Grid
       container
@@ -79,8 +81,12 @@ const CandidateGrid = props => {
           src={`${IMAGE_HOST_URI}/static/images/avatar/${candidate.person.uuid}.jpg`}
           imgProps={{
             onError: e => {
-              e.target.src =
-                IMAGE_HOST_URI + '/static/images/avatar/default.png'
+              // wingkwong: avoid infinite callbacks if fallback image fails
+              if (imageLoadError) {
+                setImageLoadError(false)
+                e.target.src =
+                  IMAGE_HOST_URI + '/static/images/avatar/default.png'
+              }
             },
           }}
           opacity={

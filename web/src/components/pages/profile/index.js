@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
 import { Typography, Grid, Breadcrumbs, Avatar } from '@material-ui/core'
@@ -166,7 +166,9 @@ const PersonDescriptionParagraph = styled(HtmlParagraph)`
 class ProfilePage extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      imageLoadError: true,
+    }
   }
 
   async componentDidMount() {}
@@ -285,6 +287,7 @@ class ProfilePage extends Component {
       },
       t,
     } = this.props
+    const { imageLoadError } = this.state
 
     const homeUrl = process.env.REACT_APP_HOST_URI
 
@@ -293,6 +296,7 @@ class ProfilePage extends Component {
         {({ loading, error, data }) => {
           if (loading) return null
           if (error) return `Error! ${error}`
+
           const person = data.dcd_people[0]
 
           const currentTerm =
@@ -438,7 +442,13 @@ class ProfilePage extends Component {
                     src={`${homeUrl}/static/images/avatar/${person.uuid}.jpg`}
                     imgProps={{
                       onError: e => {
-                        e.target.src = `${homeUrl}/static/images/avatar/default.png`
+                        // wingkwong: avoid infinite callbacks if fallback image fails
+                        if (imageLoadError) {
+                          this.setState({
+                            imageLoadError: false,
+                          })
+                          e.target.src = `${homeUrl}/static/images/avatar/default.png`
+                        }
                       },
                     }}
                   />
