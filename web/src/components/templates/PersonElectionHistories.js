@@ -8,6 +8,7 @@ import { SuccessText, FailureText } from '../atoms/Text'
 import { UnstyledNavLink } from '../atoms/Link'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { formatNumber } from 'utils/helper'
+import { useTranslation } from 'react-i18next'
 import {
   getCentroidFromYearAndCode,
   getAllFeaturesFromPoint,
@@ -50,7 +51,7 @@ const createQueryStringToBattlegroundPage = election => {
 
 const PersonElectionHistories = props => {
   const { histories } = props
-
+  const { t } = useTranslation()
   histories.sort((a, b) => {
     if (b.year > a.year) return 1
     else if (b.year < a.year) return -1
@@ -107,7 +108,10 @@ const PersonElectionHistories = props => {
                 <Typography variant="h6">{m.constituency.code}</Typography>
               </Grid>
               <Grid item xs={5}>
-                <Typography variant="h6">報稱政治聯繫</Typography>
+                <Typography variant="h6">
+                  {/* 報稱政治聯繫 */}
+                  {t('reportedPoliticalAffiliation')}
+                </Typography>
               </Grid>
               {m.votes > 0 ? (
                 <Grid item xs={3}>

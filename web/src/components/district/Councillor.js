@@ -132,7 +132,10 @@ class Councillor extends Component {
                   </Typography>
                   <Box display="flex">
                     <Box pr={1} alignSelf="flex-end">
-                      <Typography variant="body2">報稱政治聯繫</Typography>
+                      <Typography variant="body2">
+                        {/* 報稱政治聯繫 */}
+                        {t('reportedPoliticalAffiliation')}
+                      </Typography>
                     </Box>
                     <Box>
                       <Typography variant="body1">

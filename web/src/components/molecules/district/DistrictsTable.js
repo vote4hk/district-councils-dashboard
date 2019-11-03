@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
 import CampSelector from 'components/atoms/CampSelector'
 import styled from 'styled-components'
+import { withTranslation } from 'react-i18next'
 
 const StyledTableCell = styled(TableCell)`
   && {
@@ -44,9 +45,10 @@ class DistrictsTable extends Component {
   }
 
   render() {
-    const { districts, year } = this.props
+    const { districts, year, t } = this.props
     const { state } = this
     const { democracy, establishment, others, blank } = state.checked
+
     return (
       <div>
         <CampSelector onChange={this.handleChange.bind(this)} />
@@ -55,21 +57,25 @@ class DistrictsTable extends Component {
             <TableRow>
               <StyledTableCell>候選人</StyledTableCell>
               <StyledTableCell>
-                相關組織{' '}
+                {/* 相關組織{' '} */}
+                {t('relatedOrganizations')}{' '}
                 <HtmlTooltip
                   disableFocusListener
                   disableTouchListener
-                  text="候選人或議員的所屬政黨或社區組織，來源綜合媒體報道"
+                  // text="候選人或議員的所屬政黨或社區組織，來源綜合媒體報道"
+                  text={t('relatedOrganizations.tips')}
                   placement="bottom"
                   size={20}
                 />
               </StyledTableCell>
               <StyledTableCell>
-                報稱政治聯繫{' '}
+                {/* 報稱政治聯繫{' '} */}
+                {t('reportedPoliticalAffiliation')}{' '}
                 <HtmlTooltip
                   disableFocusListener
                   disableTouchListener
-                  text="根據候選人提名表格上所填報的政治聯繫"
+                  // text="根據候選人提名表格上所填報的政治聯繫"
+                  text={t('reportedPoliticalAffiliation.tips')}
                   placement="bottom"
                   size={20}
                 />
@@ -96,4 +102,4 @@ class DistrictsTable extends Component {
   }
 }
 
-export default DistrictsTable
+export default withTranslation()(DistrictsTable)

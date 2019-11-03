@@ -5,6 +5,7 @@ import Box from '@material-ui/core/Box'
 import { Tag } from '../atoms/Tag'
 import { PeopleAvatar } from '../atoms/Avatar'
 import { UnstyledNavLink } from '../atoms/Link'
+import { useTranslation } from 'react-i18next'
 import {
   getColorFromPoliticalAffiliation,
   getCouncillorMeta,
@@ -22,6 +23,7 @@ const Councillor = props => {
   const IMAGE_HOST_URI =
     process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'
   const meta = getCouncillorMeta(councillor)
+  const { t } = useTranslation()
 
   return (
     <UnstyledNavLink
@@ -67,7 +69,10 @@ const Councillor = props => {
             </Typography>
             <Box display="flex">
               <Box pr={1} alignSelf="flex-end">
-                <Typography variant="body2">報稱政治聯繫</Typography>
+                <Typography variant="body2">
+                  {/* 報稱政治聯繫 */}
+                  {t('reportedPoliticalAffiliation')}
+                </Typography>
               </Box>
               <Box>
                 <Typography variant="body1">
