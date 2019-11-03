@@ -9,6 +9,7 @@ import { getSingleFeatureFromPoint } from 'utils/features'
 import { useQuery } from '@apollo/react-hooks'
 import { QUERY_GET_ALL_DISTRICTS } from 'queries/gql'
 import { Search } from '@material-ui/icons'
+import { useTranslation } from 'react-i18next'
 
 const GET_PEOPLE = gql`
   query($nameRegex: String) {
@@ -62,6 +63,7 @@ const DropdownIndicator = props => {
 }
 
 const SearchAllBox = props => {
+  const { t } = useTranslation()
   const { client } = props
   const { loading, data, error } = useQuery(QUERY_GET_ALL_DISTRICTS, {
     variables: {
@@ -130,11 +132,11 @@ const SearchAllBox = props => {
     ])
     return [
       {
-        label: 'address',
+        label: t('constituency'),
         options: results[0],
       },
       {
-        label: 'people',
+        label: t('candidates'),
         options: results[1],
       },
     ]
@@ -148,6 +150,9 @@ const SearchAllBox = props => {
           DropdownIndicator,
           Group,
         }}
+        placeholder={t('searcher.placeholder')}
+        noOptionsMessage={() => t('searcher.noResultPlaceholder') || ''}
+        loadingMessage={() => t('searcher.loadingText') || ''}
         cacheOptions
         loadOptions={search}
         defaultOptions
