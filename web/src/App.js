@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import IndexPage from 'components/pages/landing'
@@ -24,6 +24,7 @@ import SearchDrawer from 'components/pages/SearchDrawer'
 import DistrictOverviewPage from 'components/pages/district/overview'
 import DistrictAllPage from 'components/pages/district/all'
 import GlobalDisclaimer from 'components/organisms/GlobalDisclaimer'
+import i18n from 'i18n'
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_URI,
@@ -58,6 +59,49 @@ const Wrapper = styled(Box)`
   }
 `
 
+const LangSwitch = props => {
+  const { path, url } = useRouteMatch()
+  if (url !== '/') {
+    i18n.changeLanguage(url.replace('/', ''))
+  }
+
+  return (
+    <Switch>
+      <Route exact path={path} component={withTracker(IndexPage)} />
+      <Route
+        path={`${path}/profile/:name/:uuid`}
+        component={withTracker(ProfilePage)}
+      />
+      <Route
+        path={`${path}/district/:year/tags/:tag`}
+        component={withTracker(DistrictListPage)}
+      />
+      <Route
+        path={`${path}/district/:year/:code(\\w{1})`}
+        component={withTracker(DistrictOverviewPage)}
+      />
+      <Route
+        path={`${path}/district/2019/:code`}
+        component={withTracker(BattleGroundPage)}
+      />
+      <Route
+        path={`${path}/district/:year/:code`}
+        component={withTracker(DistrictPage)}
+      />
+      <Route
+        path={`${path}/district/:year`}
+        component={withTracker(DistrictAllPage)}
+      />
+      <Route
+        path={`${path}/disclaimer`}
+        component={withTracker(DisclaimerPage)}
+      />
+      <Route path={`${path}/about-dc`} component={withTracker(AboutDCPage)} />
+      <Route component={withTracker(NotfoundPage)} />
+    </Switch>
+  )
+}
+
 const App = props => {
   if (!process.env.REACT_APP_GRAPHQL_URI) {
     throw new Error('Graphql host not yet set')
@@ -75,40 +119,9 @@ const App = props => {
                 <GlobalDisclaimer />
                 <main>
                   <Switch>
-                    <Route exact path="/" component={withTracker(IndexPage)} />
-                    <Route
-                      path="/profile/:name/:uuid"
-                      component={withTracker(ProfilePage)}
-                    />
-                    <Route
-                      path="/district/:year/tags/:tag"
-                      component={withTracker(DistrictListPage)}
-                    />
-                    <Route
-                      path="/district/:year/:code(\w{1})"
-                      component={withTracker(DistrictOverviewPage)}
-                    />
-                    <Route
-                      path="/district/2019/:code"
-                      component={withTracker(BattleGroundPage)}
-                    />
-                    <Route
-                      path="/district/:year/:code"
-                      component={withTracker(DistrictPage)}
-                    />
-                    <Route
-                      path="/district/:year"
-                      component={withTracker(DistrictAllPage)}
-                    />
-                    <Route
-                      path="/disclaimer"
-                      component={withTracker(DisclaimerPage)}
-                    />
-                    <Route
-                      path="/about-dc"
-                      component={withTracker(AboutDCPage)}
-                    />
-                    <Route component={withTracker(NotfoundPage)} />
+                    <Route path="/(en|zh)?">
+                      <LangSwitch />
+                    </Route>
                   </Switch>
                 </main>
               </Wrapper>

@@ -137,7 +137,7 @@
   "predictionChartHeader.paragraph3": "滑桿只調較2018及19年間新增選民的投票取向及投票率，如欲直接調較19年選民的取態，請到「設定」取消「只計算新增選民，同時假設上屆投票選民維持相冋政治取向」一項。",
   "predictionChartHeader.paragraph4": "是次選舉將選出452個民選議席，連同新界區27名當然議員共479席。當然議員即各區鄉事委員會主席，故這些議席全歸類為建制派。",
   "predictionChartHeader.paragraph5": "選舉結果由眾多因素影響，故模擬結果僅供參考，亦因數據來源限制而簡化，如有建議歡迎匯報",
-  "PredictionChartHeader.button.label1": "模擬結果",
+  "predictionChartHeader.button.label1": "模擬結果",
   "councillorMeetingAttendace.table.text1": "會議",
   "councillorMeetingAttendace.table.text2": "性質",
   "councillorMeetingAttendace.table.text3": "年份",
