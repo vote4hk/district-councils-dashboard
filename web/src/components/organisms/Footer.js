@@ -117,11 +117,6 @@ function Footer(props) {
               選區事實處
             </StyledFooterLink>
           </LinkBox>
-          <LinkBox>
-            <StyledFooterLink target="_blank" href="https://hkfactcheck.io/">
-              選區事實處
-            </StyledFooterLink>
-          </LinkBox>
 
           <LinkBox>
             <div
