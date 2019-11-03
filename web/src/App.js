@@ -68,7 +68,7 @@ const App = props => {
       <ThemeProvider theme={theme}>
         <ContextStoreProvider>
           <Root>
-            <ContentContainer>
+            <ContentContainer id="contentContainer">
               <CssBaseline />
               <Wrapper>
                 <MobileAppBar />
