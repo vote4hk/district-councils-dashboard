@@ -143,7 +143,7 @@ class DistrictCard extends Component {
           <SeperatedColumns>
             <Typography variant="h6">
               {/* 政治聯繫 */}
-              {t('districtCard.text1')}
+              {t('politicalAffiliation')}
             </Typography>
             <Typography>{councillor.political_affiliation || '-'}</Typography>
           </SeperatedColumns>

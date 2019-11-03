@@ -195,6 +195,7 @@ class ProfilePage extends Component {
   }
 
   renderIntroText = (person, currentTerm) => {
+    const { t } = this.props
     let text
     if (
       currentTerm &&
@@ -203,7 +204,12 @@ class ProfilePage extends Component {
     ) {
       text = `現任${currentTerm.district.dc_name_zh}區議員（${currentTerm.constituency.name_zh}）`
     } else {
-      const electionResult = person.candidates[0].is_won ? '當選' : '參選'
+      const electionResult = person.candidates[0].is_won
+        ? // '當選' :
+          t('election.tag1')
+        : // '參選'
+          t('election.tag2')
+
       text = `${electionResult}${person.candidates[0].year}年${person.candidates[0].constituency.district.dc_name_zh}區議員（${person.candidates[0].constituency.name_zh}）`
     }
 
@@ -211,6 +217,8 @@ class ProfilePage extends Component {
   }
 
   renderElectionStatusText = (person, currentTerm) => {
+    const { t } = this.props
+
     let tags = []
     let primaryText
 
@@ -219,17 +227,21 @@ class ProfilePage extends Component {
       person.candidates[0].election_type === 'ordinary'
     ) {
       if (currentTerm) {
-        primaryText = '競逐連任'
+        // primaryText = '競逐連任'
+        primaryText = t('candidate.tag1')
       } else if (person.candidates.length === 1) {
-        primaryText = '首度參選'
+        // primaryText = '首度參選'
+        primaryText = t('candidate.tag2')
       } else if (person.candidates.length > 1) {
         if (
           !person.candidates.find(p => p.is_won) &&
           person.candidates.length > 2
         ) {
-          primaryText = '屢敗屢戰'
+          // primaryText = '屢敗屢戰'
+          primaryText = t('candidate.tag3')
         } else if (!person.candidates[1].is_won) {
-          primaryText = '捲土重來'
+          // primaryText = '捲土重來'
+          primaryText = t('candidate.tag4')
         }
       }
     }
@@ -238,11 +250,13 @@ class ProfilePage extends Component {
 
     if (person.candidates.length > 1) {
       if (person.candidates[1].is_won && person.candidates[1].votes === 0) {
-        tags.push('上屆自動當選')
+        // tags.push('上屆自動當選')
+        tags.push(t('candidate.tag5'))
       }
 
       if (person.candidates[0].cacode[0] !== person.candidates[1].cacode[0]) {
-        tags.push('跨區參選')
+        // tags.push('跨區參選')
+        tags.push(t('candidate.tag6'))
       }
     }
 
@@ -321,9 +335,9 @@ class ProfilePage extends Component {
           personHighlight.push({
             xs: 6,
             // title: '相關組織 ',
-            title: t('personHighlight.relatedOrganization.title'),
+            title: t('relatedOrganizations'),
             // tips: '候選人或議員的所屬政黨或社區組織，來源綜合媒體報道',
-            tips: t('personHighlight.relatedOrganization.tips'),
+            tips: t('relatedOrganizations.tips'),
             text: person.related_organization || '-',
           })
 

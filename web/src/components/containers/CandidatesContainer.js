@@ -196,12 +196,14 @@ const CandidatesContainer = props => {
 
                               <Typography variant="body2">
                                 {candidate.political_affiliation ||
-                                  '未報稱政治聯繫'}{' '}
+                                  // '未報稱政治聯繫'}{' '}
+                                  t('candidate.unknownPosition')}
                               </Typography>
 
                               {candidate.nominate_status === 'disqualified' && (
                                 <Typography variant="body2">
-                                  取消資格
+                                  {/* 取消資格 */}
+                                  {t('candidate.nominateStatus.disqualified')}
                                 </Typography>
                               )}
                               {candidate.nominate_status === 'suspended' && (
