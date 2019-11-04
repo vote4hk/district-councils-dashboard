@@ -152,6 +152,8 @@ const PersonHighlightContainer = styled(FlexRowContainer)`
 
 const PlatformContainer = styled(Box)`
   && {
+    max-width: 600px;
+    margin: 0 auto;
   }
 `
 const PlatformHeader = styled(Box)`
