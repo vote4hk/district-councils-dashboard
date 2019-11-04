@@ -267,6 +267,7 @@ export const QUERY_GET_CANDIDATES = gql`
   }
 `
 
+// This is a dangerous query.. the data size is huge (for 2019 it is 19MB)
 export const QUERY_GET_CONSTITUENCY_CAMP_DATA = gql`
   query fetch_camp_data($year: Int!) {
     dcd_constituencies(where: { year: { _eq: $year } }) {
@@ -278,6 +279,13 @@ export const QUERY_GET_CONSTITUENCY_CAMP_DATA = gql`
             camp
             votes
             is_won
+          }
+          vote_stats(where: { subtype: { _eq: "NEW_VOTERS" } }) {
+            type
+            subtype
+            category_1
+            category_2
+            count
           }
         }
       }
