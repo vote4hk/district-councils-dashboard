@@ -10,6 +10,7 @@ import BattleGroundPage from 'components/pages/battleground'
 import DisclaimerPage from 'components/pages/disclaimer'
 import AboutDCPage from 'components/pages/about/dc'
 import NotfoundPage from 'components/pages/notfound'
+import SupportUsPage from 'components/pages/support-us'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 import theme from 'ui/theme'
@@ -97,6 +98,7 @@ const LangSwitch = props => {
         component={withTracker(DisclaimerPage)}
       />
       <Route path={`${path}/about-dc`} component={withTracker(AboutDCPage)} />
+      <Route path="/about-us" component={withTracker(SupportUsPage)} />
       <Route component={withTracker(NotfoundPage)} />
     </Switch>
   )
@@ -122,6 +124,44 @@ const App = props => {
                     <Route path="/(en|zh)?">
                       <LangSwitch />
                     </Route>
+                    <Route exact path="/" component={withTracker(IndexPage)} />
+                    <Route
+                      path="/profile/:name/:uuid"
+                      component={withTracker(ProfilePage)}
+                    />
+                    <Route
+                      path="/district/:year/tags/:tag"
+                      component={withTracker(DistrictListPage)}
+                    />
+                    <Route
+                      path="/district/:year/:code(\w{1})"
+                      component={withTracker(DistrictOverviewPage)}
+                    />
+                    <Route
+                      path="/district/2019/:code"
+                      component={withTracker(BattleGroundPage)}
+                    />
+                    <Route
+                      path="/district/:year/:code"
+                      component={withTracker(DistrictPage)}
+                    />
+                    <Route
+                      path="/district/:year"
+                      component={withTracker(DistrictAllPage)}
+                    />
+                    <Route
+                      path="/disclaimer"
+                      component={withTracker(DisclaimerPage)}
+                    />
+                    <Route
+                      path="/about-dc"
+                      component={withTracker(AboutDCPage)}
+                    />
+                    <Route
+                      path="/about-us"
+                      component={withTracker(SupportUsPage)}
+                    />
+                    <Route component={withTracker(NotfoundPage)} />
                   </Switch>
                 </main>
               </Wrapper>
