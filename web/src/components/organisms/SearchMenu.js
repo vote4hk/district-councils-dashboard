@@ -84,6 +84,18 @@ const SearchMenu = props => {
           反映意見
         </Typography>
       </LeftMargin>
+
+      <LeftMargin>
+        <Typography
+          variant="h5"
+          color="primary"
+          onClick={() => goToPage('/about-us')}
+        >
+          {/* 我們是誰？ */}
+          {t('about.support_us')}
+        </Typography>
+      </LeftMargin>
+
       <LeftMargin>
         <SearchTab />
       </LeftMargin>

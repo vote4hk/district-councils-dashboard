@@ -2,7 +2,7 @@ import React from 'react'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
 import Divider from '@material-ui/core/Divider'
-import { UnstyledLink } from 'components/atoms/Link'
+import { UnstyledLink, DefaultLink } from 'components/atoms/Link'
 import Columns from 'components/atoms/Columns'
 import { withRouter } from 'react-router-dom'
 import { Disclaimer } from 'components/templates/Disclaimer'
@@ -47,6 +47,16 @@ function Footer(props) {
         <StyledDivider />
         <Columns>
           <LinkBox>
+            <DefaultLink
+              onClick={
+                () => props.history.push(`/about-us`)
+                // console.log(props)
+              }
+            >
+              {t('about.support_us')}
+            </DefaultLink>
+          </LinkBox>
+          <LinkBox>
             <StyledFooterLink
               target="_blank"
               href="https://www.facebook.com/g0vhk.io"
@@ -54,6 +64,7 @@ function Footer(props) {
               g0vhk.io
             </StyledFooterLink>
           </LinkBox>
+
           <LinkBox>
             <StyledFooterLink
               onClick={
@@ -86,6 +97,7 @@ function Footer(props) {
               {t('thirdParty.dfo')}
             </StyledFooterLink>
           </LinkBox>
+
           <LinkBox>
             <div
               className="fb-like"
