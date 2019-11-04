@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import { PeopleAvatar } from 'components/atoms/Avatar'
 import { withRouter } from 'react-router-dom'
 import { Box, Grid } from '@material-ui/core'
@@ -8,6 +8,7 @@ import { COLORS } from 'ui/theme'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
+import { useTranslation } from 'react-i18next'
 
 const IMAGE_HOST_URI =
   process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'
@@ -48,6 +49,9 @@ const StyledTableRow = styled(TableRow)`
 
 const CandidateGrid = props => {
   const { candidate } = props
+  const { t } = useTranslation()
+  const [imageLoadError, setImageLoadError] = useState(true)
+
   return (
     <Grid
       container
@@ -77,8 +81,12 @@ const CandidateGrid = props => {
           src={`${IMAGE_HOST_URI}/static/images/avatar/${candidate.person.uuid}.jpg`}
           imgProps={{
             onError: e => {
-              e.target.src =
-                IMAGE_HOST_URI + '/static/images/avatar/default.png'
+              // wingkwong: avoid infinite callbacks if fallback image fails
+              if (imageLoadError) {
+                setImageLoadError(false)
+                e.target.src =
+                  IMAGE_HOST_URI + '/static/images/avatar/default.png'
+              }
             },
           }}
           opacity={
@@ -97,7 +105,8 @@ const CandidateGrid = props => {
           <HtmlTooltip
             disableFocusListener
             disableTouchListener
-            text="侯選人政治立場未明"
+            // text="侯選人政治立場未明"
+            text={t('candidate.noPoliticalAffiliation')}
             placement="bottom"
             size={16}
           />
@@ -105,13 +114,17 @@ const CandidateGrid = props => {
         {candidate.nominate_status === 'disqualified' && (
           <>
             <br />
-            <span>(取消資格)</span>
+            <span>
+              {/* (取消資格) */}({t('candidate.nominateStatus.disqualified')})
+            </span>
           </>
         )}
         {candidate.nominate_status === 'suspended' && (
           <>
             <br />
-            <span>(棄選)</span>
+            <span>
+              {/* (棄選) */}({t('candidate.nominateStatus.suspended')})
+            </span>
           </>
         )}
       </Grid>

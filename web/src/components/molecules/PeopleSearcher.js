@@ -15,6 +15,7 @@ import gql from 'graphql-tag'
 import _ from 'lodash'
 import styled from 'styled-components'
 import { getColorFromCamp } from 'utils/helper'
+import { useTranslation } from 'react-i18next'
 
 const GET_PEOPLE = gql`
   query($nameRegex: String) {
@@ -127,6 +128,8 @@ const PeopleSearcher = props => {
   const { classes, handlePeopleSelected } = props
   const [value, setValue] = useState('')
   const [suggestions, setSuggestions] = useState([])
+  const [imageLoadError, setImageLoadError] = useState(true)
+  const { t } = useTranslation()
   let debounced = null
 
   const onChange = (event, { newValue }) => {
@@ -209,7 +212,11 @@ const PeopleSearcher = props => {
           src={avatarPath}
           imgProps={{
             onError: e => {
-              e.target.src = `${homeUrl}/static/images/avatar/default.png`
+              // wingkwong: avoid infinite callbacks if fallback image fails
+              if (imageLoadError) {
+                setImageLoadError(false)
+                e.target.src = `${homeUrl}/static/images/avatar/default.png`
+              }
             },
           }}
           style={{
@@ -261,7 +268,8 @@ const PeopleSearcher = props => {
   // Autosuggest will pass through all these props to the input.
   const inputProps = {
     classes,
-    placeholder: '輸入候選人姓名...',
+    // placeholder: '輸入候選人姓名...',
+    placeholder: t('peopleSearcher.placeholder'),
     value: value || '',
     onChange,
     InputLabelProps: {

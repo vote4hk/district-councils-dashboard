@@ -9,6 +9,7 @@ import { Alert } from 'components/atoms/Alert'
 import SearchTab from 'components/organisms/SearchTab'
 import { QUERY_GET_CONFIG } from 'queries/gql'
 import { COLORS } from 'ui/theme'
+import { withTranslation } from 'react-i18next'
 
 const Container = styled.div`
   width: 100%;
@@ -110,6 +111,7 @@ class IndexPage extends Component {
   }
 
   render() {
+    const { t } = this.props
     return (
       <>
         {this.renderAlert()}
@@ -121,7 +123,8 @@ class IndexPage extends Component {
                 style={{ textAlign: 'center' }}
                 gutterBottom
               >
-                距離投票日
+                {/* 距離投票日 */}
+                {t('index.title1')}
               </Typography>
               <Countdown date={electionDate} />
             </CountdownContainer>
@@ -139,4 +142,4 @@ class IndexPage extends Component {
   }
 }
 
-export default IndexPage
+export default withTranslation()(IndexPage)

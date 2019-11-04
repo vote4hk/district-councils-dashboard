@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import { Tag } from '../atoms/Tag'
 import { PeopleAvatar } from '../atoms/Avatar'
 import { UnstyledNavLink } from '../atoms/Link'
+import { useTranslation } from 'react-i18next'
 import {
   getColorFromPoliticalAffiliation,
   getCouncillorMeta,
@@ -22,6 +23,8 @@ const Councillor = props => {
   const IMAGE_HOST_URI =
     process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'
   const meta = getCouncillorMeta(councillor)
+  const { t } = useTranslation()
+  const [imageLoadError, setImageLoadError] = useState(true)
 
   return (
     <UnstyledNavLink
@@ -55,8 +58,12 @@ const Councillor = props => {
               src={`${IMAGE_HOST_URI}/static/images/avatar/${councillor.person.uuid}.jpg`}
               imgProps={{
                 onError: e => {
-                  e.target.src =
-                    IMAGE_HOST_URI + '/static/images/avatar/default.png'
+                  // wingkwong: avoid infinite callbacks if fallback image fails
+                  if (imageLoadError) {
+                    setImageLoadError(false)
+                    e.target.src =
+                      IMAGE_HOST_URI + '/static/images/avatar/default.png'
+                  }
                 },
               }}
             />
@@ -67,7 +74,10 @@ const Councillor = props => {
             </Typography>
             <Box display="flex">
               <Box pr={1} alignSelf="flex-end">
-                <Typography variant="body2">報稱政治聯繫</Typography>
+                <Typography variant="body2">
+                  {/* 報稱政治聯繫 */}
+                  {t('reportedPoliticalAffiliation')}
+                </Typography>
               </Box>
               <Box>
                 <Typography variant="body1">
@@ -80,7 +90,8 @@ const Councillor = props => {
               <Box pr={1} alignSelf="flex-end">
                 <Typography variant="body2">
                   {meta.lastParticipated.year}
-                  選舉結果
+                  {/* 選舉結果 */}
+                  {t('electionResults')}
                 </Typography>
               </Box>
               <Box>

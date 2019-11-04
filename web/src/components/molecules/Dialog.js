@@ -10,13 +10,13 @@ import React from 'react'
 
 const StyledDialogTitle = styled(MuiDialogTitle)`
   && {
-    padding: 16px;
+    padding: 16px 16px 8px;
     min-width: 50%;
   }
 `
 const StyledDialogContent = styled(MuiDialogContent)`
   && {
-    padding: 16px;
+    padding: 8px 16px 16px;
     min-width: 50%;
   }
 `
@@ -60,7 +60,7 @@ export const PlainDialog = props => {
         {title}
       </DialogTitle>
       <DialogContent>{content}</DialogContent>
-      <DialogActions>{actions}</DialogActions>
+      {actions && <DialogActions>{actions}</DialogActions>}
     </Dialog>
   )
 }

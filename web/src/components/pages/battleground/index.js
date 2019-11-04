@@ -25,6 +25,7 @@ import {
   getAllFeaturesFromPoint,
 } from 'utils/features'
 import DCCAElectionHistories from 'components/templates/DCCAElectionHistories'
+import { withTranslation } from 'react-i18next'
 
 const groupVoteStat = voteStats => {
   const data = _.groupBy(voteStats, stat => stat.subtype)
@@ -123,6 +124,7 @@ class BattleGroundPage extends Component {
         params: { year = 2019, code },
       },
       location: { search },
+      t,
     } = this.props
 
     // Preset Tab for election history by matching query ?year=<year>
@@ -210,7 +212,10 @@ class BattleGroundPage extends Component {
                 <ToggleMapButton
                   onClick={() => this.setState({ showMap: !showMap })}
                 >
-                  {showMap ? '隱藏地圖' : '顯示地圖'}
+                  {/* {showMap ? '隱藏地圖' : '顯示地圖'} */}
+                  {showMap
+                    ? t('battleground.button.hide')
+                    : t('battleground.button.show')}
                   {showMap ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                 </ToggleMapButton>
                 <Collapse in={showMap}>
@@ -230,9 +235,13 @@ class BattleGroundPage extends Component {
                 {DCCAStatus && (
                   <Container>
                     <Typography variant="h6">
-                      {DCCAStatus.tag === '改劃界'
-                        ? `此選區於2019年更改劃界`
-                        : `此選區為2019年${DCCAStatus.tag}`}
+                      {DCCAStatus.tag ===
+                      // '改劃界'
+                      t('battleground.alert.text1')
+                        ? // ? `此選區於2019年更改劃界`
+                          t('battleground.alert.text2')
+                        : // : `此選區為2019年${DCCAStatus.tag}`}
+                          `${t('battleground.alert.text3')} ${DCCAStatus.tag}`}
                     </Typography>
                   </Container>
                 )}
@@ -241,7 +250,10 @@ class BattleGroundPage extends Component {
                   presetTabIndex={presetTabIndex}
                 />
                 <PlainCard>
-                  <Typography variant="h6">現任區議員</Typography>
+                  <Typography variant="h6">
+                    {/* 現任區議員 */}
+                    {t('currentTerm.councilor')}
+                  </Typography>
                   {previousDistricts.length > 1 && (
                     <Typography variant="h6">{`此區與上屆${previousDistricts.length}個選區重疊`}</Typography>
                   )}
@@ -262,4 +274,4 @@ class BattleGroundPage extends Component {
   }
 }
 
-export default BattleGroundPage
+export default withTranslation()(BattleGroundPage)

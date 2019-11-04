@@ -60,7 +60,7 @@ const Profile = () => {
           <meta property="og:image:height" content="980" />
           <meta property="og:url" content={url} />
           <meta property="article:section" content="候選人資料｜選區分界地圖｜選情數據分析" />
-          <meta property="article:tag" content={`${displayName}, 政治, 區議會, 立法會, 林鄭月娥, 議員, 選舉, 候選人, 選區, 分界, 地圖, 選情, 數據, 分析`} />
+          <meta property="article:tag" content={`${displayName}, vote4hk, vote4, 投票指南, 區議會選舉, 區議會, 區選, 選舉, 2019 dc, district council election, 掌心雷, 候選人, 選區, 分界, 地圖, 選情, 數據, 分析`} />
         </Head>
         <div>
           {displayName}

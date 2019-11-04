@@ -5,8 +5,11 @@ import _ from 'lodash'
 import { QUERY_CONSTITUENCY_STATS } from 'queries/gql'
 import { Typography } from '@material-ui/core'
 import { COLORS } from 'ui/theme'
+import { useTranslation } from 'react-i18next'
 
 export default props => {
+  const { t } = useTranslation()
+
   const [filterIndex] = useState(0)
 
   const getDataForChat = voteStats => {
@@ -149,10 +152,14 @@ export default props => {
           // transform the data to desire format
           const chartData = getDataForChat(transformedData)
           const meta = getMeta(transformedData)
+          //TODO: i18n
           return (
             <>
               <Typography variant="h2">
-                選民人數增加{_.round(meta.increased * 100, 2)}%
+                {/* 選民人數增加 */}
+                {t('districtNewVoterchartContainer.text1', {
+                  n: _.round(meta.increased * 100, 2),
+                })}
               </Typography>
               <Typography variant="h4">
                 最大增幅組別：{meta.mostIncreasedGroup.age}歲的

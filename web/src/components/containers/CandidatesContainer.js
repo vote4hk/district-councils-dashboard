@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Query } from 'react-apollo'
 import { QUERY_GET_CANDIDATES } from 'queries/gql'
 import { PeopleAvatar } from 'components/atoms/Avatar'
@@ -9,6 +9,7 @@ import { SeperatedColumns } from 'components/atoms/Columns'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
 import { Box, Typography, Grid } from '@material-ui/core'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import {
   getColorFromCamp,
   getConstituencyTagsByCandidateCamps,
@@ -85,6 +86,8 @@ const CandidateName = styled(Typography)`
 
 const CandidatesContainer = props => {
   const { code, year } = props
+  const { t } = useTranslation()
+  const [imageLoadError, setImageLoadError] = useState(true)
 
   return (
     <Query
@@ -107,7 +110,8 @@ const CandidatesContainer = props => {
                 <Rows>
                   <SeperatedColumns>
                     <Typography variant="h6" gutterBottom>
-                      已接獲提名
+                      {/* 已接獲提名 */}
+                      {t('candidateContainer.title')}
                     </Typography>
                     {tags.length > 0 && (
                       <TagContainer>
@@ -150,9 +154,13 @@ const CandidatesContainer = props => {
                                 src={`${IMAGE_HOST_URI}/static/images/avatar/${candidate.person.uuid}.jpg`}
                                 imgProps={{
                                   onError: e => {
-                                    e.target.src =
-                                      IMAGE_HOST_URI +
-                                      '/static/images/avatar/default.png'
+                                    // wingkwong: avoid infinite callbacks if fallback image fails
+                                    if (imageLoadError) {
+                                      setImageLoadError(false)
+                                      e.target.src =
+                                        IMAGE_HOST_URI +
+                                        '/static/images/avatar/default.png'
+                                    }
                                   },
                                 }}
                                 opacity={
@@ -179,7 +187,8 @@ const CandidatesContainer = props => {
                                   <HtmlTooltip
                                     disableFocusListener
                                     disableTouchListener
-                                    text="侯選人政治立場未明"
+                                    // text="侯選人政治立場未明"
+                                    text={t('candidate.noPoliticalAffiliation')}
                                     placement="bottom"
                                     size={21}
                                   />
@@ -192,18 +201,18 @@ const CandidatesContainer = props => {
 
                               <Typography variant="body2">
                                 {candidate.political_affiliation ||
-                                  '未報稱政治聯繫'}
+                                  // '未報稱政治聯繫'}{' '}
+                                  t('candidate.noPoliticalAffiliation')}
                               </Typography>
 
                               {candidate.nominate_status === 'disqualified' && (
                                 <Typography variant="body2">
-                                  取消資格
+                                  {/* 取消資格 */}
+                                  {t('candidate.nominateStatus.disqualified')}
                                 </Typography>
                               )}
                               {candidate.nominate_status === 'suspended' && (
-                                <Typography variant="body2">
-                                  宣布棄選
-                                </Typography>
+                                <Typography variant="body2"></Typography>
                               )}
                             </Candidate>
                           </UnstyledNavLink>

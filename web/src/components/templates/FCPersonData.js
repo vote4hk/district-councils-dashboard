@@ -9,6 +9,7 @@ import axios from 'axios'
 import PersonEvent from 'components/molecules/PersonEvent'
 import Typography from '@material-ui/core/Typography'
 import { DefaultLink } from 'components/atoms/Link'
+import { useTranslation } from 'react-i18next'
 
 const Container = styled.div`
   && {
@@ -49,6 +50,7 @@ const FCPersonData = props => {
     fetchData()
   }, [])
   const fcUri = `https://hkfactcheck.io/person/${fcUuid}/${name}`
+  const { t } = useTranslation()
 
   return (
     <>
@@ -57,7 +59,8 @@ const FCPersonData = props => {
           <Typography variant="body">
             以下資料取自
             <DefaultLink target="_blank" href={fcUri}>
-              選區事實處
+              {/* 選區事實處 */}
+              {t('thirdParty.dfo')}
             </DefaultLink>
             ，如有補充或錯漏，請即
             <DefaultLink target="_blank" href={fcUri}>
@@ -69,7 +72,8 @@ const FCPersonData = props => {
           <Typography variant="body">
             此人未有事件記錄，請即到
             <DefaultLink target="_blank" href={fcUri}>
-              選區事實處
+              {/* 選區事實處 */}
+              {t('thirdParty.dfo')}
             </DefaultLink>
             報料！
           </Typography>
@@ -87,7 +91,8 @@ const FCPersonData = props => {
                 win.focus()
               }}
             >
-              更多資料及往績
+              {/* 更多資料及往績 */}
+              {t('fcPersonData.paragraph3')}
             </StyledButton>
           </Container>
         )}
