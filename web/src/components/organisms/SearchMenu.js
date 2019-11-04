@@ -75,15 +75,6 @@ const SearchMenu = props => {
         <Typography
           variant="h5"
           color="secondary"
-          onClick={() => goToPage('/about-us')}
-        >
-          我們是誰？
-        </Typography>
-      </LeftMargin>
-      <LeftMargin>
-        <Typography
-          variant="h5"
-          color="secondary"
           onClick={() =>
             (window.location.href =
               'https://docs.google.com/forms/u/1/d/e/1FAIpQLSdXtbdry3w8hkmZuN0MJaj2CP2X3RUUnCTWLnOujsfx1pHDrw/viewform?usp=send_form')
@@ -93,6 +84,18 @@ const SearchMenu = props => {
           反映意見
         </Typography>
       </LeftMargin>
+
+      <LeftMargin>
+        <Typography
+          variant="h5"
+          color="primary"
+          onClick={() => goToPage('/about-us')}
+        >
+          {/* 我們是誰？ */}
+          {t('about.support_us')}
+        </Typography>
+      </LeftMargin>
+
       <LeftMargin>
         <SearchTab />
       </LeftMargin>

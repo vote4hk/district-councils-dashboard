@@ -2,7 +2,7 @@ import React from 'react'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
 import Divider from '@material-ui/core/Divider'
-import { UnstyledLink } from 'components/atoms/Link'
+import { UnstyledLink, DefaultLink } from 'components/atoms/Link'
 import Columns from 'components/atoms/Columns'
 import { withRouter } from 'react-router-dom'
 import { Disclaimer } from 'components/templates/Disclaimer'
@@ -47,14 +47,14 @@ function Footer(props) {
         <StyledDivider />
         <Columns>
           <LinkBox>
-            <StyledFooterLink
+            <DefaultLink
               onClick={
                 () => props.history.push(`/about-us`)
                 // console.log(props)
               }
             >
-              關於我們
-            </StyledFooterLink>
+              {t('about.support_us')}
+            </DefaultLink>
           </LinkBox>
           <LinkBox>
             <StyledFooterLink
