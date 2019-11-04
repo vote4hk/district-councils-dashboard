@@ -110,6 +110,25 @@ withLanguage(district.name_en, district.name_zh)
 // which can be found either in the same file or in web/src/queries/gql.js
 ````
 
+For interpolation, surround the dynamic value by curly brackets in ``translation.json``
+````json
+{
+    "districtNewVoterchartContainer.text1": "Voters increased by {{ n }}%"
+}
+````
+
+and pass an object with the key defined in curly brackets and the dynamic value in the second parameter
+````javascript
+// Example: DistrictNewVoterChartContainer.js
+<Typography variant="h2">
+    {
+        t('districtNewVoterchartContainer.text1', {
+            n: _.round(meta.increased * 100, 2)
+        })
+    }
+</Typography>
+````
+
 ## Reference
 
 [立場區議會選舉專頁 - 2015](https://dce2015.thestandnews.com)  
