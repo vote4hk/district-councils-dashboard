@@ -17,6 +17,7 @@ import { COLORS } from 'ui/theme'
 import { Tag } from 'components/atoms/Tag'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
 import { withTranslation } from 'react-i18next'
+import Columns from 'components/atoms/Columns'
 import {
   getDistrictOverviewUriFromTag,
   getConstituencyUriFromTag,
@@ -148,6 +149,17 @@ const PersonHighlightContainer = styled(FlexRowContainer)`
     text-align: left;
   }
 `
+
+const PlatformContainer = styled(Box)`
+  && {
+  }
+`
+const PlatformHeader = styled(Box)`
+  && {
+    padding: 0 16px 8px;
+  }
+`
+
 const BreadcrumbsContainer = styled(Box)`
   && {
     flex-grow: 1;
@@ -512,6 +524,26 @@ class ProfilePage extends Component {
               {person.description && (
                 <PersonDescriptionParagraph text={person.description} />
               )}
+              <PlatformContainer>
+                <PlatformHeader>
+                  <Typography variant="h6">
+                    {t('introduction_to_candidates')}
+                    <HtmlTooltip
+                      disableFocusListener
+                      disableTouchListener
+                      text={t('introduction_to_candidates.tips')}
+                      placement="bottom"
+                      size={21}
+                    />
+                  </Typography>
+                </PlatformHeader>
+                <Columns>
+                  <img
+                    src={`${homeUrl}/static/images/platform/${person.uuid}.jpg`}
+                    width="100%"
+                  />
+                </Columns>
+              </PlatformContainer>
               <ScrollableTabs
                 titles={titles}
                 indicatorcolor={
