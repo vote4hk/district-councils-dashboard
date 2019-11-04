@@ -302,7 +302,7 @@ export const QUERY_GET_CONSTITUENCY_CAMP_DATA = gql`
 
 export const QUERY_GET_NOMINATION_SUMMARY = gql`
   query {
-    dcd_constituencies(where: { year: { _eq: 2019 } }) {
+    c2019: dcd_constituencies(where: { year: { _eq: 2019 } }) {
       code
       name_en
       name_zh
@@ -311,6 +311,17 @@ export const QUERY_GET_NOMINATION_SUMMARY = gql`
         nominated_at
         nominate_status
         election_type
+      }
+      tags {
+        tag
+      }
+    }
+
+    c2015: dcd_constituencies(where: { year: { _eq: 2015 } }) {
+      code
+      name_zh
+      candidates {
+        votes
       }
     }
   }
