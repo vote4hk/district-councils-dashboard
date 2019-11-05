@@ -545,6 +545,7 @@ class ProfilePage extends Component {
                       <img
                         src={`${homeUrl}/static/images/platform/${person.uuid}.jpg`}
                         width="100%"
+                        height="auto"
                         alt={''} // TODO: use candidate.candi_intro for SEO
                       />
                     </Columns>
