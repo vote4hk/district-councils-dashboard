@@ -144,11 +144,12 @@
   "fcPersonData.paragraph1.segment1": "以下資料取自選區事實處，如有補充或錯漏，請即報料",
   "fcPersonData.paragraph2.segment1": "此人未有事件記錄，請即到選區事實處報料",
   "fcPersonData.paragraph3": "更多資料及往績",
-  "summary.tag.text1": "民主撞區",
-  "summary.tag.text2": "建制撞區",
-  "summary.tag.text3": "民主派撞區 - {{n}}區",
-  "summary.tag.text4": "建制派撞區 - {{n}}區",
+  "summary.tag.demo_clash": "民主派撞區 - {{n}}區",
+  "summary.tag.estab_clash": "建制派撞區 - {{n}}區",
   "show": "顯示:",
   "electoral_messages": "選舉信息",
-  "electoral_messages.tips": "以下簡介由候選人向選舉管理委員會提供，所載有關候選人的資料、意見及選舉信息與本網站無關。"
+  "electoral_messages.tips": "以下簡介由候選人向選舉管理委員會提供，所載有關候選人的資料、意見及選舉信息與本網站無關。",
+  "summary.tag.clash": "撞區 - {{n}}區",
+  "summary.tag.switch": "有機會翻盤 - {{n}}區",
+  "summary.tag.uncontested": "上屆自動當選 - {{n}}區"
 }

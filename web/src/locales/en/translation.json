@@ -144,11 +144,12 @@
   "fcPersonData.paragraph1.segment1": "The following information is taken from the Constituency Fact Office. If there are any additions or omissions, please report the information immediately.",
   "fcPersonData.paragraph2.segment1": "This person has no incident record. Please report it to the Constituency Fact Division immediately.",
   "fcPersonData.paragraph3": "More Information and Past Results",
-  "summary.tag.text1": "Two or more pro-democratic camp candidates running in the same constituency",
-  "summary.tag.text2": "Two or more pro-establishment camp candidates running in the same constituency",
-  "summary.tag.text3": "Two or more pro-democratic camp candidates running in {{n}} constituency",
-  "summary.tag.text4": "Two or more pro-establishment camp candidates running in {{n}} constituency",
+  "summary.tag.demo_clash": "Two or more pro-democratic camp candidates running in {{n}} constituency",
+  "summary.tag.estab_clash": "Two or more pro-establishment camp candidates running in {{n}} constituency",
   "show": "Show:",
   "electoral_messages": "Electoral messages",
-  "electoral_messages.tips": "The contents of the Introduction to Candidates pertaining to the candidates' personal information, views and electoral messages are wholly provided by the candidates. This website takes no responsibility whatsoever for the same."
+  "electoral_messages.tips": "The contents of the Introduction to Candidates pertaining to the candidates' personal information, views and electoral messages are wholly provided by the candidates. This website takes no responsibility whatsoever for the same.",
+  "summary.tag.clash": "Two or more same camp candidates running in the same constituency - {{n}} districts",
+  "summary.tag.switch": "有機會翻盤 {{n}}區",
+  "summary.tag.uncontested": "Uncontested in last election - {{n}} districts"
 }

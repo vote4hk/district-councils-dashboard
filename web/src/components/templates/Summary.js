@@ -48,6 +48,7 @@ const SummaryExpansionPanelDetails = styled(ExpansionPanelDetails)`
 
 function ControlledExpansionPanels(props) {
   const [expanded, setExpanded] = React.useState(false)
+  const { t } = useTranslation()
 
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false)
@@ -67,13 +68,17 @@ function ControlledExpansionPanels(props) {
           id="panel1bh-header"
         >
           <Typography variant="h5" gutterBottom>
-            撞區 - {demo_clash.length + estab_clash.length}區
+            {/* 撞區 - {demo_clash.length + estab_clash.length}區 */}
+            {t('summary.tag.clash', {
+              n: demo_clash.length + estab_clash.length,
+            })}
           </Typography>
         </SummaryExpansionPanelSummary>
         <SummaryExpansionPanelDetails style={{ flexDirection: 'column' }}>
           <SeperatedColumns>
             <Typography variant="h6" gutterBottom>
-              民主派撞區 - {demo_clash.length}區
+              {/* 民主派撞區 - {demo_clash.length}區 */}
+              {t('summary.tag.demo_clash', { n: demo_clash.length })}
             </Typography>
           </SeperatedColumns>
           <Columns>
@@ -91,7 +96,8 @@ function ControlledExpansionPanels(props) {
 
           <SeperatedColumns>
             <Typography variant="h6" gutterBottom>
-              建制派撞區 - {estab_clash.length}區
+              {/* 建制派撞區 - {estab_clash.length}區 */}
+              {t('summary.tag.estab_clash', { n: estab_clash.length })}
             </Typography>
           </SeperatedColumns>
           <Columns>
@@ -118,7 +124,8 @@ function ControlledExpansionPanels(props) {
           id="panel2bh-header"
         >
           <Typography variant="h5" gutterBottom>
-            可能翻盤 - {margin_win.length}區
+            {/* 可能翻盤 - {margin_win.length}區 */}
+            {t('summary.tag.switch', { n: margin_win.length })}
           </Typography>
         </SummaryExpansionPanelSummary>
         <SummaryExpansionPanelDetails>
@@ -146,7 +153,8 @@ function ControlledExpansionPanels(props) {
           id="panel3bh-header"
         >
           <Typography variant="h5" gutterBottom>
-            上屆自動當選 - {auto_win.length}區
+            {/* 上屆自動當選 - {auto_win.length}區 */}
+            {t('summary.tag.uncontested', { n: auto_win.length })}
           </Typography>
         </SummaryExpansionPanelSummary>
         <SummaryExpansionPanelDetails>
