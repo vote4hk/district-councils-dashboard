@@ -531,11 +531,11 @@ class ProfilePage extends Component {
                   <PlatformContainer>
                     <PlatformHeader>
                       <Typography variant="h6">
-                        {t('introduction_to_candidates')}
+                        {t('electoral_messages')}
                         <HtmlTooltip
                           disableFocusListener
                           disableTouchListener
-                          text={t('introduction_to_candidates.tips')}
+                          text={t('electoral_messages.tips')}
                           placement="bottom"
                           size={21}
                         />
