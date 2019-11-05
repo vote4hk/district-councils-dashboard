@@ -117,6 +117,29 @@ const PersonName = styled.div`
   }
 `
 
+const ImgTag = styled.img`
+  && {
+    display: block;
+    width: 100%;
+  }
+`
+
+const CandidateNumber = styled(Box)`
+  && {
+    position: relative;
+    margin-bottom: -18px !important;
+    top: -22px;
+    left: 2px;
+    border-radius: 50%;
+    font-weight: 700;
+    width: ${props => props.dimension};
+    height: ${props => props.dimension};
+    background-color: ${props => COLORS.camp[props.camp].background};
+    color: ${props => COLORS.camp[props.camp].text};
+    text-align: center;
+  }
+`
+
 const ElectionStatus = styled(Box)`
   && {
     display: flex;
@@ -466,6 +489,14 @@ class ProfilePage extends Component {
                       },
                     }}
                   />
+                  {person.candidates[0].candidate_number && (
+                    <CandidateNumber
+                      dimension="18px"
+                      camp={getColorFromCamp(person.candidates[0].camp)}
+                    >
+                      {person.candidates[0].candidate_number}
+                    </CandidateNumber>
+                  )}
                 </CandidateAvatorContainer>
                 <Box>
                   <PersonName
@@ -542,10 +573,8 @@ class ProfilePage extends Component {
                       </Typography>
                     </PlatformHeader>
                     <Columns>
-                      <img
+                      <ImgTag
                         src={`${homeUrl}/static/images/platform/${person.uuid}.jpg`}
-                        width="100%"
-                        height="auto"
                         alt={''} // TODO: use candidate.candi_intro for SEO
                       />
                     </Columns>
