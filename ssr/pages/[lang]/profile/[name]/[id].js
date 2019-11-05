@@ -1,9 +1,9 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import withData from '../../../lib/apollo'
-import ProfileMeta from '../../../components/meta/profile'
+import withData from '../../../../lib/apollo'
+import ProfileMeta from '../../../../components/meta/profile'
 import { useQuery } from '@apollo/react-hooks'
-import { QUERY_FETCH_PROFILE } from '../../../lib/gql'
+import { QUERY_FETCH_PROFILE } from '../../../../lib/gql'
 
 const Profile = () => {
   const router = useRouter()
