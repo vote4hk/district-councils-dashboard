@@ -20,7 +20,7 @@ const Container = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding-bottom: 32px;
+    padding: 0 16px 32px;
   }
 `
 
@@ -36,7 +36,7 @@ const StyledLoadingButton = styled(LoadingButton)`
   && {
     position: absolute;
     width: 100px;
-    right: 8px;
+    right: 16px;
     bottom: 0px;
     padding: 0px;
     background-color: ${COLORS.main.primary};
@@ -304,7 +304,7 @@ const DistrictCampCompareChartContainer = props => {
             <br />
             <PredictionChartHeader>
               <Text variant="h5">
-                {predictEnabled ? '2019選舉結果模擬' : '現時陣營分佈'}
+                {predictEnabled ? '模擬2019選舉結果' : '現時陣營分布'}
               </Text>
               <br />
               <Text variant="body2">
