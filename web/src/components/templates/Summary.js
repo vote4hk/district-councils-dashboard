@@ -114,7 +114,7 @@ function ControlledExpansionPanels(props) {
           </Columns>
         </SummaryExpansionPanelDetails>
       </SummaryExpansionPanel>
-      <SummaryExpansionPanel
+      {/* <SummaryExpansionPanel
         expanded={expanded === 'panel2'}
         onChange={handleChange('panel2')}
       >
@@ -124,7 +124,6 @@ function ControlledExpansionPanels(props) {
           id="panel2bh-header"
         >
           <Typography variant="h5" gutterBottom>
-            {/* 可能翻盤 - {margin_win.length}區 */}
             {t('summary.tag.switch', { n: margin_win.length })}
           </Typography>
         </SummaryExpansionPanelSummary>
@@ -142,8 +141,8 @@ function ControlledExpansionPanels(props) {
             ))}
           </Columns>
         </SummaryExpansionPanelDetails>
-      </SummaryExpansionPanel>
-      <SummaryExpansionPanel
+      </SummaryExpansionPanel> */}
+      {/* <SummaryExpansionPanel
         expanded={expanded === 'panel3'}
         onChange={handleChange('panel3')}
       >
@@ -153,7 +152,6 @@ function ControlledExpansionPanels(props) {
           id="panel3bh-header"
         >
           <Typography variant="h5" gutterBottom>
-            {/* 上屆自動當選 - {auto_win.length}區 */}
             {t('summary.tag.uncontested', { n: auto_win.length })}
           </Typography>
         </SummaryExpansionPanelSummary>
@@ -171,7 +169,7 @@ function ControlledExpansionPanels(props) {
             ))}
           </Columns>
         </SummaryExpansionPanelDetails>
-      </SummaryExpansionPanel>
+      </SummaryExpansionPanel> */}
     </div>
   )
 }
