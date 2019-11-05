@@ -177,7 +177,6 @@ function ControlledExpansionPanels(props) {
 }
 
 const Summary = props => {
-  const { t } = useTranslation()
   return (
     <Query query={QUERY_GET_NOMINATION_SUMMARY}>
       {({ loading, error, data }) => {
