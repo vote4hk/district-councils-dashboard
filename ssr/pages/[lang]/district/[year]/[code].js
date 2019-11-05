@@ -1,12 +1,12 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import withData from '../../../lib/apollo'
-import DistrictMeta from '../../../components/meta/district'
-import ConstituencyMeta from '../../../components/meta/constituency'
+import withData from '../../../../lib/apollo'
+import DistrictMeta from '../../../../components/meta/district'
+import ConstituencyMeta from '../../../../components/meta/constituency'
 import {
   QUERY_FETCH_CONSTITUENCY,
   QUERY_FETCH_DISTRICT,
-} from '../../../lib/gql'
+} from '../../../../lib/gql'
 import { useQuery } from '@apollo/react-hooks'
 
 const District = () => {
