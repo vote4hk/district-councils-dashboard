@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box'
 import { DefaultLink } from 'components/atoms/Link'
 import Columns, { SeperatedColumns } from 'components/atoms/Columns'
 import { getConstituencyTagsByCandidateCamps, withLanguage } from 'utils/helper'
+import { useTranslation } from 'react-i18next'
 
 const Container = styled(Box)`
   && {
@@ -24,6 +25,7 @@ const FlexLink = styled(DefaultLink)`
   }
 `
 const Summary = props => {
+  const { t } = useTranslation()
   return (
     <Query query={QUERY_GET_NOMINATION_SUMMARY}>
       {({ loading, error, data }) => {
@@ -60,7 +62,8 @@ const Summary = props => {
 
                 <SeperatedColumns>
                   <Typography variant="h6" gutterBottom>
-                    民主派撞區 - {demo_clash.length}區
+                    {/* 民主派撞區 - {demo_clash.length}區 */}
+                    {t('summary.tag.text3', { n: demo_clash.length })}
                   </Typography>
                 </SeperatedColumns>
                 <Columns>
@@ -78,7 +81,8 @@ const Summary = props => {
 
                 <SeperatedColumns>
                   <Typography variant="h6" gutterBottom>
-                    建制派撞區 - {estab_clash.length}區
+                    {/* 建制派撞區 - {estab_clash.length}區 */}
+                    {t('summary.tag.text4', { n: estab_clash.length })}
                   </Typography>
                 </SeperatedColumns>
                 <Columns>
