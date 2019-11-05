@@ -54,7 +54,7 @@ function ControlledExpansionPanels(props) {
     setExpanded(isExpanded ? panel : false)
   }
 
-  const { demo_clash, estab_clash, auto_win, margin_win } = props.tagsData
+  const { demo_clash, estab_clash } = props.tagsData // auto_win, margin_win
 
   return (
     <div>
