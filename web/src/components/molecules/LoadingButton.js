@@ -25,11 +25,12 @@ const WhiteText = styled(Text)`
 `
 
 export default function LoadingButton(props) {
-  const { label, isLoading, onClick, className } = props
+  const { label, isLoading, onClick, className, size } = props
 
   return (
     <>
       <Button
+        size={size}
         variant="outlined"
         className={className}
         disabled={isLoading}
