@@ -526,27 +526,30 @@ class ProfilePage extends Component {
               {person.description && (
                 <PersonDescriptionParagraph text={person.description} />
               )}
-              <PlatformContainer>
-                <PlatformHeader>
-                  <Typography variant="h6">
-                    {t('introduction_to_candidates')}
-                    <HtmlTooltip
-                      disableFocusListener
-                      disableTouchListener
-                      text={t('introduction_to_candidates.tips')}
-                      placement="bottom"
-                      size={21}
-                    />
-                  </Typography>
-                </PlatformHeader>
-                <Columns>
-                  <img
-                    src={`${homeUrl}/static/images/platform/${person.uuid}.jpg`}
-                    width="100%"
-                    alt={''} // TODO: use candidate.candi_intro for SEO
-                  />
-                </Columns>
-              </PlatformContainer>
+              {lastElection.year === 2019 &&
+                lastElection.election_type === 'ordinary' && (
+                  <PlatformContainer>
+                    <PlatformHeader>
+                      <Typography variant="h6">
+                        {t('introduction_to_candidates')}
+                        <HtmlTooltip
+                          disableFocusListener
+                          disableTouchListener
+                          text={t('introduction_to_candidates.tips')}
+                          placement="bottom"
+                          size={21}
+                        />
+                      </Typography>
+                    </PlatformHeader>
+                    <Columns>
+                      <img
+                        src={`${homeUrl}/static/images/platform/${person.uuid}.jpg`}
+                        width="100%"
+                        alt={''} // TODO: use candidate.candi_intro for SEO
+                      />
+                    </Columns>
+                  </PlatformContainer>
+                )}
               <ScrollableTabs
                 titles={titles}
                 indicatorcolor={
