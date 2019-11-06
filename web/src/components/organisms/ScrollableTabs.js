@@ -14,12 +14,7 @@ const StyledAppBar = styled(AppBar)`
     .MuiTabs-indicator {
       background: ${props => props.indicatorcolor || 'black'};
     }
-  }
-`
-
-const StyledTab = styled(Tab)`
-  && {
-    box-shadow: 1px 2px #ccc;
+    border-bottom: 1px solid #e8e8e8;
   }
 `
 
@@ -79,7 +74,7 @@ export default function ScrollableTabs(props) {
           scrollButtons="auto"
         >
           {titles.map((title, index) => (
-            <StyledTab
+            <Tab
               label={title}
               id={`scrollable-auto-tab-${index}`}
               key={index}

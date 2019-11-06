@@ -591,11 +591,7 @@ class ProfilePage extends Component {
                 )}
               <ScrollableTabs
                 titles={titles}
-                indicatorcolor={
-                  COLORS.camp[
-                    getColorFromCamp(lastElection && lastElection.camp)
-                  ].background
-                }
+                indicatorcolor={COLORS.main.primary}
                 variant="scrollable"
               >
                 {person.fc_uuid && (
