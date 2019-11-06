@@ -17,7 +17,7 @@ import { COLORS } from 'ui/theme'
 import { Tag } from 'components/atoms/Tag'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
 import { withTranslation } from 'react-i18next'
-import Columns from 'components/atoms/Columns'
+
 import {
   getDistrictOverviewUriFromTag,
   getConstituencyUriFromTag,
@@ -182,6 +182,14 @@ const PlatformContainer = styled(Box)`
 const PlatformHeader = styled(Box)`
   && {
     padding: 0 16px 8px;
+  }
+`
+
+const PlatformImage = styled(Box)`
+  && {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 `
 
@@ -572,12 +580,12 @@ class ProfilePage extends Component {
                         />
                       </Typography>
                     </PlatformHeader>
-                    <Columns>
+                    <PlatformImage>
                       <ImgTag
                         src={`${homeUrl}/static/images/platform/${person.uuid}.jpg`}
                         alt={''} // TODO: use candidate.candi_intro for SEO
                       />
-                    </Columns>
+                    </PlatformImage>
                   </PlatformContainer>
                 )}
               <ScrollableTabs
