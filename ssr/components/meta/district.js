@@ -1,28 +1,34 @@
 import React from 'react'
 import Head from 'next/head'
 import { ArticleJsonLd, NextSeo } from 'next-seo'
+import meta from '../../lib/meta'
 
 const DistrictMeta = (props) => {
   const { year, code, lang, loading, error, data } = props
-
-  const url = lang === 'en'
-    ? `https://vote4.hk/en/district/${year}/${code}`
-    : `https://vote4.hk/district/${year}/${code}`
 
   if (!loading) {
     const district = data.dcd_districts.length > 0
       ? data.dcd_districts[0]
       : {}
-    const displayName = lang === 'en'
+    const districtName = lang === 'en'
       ? district.dc_name_en
       : district.dc_name_zh
+    const areaName = lang === 'en'
+      ? district.lc_name_en
+      : district.lc_name_zh
 
-    const metaSiteMap = 'Vote4HK 區議會投票指南 ✋🏻💜⚡'
-    const metaTitle = `${displayName}｜Vote4HK 區議會投票指南 ✋🏻💜⚡`
-    const metaDescription = `了解區選最新消息，選區背景資料丶候選人政綱及表現`
-    const metaKeyword = `${displayName}, vote4hk, vote4, 投票指南, 區議會選舉, 區議會, 區選, 選舉, 2019 dc, district council election, 掌心雷, 候選人, 選區, 分界, 地圖, 選情, 數據, 分析`
-    const metaImageUrl = 'https://vote4.hk/og-image.png'
-    const metaArticleSection = '候選人資料｜選區分界地圖｜選情數據分析'
+    const constituenciesNames = lang === 'en'
+      ? district.constituencies.map(c => c.name_en).slice(0, 5).join('、')
+      : district.constituencies.map(c => c.name_zh).slice(0, 5).join('、')
+
+    const canonicalUrl = meta.formatDistrictCanonicalUrl(year, code, lang)
+    const metaSiteMap = meta.formatSiteName()
+    const metaTitle = meta.formatDistrictTitle(districtName, areaName)
+    const metaDescription = meta.formatDistrictDescription(districtName,
+      areaName, constituenciesNames)
+    const metaKeyword = meta.formatKeyword(districtName)
+    const metaImageUrl = meta.formatImageUrl()
+    const metaArticleSection = meta.formatArticleSection()
 
     return (
       <div>
@@ -33,7 +39,7 @@ const DistrictMeta = (props) => {
         <NextSeo
           title={metaTitle}
           description={metaDescription}
-          canonical={url}
+          canonical={canonicalUrl}
           additionalMetaTags={
             [
               {
@@ -43,7 +49,7 @@ const DistrictMeta = (props) => {
             ]
           }
           openGraph={{
-            url: url,
+            url: canonicalUrl,
             title: metaTitle,
             description: metaDescription,
             type: 'website',
@@ -66,7 +72,7 @@ const DistrictMeta = (props) => {
           }}
         />
         <ArticleJsonLd
-          url={url}
+          url={canonicalUrl}
           title={metaTitle}
           images={[
             metaImageUrl,
