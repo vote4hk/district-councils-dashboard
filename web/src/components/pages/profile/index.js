@@ -9,7 +9,7 @@ import HtmlParagraph from 'components/atoms/HtmlParagraph'
 import ScrollableTabs from 'components/organisms/ScrollableTabs'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import { getColorFromCamp } from 'utils/helper'
+import { getColorFromCamp, withLanguage } from 'utils/helper'
 import CouncillorMeetingAttendanceContainer from 'components/containers/CouncillorMeetingAttendanceContainer'
 import PersonElectionHistoriesContainer from 'components/containers/PersonElectionHistoriesContainer'
 import FCPersonData from 'components/templates/FCPersonData'
@@ -69,8 +69,10 @@ const GET_PEOPLE_PROFILE = gql`
         candidate_number
         is_won
         fb_id
-        occupation
-        political_affiliation
+        occupation_zh
+        occupation_en
+        political_affiliation_zh
+        political_affiliation_en
         age
         cacode
         camp
@@ -400,7 +402,10 @@ class ProfilePage extends Component {
             // tips: '候選人：取自最近選舉的候選人簡介<br />議員：取自區議會網頁<br />來源綜合媒體報道',
             tips: t('personHighlight.occupation.tips'),
             text:
-              lastElection.occupation_zh ||
+              withLanguage(
+                lastElection.occupation_zh,
+                lastElection.occupation_en
+              ) ||
               (currentTerm && currentTerm.career) ||
               '-',
           })

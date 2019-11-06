@@ -53,8 +53,10 @@ query fetch_user($uuid: uuid!) {
                     dc_name_en
                 }
             }
-            occupation
-            political_affiliation
+            occupation_zh
+            occupation_en
+            political_affiliation_zh
+            political_affiliation_en
         }
     }
 }`
