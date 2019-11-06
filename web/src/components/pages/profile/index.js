@@ -372,16 +372,16 @@ class ProfilePage extends Component {
 
           const personHighlight = []
 
-          if (person.estimated_yob) {
-            personHighlight.push({
-              xs: 2,
-              // title: '年齡',
-              title: t('personHighlight.age.title'),
-              // tips: '根據候選人簡介的年齡推算',
-              tips: t('personHighlight.age.tips'),
-              text: `${2019 - person.estimated_yob}歲`,
-            })
-          }
+          personHighlight.push({
+            xs: 2,
+            // title: '年齡',
+            title: t('personHighlight.age.title'),
+            // tips: '根據候選人簡介的年齡推算',
+            tips: t('personHighlight.age.tips'),
+            text: person.estimated_yob
+              ? `${2019 - person.estimated_yob}歲`
+              : '-',
+          })
 
           personHighlight.push({
             xs: 6,
@@ -399,7 +399,9 @@ class ProfilePage extends Component {
             // tips: '候選人：取自最近選舉的候選人簡介<br />議員：取自區議會網頁<br />來源綜合媒體報道',
             tips: t('personHighlight.occupation.tips'),
             text:
-              (currentTerm && currentTerm.career) || lastElection.occupation,
+              lastElection.occupation_zh ||
+              (currentTerm && currentTerm.career) ||
+              '-',
           })
 
           const titles = []
