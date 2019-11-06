@@ -175,14 +175,15 @@ const PersonHighlightContainer = styled(FlexRowContainer)`
 
 const PlatformContainer = styled(Box)`
   && {
-    max-width: 600px;
+    background: ${props => COLORS.camp[props.camp].background};
     margin: 0 auto;
-    border: 1px solid #ccc;
+    padding: 8px 16px 16px;
   }
 `
 const PlatformHeader = styled(Box)`
   && {
-    padding: 0 16px 8px;
+    color: ${props => COLORS.camp[props.camp].text};
+    margin-bottom: 8px;
   }
 `
 
@@ -568,8 +569,12 @@ class ProfilePage extends Component {
               )}
               {lastElection.year === 2019 &&
                 lastElection.election_type === 'ordinary' && (
-                  <PlatformContainer>
-                    <PlatformHeader>
+                  <PlatformContainer
+                    camp={getColorFromCamp(lastElection && lastElection.camp)}
+                  >
+                    <PlatformHeader
+                      camp={getColorFromCamp(lastElection && lastElection.camp)}
+                    >
                       <Typography variant="h6">
                         {t('electoral_messages')}
                         <HtmlTooltip
