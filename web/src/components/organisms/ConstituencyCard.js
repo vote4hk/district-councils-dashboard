@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, Typography } from '@material-ui/core'
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
-import { Tag } from 'components/atoms/Tag'
+import { SecondaryTag } from 'components/atoms/Tag'
 import Box from '@material-ui/core/Box'
 import Columns from 'components/atoms/Columns'
 import { getDistrictListUriFromTag } from 'utils/helper'
@@ -42,7 +42,7 @@ const ConstituencyCard = props => {
       <Columns>
         {sortedTags.map((tag, index) => (
           <TagContainer>
-            <Tag
+            <SecondaryTag
               key={index}
               value={tag.tag}
               handleClick={evt => {

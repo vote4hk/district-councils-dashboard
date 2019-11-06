@@ -3,7 +3,7 @@ import { Query } from 'react-apollo'
 import { QUERY_GET_CANDIDATES } from 'queries/gql'
 import { PeopleAvatar } from 'components/atoms/Avatar'
 import { UnstyledNavLink } from 'components/atoms/Link'
-import { Tag } from 'components/atoms/Tag'
+import { SecondaryTag } from 'components/atoms/Tag'
 import Rows from 'components/atoms/Rows'
 import { SeperatedColumns } from 'components/atoms/Columns'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
@@ -30,14 +30,15 @@ const CandidateGrid = styled(Grid)`
   }
 `
 
-const TagContainer = styled(Box)`
+const DCCAStatusTagsContainer = styled(SeperatedColumns)`
   && {
+    justify-content: flex-end;
   }
 `
 
-const StyledTag = styled(Tag)`
+const StyledSecondaryTag = styled(SecondaryTag)`
   && {
-    margin-left: 4px;
+    margin-left: 8px;
   }
 `
 
@@ -108,19 +109,12 @@ const CandidatesContainer = props => {
             {candidates.length > 0 && (
               <>
                 <Rows>
-                  <SeperatedColumns>
-                    <Typography variant="h6" gutterBottom>
-                      {/* 已接獲提名 */}
-                      {t('candidateContainer.title')}
-                    </Typography>
-                    {tags.length > 0 && (
-                      <TagContainer>
-                        {tags.map((tag, index) => (
-                          <StyledTag value={tag} key={index} />
-                        ))}
-                      </TagContainer>
-                    )}
-                  </SeperatedColumns>
+                  <DCCAStatusTagsContainer>
+                    {tags.length > 0 &&
+                      tags.map((tag, index) => (
+                        <StyledSecondaryTag value={tag} key={index} />
+                      ))}
+                  </DCCAStatusTagsContainer>
                 </Rows>
                 <Rows>
                   <SeperatedColumns>
