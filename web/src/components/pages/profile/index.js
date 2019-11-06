@@ -9,7 +9,7 @@ import HtmlParagraph from 'components/atoms/HtmlParagraph'
 import ScrollableTabs from 'components/organisms/ScrollableTabs'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import { getColorFromCamp } from 'utils/helper'
+import { getColorFromCamp, withLanguage } from 'utils/helper'
 import CouncillorMeetingAttendanceContainer from 'components/containers/CouncillorMeetingAttendanceContainer'
 import PersonElectionHistoriesContainer from 'components/containers/PersonElectionHistoriesContainer'
 import FCPersonData from 'components/templates/FCPersonData'
@@ -69,8 +69,10 @@ const GET_PEOPLE_PROFILE = gql`
         candidate_number
         is_won
         fb_id
-        occupation
-        political_affiliation
+        occupation_zh
+        occupation_en
+        political_affiliation_zh
+        political_affiliation_en
         age
         cacode
         camp
@@ -175,14 +177,15 @@ const PersonHighlightContainer = styled(FlexRowContainer)`
 
 const PlatformContainer = styled(Box)`
   && {
-    max-width: 600px;
+    background: ${props => COLORS.camp[props.camp].background};
     margin: 0 auto;
-    border: 1px solid #ccc;
+    padding: 8px 16px 16px;
   }
 `
 const PlatformHeader = styled(Box)`
   && {
-    padding: 0 16px 8px;
+    color: ${props => COLORS.camp[props.camp].text};
+    margin-bottom: 8px;
   }
 `
 
@@ -191,6 +194,7 @@ const PlatformImage = styled(Box)`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    max-width: 600px;
   }
 `
 
@@ -371,16 +375,16 @@ class ProfilePage extends Component {
 
           const personHighlight = []
 
-          if (person.estimated_yob) {
-            personHighlight.push({
-              xs: 2,
-              // title: '年齡',
-              title: t('personHighlight.age.title'),
-              // tips: '根據候選人簡介的年齡推算',
-              tips: t('personHighlight.age.tips'),
-              text: `${2019 - person.estimated_yob}歲`,
-            })
-          }
+          personHighlight.push({
+            xs: 2,
+            // title: '年齡',
+            title: t('personHighlight.age.title'),
+            // tips: '根據候選人簡介的年齡推算',
+            tips: t('personHighlight.age.tips'),
+            text: person.estimated_yob
+              ? `${2019 - person.estimated_yob}歲`
+              : '-',
+          })
 
           personHighlight.push({
             xs: 6,
@@ -398,7 +402,12 @@ class ProfilePage extends Component {
             // tips: '候選人：取自最近選舉的候選人簡介<br />議員：取自區議會網頁<br />來源綜合媒體報道',
             tips: t('personHighlight.occupation.tips'),
             text:
-              (currentTerm && currentTerm.career) || lastElection.occupation,
+              withLanguage(
+                lastElection.occupation_zh,
+                lastElection.occupation_en
+              ) ||
+              (currentTerm && currentTerm.career) ||
+              '-',
           })
 
           const titles = []
@@ -568,8 +577,12 @@ class ProfilePage extends Component {
               )}
               {lastElection.year === 2019 &&
                 lastElection.election_type === 'ordinary' && (
-                  <PlatformContainer>
-                    <PlatformHeader>
+                  <PlatformContainer
+                    camp={getColorFromCamp(lastElection && lastElection.camp)}
+                  >
+                    <PlatformHeader
+                      camp={getColorFromCamp(lastElection && lastElection.camp)}
+                    >
                       <Typography variant="h6">
                         {t('electoral_messages')}
                         <HtmlTooltip
@@ -591,11 +604,7 @@ class ProfilePage extends Component {
                 )}
               <ScrollableTabs
                 titles={titles}
-                indicatorcolor={
-                  COLORS.camp[
-                    getColorFromCamp(lastElection && lastElection.camp)
-                  ].background
-                }
+                indicatorcolor={COLORS.main.primary}
                 variant="scrollable"
               >
                 {person.fc_uuid && (

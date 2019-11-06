@@ -1,13 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { PlainDialog } from 'components/molecules/Dialog'
 import { Disclaimer } from 'components/templates/Disclaimer'
+import localforage from 'localforage'
 
 export default function GlobalDisclaimer() {
-  const [open, setOpen] = React.useState(true)
+  const [open, setOpen] = React.useState(false)
 
-  const handleClose = () => {
+  const handleClose = async () => {
     setOpen(false)
+    await localforage.setItem('instructionRead', true)
   }
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const instructionRead = await localforage.getItem('instructionRead')
+        await setOpen(!instructionRead)
+      } catch (e) {
+        await setOpen(true)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <PlainDialog

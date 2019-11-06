@@ -39,8 +39,8 @@ function MobileAppBar(props) {
         <Toolbar disableGutters>
           <AppBarTitle to={'/'}>
             <Typography variant="h1" align="center">
-              <span role="img" aria-label="區議會 2019">
-                vote4.hk ✋🏻💜⚡
+              <span role="img" aria-label="Vote4.hk ✋🏻💜⚡">
+                Vote4.hk ✋🏻💜⚡
               </span>
             </Typography>
           </AppBarTitle>

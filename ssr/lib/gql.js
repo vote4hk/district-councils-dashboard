@@ -71,8 +71,10 @@ query fetch_user($uuid: uuid!) {
                 }
                 main_areas
             }
-            occupation
-            political_affiliation
+            occupation_zh
+            occupation_en
+            political_affiliation_zh
+            political_affiliation_en
         }
     }
 }`
