@@ -5,12 +5,10 @@ import { PeopleAvatar } from 'components/atoms/Avatar'
 import { getColorFromCamp } from 'utils/helper'
 import Columns from 'components/atoms/Columns'
 import { withRouter } from 'react-router-dom'
-import { COLORS } from 'ui/theme'
 import ContextStore from 'ContextStore'
 import { DRAWER_CLOSE } from 'reducers/drawer'
 import { getProfilePath } from 'utils/helper'
-import DistrictSelector from 'components/molecules/DistrictSelector'
-import { fireEvent } from 'utils/ga_fireevent'
+// import { fireEvent } from 'utils/ga_fireevent'
 
 const AddressOption = props => {
   const { className, onClick } = props
