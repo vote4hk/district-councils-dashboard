@@ -17,6 +17,12 @@ const StyledAppBar = styled(AppBar)`
   }
 `
 
+const StyledTab = styled(Tab)`
+  && {
+    box-shadow: 1px 2px #ccc;
+  }
+`
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props
 
@@ -73,7 +79,7 @@ export default function ScrollableTabs(props) {
           scrollButtons="auto"
         >
           {titles.map((title, index) => (
-            <Tab
+            <StyledTab
               label={title}
               id={`scrollable-auto-tab-${index}`}
               key={index}

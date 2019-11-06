@@ -177,6 +177,7 @@ const PlatformContainer = styled(Box)`
   && {
     max-width: 600px;
     margin: 0 auto;
+    border: 1px solid #ccc;
   }
 `
 const PlatformHeader = styled(Box)`
