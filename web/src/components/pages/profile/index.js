@@ -35,6 +35,7 @@ const GET_PEOPLE_PROFILE = gql`
       gender
       related_organization
       estimated_yob
+      yod
       description
       councillors {
         meeting_attendances {
@@ -382,7 +383,7 @@ class ProfilePage extends Component {
             // tips: '根據候選人簡介的年齡推算',
             tips: t('personHighlight.age.tips'),
             text: person.estimated_yob
-              ? `${2019 - person.estimated_yob}歲`
+              ? `${(person.yod || 2019) - person.estimated_yob}歲`
               : '-',
           })
 
