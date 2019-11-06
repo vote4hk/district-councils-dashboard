@@ -104,6 +104,7 @@ const SearchAllBox = props => {
         (ele, index, self) =>
           index === self.findIndex(record => record.label === ele.label)
       )
+      .filter((_, i) => i <= 3)
   }
 
   const searchPeople = async query => {
@@ -114,15 +115,17 @@ const SearchAllBox = props => {
       },
     })
     data.dcd_candidates.sort((a, b) => b.year - a.year)
-    return data.dcd_candidates.map(c => ({
-      label: c.person.name_zh || c.person.name_en,
-      uuid: c.person.uuid,
-      name_zh: c.person.name_zh,
-      name_en: c.person.name_en,
-      constituency: c.constituency,
-      camp: c.camp,
-      type: 'people',
-    }))
+    return data.dcd_candidates
+      .map(c => ({
+        label: c.person.name_zh || c.person.name_en,
+        uuid: c.person.uuid,
+        name_zh: c.person.name_zh,
+        name_en: c.person.name_en,
+        constituency: c.constituency,
+        camp: c.camp,
+        type: 'people',
+      }))
+      .filter((_, i) => i <= 3)
   }
 
   const search = async query => {
@@ -132,12 +135,12 @@ const SearchAllBox = props => {
     ])
     return [
       {
-        label: t('constituency'),
-        options: results[0],
-      },
-      {
         label: t('candidates'),
         options: results[1],
+      },
+      {
+        label: t('constituency'),
+        options: results[0],
       },
     ]
   }
