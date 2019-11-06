@@ -192,6 +192,7 @@ const PlatformImage = styled(Box)`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    max-width: 600px;
   }
 `
 
