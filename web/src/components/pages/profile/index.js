@@ -495,7 +495,7 @@ class ProfilePage extends Component {
                   <PeopleAvatar
                     dimension={'84px'}
                     borderwidth={'0'}
-                    src={`${homeUrl}/static/images/avatar/${person.uuid}.jpg`}
+                    src={`${homeUrl}/static/images/avatar/100x100/${person.uuid}.jpg`}
                     imgProps={{
                       onError: e => {
                         // wingkwong: avoid infinite callbacks if fallback image fails

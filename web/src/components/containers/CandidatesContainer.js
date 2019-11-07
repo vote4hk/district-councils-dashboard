@@ -145,7 +145,7 @@ const CandidatesContainer = props => {
                                 dimension="84px"
                                 borderwidth={'4'}
                                 camp={getColorFromCamp(candidate.camp)}
-                                src={`${IMAGE_HOST_URI}/static/images/avatar/${candidate.person.uuid}.jpg`}
+                                src={`${IMAGE_HOST_URI}/static/images/avatar/100x100/${candidate.person.uuid}.jpg`}
                                 imgProps={{
                                   onError: e => {
                                     // wingkwong: avoid infinite callbacks if fallback image fails

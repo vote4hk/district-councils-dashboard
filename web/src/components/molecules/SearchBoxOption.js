@@ -41,7 +41,7 @@ export const PeopleOption = props => {
   const { className, onClick } = props
   const { uuid, name_zh, name_en, camp, constituency } = props.data
   const avatarPath = uuid
-    ? `${homeUrl}/static/images/avatar/${uuid}.jpg`
+    ? `${homeUrl}/static/images/avatar/100x100/${uuid}.jpg`
     : `${homeUrl}/static/images/avatar/default.png`
   return (
     <Box
