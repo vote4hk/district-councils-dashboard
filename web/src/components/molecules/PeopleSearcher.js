@@ -174,7 +174,7 @@ const PeopleSearcher = props => {
     const district = constituency['district']
 
     const avatarPath = uuid
-      ? `${homeUrl}/static/images/avatar/${uuid}.jpg`
+      ? `${homeUrl}/static/images/avatar/100x100/${uuid}.jpg`
       : `${homeUrl}/static/images/avatar/default.png`
 
     // keyword this is not accessible here. so define the style here

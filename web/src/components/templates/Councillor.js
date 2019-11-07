@@ -55,7 +55,7 @@ const Councillor = props => {
               camp={getColorFromPoliticalAffiliation(
                 councillor.political_affiliation
               )}
-              src={`${IMAGE_HOST_URI}/static/images/avatar/${councillor.person.uuid}.jpg`}
+              src={`${IMAGE_HOST_URI}/static/images/avatar/100x100/${councillor.person.uuid}.jpg`}
               imgProps={{
                 onError: e => {
                   // wingkwong: avoid infinite callbacks if fallback image fails
