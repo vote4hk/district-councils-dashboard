@@ -1,49 +1,49 @@
 const zh = {
   // Global
   formatCanonicalUrl: () => `https://vote4.hk/en`,
-  formatSiteName: () => '2019區議會選舉｜Vote4.hk 投票指南',
-  formatTitle: (prefix) => `${prefix ? prefix + '｜' : '' }2019區議會選舉｜Vote4.hk 投票指南`,
-  formatDescription: (prefix) => `${prefix ? prefix + '｜' : '' }2019區議會選舉指南，全港最強選區、候選人名單搜尋器，提供提名、歷屆區議會選舉結果、數據分析、候選人言論及會議出席率。`,
-  formatKeyword: (prefix) => `${prefix ? prefix + ', ' : '' }vote4hk, vote4, 投票指南, 區議會選舉, 區議會, 區選, 選舉, 2019 dc, district council election, 掌心雷, 候選人, 選區, 分界, 地圖, 選情, 數據, 分析, 蘋果, hk01, 立場, scmp, 建制派, 民主派`,
+  formatSiteName: () => '2019 District Council Election｜Vote4.hk The Guide to Voting',
+  formatTitle: (prefix) => `${prefix ? prefix + '｜' : '' }2019 District Council Election｜Vote4.hk The Guide to Voting`,
+  formatDescription: () => `The Guide to Voting in 2019 District Council Election is the best search engine for the list of districts and candidates. The page contains information on nomination of candidates, past results of District Council Election, data analysis, remarks made by candidates and their attendance at meetings.`,
+  formatKeyword: (prefix) => `${prefix ? prefix + ', ' : '' }vote4hk, vote4, guide to voting, district council election, district council, dce, election, 2019 dc, candidate, constituency, boundary, map, situation, data, analysis, south china morning post, scmp, hong kong free press, hkfp, pro-democratic, pro-establishment`,
   formatImageUrl: () => 'https://vote4.hk/og-image.png',
-  formatArticleSection: () => '候選人資料｜選區分界地圖｜選情數據分析',
+  formatArticleSection: () => 'Candidate information｜Boundary and map｜Data analysis',
 
   // Districts
-  formatDistrictsTitle: () => `港九新界選區候選人名單｜2019區議會選舉｜Vote4.hk 投票指南`,
-  formatDistrictsDescription: () => `2019區議會選舉日期是11月24日，香港島、九龍、新界452個區議會選區將各選出1名區議員，立即睇盡18區如油尖旺、葵青、元朗、沙田等參選人資料。`,
+  formatDistrictsTitle: () => `List of Candidates from Hong Kong Island, Kowloon and the New Territories Districts｜2019 District Council Election｜Vote4.hk The Guide to Voting`,
+  formatDistrictsDescription: () => `"2019 District Council Election will be held on 24 Nov. 1 District Council member will be elected in each constituency among the 452 constituencies over Hong Kong Island, Kowloon and the New Territories Districts. Take a look at the details of candidates from 18 districts, including candidates from Yau Tsim Mong District, Kwai Tsing District, Yuen Long District and Sha Tin District.`,
   formatDistrictsCanonicalUrl: (year) => `https://vote4.hk/district/${year}`,
 
   // Tag
-  formatTagTitle: (tag) => `關於${tag}｜區議會選舉2019｜Vote4.hk`,
-  formatTagDescription: (tag) => `2019區議會選舉數據分析，與「${tag}」相關的候選人名單。`,
+  formatTagTitle: (tag) => `About ${tag}｜2019 District Council Election｜Vote4.hk The Guide to Voting`,
+  formatTagDescription: (tag) => `Data Analysis of 2019 District Council Election. List of candidates who are relating to "${tag}"`,
   formatTagCanonicalUrl: (year, tag) => `https://vote4.hk/district/${year}/tags/${tag}`,
 
   // District
   formatDistrictTitle: (
     districtName,
-    areaName) => `${districtName}候選人名單｜${areaName}｜2019區議會選舉｜Vote4.hk 投票指南`,
+    areaName) => `List of Candidates from ${districtName}｜${areaName}｜2019 District Council Election｜Vote4.hk The Guide to Voting`,
   formatDistrictDescription: (
     districtName, areaName,
-    constituenciesNames) => `${areaName}${districtName}包括${constituenciesNames}等，包含所有候選人名單及詳盡分析，歷屆區議會選舉結果、數據分析、候選人言論及會議出席率。`,
+    constituenciesNames) => `${areaName}${districtName} includes constituencies such as ${constituenciesNames}. This page includes the list of all candidates and detailed analysis of past results of District Council Election, data analysis, remarks made by the candidates and their attendance at meetings.`,
   formatDistrictCanonicalUrl: (year, code) => `https://vote4.hk/en/district/${year}/${code}`,
 
   // Constituency
   formatConstituencyTitle: (
     constituencyName, constituencyCode, districtName,
-    areaName) => `${districtName}－${constituencyName}（${constituencyCode}）候選人名單｜${areaName}｜2019區議會選舉｜Vote4.hk 投票指南`,
+    areaName) => `List of Candidates from ${districtName} - ${constituencyName} (${constituencyCode}｜${areaName}｜2019 District Council Election｜Vote4.hk The Guide to Voting`,
   formatConstituencyDescription: (
     constituencyName, constituencyCode,
-    mainAreasNames) => `${constituencyName}（${constituencyCode}）選區候選人名單及介紹，候選人言論、媒體報導、會議出席率、參選紀錄一覽無遺。中環選區主要屋苑有${mainAreasNames}。`,
+    mainAreasNames) => `List and introduction of candidates in ${constituencyName} (${constituencyCode})constituency. This page includes candidate's remarks, media reports, their attendance at meetings and election records. ${constituencyName} constituency includes ${mainAreasNames}.`,
   formatConstituencyCanonicalUrl: (year, code) => `https://vote4.hk/en/district/${year}/${code}`,
 
   // Candidate
   formatCandidateTitle: (
     candidateName, constituencyName, constituencyCode,
-    districtName) => `${candidateName}｜${districtName}－${constituencyName}（${constituencyCode}）｜2019區議會選舉｜Vote4.hk 投票指南`,
+    districtName) => `${candidateName}｜${districtName} - ${constituencyName} (${constituencyCode})｜2019 District Council Election｜Vote4.hk The Guide to Voting`,
   formatCandidateDescription: (
     candidateName, constituencyName, constituencyCode, districtName, areaName,
     candidateNumber,
-    mainAreasNames) => `${candidateName}，2019區議會選舉${districtName}－${constituencyName}（${constituencyCode}）${candidateNumber}號候選人詳盡介紹，${constituencyName}選區包括${mainAreasNames}。`,
+    mainAreasNames) => `Details of 2019 District Council Election candidate, ${candidateName}, ${districtName} - ${constituencyName} (${constituencyCode}) ${candidateNumber} Constituency includes ${mainAreasNames}.`,
   formatCandidateImageUrl: (id) => `https://vote4.hk/static/images/avatar/${id}.jpg`,
   formatCandidateCanonicalUrl: (name, id) =>  `https://vote4.hk/en/profile/${name}/${id}`,
 }
