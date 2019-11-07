@@ -8,6 +8,16 @@ const zh = {
   formatImageUrl: () => 'https://vote4.hk/og-image.png',
   formatArticleSection: () => '候選人資料｜選區分界地圖｜選情數據分析',
 
+  // Districts
+  formatDistrictsTitle: () => `港九新界選區候選人名單｜2019區議會選舉｜Vote4.hk 投票指南`,
+  formatDistrictsDescription: () => `2019區議會選舉日期是11月24日，香港島、九龍、新界452個區議會選區將各選出1名區議員，立即睇盡18區如油尖旺、葵青、元朗、沙田等參選人資料。`,
+  formatDistrictsCanonicalUrl: (year) => `https://vote4.hk/district/${year}`,
+
+  // Tag
+  formatTagTitle: (tag) => `關於${tag}｜區議會選舉2019｜Vote4.hk`,
+  formatTagDescription: (tag) => `2019區議會選舉數據分析，與「${tag}」相關的候選人名單。`,
+  formatTagCanonicalUrl: (year, tag) => `https://vote4.hk/district/${year}/tags/${tag}`,
+
   // District
   formatDistrictTitle: (
     districtName,
