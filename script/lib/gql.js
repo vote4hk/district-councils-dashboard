@@ -43,7 +43,8 @@ const QUERY_GET_CANDIDATES = `query {
     year
     cacode
     candidate_number
-    occupation
+    occupation_zh
+    occupation_en
     votes
     is_won  	
   }

@@ -13,12 +13,16 @@ export const getSingleFeatureFromPoint = ({ lng, lat }) => {
   const result = {
     code: null,
     year: 2019,
+    name_zh: null,
+    name_en: null,
   }
   for (let i = 0; i < dc2019.features.length; i++) {
     const feature = dc2019.features[i]
     const poly = turf.polygon(feature.geometry.coordinates)
     if (turf.booleanPointInPolygon(pt, poly)) {
       result.code = feature.properties.CACODE
+      result.name_zh = feature.properties.CNAME
+      result.name_en = feature.properties.ENAME
       break
     }
   }

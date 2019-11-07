@@ -12,10 +12,35 @@ const StyledChip = styled(Chip)`
       ${props => props.bordercolor || 'rgba(0, 0, 0, 0.5)'} solid;
   }
 `
+const SecondaryStyledChip = styled(Chip)`
+  && {
+    font-size: ${props => props.fontsize || 12}px;
+    background: ${props => props.textcolor || COLORS.main.background};
+    color: ${props => props.backgroundcolor || COLORS.main.primary};
+    border: ${props => props.borderwidth || 1}px
+      ${props => props.backgroundcolor || COLORS.main.primary} solid;
+  }
+`
 
 export const Tag = props => {
   return (
     <StyledChip
+      fontSize={props.fontsize}
+      textcolor={props.textcolor}
+      backgroundcolor={props.backgroundcolor}
+      bordercolor={props.bordercolor}
+      borderwidth={props.borderwidth}
+      label={props.value}
+      size="small"
+      onClick={props.handleClick}
+      className={props.className}
+    />
+  )
+}
+
+export const SecondaryTag = props => {
+  return (
+    <SecondaryStyledChip
       fontSize={props.fontsize}
       textcolor={props.textcolor}
       backgroundcolor={props.backgroundcolor}

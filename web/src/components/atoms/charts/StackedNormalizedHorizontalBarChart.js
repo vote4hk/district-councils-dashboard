@@ -24,6 +24,7 @@ const Styled = styled(Box)`
 
 export default props => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
+  const hideLegend = !!props.hideLegend
 
   const CAMP_COLORS = [
     COLORS.camp.establishment.background,
@@ -34,6 +35,9 @@ export default props => {
   const d3Container = useRef(null)
 
   const updateLegend = (res, svg) => {
+    if (hideLegend) {
+      return
+    }
     const data = [
       {
         camp: 'establishment',
@@ -114,8 +118,14 @@ export default props => {
     }
 
     const margin = { top: 65, right: 15, bottom: 0, left: 50 }
+    let rowHeight = ROW_HEIGHT
+    if (hideLegend) {
+      margin.top = 0
+      margin.left = 15
+      rowHeight = ROW_HEIGHT * 1.5
+    }
     const width = dimensions.width
-    const height = data.length * ROW_HEIGHT + margin.top + margin.bottom
+    const height = data.length * rowHeight + margin.top + margin.bottom
 
     const labels = ['建制', '其他', '民主']
     const series = d3
@@ -197,7 +207,6 @@ export default props => {
         .duration(1000)
         .attr('x', d => x(d[0]))
         .attr('width', d => x(d[1]) - x(d[0]))
-
       bar
         .selectAll('text')
         .data(d => d)
@@ -229,7 +238,6 @@ export default props => {
               return 'middle'
           }
         })
-
         .attr('font-family', 'sans-serif')
         .attr('font-size', '12px')
         .attr('fill', d => {
@@ -242,14 +250,16 @@ export default props => {
           }
         })
 
-      // Add the y axis and add on click function to it
-      svg.append('g').call(yAxis)
-      svg.selectAll('.tick').on('click', function(d, i) {
-        const code = getCodeFromDistrictName(d)
-        window.location = getConstituencyUriFromTag(code)
-      })
+      if (!hideLegend) {
+        // Add the y axis and add on click function to it
+        svg.append('g').call(yAxis)
+        svg.selectAll('.tick').on('click', function(d, i) {
+          const code = getCodeFromDistrictName(d)
+          window.location = getConstituencyUriFromTag(code)
+        })
 
-      svg.append('g').call(xAxis)
+        svg.append('g').call(xAxis)
+      }
 
       // middle line
       const middle = (width + margin.left - margin.right) / 2

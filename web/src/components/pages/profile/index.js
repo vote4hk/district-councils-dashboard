@@ -9,7 +9,7 @@ import HtmlParagraph from 'components/atoms/HtmlParagraph'
 import ScrollableTabs from 'components/organisms/ScrollableTabs'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import { getColorFromCamp } from 'utils/helper'
+import { getColorFromCamp, withLanguage } from 'utils/helper'
 import CouncillorMeetingAttendanceContainer from 'components/containers/CouncillorMeetingAttendanceContainer'
 import PersonElectionHistoriesContainer from 'components/containers/PersonElectionHistoriesContainer'
 import FCPersonData from 'components/templates/FCPersonData'
@@ -17,6 +17,7 @@ import { COLORS } from 'ui/theme'
 import { Tag } from 'components/atoms/Tag'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
 import { withTranslation } from 'react-i18next'
+
 import {
   getDistrictOverviewUriFromTag,
   getConstituencyUriFromTag,
@@ -34,6 +35,7 @@ const GET_PEOPLE_PROFILE = gql`
       gender
       related_organization
       estimated_yob
+      yod
       description
       councillors {
         meeting_attendances {
@@ -68,8 +70,10 @@ const GET_PEOPLE_PROFILE = gql`
         candidate_number
         is_won
         fb_id
-        occupation
-        political_affiliation
+        occupation_zh
+        occupation_en
+        political_affiliation_zh
+        political_affiliation_en
         age
         cacode
         camp
@@ -116,6 +120,29 @@ const PersonName = styled.div`
   }
 `
 
+const ImgTag = styled.img`
+  && {
+    display: block;
+    width: 100%;
+  }
+`
+
+const CandidateNumber = styled(Box)`
+  && {
+    position: relative;
+    margin-bottom: -18px !important;
+    top: -22px;
+    left: 2px;
+    border-radius: 50%;
+    font-weight: 700;
+    width: ${props => props.dimension};
+    height: ${props => props.dimension};
+    background-color: ${props => COLORS.camp[props.camp].background};
+    color: ${props => COLORS.camp[props.camp].text};
+    text-align: center;
+  }
+`
+
 const ElectionStatus = styled(Box)`
   && {
     display: flex;
@@ -148,6 +175,30 @@ const PersonHighlightContainer = styled(FlexRowContainer)`
     text-align: left;
   }
 `
+
+const PlatformContainer = styled(Box)`
+  && {
+    background: ${props => COLORS.camp[props.camp].background};
+    margin: 0 auto;
+    padding: 8px 16px 16px;
+  }
+`
+const PlatformHeader = styled(Box)`
+  && {
+    color: ${props => COLORS.camp[props.camp].text};
+    margin-bottom: 8px;
+  }
+`
+
+const PlatformImage = styled(Box)`
+  && {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 600px;
+  }
+`
+
 const BreadcrumbsContainer = styled(Box)`
   && {
     flex-grow: 1;
@@ -325,16 +376,16 @@ class ProfilePage extends Component {
 
           const personHighlight = []
 
-          if (person.estimated_yob) {
-            personHighlight.push({
-              xs: 2,
-              // title: '年齡',
-              title: t('personHighlight.age.title'),
-              // tips: '根據候選人簡介的年齡推算',
-              tips: t('personHighlight.age.tips'),
-              text: `${2019 - person.estimated_yob}歲`,
-            })
-          }
+          personHighlight.push({
+            xs: 2,
+            // title: '年齡',
+            title: t('personHighlight.age.title'),
+            // tips: '根據候選人簡介的年齡推算',
+            tips: t('personHighlight.age.tips'),
+            text: person.estimated_yob
+              ? `${(person.yod || 2019) - person.estimated_yob}歲`
+              : '-',
+          })
 
           personHighlight.push({
             xs: 6,
@@ -352,7 +403,12 @@ class ProfilePage extends Component {
             // tips: '候選人：取自最近選舉的候選人簡介<br />議員：取自區議會網頁<br />來源綜合媒體報道',
             tips: t('personHighlight.occupation.tips'),
             text:
-              (currentTerm && currentTerm.career) || lastElection.occupation,
+              withLanguage(
+                lastElection.occupation_en,
+                lastElection.occupation_zh
+              ) ||
+              (currentTerm && currentTerm.career) ||
+              '-',
           })
 
           const titles = []
@@ -452,6 +508,14 @@ class ProfilePage extends Component {
                       },
                     }}
                   />
+                  {person.candidates[0].candidate_number && (
+                    <CandidateNumber
+                      dimension="18px"
+                      camp={getColorFromCamp(person.candidates[0].camp)}
+                    >
+                      {person.candidates[0].candidate_number}
+                    </CandidateNumber>
+                  )}
                 </CandidateAvatorContainer>
                 <Box>
                   <PersonName
@@ -512,13 +576,36 @@ class ProfilePage extends Component {
               {person.description && (
                 <PersonDescriptionParagraph text={person.description} />
               )}
+              {lastElection.year === 2019 &&
+                lastElection.election_type === 'ordinary' && (
+                  <PlatformContainer
+                    camp={getColorFromCamp(lastElection && lastElection.camp)}
+                  >
+                    <PlatformHeader
+                      camp={getColorFromCamp(lastElection && lastElection.camp)}
+                    >
+                      <Typography variant="h6">
+                        {t('electoral_messages')}
+                        <HtmlTooltip
+                          disableFocusListener
+                          disableTouchListener
+                          text={t('electoral_messages.tips')}
+                          placement="bottom"
+                          size={21}
+                        />
+                      </Typography>
+                    </PlatformHeader>
+                    <PlatformImage>
+                      <ImgTag
+                        src={`${homeUrl}/static/images/platform/${person.uuid}.jpg`}
+                        alt={''} // TODO: use candidate.candi_intro for SEO
+                      />
+                    </PlatformImage>
+                  </PlatformContainer>
+                )}
               <ScrollableTabs
                 titles={titles}
-                indicatorcolor={
-                  COLORS.camp[
-                    getColorFromCamp(lastElection && lastElection.camp)
-                  ].background
-                }
+                indicatorcolor={COLORS.main.primary}
                 variant="scrollable"
               >
                 {person.fc_uuid && (

@@ -153,16 +153,17 @@ const groupExpectDataByRegionAndCamp = (constituencies, settings) => {
       settings.config.reference_last_election
     ) {
       // if there is predecessor, we use only the new voters
+      const predecessor = constituency.predecessors[0].predecessor
 
       if (
-        constituency.predecessors[0].predecessor.candidates.length === 1 &&
+        predecessor.candidates.length === 1 &&
         settings.config.auto_won_add_components
       ) {
         const camps = ['民主', '建制', '其他']
-        const onlyCandidate =
-          constituency.predecessors[0].predecessor.candidates[0]
+        const onlyCandidate = predecessor.candidates[0]
         camps.forEach(camp => {
-          // mock the votes for the last election
+          // mock the votes for the last election (because no records for 自動當選)
+          // by 2019 all voters - (2018 - 2019 new voters) - (2015 - 2018 new voters for predecessor)
           const votes =
             getProjectedVotes(
               STAT_TYPE_ALL_VOTERS,
@@ -175,10 +176,16 @@ const groupExpectDataByRegionAndCamp = (constituencies, settings) => {
               camp,
               settings,
               constituency.vote_stats
+            ) -
+            getProjectedVotes(
+              STAT_TYPE_NEW_VOTERS,
+              camp,
+              settings,
+              predecessor.vote_stats
             )
 
           if (onlyCandidate.camp !== camp) {
-            constituency.predecessors[0].predecessor.candidates.push({
+            predecessor.candidates.push({
               camp,
               votes,
               mock: true,
@@ -189,7 +196,9 @@ const groupExpectDataByRegionAndCamp = (constituencies, settings) => {
         })
       }
       let maxVote = 0
-      constituency.predecessors[0].predecessor.candidates.forEach(c => {
+      predecessor.candidates.forEach(c => {
+        // calculation here is:
+        // 2015 election result + (2015-2018 new voters projected from settings[predecessor constituency]) + (2018-2019 new voters projected from settings[new constituency])
         const projectedVotes =
           c.votes +
           getProjectedVotes(
@@ -197,6 +206,12 @@ const groupExpectDataByRegionAndCamp = (constituencies, settings) => {
             c.camp,
             settings,
             constituency.vote_stats
+          ) +
+          getProjectedVotes(
+            STAT_TYPE_NEW_VOTERS,
+            c.camp,
+            settings,
+            predecessor.vote_stats
           )
         if (
           projectedVotes >= maxVote &&

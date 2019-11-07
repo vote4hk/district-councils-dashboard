@@ -267,6 +267,7 @@ export const QUERY_GET_CANDIDATES = gql`
   }
 `
 
+// This is a dangerous query.. the data size is huge (for 2019 it is 19MB)
 export const QUERY_GET_CONSTITUENCY_CAMP_DATA = gql`
   query fetch_camp_data($year: Int!) {
     dcd_constituencies(where: { year: { _eq: $year } }) {
@@ -278,6 +279,13 @@ export const QUERY_GET_CONSTITUENCY_CAMP_DATA = gql`
             camp
             votes
             is_won
+          }
+          vote_stats(where: { subtype: { _eq: "NEW_VOTERS" } }) {
+            type
+            subtype
+            category_1
+            category_2
+            count
           }
         }
       }
@@ -294,7 +302,7 @@ export const QUERY_GET_CONSTITUENCY_CAMP_DATA = gql`
 
 export const QUERY_GET_NOMINATION_SUMMARY = gql`
   query {
-    dcd_constituencies(where: { year: { _eq: 2019 } }) {
+    c2019: dcd_constituencies(where: { year: { _eq: 2019 } }) {
       code
       name_en
       name_zh
@@ -303,6 +311,17 @@ export const QUERY_GET_NOMINATION_SUMMARY = gql`
         nominated_at
         nominate_status
         election_type
+      }
+      tags {
+        tag
+      }
+    }
+
+    c2015: dcd_constituencies(where: { year: { _eq: 2015 } }) {
+      code
+      name_zh
+      candidates {
+        votes
       }
     }
   }

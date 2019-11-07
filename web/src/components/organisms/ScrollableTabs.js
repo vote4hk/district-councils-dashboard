@@ -14,6 +14,7 @@ const StyledAppBar = styled(AppBar)`
     .MuiTabs-indicator {
       background: ${props => props.indicatorcolor || 'black'};
     }
+    border-bottom: 1px solid #e8e8e8;
   }
 `
 
