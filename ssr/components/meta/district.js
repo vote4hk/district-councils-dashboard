@@ -1,10 +1,13 @@
 import React from 'react'
 import Head from 'next/head'
 import { ArticleJsonLd, NextSeo } from 'next-seo'
-import meta from '../../lib/meta'
+import zh from '../../lib/locale/zh'
+import en from '../../lib/locale/en'
 
 const DistrictMeta = (props) => {
   const { year, code, lang, loading, error, data } = props
+
+  const meta = lang === 'en' ? en : zh
 
   if (!loading) {
     const district = data.dcd_districts.length > 0
@@ -18,14 +21,14 @@ const DistrictMeta = (props) => {
       : district.lc_name_zh
 
     const constituenciesNames = lang === 'en'
-      ? district.constituencies.map(c => c.name_en).slice(0, 5).join('、')
-      : district.constituencies.map(c => c.name_zh).slice(0, 5).join('、')
+      ? district.constituencies.map(c => c.name_en).join('、')
+      : district.constituencies.map(c => c.name_zh).join('、')
 
-    const canonicalUrl = meta.formatDistrictCanonicalUrl(year, code, lang)
+    const metaCanonicalUrl = meta.formatDistrictCanonicalUrl(year, code)
     const metaSiteMap = meta.formatSiteName()
     const metaTitle = meta.formatDistrictTitle(districtName, areaName)
     const metaDescription = meta.formatDistrictDescription(districtName,
-      areaName, constituenciesNames)
+      areaName, constituenciesNames.slice(0, 5))
     const metaKeyword = meta.formatKeyword(districtName)
     const metaImageUrl = meta.formatImageUrl()
     const metaArticleSection = meta.formatArticleSection()
@@ -39,7 +42,7 @@ const DistrictMeta = (props) => {
         <NextSeo
           title={metaTitle}
           description={metaDescription}
-          canonical={canonicalUrl}
+          canonical={metaCanonicalUrl}
           additionalMetaTags={
             [
               {
@@ -49,7 +52,7 @@ const DistrictMeta = (props) => {
             ]
           }
           openGraph={{
-            url: canonicalUrl,
+            url: metaCanonicalUrl,
             title: metaTitle,
             description: metaDescription,
             type: 'website',
@@ -72,7 +75,7 @@ const DistrictMeta = (props) => {
           }}
         />
         <ArticleJsonLd
-          url={canonicalUrl}
+          url={metaCanonicalUrl}
           title={metaTitle}
           images={[
             metaImageUrl,
@@ -84,6 +87,14 @@ const DistrictMeta = (props) => {
           publisherLogo={metaImageUrl}
           description={metaDescription}
         />
+
+        <h1>
+          {districtName}
+        </h1>
+
+        <h2>
+          {constituenciesNames}
+        </h2>
 
       </div>
     )
