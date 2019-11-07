@@ -78,7 +78,6 @@ class BattleGroundPage extends Component {
 
   handleChangeDistrict = (year, code) => {
     if (!year || !code) return
-    this.props.history.push(`/district/${year}/${code}`)
   }
 
   handleMapClick = coordinate => {
