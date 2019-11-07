@@ -404,8 +404,8 @@ class ProfilePage extends Component {
             tips: t('personHighlight.occupation.tips'),
             text:
               withLanguage(
-                lastElection.occupation_zh,
-                lastElection.occupation_en
+                lastElection.occupation_en,
+                lastElection.occupation_zh
               ) ||
               (currentTerm && currentTerm.career) ||
               '-',
