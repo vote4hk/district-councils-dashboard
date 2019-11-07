@@ -24,7 +24,7 @@ const DistrictMeta = (props) => {
       ? district.constituencies.map(c => c.name_en).join('、')
       : district.constituencies.map(c => c.name_zh).join('、')
 
-    const canonicalUrl = meta.formatDistrictCanonicalUrl(year, code, lang)
+    const canonicalUrl = meta.formatDistrictCanonicalUrl(year, code)
     const metaSiteMap = meta.formatSiteName()
     const metaTitle = meta.formatDistrictTitle(districtName, areaName)
     const metaDescription = meta.formatDistrictDescription(districtName,

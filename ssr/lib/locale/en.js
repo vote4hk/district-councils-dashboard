@@ -15,9 +15,7 @@ const zh = {
   formatDistrictDescription: (
     districtName, areaName,
     constituenciesNames) => `${areaName}${districtName}包括${constituenciesNames}等，包含所有候選人名單及詳盡分析，歷屆區議會選舉結果、數據分析、候選人言論及會議出席率。`,
-  formatDistrictCanonicalUrl: (year, code, lang) => lang === 'en'
-    ? `https://vote4.hk/en/district/${year}/${code}`
-    : `https://vote4.hk/district/${year}/${code}`,
+  formatDistrictCanonicalUrl: (year, code) => `https://vote4.hk/en/district/${year}/${code}`,
 
   // Constituency
   formatConstituencyTitle: (
@@ -26,7 +24,7 @@ const zh = {
   formatConstituencyDescription: (
     constituencyName, constituencyCode,
     mainAreasNames) => `${constituencyName}（${constituencyCode}）選區候選人名單及介紹，候選人言論、媒體報導、會議出席率、參選紀錄一覽無遺。中環選區主要屋苑有${mainAreasNames}。`,
-  formatConstituencyImageUrl: (year, code) => `https://vote4.hk/en/district/${year}/${code}`,
+  formatConstituencyCanonicalUrl: (year, code) => `https://vote4.hk/en/district/${year}/${code}`,
 
   // Candidate
   formatCandidateTitle: (
