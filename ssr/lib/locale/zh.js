@@ -1,9 +1,10 @@
-const meta = {
+const zh = {
   // Global
+  formatCanonicalUrl: () => `https://vote4.hk`,
   formatSiteName: () => '2019區議會選舉｜Vote4.hk 投票指南',
-  formatTitle: (displayName) => `${displayName}｜2019區議會選舉｜Vote4.hk 投票指南`,
-  formatDescription: (description) => `${description}｜2019區議會選舉指南，全港最強選區、候選人名單搜尋器，提供提名、歷屆區議會選舉結果、數據分析、候選人言論及會議出席率。`,
-  formatKeyword: (displayName) => `${displayName}, vote4hk, vote4, 投票指南, 區議會選舉, 區議會, 區選, 選舉, 2019 dc, district council election, 掌心雷, 候選人, 選區, 分界, 地圖, 選情, 數據, 分析, 蘋果, hk01, 立場, scmp, 建制派, 民主派`,
+  formatTitle: (prefix) => `${prefix ? prefix + '｜' : '' }2019區議會選舉｜Vote4.hk 投票指南`,
+  formatDescription: (prefix) => `${prefix ? prefix + '｜' : '' }2019區議會選舉指南，全港最強選區、候選人名單搜尋器，提供提名、歷屆區議會選舉結果、數據分析、候選人言論及會議出席率。`,
+  formatKeyword: (prefix) => `${prefix ? prefix + ', ' : '' }vote4hk, vote4, 投票指南, 區議會選舉, 區議會, 區選, 選舉, 2019 dc, district council election, 掌心雷, 候選人, 選區, 分界, 地圖, 選情, 數據, 分析, 蘋果, hk01, 立場, scmp, 建制派, 民主派`,
   formatImageUrl: () => 'https://vote4.hk/og-image.png',
   formatArticleSection: () => '候選人資料｜選區分界地圖｜選情數據分析',
 
@@ -25,6 +26,7 @@ const meta = {
   formatConstituencyDescription: (
     constituencyName, constituencyCode,
     mainAreasNames) => `${constituencyName}（${constituencyCode}）選區候選人名單及介紹，候選人言論、媒體報導、會議出席率、參選紀錄一覽無遺。中環選區主要屋苑有${mainAreasNames}。`,
+  formatConstituencyImageUrl: (year, code) => `https://vote4.hk/district/${year}/${code}`,
 
   // Candidate
   formatCandidateTitle: (
@@ -35,6 +37,7 @@ const meta = {
     candidateNumber,
     mainAreasNames) => `${candidateName}，2019區議會選舉${districtName}－${constituencyName}（${constituencyCode}）${candidateNumber}號候選人詳盡介紹，${constituencyName}選區包括${mainAreasNames}。`,
   formatCandidateImageUrl: (id) => `https://vote4.hk/static/images/avatar/${id}.jpg`,
+  formatCandidateCanonicalUrl: (name, id) => `https://vote4.hk/profile/${name}/${id}`,
 }
 
-module.exports = meta
+module.exports = zh

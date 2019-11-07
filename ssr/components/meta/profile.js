@@ -1,19 +1,18 @@
 import React from 'react'
 import Head from 'next/head'
 import { ArticleJsonLd, NextSeo } from 'next-seo'
-import meta from '../../lib/meta'
+import zh from '../../lib/locale/zh'
+import en from '../../lib/locale/en'
 
 const ProfileMeta = (props) => {
   const { id, name, lang, loading, error, data } = props
 
+  const meta = lang === 'en' ? en : zh
 
   if (!loading) {
     const person = data.dcd_people.length > 0 ? data.dcd_people[0] : {}
     const candidate = person.candidates ? person.candidates[0] || {} : {}
 
-    const url = lang === 'en'
-      ? `https://vote4.hk/en/profile/${name}/${id}`
-      : `https://vote4.hk/profile/${name}/${id}`
     const candidateName = lang === 'en'
       ? (person.name_en || person.name_zh)
       : (person.name_zh || person.name_en)
@@ -32,6 +31,7 @@ const ProfileMeta = (props) => {
       ? candidate.constituency.main_areas.map(a => Object.values(a)[0]).join(', ')
       : candidate.constituency.main_areas.map(a => Object.values(a)[0]).join(', ')
 
+    const metaURL = meta.formatCandidateCanonicalUrl(name, id)
     const metaSiteMap = meta.formatSiteName()
     const metaTitle = meta.formatCandidateTitle(candidateName, constituencyName, constituencyCode, districtName)
     const metaDescription = meta.formatCandidateDescription(candidateName, constituencyName, constituencyCode, districtName, areaName, candidateNumber, mainAreasNames)
@@ -48,7 +48,7 @@ const ProfileMeta = (props) => {
         <NextSeo
           title={metaTitle}
           description={metaDescription}
-          canonical={url}
+          canonical={metaURL}
           additionalMetaTags={
             [
               {
@@ -58,7 +58,7 @@ const ProfileMeta = (props) => {
             ]
           }
           openGraph={{
-            url: url,
+            url: metaUrl,
             title: metaTitle,
             description: metaDescription,
             type: 'website',
@@ -81,7 +81,7 @@ const ProfileMeta = (props) => {
           }}
         />
         <ArticleJsonLd
-          url={url}
+          url={metaUrl}
           title={metaTitle}
           images={[
             metaImageUrl,
@@ -94,9 +94,13 @@ const ProfileMeta = (props) => {
           description={metaDescription}
         />
 
-        <div>
+        <h1>
           {candidateName}
-        </div>
+        </h1>
+
+        <h2>
+          {districtName}－{constituencyName}（{constituencyCode}）
+        </h2>
 
       </div>
     )

@@ -1,22 +1,18 @@
 import React from 'react'
 import Head from 'next/head'
 import { ArticleJsonLd, NextSeo } from 'next-seo'
-import meta from '../../lib/meta'
+import zh from '../../lib/locale/zh'
+import en from '../../lib/locale/en'
 
 const ConstituencyMeta = (props) => {
   const { year, code, lang, loading, error, data } = props
 
-  const url = lang === 'en'
-    ? `https://vote4.hk/en/district/${year}/${code}`
-    : `https://vote4.hk/district/${year}/${code}`
+  const meta = lang === 'en' ? en : zh
 
   if (!loading) {
     const constituency = data.dcd_constituencies.length > 0
       ? data.dcd_constituencies[0]
       : {}
-    const displayName = lang === 'en'
-      ? `${constituency.name_en}｜${constituency.district.dc_name_en}`
-      : `${constituency.name_zh}｜${constituency.district.dc_name_zh}`
 
     const constituencyName = lang === 'en'
       ? constituency.name_en : constituency.name_zh
@@ -30,10 +26,11 @@ const ConstituencyMeta = (props) => {
       ? constituency.main_areas.map(a => Object.values(a)[0]).join(', ')
       : constituency.main_areas.map(a => Object.values(a)[0]).join(', ')
 
+    const canonicalUrl = meta.formatConstituencyCanonicalUrl(year, code)
     const metaSiteMap = meta.formatSiteName()
     const metaTitle = meta.formatConstituencyTitle(constituencyName, constituencyCode, districtName, areaName)
     const metaDescription = meta.formatConstituencyDescription(constituencyName, constituencyCode, mainAreasNames)
-    const metaKeyword = meta.formatKeyword(displayName)
+    const metaKeyword = meta.formatKeyword(constituencyName)
     const metaImageUrl = meta.formatImageUrl()
     const metaArticleSection = meta.formatArticleSection()
 
@@ -46,7 +43,7 @@ const ConstituencyMeta = (props) => {
         <NextSeo
           title={metaTitle}
           description={metaDescription}
-          canonical={url}
+          canonical={canonicalUrl}
           additionalMetaTags={
             [
               {
@@ -56,7 +53,7 @@ const ConstituencyMeta = (props) => {
             ]
           }
           openGraph={{
-            url: url,
+            url: canonicalUrl,
             title: metaTitle,
             description: metaDescription,
             type: 'website',
@@ -79,7 +76,7 @@ const ConstituencyMeta = (props) => {
           }}
         />
         <ArticleJsonLd
-          url={url}
+          url={canonicalUrl}
           title={metaTitle}
           images={[
             metaImageUrl,
@@ -91,6 +88,14 @@ const ConstituencyMeta = (props) => {
           publisherLogo={metaImageUrl}
           description={metaDescription}
         />
+
+        <h1>
+          {districtName}－{constituencyName}
+        </h1>
+
+        <h2>
+          {mainAreasNames}
+        </h2>
       </div>
     )
   } else {
