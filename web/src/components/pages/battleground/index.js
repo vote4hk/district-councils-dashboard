@@ -69,7 +69,7 @@ class BattleGroundPage extends Component {
         lat: centroid[1],
       },
       selectedYear: null,
-      selectedCode: null
+      selectedCode: null,
     }
   }
 
@@ -81,8 +81,11 @@ class BattleGroundPage extends Component {
   handleChangeDistrict = (year, code) => {
     if (!year || !code) return
 
-    const { selectedYear, selectedCode } = this.state;
-    if((selectedYear == null && selectedCode == null) || (year != selectedYear || code != selectedCode)) {
+    const { selectedYear, selectedCode } = this.state
+    if (
+      (selectedYear == null && selectedCode == null) ||
+      (year !== selectedYear || code !== selectedCode)
+    ) {
       this.props.history.push(`/district/${year}/${code}`)
     }
   }
@@ -101,14 +104,14 @@ class BattleGroundPage extends Component {
     const { selectedYear, selectedCode } = this.state
 
     var state = {
-      currentPoint: point
+      currentPoint: point,
     }
 
-    if(selectedYear == null & selectedCode == null) {
+    if ((selectedYear == null) & (selectedCode == null)) {
       state = {
         ...state,
         selectedYear: year,
-        selectedCode: code
+        selectedCode: code,
       }
     }
 
