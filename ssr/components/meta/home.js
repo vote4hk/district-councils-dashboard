@@ -9,7 +9,7 @@ const HomeMeta = (props) => {
 
   const meta = lang === 'en' ? en : zh
 
-  const metaURL = meta.formatCanonicalUrl()
+  const metaCanonicalUrl = meta.formatCanonicalUrl()
   const metaSiteMap = meta.formatSiteName()
   const metaTitle = meta.formatTitle()
   const metaDescription = meta.formatDescription()
@@ -26,7 +26,7 @@ const HomeMeta = (props) => {
       <NextSeo
         title={metaTitle}
         description={metaDescription}
-        canonical={metaURL}
+        canonical={metaCanonicalUrl}
         additionalMetaTags={
           [
             {
@@ -36,7 +36,7 @@ const HomeMeta = (props) => {
           ]
         }
         openGraph={{
-          url: metaURL,
+          url: metaCanonicalUrl,
           title: metaTitle,
           description: metaDescription,
           type: 'website',
@@ -59,7 +59,7 @@ const HomeMeta = (props) => {
         }}
       />
       <ArticleJsonLd
-        url={metaURL}
+        url={metaCanonicalUrl}
         title={metaTitle}
         images={[
           metaImageUrl,

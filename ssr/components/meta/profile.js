@@ -31,7 +31,7 @@ const ProfileMeta = (props) => {
       ? candidate.constituency.main_areas.map(a => Object.values(a)[0]).join(', ')
       : candidate.constituency.main_areas.map(a => Object.values(a)[0]).join(', ')
 
-    const metaURL = meta.formatCandidateCanonicalUrl(name, id)
+    const metaCanonicalUrl = meta.formatCandidateCanonicalUrl(name, id)
     const metaSiteMap = meta.formatSiteName()
     const metaTitle = meta.formatCandidateTitle(candidateName, constituencyName, constituencyCode, districtName)
     const metaDescription = meta.formatCandidateDescription(candidateName, constituencyName, constituencyCode, districtName, areaName, candidateNumber, mainAreasNames)
@@ -48,7 +48,7 @@ const ProfileMeta = (props) => {
         <NextSeo
           title={metaTitle}
           description={metaDescription}
-          canonical={metaURL}
+          canonical={metaCanonicalUrl}
           additionalMetaTags={
             [
               {
@@ -58,7 +58,7 @@ const ProfileMeta = (props) => {
             ]
           }
           openGraph={{
-            url: metaUrl,
+            url: metaCanonicalUrl,
             title: metaTitle,
             description: metaDescription,
             type: 'website',
@@ -81,7 +81,7 @@ const ProfileMeta = (props) => {
           }}
         />
         <ArticleJsonLd
-          url={metaUrl}
+          url={metaCanonicalUrl}
           title={metaTitle}
           images={[
             metaImageUrl,

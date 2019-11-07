@@ -26,7 +26,7 @@ const ConstituencyMeta = (props) => {
       ? constituency.main_areas.map(a => Object.values(a)[0]).join(', ')
       : constituency.main_areas.map(a => Object.values(a)[0]).join(', ')
 
-    const canonicalUrl = meta.formatConstituencyCanonicalUrl(year, code)
+    const metaCanonicalUrl = meta.formatConstituencyCanonicalUrl(year, code)
     const metaSiteMap = meta.formatSiteName()
     const metaTitle = meta.formatConstituencyTitle(constituencyName, constituencyCode, districtName, areaName)
     const metaDescription = meta.formatConstituencyDescription(constituencyName, constituencyCode, mainAreasNames)
@@ -43,7 +43,7 @@ const ConstituencyMeta = (props) => {
         <NextSeo
           title={metaTitle}
           description={metaDescription}
-          canonical={canonicalUrl}
+          canonical={metaCanonicalUrl}
           additionalMetaTags={
             [
               {
@@ -53,7 +53,7 @@ const ConstituencyMeta = (props) => {
             ]
           }
           openGraph={{
-            url: canonicalUrl,
+            url: metaCanonicalUrl,
             title: metaTitle,
             description: metaDescription,
             type: 'website',
@@ -76,7 +76,7 @@ const ConstituencyMeta = (props) => {
           }}
         />
         <ArticleJsonLd
-          url={canonicalUrl}
+          url={metaCanonicalUrl}
           title={metaTitle}
           images={[
             metaImageUrl,
