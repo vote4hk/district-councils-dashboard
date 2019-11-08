@@ -8,17 +8,25 @@ import styled from 'styled-components'
 import axios from 'axios'
 import PersonEvent from 'components/molecules/PersonEvent'
 import Typography from '@material-ui/core/Typography'
-import { DefaultLink } from 'components/atoms/Link'
+import { COLORS } from 'ui/theme'
 import { useTranslation } from 'react-i18next'
 
 const Container = styled.div`
   && {
     width: 100%;
     margin-top: 32px;
+    padding: 0 16px 0;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    a {
+      text-decoration: unset;
+      color: ${COLORS.main.primary};
+    }
+    a:hover {
+      text-decoration: underline;
+    }
   }
 `
 
@@ -30,6 +38,7 @@ const StyledRows = styled(Rows)`
 
 const StyledButton = styled(Button)`
   && {
+    text-transform: lowercase;
     border: 1px black solid;
     height: 48px;
     padding: 0 32px;
@@ -57,25 +66,19 @@ const FCPersonData = props => {
       <Container>
         {events.length > 0 ? (
           <Typography variant="body">
-            以下資料取自
-            <DefaultLink target="_blank" href={fcUri}>
-              {/* 選區事實處 */}
-              {t('thirdParty.dfo')}
-            </DefaultLink>
-            ，如有補充或錯漏，請即
-            <DefaultLink target="_blank" href={fcUri}>
-              報料
-            </DefaultLink>
-            ！
+            <span
+              dangerouslySetInnerHTML={{
+                __html: t('fcPersonData.report', { fc_url: fcUri }),
+              }}
+            />
           </Typography>
         ) : (
           <Typography variant="body">
-            此人未有事件記錄，請即到
-            <DefaultLink target="_blank" href={fcUri}>
-              {/* 選區事實處 */}
-              {t('thirdParty.dfo')}
-            </DefaultLink>
-            報料！
+            <span
+              dangerouslySetInnerHTML={{
+                __html: t('fcPersonData.no_record', { fc_url: fcUri }),
+              }}
+            />
           </Typography>
         )}
       </Container>
@@ -92,7 +95,7 @@ const FCPersonData = props => {
               }}
             >
               {/* 更多資料及往績 */}
-              {t('fcPersonData.paragraph3')}
+              {t('fcPersonData.go_to_fc', { name })}
             </StyledButton>
           </Container>
         )}

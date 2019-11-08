@@ -48,6 +48,7 @@ const GET_PEOPLE_PROFILE = gql`
         career
         district {
           dc_name_zh
+          dc_name_en
           dc_code
         }
         political_affiliation
@@ -56,14 +57,17 @@ const GET_PEOPLE_PROFILE = gql`
           id
           year
           name_zh
+          name_en
         }
       }
       candidates {
         constituency {
           name_zh
+          name_en
           code
           district {
             dc_name_zh
+            dc_name_en
             dc_code
           }
         }
@@ -93,7 +97,7 @@ const FlexRowContainer = styled(Box)`
 
 const CandidateHeaderContainer = styled(FlexRowContainer)`
   && {
-    height: 116px;
+    height: 120px;
     position: relative;
     display: flex;
     background: linear-gradient(
@@ -115,7 +119,7 @@ const PersonName = styled.div`
   && {
     position: absolute;
     left: 116px;
-    top: 32px;
+    top: 36px;
     color: ${props => COLORS.camp[props.camp].text};
   }
 `
@@ -383,7 +387,9 @@ class ProfilePage extends Component {
             // tips: '根據候選人簡介的年齡推算',
             tips: t('personHighlight.age.tips'),
             text: person.estimated_yob
-              ? `${(person.yod || 2019) - person.estimated_yob}歲`
+              ? t('personHighlight.age.value', {
+                  n: (person.yod || 2019) - person.estimated_yob,
+                })
               : '-',
           })
 
@@ -393,7 +399,7 @@ class ProfilePage extends Component {
             title: t('relatedOrganizations'),
             // tips: '候選人或議員的所屬政黨或社區組織，來源綜合媒體報道',
             tips: t('relatedOrganizations.tips'),
-            text: person.related_organization || '-',
+            text: person.related_organization || '-', // withLanguage(person.related_organization_en, person.related_organization_zh) || '-'
           })
 
           personHighlight.push({
@@ -463,7 +469,10 @@ class ProfilePage extends Component {
                         }}
                       >
                         <Typography color="textPrimary">
-                          {lastElection.constituency.district.dc_name_zh}
+                          {withLanguage(
+                            lastElection.constituency.district.dc_name_en,
+                            lastElection.constituency.district.dc_name_zh
+                          )}
                         </Typography>
                       </UnstyledLink>
                       <UnstyledLink
@@ -476,12 +485,15 @@ class ProfilePage extends Component {
                         }}
                       >
                         <Typography color="textPrimary">
-                          {lastElection.constituency.name_zh}（
-                          {lastElection.constituency.code}）
+                          {withLanguage(
+                            lastElection.constituency.name_en,
+                            lastElection.constituency.name_zh
+                          )}
+                          （{lastElection.constituency.code}）
                         </Typography>
                       </UnstyledLink>
                       <Typography color="primary" style={{ fontWeight: 600 }}>
-                        {person.name_zh}
+                        {withLanguage(person.name_en, person.name_zh)}
                       </Typography>
                     </Breadcrumbs>
                   </BreadcrumbsContainer>

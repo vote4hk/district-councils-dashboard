@@ -8,19 +8,18 @@ import { COLORS } from 'ui/theme'
 
 const AreasTabs = styled(Tabs)`
   && {
+    .MuiTabs-indicator {
+      background-color: ${COLORS.main.primary};
+    }
   }
 `
 // Updated 2019-10-19 Hackathon - make the AreasTab look like a button
 const AreasTab = styled(Tab)`
   && {
-    background-color: ${COLORS.main.primary};
-    color: ${COLORS.main.background};
+    color: ${COLORS.main.primary};
     margin: 3px 5px;
-    :hover {
-      color: ${COLORS.main.primary};
-      background-color: ${COLORS.main.background};
-      border-color: 1px ${COLORS.main.primary} solid;
-    }
+    font-weight: 600;
+    opacity: 1;
   }
 `
 

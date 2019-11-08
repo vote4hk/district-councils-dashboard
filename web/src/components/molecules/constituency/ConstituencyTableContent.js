@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import CandidatesTableContent from 'components/molecules/candidate/CandidatesTableContent'
 import { TableRow, TableCell, Box, Typography } from '@material-ui/core'
-import { getConstituencyTagsByCandidateCamps } from 'utils/helper'
+import { getConstituencyTagsByCandidateCamps, withLanguage } from 'utils/helper'
 import { SecondaryTag } from 'components/atoms/Tag'
 import { SeperatedColumns } from 'components/atoms/Columns'
 
@@ -45,7 +45,8 @@ const ConstituencyTableContent = props => {
         <TableCell colSpan={5}>
           <SeperatedColumns>
             <Typography variant="h6">
-              {constituency.name_zh}（{constituency.code}）
+              {withLanguage(constituency.name_en, constituency.name_zh)}（
+              {constituency.code}）
             </Typography>
             <TagContainer>
               {tags.length > 0 &&

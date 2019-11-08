@@ -19,7 +19,11 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/Link'
 import { Alert } from 'components/atoms/Alert'
-import { getDistrictOverviewUriFromTag, getParameterByName } from 'utils/helper'
+import {
+  getDistrictOverviewUriFromTag,
+  getParameterByName,
+  withLanguage,
+} from 'utils/helper'
 import {
   getCentroidFromYearAndCode,
   getAllFeaturesFromPoint,
@@ -206,11 +210,15 @@ class BattleGroundPage extends Component {
                       }}
                     >
                       <Typography color="textPrimary">
-                        {district.district.dc_name_zh}
+                        {withLanguage(
+                          district.district.dc_name_en,
+                          district.district.dc_name_zh
+                        )}
                       </Typography>
                     </UnstyledLink>
                     <Typography color="primary" style={{ fontWeight: 600 }}>
-                      {district.name_zh}（{code}）
+                      {withLanguage(district.name_en, district.name_zh)}（{code}
+                      ）
                     </Typography>
                   </Breadcrumbs>
                 </BreadcrumbsContainer>
@@ -228,9 +236,7 @@ class BattleGroundPage extends Component {
                 </Container>
                 <DCCAOverview
                   year={year}
-                  name_zh={district.name_zh}
                   dc_code={district.district.dc_code}
-                  dc_name_zh={district.district.dc_name_zh}
                   code={district.code}
                   tags={district.tags}
                   voterData={groupVoteStat(district.vote_stats)}

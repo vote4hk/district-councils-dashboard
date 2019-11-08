@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next'
 import {
   getColorFromCamp,
   getConstituencyTagsByCandidateCamps,
+  withLanguage,
 } from 'utils/helper'
 import { COLORS } from 'ui/theme'
 
@@ -189,8 +190,11 @@ const CandidatesContainer = props => {
                                 </ControversialAlert>
                               )}
                               <CandidateName variant="h5">
-                                {candidate.person.name_zh ||
-                                  candidate.person.name_en}
+                                {withLanguage(
+                                  candidate.person.name_en,
+                                  candidate.person.name_zh ||
+                                    candidate.person.name_en
+                                )}
                               </CandidateName>
 
                               <Typography variant="body2">

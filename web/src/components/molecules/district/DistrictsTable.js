@@ -19,6 +19,7 @@ const StyledTableCell = styled(TableCell)`
     :last-child {
       padding: 6px 0px 6px 16px;
     }
+    line-height: 1rem;
   }
 `
 
@@ -115,7 +116,10 @@ class DistrictsTable extends Component {
         <Table id="districtsTable" size="small" onScroll={this.handleScroll}>
           <TableHead>
             <TableRow>
-              <StyledTableCell>候選人</StyledTableCell>
+              <StyledTableCell>
+                {/* 候選人 */}
+                {t('candidates')}
+              </StyledTableCell>
               <StyledTableCell>
                 {/* 相關組織{' '} */}
                 {t('relatedOrganizations')}{' '}

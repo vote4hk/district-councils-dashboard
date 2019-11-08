@@ -30,7 +30,6 @@ const FlexLink = styled(DefaultLink)`
 `
 const SummaryExpansionPanel = styled(ExpansionPanel)`
   && {
-    margin: 5px 0;
     box-shadow: none;
   }
 `

@@ -39,12 +39,15 @@ tags {
 const DISTRICT_DATA = `
 area_code
 area_name_zh
+area_name_en
 dc_code
 dc_name_zh
+dc_name_en
 dc_description_zh
 constituencies( where: { year: { _eq: $year } }, order_by: {code: asc} ) {
   id
   name_zh
+  name_en
   code
   candidates( where: { year: { _eq: $year } }, order_by: {candidate_number: asc} ) {
     candidate_number
@@ -135,6 +138,7 @@ export const QUERY_GET_AREA = gql`
       constituencies(where: { year: { _eq: 2019 } }) {
         code
         name_zh
+        name_en
       }
     }
   }
@@ -248,6 +252,8 @@ export const QUERY_GET_CANDIDATES = gql`
       candidate_number
       is_won
       political_affiliation
+      political_affiliation_en
+      political_affiliation_zh
       election_type
       camp
       nominate_status
