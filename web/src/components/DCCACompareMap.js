@@ -19,6 +19,8 @@ import dc2011 from '../data/DCCA_2011'
 import dc2015 from '../data/DCCA_2015'
 import dc2019 from '../data/DCCA_2019'
 
+import { adjustConcavePolygonCentroid } from 'utils/features'
+
 const MapContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -194,10 +196,12 @@ class DCCACompareMap extends Component {
           this.highlightFeature(features[i])
 
           const loadedResult = {
-            centroid: features[i]
-              .getGeometry()
-              .getInteriorPoint()
-              .getCoordinates(),
+            centroid:
+              adjustConcavePolygonCentroid(2019, code) ||
+              features[i] // hardcode as 2019
+                .getGeometry()
+                .getInteriorPoint()
+                .getCoordinates(),
           }
 
           handleMapLoaded(loadedResult)
