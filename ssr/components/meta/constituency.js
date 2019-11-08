@@ -1,57 +1,38 @@
 import React from 'react'
 import Head from 'next/head'
 import { ArticleJsonLd, NextSeo } from 'next-seo'
+import zh from '../../lib/locale/zh'
+import en from '../../lib/locale/en'
 
 const ConstituencyMeta = (props) => {
   const { year, code, lang, loading, error, data } = props
 
-  const url = lang === 'en'
-    ? `https://vote4.hk/en/district/${year}/${code}`
-    : `https://vote4.hk/district/${year}/${code}`
+  const meta = lang === 'en' ? en : zh
 
   if (!loading) {
     const constituency = data.dcd_constituencies.length > 0
       ? data.dcd_constituencies[0]
       : {}
-    const displayName = lang === 'en'
-      ? `${constituency.name_en}｜${constituency.district.dc_name_en}`
-      : `${constituency.name_zh}｜${constituency.district.dc_name_zh}`
-    const candidates = constituency.candidates.filter(
-      candidate => candidate.nominate_status !== 'disqualified') || []
-    const main_area = constituency.main_areas.map(a => Object.values(a)[0]).
-      join(', ')
-    const candi_camp_count = {}
-    candidates.forEach(candidate => {
-      let camp = candidate.camp || '其他'
-      if (!candi_camp_count[camp]) {
-        candi_camp_count[camp] = 1
-      } else {
-        candi_camp_count[camp]++
-      }
-    })
 
-    const candi_camp_summary = [
-      (candi_camp_count['民主'] && `民主：${candi_camp_count['民主']}`),
-      (candi_camp_count['建制'] && `建制：${candi_camp_count['建制']}`),
-      (candi_camp_count['其他'] && `其他：${candi_camp_count['其他']}`),
-    ].filter(c => typeof c !== 'undefined')
+    const constituencyName = lang === 'en'
+      ? constituency.name_en : constituency.name_zh
+    const constituencyCode = constituency.code
+    const districtName = lang === 'en'
+      ? constituency.district.dc_name_en : constituency.district.dc_name_zh
+    const areaName = lang === 'en'
+      ? constituency.district.lc_name_en
+      : constituency.district.lc_name_zh
+    const mainAreasNames = lang === 'en'
+      ? constituency.main_areas.map(a => Object.values(a)[0]).join(', ')
+      : constituency.main_areas.map(a => Object.values(a)[0]).join(', ')
 
-    let clash = ''
-    if (candi_camp_count['民主'] > 1) clash = clash + `民主派`
-    if (candi_camp_count['建制'] > 1) clash = clash + `建制派`
-    if (clash.length > 0) clash = clash + `撞區｜`
-
-    const description = (`${clash}${candidates.length > 3
-      ? `${candidates.length}人混戰`
-      : `${candidates.length}名候選人`}｜${candi_camp_summary.join(
-      ' ')}｜${main_area}`)
-
-    const metaSiteMap = 'Vote4HK 區議會投票指南 ✋🏻💜⚡'
-    const metaTitle = `${displayName}｜Vote4HK 區議會投票指南 ✋🏻💜⚡`
-    const metaDescription = `${description}｜了解區選最新消息，選區背景資料丶候選人政綱及表現`
-    const metaKeyword = `${displayName}, vote4hk, vote4, 投票指南, 區議會選舉, 區議會, 區選, 選舉, 2019 dc, district council election, 掌心雷, 候選人, 選區, 分界, 地圖, 選情, 數據, 分析`
-    const metaImageUrl = 'https://vote4.hk/og-image.png'
-    const metaArticleSection = '候選人資料｜選區分界地圖｜選情數據分析'
+    const metaCanonicalUrl = meta.formatConstituencyCanonicalUrl(year, code)
+    const metaSiteMap = meta.formatSiteName()
+    const metaTitle = meta.formatConstituencyTitle(constituencyName, constituencyCode, districtName, areaName)
+    const metaDescription = meta.formatConstituencyDescription(constituencyName, constituencyCode, mainAreasNames)
+    const metaKeyword = meta.formatKeyword(constituencyName)
+    const metaImageUrl = meta.formatImageUrl()
+    const metaArticleSection = meta.formatArticleSection()
 
     return (
       <div>
@@ -62,7 +43,7 @@ const ConstituencyMeta = (props) => {
         <NextSeo
           title={metaTitle}
           description={metaDescription}
-          canonical={url}
+          canonical={metaCanonicalUrl}
           additionalMetaTags={
             [
               {
@@ -72,7 +53,7 @@ const ConstituencyMeta = (props) => {
             ]
           }
           openGraph={{
-            url: url,
+            url: metaCanonicalUrl,
             title: metaTitle,
             description: metaDescription,
             type: 'website',
@@ -95,7 +76,7 @@ const ConstituencyMeta = (props) => {
           }}
         />
         <ArticleJsonLd
-          url={url}
+          url={metaCanonicalUrl}
           title={metaTitle}
           images={[
             metaImageUrl,
@@ -107,6 +88,14 @@ const ConstituencyMeta = (props) => {
           publisherLogo={metaImageUrl}
           description={metaDescription}
         />
+
+        <h1>
+          {districtName}－{constituencyName}
+        </h1>
+
+        <h2>
+          {mainAreasNames}
+        </h2>
       </div>
     )
   } else {

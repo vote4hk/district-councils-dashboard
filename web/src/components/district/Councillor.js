@@ -117,7 +117,7 @@ class Councillor extends Component {
                     camp={getColorFromPoliticalAffiliation(
                       councillor.political_affiliation
                     )}
-                    src={`${homeUrl}/static/images/avatar/${councillor.person.uuid}.jpg`}
+                    src={`${homeUrl}/static/images/avatar/100x100/${councillor.person.uuid}.jpg`}
                     imgProps={{
                       onError: e => {
                         e.target.src =

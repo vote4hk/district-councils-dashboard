@@ -7,6 +7,14 @@ query fetch_district($code: String!) {
     }) {
         dc_name_zh
         dc_name_en
+        lc_name_zh
+        lc_name_en
+        area_name_zh
+        area_name_en
+        constituencies( where: { year: { _eq: 2019 } }, order_by: {code: asc} ) {
+            name_zh
+            name_en
+        }
     }
 }`
 
@@ -17,11 +25,14 @@ query fetch_constituency($year: Int!, $code: String!) {
         code: {_eq: $code}
     }) {
         code
+        main_areas
         district {
             dc_name_zh
             dc_name_en
             lc_name_zh
             lc_name_en
+            area_name_zh
+            area_name_en
         }
         name_zh
         name_en
@@ -45,13 +56,20 @@ query fetch_user($uuid: uuid!) {
         }) {
             year
             cacode
+            candidate_number
             constituency {
+                code
                 name_zh
                 name_en
                 district {
                     dc_name_zh
                     dc_name_en
+                    lc_name_zh
+                    lc_name_en
+                    area_name_zh
+                    area_name_en
                 }
+                main_areas
             }
             occupation_zh
             occupation_en

@@ -1,32 +1,43 @@
 import React from 'react'
 import Head from 'next/head'
 import { ArticleJsonLd, NextSeo } from 'next-seo'
+import zh from '../../lib/locale/zh'
+import en from '../../lib/locale/en'
 
 const ProfileMeta = (props) => {
-  const { t, id, name, lang, loading, error, data } = props
+  const { id, name, lang, loading, error, data } = props
 
-  console.log(`Lang is ${lang} at ProfileMeta`)
-
-  const url = lang === 'en'
-    ? `https://vote4.hk/en/profile/${name}/${id}`
-    : `https://vote4.hk/profile/${name}/${id}`
+  const meta = lang === 'en' ? en : zh
 
   if (!loading) {
     const person = data.dcd_people.length > 0 ? data.dcd_people[0] : {}
-    const displayName = lang === 'en'
+    const candidate = person.candidates ? person.candidates[0] || {} : {}
+
+    const candidateName = lang === 'en'
       ? (person.name_en || person.name_zh)
       : (person.name_zh || person.name_en)
-    const candidate = person.candidates ? person.candidates[0] || {} : {}
-    const description = `${candidate.constituency.district.dc_name_zh} - ${candidate.constituency.name_zh}｜${candidate.political_affiliation ||
-    '-'}｜${candidate.year}年｜第${person.candidates.length}次參選${person.estimated_yob &&
-    person.estimated_yob !== '1990' ? `｜${person.estimated_yob}年出生` : ''}`
+    const constituencyName = lang === 'en'
+      ? candidate.constituency.name_en
+      : candidate.constituency.name_zh
+    const constituencyCode = candidate.constituency.code
+    const districtName = lang === 'en'
+      ? candidate.constituency.district.dc_name_en
+      : candidate.constituency.district.dc_name_zh
+    const areaName = lang === 'en'
+      ? candidate.constituency.district.lc_name_en
+      : candidate.constituency.district.lc_name_zh
+    const candidateNumber = candidate.candidate_number
+    const mainAreasNames = lang === 'en'
+      ? candidate.constituency.main_areas.map(a => Object.values(a)[0]).join(', ')
+      : candidate.constituency.main_areas.map(a => Object.values(a)[0]).join(', ')
 
-    const metaSiteMap = 'Vote4HK 區議會投票指南 ✋🏻💜⚡'
-    const metaTitle = `${displayName}｜Vote4HK 區議會投票指南 ✋🏻💜⚡`
-    const metaDescription = `${description}｜了解區選最新消息，選區背景資料丶候選人政綱及表現`
-    const metaKeyword = `${displayName}, vote4hk, vote4, 投票指南, 區議會選舉, 區議會, 區選, 選舉, 2019 dc, district council election, 掌心雷, 候選人, 選區, 分界, 地圖, 選情, 數據, 分析`
-    const metaImageUrl = `https://vote4.hk/static/images/avatar/${id}.jpg`
-    const metaArticleSection = '候選人資料｜選區分界地圖｜選情數據分析'
+    const metaCanonicalUrl = meta.formatCandidateCanonicalUrl(name, id)
+    const metaSiteMap = meta.formatSiteName()
+    const metaTitle = meta.formatCandidateTitle(candidateName, constituencyName, constituencyCode, districtName)
+    const metaDescription = meta.formatCandidateDescription(candidateName, constituencyName, constituencyCode, districtName, areaName, candidateNumber, mainAreasNames)
+    const metaKeyword = meta.formatKeyword(candidateName)
+    const metaImageUrl = meta.formatCandidateImageUrl(id)
+    const metaArticleSection = meta.formatArticleSection()
 
     return (
       <div>
@@ -37,7 +48,7 @@ const ProfileMeta = (props) => {
         <NextSeo
           title={metaTitle}
           description={metaDescription}
-          canonical={url}
+          canonical={metaCanonicalUrl}
           additionalMetaTags={
             [
               {
@@ -47,7 +58,7 @@ const ProfileMeta = (props) => {
             ]
           }
           openGraph={{
-            url: url,
+            url: metaCanonicalUrl,
             title: metaTitle,
             description: metaDescription,
             type: 'website',
@@ -70,7 +81,7 @@ const ProfileMeta = (props) => {
           }}
         />
         <ArticleJsonLd
-          url={url}
+          url={metaCanonicalUrl}
           title={metaTitle}
           images={[
             metaImageUrl,
@@ -83,9 +94,13 @@ const ProfileMeta = (props) => {
           description={metaDescription}
         />
 
-        <div>
-          {displayName}
-        </div>
+        <h1>
+          {candidateName}
+        </h1>
+
+        <h2>
+          {districtName}－{constituencyName}（{constituencyCode}）
+        </h2>
 
       </div>
     )
