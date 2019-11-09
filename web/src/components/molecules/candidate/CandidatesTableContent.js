@@ -59,7 +59,7 @@ const CandidateGrid = props => {
       justify="flex-start"
       alignItems="center"
       spacing={1}
-      style={{ minWidth: '140px' }}
+      style={{ minWidth: '140px', flexFlow: 'nowrap' }}
     >
       {candidate.candidate_number > 0 && (
         <Grid item>
@@ -89,12 +89,7 @@ const CandidateGrid = props => {
               }
             },
           }}
-          opacity={
-            candidate.nominate_status === 'disqualified' ||
-            candidate.nominate_status === 'suspended'
-              ? 0.1
-              : 1
-          }
+          opacity={candidate.nominate_status === 'disqualified' ? 0.1 : 1}
         />
       </Grid>
       <Grid item>
@@ -115,7 +110,8 @@ const CandidateGrid = props => {
           <>
             <br />
             <span>
-              {/* (取消資格) */}({t('candidate.nominateStatus.disqualified')})
+              {/* (取消資格) */}
+              {t('candidate.nominateStatus.disqualified_bracket')}
             </span>
           </>
         )}
@@ -123,8 +119,17 @@ const CandidateGrid = props => {
           <>
             <br />
             <span>
-              {/* (棄選) */}({t('candidate.nominateStatus.suspended')})
+              {/* (棄選) */}
+              {t('candidate.nominateStatus.suspended_bracket')}
             </span>
+          </>
+        )}
+        {candidate.tags.findIndex(
+          tag => tag.type === 'demo_status' && tag.tag === 'planb'
+        ) > -1 && (
+          <>
+            <br />
+            <span>{t('candidate.nominateStatus.demo_planb_bracket')}</span>
           </>
         )}
       </Grid>

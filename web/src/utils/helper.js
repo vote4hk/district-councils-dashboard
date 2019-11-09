@@ -183,9 +183,9 @@ export const getConstituencyTagsByCandidateCamps = candidates => {
     c =>
       c.election_type === 'ordinary' &&
       c.nominate_status === 'confirmed' &&
-      !c.tags.findIndex(
+      c.tags.findIndex(
         tag => tag.type === 'demo_status' && tag.tag === 'planb'
-      ) > -1
+      ) === -1
   )
 
   if (filteredCandidates.length >= 3) {
