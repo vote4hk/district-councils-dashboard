@@ -5,7 +5,7 @@ import { Typography, Grid, Breadcrumbs, Avatar } from '@material-ui/core'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/Link'
 import { PeopleAvatar } from 'components/atoms/Avatar'
-import HtmlParagraph from 'components/atoms/HtmlParagraph'
+// import HtmlParagraph from 'components/atoms/HtmlParagraph'
 import ScrollableTabs from 'components/organisms/ScrollableTabs'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
@@ -209,14 +209,14 @@ const BreadcrumbsContainer = styled(Box)`
     padding: 4px 16px;
   }
 `
-const PersonDescriptionParagraph = styled(HtmlParagraph)`
-  && {
-    margin-top: 0px;
-    padding-left: 16px;
-    padding-right: 16px;
-    margin-bottom: 8px;
-  }
-`
+// const PersonDescriptionParagraph = styled(HtmlParagraph)`
+//   && {
+//     margin-top: 0px;
+//     padding-left: 16px;
+//     padding-right: 16px;
+//     margin-bottom: 8px;
+//   }
+// `
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -585,9 +585,9 @@ class ProfilePage extends Component {
                   ))}
                 </Grid>
               </PersonHighlightContainer>
-              {person.description && (
+              {/* {person.description && (
                 <PersonDescriptionParagraph text={person.description} />
-              )}
+              )} */}
               {lastElection.year === 2019 &&
                 lastElection.election_type === 'ordinary' && (
                   <PlatformContainer
