@@ -317,6 +317,10 @@ export const QUERY_GET_NOMINATION_SUMMARY = gql`
         nominated_at
         nominate_status
         election_type
+        tags {
+          tag
+          type
+        }
       }
       tags {
         tag
