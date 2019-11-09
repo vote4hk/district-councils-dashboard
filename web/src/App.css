@@ -1,5 +1,5 @@
 /* Load in your font */
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans+TC');
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+TC&amp;display=swap&amp;subset=chinese-traditional');
 
 .App {
   text-align: center;
