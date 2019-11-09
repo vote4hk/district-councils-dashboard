@@ -151,6 +151,7 @@
   "electoral_messages": "選舉信息",
   "electoral_messages.tips": "以下簡介由候選人向選舉管理委員會提供，所載有關候選人的資料、意見及選舉信息與本網站無關。",
   "summary.tag.clash": "撞區 - {{n}}區",
-  "summary.tag.switch": "有機會翻盤 - {{n}}區",
+  "summary.tag.highlight": "焦點選區 - {{n}}區",
+  "summary.tag.highlight_text": "是次選舉，該選區有超過2個候選人。另外，該選區於2015區議會選舉競爭激烈（當選者得票與第二高得票者相差少於10個百分比）或自動當選。",
   "summary.tag.uncontested": "上屆自動當選 - {{n}}區"
 }

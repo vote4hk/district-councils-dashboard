@@ -53,7 +53,7 @@ function ControlledExpansionPanels(props) {
     setExpanded(isExpanded ? panel : false)
   }
 
-  const { demo_clash, estab_clash } = props.tagsData // auto_win, margin_win
+  const { demo_clash, estab_clash, highlight } = props.tagsData // auto_win, highlight
 
   return (
     <div>
@@ -68,6 +68,37 @@ function ControlledExpansionPanels(props) {
         >
           <Typography variant="h5" gutterBottom>
             {/* 撞區 - {demo_clash.length + estab_clash.length}區 */}
+            {t('summary.tag.highlight', { n: highlight.length })}
+          </Typography>
+        </SummaryExpansionPanelSummary>
+        <SummaryExpansionPanelDetails>
+          <Columns>
+            <Typography variant="h6" gutterBottom>
+              {t('summary.tag.highlight_text')}
+            </Typography>
+            {highlight.map((district, index) => (
+              <FlexLink
+                key={index}
+                onClick={() =>
+                  props.history.push(`district/2019/${district.code}`)
+                }
+              >
+                {withLanguage(district.name_en, district.name_zh)}
+              </FlexLink>
+            ))}
+          </Columns>
+        </SummaryExpansionPanelDetails>
+      </SummaryExpansionPanel>
+      <SummaryExpansionPanel
+        expanded={expanded === 'panel2'}
+        onChange={handleChange('panel2')}
+      >
+        <SummaryExpansionPanelSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2bh-content"
+          id="panel2bh-header"
+        >
+          <Typography variant="h5" gutterBottom>
             {t('summary.tag.clash', {
               n: demo_clash.length + estab_clash.length,
             })}
@@ -113,34 +144,6 @@ function ControlledExpansionPanels(props) {
           </Columns>
         </SummaryExpansionPanelDetails>
       </SummaryExpansionPanel>
-      {/* <SummaryExpansionPanel
-        expanded={expanded === 'panel2'}
-        onChange={handleChange('panel2')}
-      >
-        <SummaryExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2bh-content"
-          id="panel2bh-header"
-        >
-          <Typography variant="h5" gutterBottom>
-            {t('summary.tag.switch', { n: margin_win.length })}
-          </Typography>
-        </SummaryExpansionPanelSummary>
-        <SummaryExpansionPanelDetails>
-          <Columns>
-            {margin_win.map((district, index) => (
-              <FlexLink
-                key={index}
-                onClick={() =>
-                  props.history.push(`district/2019/${district.code}`)
-                }
-              >
-                {withLanguage(district.name_en, district.name_zh)}
-              </FlexLink>
-            ))}
-          </Columns>
-        </SummaryExpansionPanelDetails>
-      </SummaryExpansionPanel> */}
       {/* <SummaryExpansionPanel
         expanded={expanded === 'panel3'}
         onChange={handleChange('panel3')}
@@ -200,20 +203,33 @@ const Summary = props => {
         // const candi_4 = result.filter(r => r.tags.includes('多人混戰')).filter(district => district.candidates.length === 4)
 
         let auto_win = []
-        let margin_win = []
+        let highlight = []
         if (data && data.c2015) {
           data.c2015.forEach(dcca2015 => {
             let dcca2019 = data.c2019.find(c => c.name_zh === dcca2015.name_zh)
             if (dcca2019) {
+              const filteredCandidates2019 = dcca2019.candidates.filter(
+                c =>
+                  c.election_type === 'ordinary' &&
+                  c.nominate_status === 'confirmed' &&
+                  c.tags.findIndex(
+                    tag => tag.type === 'demo_status' && tag.tag === 'planb'
+                  ) === -1
+              )
               if (dcca2015.candidates.length <= 1) {
                 auto_win.push(dcca2019)
+                if (filteredCandidates2019.length > 2) highlight.push(dcca2019)
               } else {
                 var votes = dcca2015.candidates
                   .map(c => c.votes)
                   .sort((a, b) => b - a)
                 var allVotes = votes.reduce((a, b) => a + b, 0)
                 var votesDiffFrac = (votes[0] - votes[1]) / allVotes
-                if (votesDiffFrac < 0.08) margin_win.push(dcca2019)
+                if (votesDiffFrac < 0.1) {
+                  // Check if 2019 has 3 and more candidates
+                  if (filteredCandidates2019.length > 2)
+                    highlight.push(dcca2019)
+                }
               }
             }
           })
@@ -223,7 +239,7 @@ const Summary = props => {
           demo_clash: demo_clash,
           estab_clash: estab_clash,
           auto_win: auto_win,
-          margin_win: margin_win,
+          highlight: highlight,
         }
 
         return (

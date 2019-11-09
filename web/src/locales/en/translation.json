@@ -151,6 +151,7 @@
   "electoral_messages": "Electoral messages (Chinese only)",
   "electoral_messages.tips": "The contents of the Introduction to Candidates pertaining to the candidates' personal information, views and electoral messages are wholly provided by the candidates. This website takes no responsibility whatsoever for the same.",
   "summary.tag.clash": "Two or more same camp candidates running in the same constituency - {{n}} districts",
-  "summary.tag.switch": "Election results of {{n}} Constituency Areas that may sweep",
+  "summary.tag.highlight": "Highlighted districts - {{n}} districts",
+  "summary.tag.highlight_text": "是次選舉，該選區有超過2個候選人。另外，該選區於2015區議會選舉競爭激烈（當選者得票與第二高得票者相差少於10個百分比）或自動當選。",
   "summary.tag.uncontested": "Uncontested in last election - {{n}} districts"
 }

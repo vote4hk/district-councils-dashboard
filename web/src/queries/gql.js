@@ -312,6 +312,11 @@ export const QUERY_GET_NOMINATION_SUMMARY = gql`
       code
       name_en
       name_zh
+      district {
+        dc_code
+        dc_name_en
+        dc_name_zh
+      }
       candidates {
         camp
         nominated_at
@@ -329,6 +334,7 @@ export const QUERY_GET_NOMINATION_SUMMARY = gql`
 
     c2015: dcd_constituencies(where: { year: { _eq: 2015 } }) {
       code
+      name_en
       name_zh
       candidates {
         votes
