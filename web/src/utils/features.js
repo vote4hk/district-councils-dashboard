@@ -87,11 +87,11 @@ export const adjustConcavePolygonCentroid = (year, code) => {
       L13: [113.989521, 22.365375],
       P02: [114.165739, 22.455871],
       P16: [114.1620147228241, 22.45361940935254],
+      R09: [114.198862, 22.370661],
     },
   }
 
   if (!mapping[year][code]) return
-  console.log(`mapping: ${mapping[year][code]}`)
   return mapping[year][code]
 }
 
