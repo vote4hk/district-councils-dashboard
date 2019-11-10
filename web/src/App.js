@@ -18,6 +18,7 @@ import './App.css'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
 import MobileAppBar from 'components/organisms/MobileAppBar'
+import ShareButton from 'components/organisms/ShareButton'
 import Footer from 'components/organisms/Footer'
 import { ContextStoreProvider } from 'ContextStore'
 import withTracker from './WithTracker'
@@ -25,6 +26,7 @@ import SearchDrawer from 'components/pages/SearchDrawer'
 import DistrictOverviewPage from 'components/pages/district/overview'
 import DistrictAllPage from 'components/pages/district/all'
 import GlobalDisclaimer from 'components/organisms/GlobalDisclaimer'
+import { fireEvent } from 'utils/ga_fireevent'
 import i18n from 'i18n'
 
 const client = new ApolloClient({
@@ -165,6 +167,15 @@ const App = props => {
                   </Switch>
                 </main>
               </Wrapper>
+              <ShareButton
+                onClick={() =>
+                  fireEvent({
+                    ca: 'general',
+                    ac: 'click',
+                    lb: 'share_button',
+                  })
+                }
+              />
               <Footer />
             </ContentContainer>
             <SearchDrawer />

@@ -81,7 +81,8 @@ const SearchMenu = props => {
           }
         >
           {/* TODO: i18n */}
-          反映意見
+          {/* 反映意見 */}
+          {t('searchMenu.feedback')}
         </Typography>
       </LeftMargin>
 

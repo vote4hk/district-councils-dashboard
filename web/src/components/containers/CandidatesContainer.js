@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next'
 import {
   getColorFromCamp,
   getConstituencyTagsByCandidateCamps,
+  withLanguage,
 } from 'utils/helper'
 import { COLORS } from 'ui/theme'
 
@@ -158,11 +159,7 @@ const CandidatesContainer = props => {
                                   },
                                 }}
                                 opacity={
-                                  candidate.nominate_status ===
-                                    'disqualified' ||
-                                  candidate.nominate_status === 'suspended'
-                                    ? 0.1
-                                    : 1
+                                  candidate.nominate_status === 'disqualified'
                                 }
                               />
                               {candidate.candidate_number > 0 && (
@@ -189,8 +186,11 @@ const CandidatesContainer = props => {
                                 </ControversialAlert>
                               )}
                               <CandidateName variant="h5">
-                                {candidate.person.name_zh ||
-                                  candidate.person.name_en}
+                                {withLanguage(
+                                  candidate.person.name_en,
+                                  candidate.person.name_zh ||
+                                    candidate.person.name_en
+                                )}
                               </CandidateName>
 
                               <Typography variant="body2">
@@ -202,11 +202,28 @@ const CandidatesContainer = props => {
                               {candidate.nominate_status === 'disqualified' && (
                                 <Typography variant="body2">
                                   {/* 取消資格 */}
-                                  {t('candidate.nominateStatus.disqualified')}
+                                  {t(
+                                    'candidate.nominateStatus.disqualified_bracket'
+                                  )}
                                 </Typography>
                               )}
                               {candidate.nominate_status === 'suspended' && (
-                                <Typography variant="body2"></Typography>
+                                <Typography variant="body2">
+                                  {t(
+                                    'candidate.nominateStatus.suspended_bracket'
+                                  )}
+                                </Typography>
+                              )}
+                              {candidate.tags.findIndex(
+                                tag =>
+                                  tag.type === 'demo_status' &&
+                                  tag.tag === 'planb'
+                              ) > -1 && (
+                                <Typography variant="body2">
+                                  {t(
+                                    'candidate.nominateStatus.demo_planb_bracket'
+                                  )}
+                                </Typography>
                               )}
                             </Candidate>
                           </UnstyledNavLink>

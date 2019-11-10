@@ -72,7 +72,8 @@ function Footer(props) {
                 // console.log(props)
               }
             >
-              關於候選人陣營
+              {/* 關於候選人陣營 */}
+              {t('about.camp')}
             </StyledFooterLink>
           </LinkBox>
           <LinkBox>
@@ -80,7 +81,8 @@ function Footer(props) {
               target="_blank"
               href="https://forms.gle/irD6tEznWPNda6w59"
             >
-              反映意見
+              {/* 反映意見 */}
+              {t('about.feedback')}
             </StyledFooterLink>
           </LinkBox>
           <LinkBox>

@@ -180,7 +180,12 @@ export const getCurrentUrl = () => {
 export const getConstituencyTagsByCandidateCamps = candidates => {
   const tags = []
   const filteredCandidates = candidates.filter(
-    c => c.election_type === 'ordinary' && c.nominate_status === 'confirmed'
+    c =>
+      c.election_type === 'ordinary' &&
+      c.nominate_status === 'confirmed' &&
+      c.tags.findIndex(
+        tag => tag.type === 'demo_status' && tag.tag === 'planb'
+      ) === -1
   )
 
   if (filteredCandidates.length >= 3) {

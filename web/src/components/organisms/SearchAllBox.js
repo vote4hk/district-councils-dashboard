@@ -10,6 +10,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { QUERY_GET_ALL_DISTRICTS } from 'queries/gql'
 import { Search } from '@material-ui/icons'
 import { useTranslation } from 'react-i18next'
+import { withLanguage } from 'utils/helper'
 
 const GET_PEOPLE = gql`
   query($nameRegex: String) {
@@ -96,7 +97,10 @@ const SearchAllBox = props => {
         return {
           coordinate: record.coordinate(),
           constituency,
-          label: record.fullAddress(AddressParser.Address.LANG_ZH),
+          label: withLanguage(
+            record.fullAddress(AddressParser.Address.LANG_EN),
+            record.fullAddress(AddressParser.Address.LANG_ZH)
+          ),
           type: 'address',
         }
       })
@@ -117,10 +121,10 @@ const SearchAllBox = props => {
     data.dcd_candidates.sort((a, b) => b.year - a.year)
     return data.dcd_candidates
       .map(c => ({
-        label: c.person.name_zh || c.person.name_en,
+        label: withLanguage(c.person.name_en, c.person.name_zh), //c.person.name_zh || c.person.name_en,
         uuid: c.person.uuid,
-        name_zh: c.person.name_zh,
-        name_en: c.person.name_en,
+        name_zh: withLanguage(c.person.name_en, c.person.name_zh), // c.person.name_zh,
+        name_en: withLanguage(c.person.name_en, c.person.name_zh), // c.person.name_en,
         constituency: c.constituency,
         camp: c.camp,
         type: 'people',
