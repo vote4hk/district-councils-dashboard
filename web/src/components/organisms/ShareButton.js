@@ -19,13 +19,6 @@ import {
   TwitterIcon,
 } from 'react-share'
 
-const RightIconButton = styled(IconButton)`
-  && {
-    position: absolute;
-    right: 0;
-  }
-`
-
 const StyledCopyIcon = styled(CopyIcon)`
   && {
     width: 32px;
