@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import ContextStore from 'ContextStore'
 import { DRAWER_OPEN } from '../../reducers/drawer'
 import { UnstyledNavLink } from '../atoms/Link'
-import ShareButton from './ShareButton'
+import LanguageSwitcher from './LanguageSwitcher'
 import { fireEvent } from 'utils/ga_fireevent'
 
 const StyledAppBar = styled(AppBar)`
@@ -59,12 +59,12 @@ function MobileAppBar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <ShareButton
+          <LanguageSwitcher
             onClick={() =>
               fireEvent({
                 ca: 'general',
                 ac: 'click',
-                lb: 'share_button',
+                lb: 'xxxxxxx', //FIXME
               })
             }
           />
