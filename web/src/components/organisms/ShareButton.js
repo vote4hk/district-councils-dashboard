@@ -1,11 +1,10 @@
 import React from 'react'
-import IconButton from '@material-ui/core/IconButton'
 import CopyIcon from '@material-ui/icons/Link'
 import styled from 'styled-components'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import Fab from '@material-ui/core/Fab'
-import AddIcon from '@material-ui/icons/Add'
+import ShareIcon from '@material-ui/icons/Share'
 import { getCurrentUrl } from 'utils/helper'
 import { COLORS } from 'ui/theme'
 import {
@@ -94,7 +93,7 @@ function ShareButton(props) {
         aria-haspopup="true"
         onClick={handleShareButtonClick}
       >
-        <AddIcon />
+        <ShareIcon />
       </StyledFab>
       <Menu
         id="share-menu"
