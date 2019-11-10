@@ -64,7 +64,7 @@ function MobileAppBar(props) {
               fireEvent({
                 ca: 'general',
                 ac: 'click',
-                lb: 'xxxxxxx', //FIXME
+                lb: 'lang_switcher_button', //TODO: do we need that?
               })
             }
           />
