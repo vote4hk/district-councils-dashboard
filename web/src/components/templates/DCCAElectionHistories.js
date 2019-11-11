@@ -36,6 +36,7 @@ class DCCAElectionHistories extends Component {
       name_zh
       candidates(where: { year: { _eq: $year${year} }, cacode: { _eq: $code${code} } }) {
         person {
+          name_en
           name_zh
           uuid
         }
