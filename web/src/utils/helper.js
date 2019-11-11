@@ -224,3 +224,17 @@ export const withLanguage = (name_en, name_zh) => {
 export const getCurrentLanguage = () => {
   return i18n.language || window.localStorage.i18nextLng || 'zh'
 }
+
+export const geti18nFromCamp = (camp, isShortForm = false) => {
+  if (!camp) return camp
+
+  const suffix = isShortForm ? '_short_form' : ''
+  const mapping = {
+    民主: `camp.democracy${suffix}`,
+    建制: `camp.establishment${suffix}`,
+    其他: `camp.others${suffix}`,
+  }
+
+  if (!mapping[camp]) return camp
+  return mapping[camp]
+}

@@ -99,6 +99,7 @@ const FlexRowContainer = styled(Box)`
 const CandidateHeaderContainer = styled(FlexRowContainer)`
   && {
     height: 120px;
+    margin-bottom: 16px;
     position: relative;
     display: flex;
     background: linear-gradient(
@@ -121,6 +122,7 @@ const PersonName = styled.div`
     position: absolute;
     left: 116px;
     top: 36px;
+    margin-right: 16px;
     color: ${props => COLORS.camp[props.camp].text};
   }
 `
@@ -261,15 +263,42 @@ class ProfilePage extends Component {
       currentTerm.term_to &&
       Date.parse(new Date()) < Date.parse(currentTerm.term_to)
     ) {
-      text = `現任${currentTerm.district.dc_name_zh}區議員（${currentTerm.constituency.name_zh}）`
+      text = t('currentTerm.councilor.withDistrict', {
+        district_name: withLanguage(
+          currentTerm.district.dc_name_en,
+          currentTerm.district.dc_name_zh
+        ),
+        dcca_name: withLanguage(
+          currentTerm.constituency.name_en,
+          currentTerm.constituency.name_zh
+        ),
+      })
     } else {
-      const electionResult = person.candidates[0].is_won
+      text = person.candidates[0].is_won
         ? // '當選' :
-          t('election.tag1')
+          t('election.elected', {
+            year: person.candidates[0].year,
+            district_name: withLanguage(
+              person.candidates[0].constituency.district.dc_name_en,
+              person.candidates[0].constituency.district.dc_name_zh
+            ),
+            dcca_name: withLanguage(
+              person.candidates[0].constituency.name_en,
+              person.candidates[0].constituency.name_zh
+            ),
+          })
         : // '參選'
-          t('election.tag2')
-
-      text = `${electionResult}${person.candidates[0].year}年${person.candidates[0].constituency.district.dc_name_zh}區議員（${person.candidates[0].constituency.name_zh}）`
+          t('election.run_for', {
+            year: person.candidates[0].year,
+            district_name: withLanguage(
+              person.candidates[0].constituency.district.dc_name_en,
+              person.candidates[0].constituency.district.dc_name_zh
+            ),
+            dcca_name: withLanguage(
+              person.candidates[0].constituency.name_en,
+              person.candidates[0].constituency.name_zh
+            ),
+          })
     }
 
     return <Typography variant="h6">{text}</Typography>
