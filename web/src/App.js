@@ -5,6 +5,7 @@ import { ThemeProvider } from '@material-ui/core/styles/'
 import IndexPage from 'components/pages/landing'
 import ProfilePage from 'components/pages/profile'
 import DistrictPage from 'components/pages/district'
+import FavDistrictListPage from 'components/pages/fav-district'
 import DistrictListPage from 'components/pages/district/list'
 import BattleGroundPage from 'components/pages/battleground'
 import DisclaimerPage from 'components/pages/disclaimer'
@@ -99,6 +100,10 @@ const LangSwitch = props => {
         path={`${path}/disclaimer`}
         component={withTracker(DisclaimerPage)}
       />
+      <Route
+        path={`${path}/SelectedDistrict`}
+        component={withTracker(FavDistrictListPage)}
+      />
       <Route path={`${path}/about-dc`} component={withTracker(AboutDCPage)} />
       <Route path="/about-us" component={withTracker(SupportUsPage)} />
       <Route component={withTracker(NotfoundPage)} />
@@ -162,6 +167,10 @@ const App = props => {
                     <Route
                       path="/about-us"
                       component={withTracker(SupportUsPage)}
+                    />
+                    <Route
+                      path="/SelectedDistrict"
+                      component={withTracker(FavDistrictListPage)}
                     />
                     <Route component={withTracker(NotfoundPage)} />
                   </Switch>

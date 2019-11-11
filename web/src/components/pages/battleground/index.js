@@ -30,6 +30,7 @@ import {
 } from 'utils/features'
 import DCCAElectionHistories from 'components/templates/DCCAElectionHistories'
 import { withTranslation } from 'react-i18next'
+import localforage from 'localforage'
 
 const groupVoteStat = voteStats => {
   const data = _.groupBy(voteStats, stat => stat.subtype)
@@ -62,6 +63,17 @@ const ToggleMapButton = styled(UnstyledButton)`
   }
 `
 
+const FavDistrictButton = styled(UnstyledButton)`
+  && {
+    border-radius: 0;
+    width: 100%;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+`
+
 class BattleGroundPage extends Component {
   constructor(props) {
     super(props)
@@ -74,7 +86,12 @@ class BattleGroundPage extends Component {
       },
       selectedYear: null,
       selectedCode: null,
+      battlegroundArr: [],
     }
+
+    localforage.getItem('battleground').then(value => {
+      this.setState({ battlegroundArr: value === null ? [] : value })
+    })
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -147,6 +164,21 @@ class BattleGroundPage extends Component {
       },
     } = this.props
     this.props.history.push(`/district/${parseInt(year, 10) + 4}/${code}`)
+  }
+
+  TriggerFavDistrict = districtCode => {
+    const dc = districtCode
+    var battleArr = this.state.battlegroundArr
+    if (this.state.battlegroundArr.find(code => code === dc)) {
+      battleArr = battleArr.filter((value, index, arr) => {
+        return value !== dc
+      })
+      this.setState({ battlegroundArr: battleArr })
+    } else {
+      battleArr.push(dc)
+      this.setState({ battlegroundArr: battleArr })
+    }
+    localforage.setItem('battleground', battleArr.sort())
   }
 
   render() {
@@ -242,6 +274,17 @@ class BattleGroundPage extends Component {
                   voterData={groupVoteStat(district.vote_stats)}
                   description={district.description}
                 />
+
+                <FavDistrictButton
+                  onClick={() => this.TriggerFavDistrict(district.code)}
+                >
+                  {this.state.battlegroundArr.find(
+                    code => code === district.code
+                  )
+                    ? `取消關注`
+                    : `關注此選區⭐`}
+                </FavDistrictButton>
+
                 {/* TODO Refactor style for ToggleMap Button */}
                 <ToggleMapButton
                   onClick={() => this.setState({ showMap: !showMap })}

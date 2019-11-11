@@ -85,6 +85,17 @@ query($year: Int!, $code: String!) {
 }
 `
 
+export const QUERY_GET_CONSTITUENCIES_BY_DISTRICT_CODES = gql`
+query($year: Int!, $dc: [String!]) {
+  dcd_constituencies(
+    where: { year: { _eq: $year }, code: { _in: $dc } } 
+    order_by: {code: asc }
+  ) {
+    ${CONSTITUENCIES_DATA}
+  }  
+}
+`
+
 export const QUERY_GET_CONSTITUENCIES_BY_TAG = gql`
 query($year: Int!, $tag: String!) {
   dcd_constituencies(
