@@ -197,9 +197,10 @@ const CandidatesContainer = props => {
                               </CandidateName>
 
                               <Typography variant="body2">
-                                {candidate.political_affiliation ||
-                                  // '未報稱政治聯繫'}{' '}
-                                  t('candidate.noPoliticalAffiliation')}
+                                {withLanguage(
+                                  candidate.political_affiliation_en,
+                                  candidate.political_affiliation_zh
+                                ) || t('candidate.noPoliticalAffiliation')}
                               </Typography>
 
                               {candidate.nominate_status === 'disqualified' && (

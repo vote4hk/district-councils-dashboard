@@ -7,7 +7,7 @@ import { Box, Grid } from '@material-ui/core'
 import { SuccessText, FailureText } from '../atoms/Text'
 import { UnstyledNavLink } from '../atoms/Link'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
-import { formatNumber, getCurrentLanguage } from 'utils/helper'
+import { formatNumber, getCurrentLanguage, withLanguage } from 'utils/helper'
 import { useTranslation } from 'react-i18next'
 import {
   getCentroidFromYearAndCode,
@@ -85,12 +85,18 @@ const PersonElectionHistories = props => {
             </PersonElectionHistoriesTitle>
             <Grid container>
               <Grid item xs={4}>
-                <Typography variant="h5">{m.constituency.name_zh}</Typography>
+                <Typography variant="h5">
+                  {withLanguage(m.constituency.name_en, m.constituency.name_zh)}
+                </Typography>
               </Grid>
               <Grid item xs={5}>
-                <Typography variant="h5">{`${m.political_affiliation || '-'}（${
-                  m.camp
-                }）`}</Typography>
+                <Typography variant="h5">
+                  {withLanguage(
+                    m.political_affiliation_en,
+                    m.political_affiliation_zh
+                  ) || t('candidate.noPoliticalAffiliation')}
+                  （{m.camp}）
+                </Typography>
               </Grid>
               <Grid item xs={3}>
                 {m.is_won ? (
