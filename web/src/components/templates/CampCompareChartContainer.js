@@ -118,7 +118,11 @@ const AGE_GROUP_OLD = ['61-65', '66-70', '71+']
 const STAT_TYPE_NEW_VOTERS = 'NEW_VOTERS'
 const STAT_TYPE_ALL_VOTERS = 'VOTERS'
 
-const groupExpectDataByRegionAndCamp = (constituencies, settings) => {
+export const groupExpectDataByRegionAndCamp = (
+  constituencies,
+  settings,
+  districtCode
+) => {
   const getVoteCountBySetting = (stat, camp, settings) => {
     let settingIndex = 0
     if (AGE_GROUP_MIDDLE.indexOf(stat.category_2) >= 0) {
@@ -143,108 +147,111 @@ const groupExpectDataByRegionAndCamp = (constituencies, settings) => {
       .map(s => getVoteCountBySetting(s, camp, settings))
       .reduce((c, v) => c + v, 0)
   }
-  // First calculate the winner
-  const expectedResult = constituencies.map(constituency => {
-    let camp = '建制' // default camp = 建制 is this good?
 
-    if (
-      constituency.predecessors &&
-      constituency.predecessors.length > 0 &&
-      settings.config.reference_last_election
-    ) {
-      // if there is predecessor, we use only the new voters
-      const predecessor = constituency.predecessors[0].predecessor
+  // First calculate the winner
+  const expectedResult = constituencies
+    .filter(c => !districtCode || c.code.indexOf(districtCode) === 0) // filter function for distrcit compare map
+    .map(constituency => {
+      let camp = '建制' // default camp = 建制 is this good?
 
       if (
-        predecessor.candidates.length === 1 &&
-        settings.config.auto_won_add_components
+        constituency.predecessors &&
+        constituency.predecessors.length > 0 &&
+        settings.config.reference_last_election
       ) {
-        const camps = ['民主', '建制', '其他']
-        const onlyCandidate = predecessor.candidates[0]
-        camps.forEach(camp => {
-          // mock the votes for the last election (because no records for 自動當選)
-          // by 2019 all voters - (2018 - 2019 new voters) - (2015 - 2018 new voters for predecessor)
-          const votes =
-            getProjectedVotes(
-              STAT_TYPE_ALL_VOTERS,
-              camp,
-              settings,
-              constituency.vote_stats
-            ) -
+        // if there is predecessor, we use only the new voters
+        const predecessor = constituency.predecessors[0].predecessor
+
+        if (
+          predecessor.candidates.length === 1 &&
+          settings.config.auto_won_add_components
+        ) {
+          const camps = ['民主', '建制', '其他']
+          const onlyCandidate = predecessor.candidates[0]
+          camps.forEach(camp => {
+            // mock the votes for the last election (because no records for 自動當選)
+            // by 2019 all voters - (2018 - 2019 new voters) - (2015 - 2018 new voters for predecessor)
+            const votes =
+              getProjectedVotes(
+                STAT_TYPE_ALL_VOTERS,
+                camp,
+                settings,
+                constituency.vote_stats
+              ) -
+              getProjectedVotes(
+                STAT_TYPE_NEW_VOTERS,
+                camp,
+                settings,
+                constituency.vote_stats
+              ) -
+              getProjectedVotes(
+                STAT_TYPE_NEW_VOTERS,
+                camp,
+                settings,
+                predecessor.vote_stats
+              )
+
+            if (onlyCandidate.camp !== camp) {
+              predecessor.candidates.push({
+                camp,
+                votes,
+                mock: true,
+              })
+            } else {
+              onlyCandidate.votes = votes
+            }
+          })
+        }
+        let maxVote = 0
+        predecessor.candidates.forEach(c => {
+          // calculation here is:
+          // 2015 election result + (2015-2018 new voters projected from settings[predecessor constituency]) + (2018-2019 new voters projected from settings[new constituency])
+          const projectedVotes =
+            c.votes +
             getProjectedVotes(
               STAT_TYPE_NEW_VOTERS,
-              camp,
+              c.camp,
               settings,
               constituency.vote_stats
-            ) -
+            ) +
             getProjectedVotes(
               STAT_TYPE_NEW_VOTERS,
-              camp,
+              c.camp,
               settings,
               predecessor.vote_stats
             )
-
-          if (onlyCandidate.camp !== camp) {
-            predecessor.candidates.push({
-              camp,
-              votes,
-              mock: true,
-            })
-          } else {
-            onlyCandidate.votes = votes
+          if (
+            projectedVotes >= maxVote &&
+            (!c.mock || settings.config.auto_won_add_components)
+          ) {
+            camp = c.camp
+            maxVote = projectedVotes
           }
         })
-      }
-      let maxVote = 0
-      predecessor.candidates.forEach(c => {
-        // calculation here is:
-        // 2015 election result + (2015-2018 new voters projected from settings[predecessor constituency]) + (2018-2019 new voters projected from settings[new constituency])
-        const projectedVotes =
-          c.votes +
-          getProjectedVotes(
-            STAT_TYPE_NEW_VOTERS,
-            c.camp,
-            settings,
-            constituency.vote_stats
-          ) +
-          getProjectedVotes(
-            STAT_TYPE_NEW_VOTERS,
-            c.camp,
-            settings,
-            predecessor.vote_stats
-          )
-        if (
-          projectedVotes >= maxVote &&
-          (!c.mock || settings.config.auto_won_add_components)
-        ) {
-          camp = c.camp
-          maxVote = projectedVotes
+      } else {
+        // else we calculate from all voters
+        const establishCount = getProjectedVotes(
+          STAT_TYPE_ALL_VOTERS,
+          '建制',
+          settings,
+          constituency.vote_stats
+        )
+        const democracyCount = getProjectedVotes(
+          STAT_TYPE_ALL_VOTERS,
+          '民主',
+          settings,
+          constituency.vote_stats
+        )
+        if (democracyCount > establishCount) {
+          camp = '民主'
         }
-      })
-    } else {
-      // else we calculate from all voters
-      const establishCount = getProjectedVotes(
-        STAT_TYPE_ALL_VOTERS,
-        '建制',
-        settings,
-        constituency.vote_stats
-      )
-      const democracyCount = getProjectedVotes(
-        STAT_TYPE_ALL_VOTERS,
-        '民主',
-        settings,
-        constituency.vote_stats
-      )
-      if (democracyCount > establishCount) {
-        camp = '民主'
       }
-    }
 
-    return {
-      cacode: constituency.code,
-      camp,
-    }
-  })
+      return {
+        cacode: constituency.code,
+        camp,
+      }
+    })
   const byCodes = _.groupBy(expectedResult, c => c.cacode[0])
   return Object.keys(byCodes).map(code => ({
     code,

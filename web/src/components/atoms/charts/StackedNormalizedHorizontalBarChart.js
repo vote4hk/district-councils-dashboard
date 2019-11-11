@@ -113,6 +113,7 @@ export default props => {
 
   const drawChart = res => {
     const { columns, data } = res
+
     if (dimensions.width === 0) {
       return
     }
