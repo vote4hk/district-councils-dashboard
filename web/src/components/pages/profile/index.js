@@ -21,6 +21,7 @@ import { withTranslation } from 'react-i18next'
 import {
   getDistrictOverviewUriFromTag,
   getConstituencyUriFromTag,
+  getCurrentLanguage,
 } from 'utils/helper'
 
 // TODO: add age, camp & related_organization
@@ -229,7 +230,8 @@ class ProfilePage extends Component {
   async componentDidMount() {}
 
   handleElectionDetailButton = (year, code) => {
-    this.props.history.push(`/district/${year}/${code}`)
+    const currentLanguage = getCurrentLanguage()
+    this.props.history.push(`/${currentLanguage}/district/${year}/${code}`)
   }
 
   renderFacebook = person => {
@@ -452,7 +454,10 @@ class ProfilePage extends Component {
                     >
                       <UnstyledLink
                         onClick={() => {
-                          this.props.history.push(`/district/2019`)
+                          const currentLanguage = getCurrentLanguage()
+                          this.props.history.push(
+                            `/${currentLanguage}/district/2019`
+                          )
                         }}
                       >
                         <Typography color="textPrimary">

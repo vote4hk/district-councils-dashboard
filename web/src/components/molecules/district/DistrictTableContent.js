@@ -6,7 +6,7 @@ import TableCell from '@material-ui/core/TableCell'
 import { Typography } from '@material-ui/core'
 import TableRow from '@material-ui/core/TableRow'
 import { useTranslation } from 'react-i18next'
-import { withLanguage } from 'utils/helper'
+import { withLanguage, getCurrentLanguage } from 'utils/helper'
 
 const DistrictNameTableRow = styled(TableRow)`
   && {
@@ -25,11 +25,14 @@ const DistrictTableContent = props => {
   } = props
 
   const { t } = useTranslation()
+  const currentLanguage = getCurrentLanguage()
   return (
     <>
       <DistrictNameTableRow
         onClick={() => {
-          props.history.push(`/district/${year}/${district.dc_code}`)
+          props.history.push(
+            `/${currentLanguage}/district/${year}/${district.dc_code}`
+          )
         }}
       >
         <TableCell colSpan={5}>

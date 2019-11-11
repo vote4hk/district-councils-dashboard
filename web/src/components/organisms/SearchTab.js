@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom'
 import ContextStore from 'ContextStore'
 import { DRAWER_CLOSE } from 'reducers/drawer'
 import DistrictSelector from 'components/molecules/DistrictSelector'
+import { getCurrentLanguage } from 'utils/helper'
 
 const Container = styled(Paper)`
   && {
@@ -51,8 +52,10 @@ function SearchTab(props) {
       When user select click previous button in district page,
       the CACODE should follow follow the above result
     */
-
-    props.history.push(`/district/${result.year}/${result.code}`)
+    const currentLanguage = getCurrentLanguage()
+    props.history.push(
+      `/${currentLanguage}/district/${result.year}/${result.code}`
+    )
     dispatch({ type: DRAWER_CLOSE })
   }
 

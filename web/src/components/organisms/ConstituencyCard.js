@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { SecondaryTag } from 'components/atoms/Tag'
 import Box from '@material-ui/core/Box'
 import Columns from 'components/atoms/Columns'
-import { getDistrictListUriFromTag } from 'utils/helper'
+import { getDistrictListUriFromTag, getCurrentLanguage } from 'utils/helper'
 import CandidatesContainer from 'components/containers/CandidatesContainer'
 
 const StyledCard = styled(Card)`
@@ -29,11 +29,13 @@ const ConstituencyCard = props => {
   const sortedTags = tags.sort((a, b) =>
     a.type === 'boundary' ? -1 : a.type === b.type ? 0 : 1
   )
-
+  const currentLanguage = getCurrentLanguage()
   return (
     <StyledCard
       onClick={() => {
-        props.history.push(`/district/2019/${constituency.code}`)
+        props.history.push(
+          `/${currentLanguage}/district/2019/${constituency.code}`
+        )
       }}
     >
       <Typography variant="h6" gutterBottom>

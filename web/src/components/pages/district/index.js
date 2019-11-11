@@ -7,6 +7,7 @@ import MainAreas from 'components/district/MainAreas'
 import Metrics from 'components/district/Metrics'
 import styled from 'styled-components'
 import { bps } from 'ui/responsive'
+import { getCurrentLanguage } from 'utils/helper'
 
 import { QUERY_CONSTITUENCIES } from 'queries/gql'
 
@@ -65,14 +66,18 @@ class DistrictPage extends Component {
   }
 
   handleCandidateSelected = person => {
+    const currentLanguage = getCurrentLanguage()
     this.props.history.push(
-      `/profile/${person.name_zh || person.name_en}/${person.uuid}`
+      `/${currentLanguage}/profile/${person.name_zh || person.name_en}/${
+        person.uuid
+      }`
     )
   }
 
   handleChangeDistrict = (year, code) => {
     if (!year || !code) return
-    this.props.history.push(`/district/${year}/${code}`)
+    const currentLanguage = getCurrentLanguage()
+    this.props.history.push(`/${currentLanguage}/district/${year}/${code}`)
   }
 
   onPrevElection() {
@@ -81,7 +86,10 @@ class DistrictPage extends Component {
         params: { year, code },
       },
     } = this.props
-    this.props.history.push(`/district/${parseInt(year, 10) - 4}/${code}`)
+    const currentLanguage = getCurrentLanguage()
+    this.props.history.push(
+      `/${currentLanguage}/district/${parseInt(year, 10) - 4}/${code}`
+    )
   }
 
   onNextElection() {
@@ -90,7 +98,10 @@ class DistrictPage extends Component {
         params: { year, code },
       },
     } = this.props
-    this.props.history.push(`/district/${parseInt(year, 10) + 4}/${code}`)
+    const currentLanguage = getCurrentLanguage()
+    this.props.history.push(
+      `/${currentLanguage}/district/${parseInt(year, 10) + 4}/${code}`
+    )
   }
 
   render() {

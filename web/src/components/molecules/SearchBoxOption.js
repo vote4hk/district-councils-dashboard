@@ -7,7 +7,7 @@ import Columns from 'components/atoms/Columns'
 import { withRouter } from 'react-router-dom'
 import ContextStore from 'ContextStore'
 import { DRAWER_CLOSE } from 'reducers/drawer'
-import { getProfilePath } from 'utils/helper'
+import { getProfilePath, getCurrentLanguage } from 'utils/helper'
 // import { fireEvent } from 'utils/ga_fireevent'
 
 const AddressOption = props => {
@@ -96,7 +96,8 @@ export default withRouter(props => {
   } = React.useContext(ContextStore)
 
   function handleAddressSelected({ year, code }) {
-    props.history.push(`/district/${year}/${code}`)
+    const currentLanguage = getCurrentLanguage()
+    props.history.push(`/${currentLanguage}/district/${year}/${code}`)
     dispatch({ type: DRAWER_CLOSE })
   }
 
