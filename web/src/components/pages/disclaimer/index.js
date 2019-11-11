@@ -47,10 +47,10 @@ const DisclaimerPage = props => {
 
         <p>
           {/* 本屆區議會選舉的候選人政治陣營取自 */}
-          {t('disclaimer.paragraph2.segment1')}
+          {t('disclaimer.paragraph2.segment1')}{' '}
           <DefaultLink target="_blank" href="https://hkfactcheck.io">
             {/* 選區事實處 */}
-            {t('thirdParty.dfo')}
+            {t('thirdParty.dfo')}{' '}
           </DefaultLink>
           {/* ，該網站收集大眾意見，並跟據以下資料綜合判斷： */}
           {t('disclaimer.paragraph2.segment2')}
