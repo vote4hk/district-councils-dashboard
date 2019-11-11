@@ -10,6 +10,9 @@ import DCCAOverview from 'components/district/DCCAOverview'
 import { UnstyledButton } from 'components/atoms/Button'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
+import StarIcon from '@material-ui/icons/Star'
+import UnstarIcon from '@material-ui/icons/StarBorder'
+
 import Collapse from '@material-ui/core/Collapse'
 import _ from 'lodash'
 import { QUERY_CONSTITUENCIES } from 'queries/gql'
@@ -72,6 +75,28 @@ const FavDistrictButton = styled(UnstyledButton)`
     text-align: center;
     margin-top: 30px;
     margin-bottom: 20px;
+  }
+`
+
+const StarIconSvg = styled(StarIcon)`
+  && {
+    font-size: ${props => props.size || 24}px;
+    vertical-align: bottom;
+    position: relative;
+    top: 10px;
+    left: 10px;
+    color: #ffcd00;
+  }
+`
+
+const UnstarIconSvg = styled(UnstarIcon)`
+  && {
+    font-size: ${props => props.size || 24}px;
+    vertical-align: bottom;
+    position: relative;
+    top: 10px;
+    left: 10px;
+    color: #ccc;
   }
 `
 
@@ -272,6 +297,21 @@ class BattleGroundPage extends Component {
                     </Typography>
                   </Alert>
                 )}
+
+                {this.state.battlegroundArr.find(
+                  code => code === district.code
+                ) ? (
+                  <StarIconSvg
+                    size={24}
+                    onClick={() => this.TriggerFavDistrict(district.code)}
+                  />
+                ) : (
+                  <UnstarIconSvg
+                    size={24}
+                    onClick={() => this.TriggerFavDistrict(district.code)}
+                  />
+                )}
+
                 <Container>
                   <CandidatesContainer year={year} code={district.code} />
                 </Container>
@@ -290,8 +330,8 @@ class BattleGroundPage extends Component {
                   {this.state.battlegroundArr.find(
                     code => code === district.code
                   )
-                    ? `取消關注`
-                    : `關注此選區⭐`}
+                    ? t('battleground.button.unfollow')
+                    : t('battleground.button.follow')}
                 </FavDistrictButton>
 
                 {/* TODO Refactor style for ToggleMap Button */}
