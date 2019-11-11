@@ -12,7 +12,7 @@ import { COLORS } from 'ui/theme'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
-import { useTranslation } from 'react-i18next'
+import { useTranslation, withTranslation } from 'react-i18next'
 
 const IMAGE_HOST_URI =
   process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'
@@ -151,7 +151,13 @@ class CandidatesTableContent extends Component {
 
   render() {
     const { props, matchCamp } = this
-    const { candidates, showEstablishment, showDemocracy, showOthers } = props
+    const {
+      candidates,
+      showEstablishment,
+      showDemocracy,
+      showOthers,
+      t,
+    } = props
     const currentLanguage = getCurrentLanguage()
     return (
       <>
@@ -185,7 +191,10 @@ class CandidatesTableContent extends Component {
                 {candidate.person.related_organization || '-'}
               </StyledTableCell>
               <StyledTableCell>
-                {candidate.political_affiliation || '-'}
+                {withLanguage(
+                  candidate.political_affiliation_en,
+                  candidate.political_affiliation_zh
+                ) || t('candidate.noPoliticalAffiliation')}
               </StyledTableCell>
             </StyledTableRow>
           ))}
@@ -194,4 +203,4 @@ class CandidatesTableContent extends Component {
   }
 }
 
-export default withRouter(CandidatesTableContent)
+export default withTranslation()(withRouter(CandidatesTableContent))
