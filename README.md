@@ -129,6 +129,17 @@ and pass an object with the key defined in curly brackets and the dynamic value 
 </Typography>
 ````
 
+Use ``getCurrentLanguage()`` to retrieve the current language
+````javascript
+// Example: CandidatesContainer.js
+// ---------------------------------------------
+// 1. import getCurrentLanguage from utils/helper
+import { getCurrentLanguage } from 'utils/helper'
+// 2. call getCurrentLanguage() to retrieve the current language
+const currentLanguage = getCurrentLanguage()
+// possible currentLanguage value: en or zh (default)
+````
+
 ## Reference
 
 [立場區議會選舉專頁 - 2015](https://dce2015.thestandnews.com)  

@@ -162,11 +162,14 @@ export const QUERY_GET_PERSON_ELECTIONS = gql`
         year
         constituency {
           name_zh
+          name_en
           code
         }
         election_type
         camp
         political_affiliation
+        political_affiliation_zh
+        political_affiliation_en
         votes
         is_won
       }

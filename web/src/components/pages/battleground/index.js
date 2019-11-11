@@ -23,6 +23,7 @@ import {
   getDistrictOverviewUriFromTag,
   getParameterByName,
   withLanguage,
+  getCurrentLanguage,
 } from 'utils/helper'
 import {
   getCentroidFromYearAndCode,
@@ -107,7 +108,8 @@ class BattleGroundPage extends Component {
       (selectedYear == null && selectedCode == null) ||
       (year !== selectedYear || code !== selectedCode)
     ) {
-      this.props.history.push(`/district/${year}/${code}`)
+      const currentLanguage = getCurrentLanguage()
+      this.props.history.push(`/${currentLanguage}/district/${year}/${code}`)
     }
   }
 
@@ -154,7 +156,8 @@ class BattleGroundPage extends Component {
         params: { code },
       },
     } = this.props
-    this.props.history.push(`/district/2015/${code}`)
+    const currentLanguage = getCurrentLanguage()
+    this.props.history.push(`/${currentLanguage}/district/2015/${code}`)
   }
 
   onNextElection() {
@@ -163,7 +166,10 @@ class BattleGroundPage extends Component {
         params: { year, code },
       },
     } = this.props
-    this.props.history.push(`/district/${parseInt(year, 10) + 4}/${code}`)
+    const currentLanguage = getCurrentLanguage()
+    this.props.history.push(
+      `/${currentLanguage}/district/${parseInt(year, 10) + 4}/${code}`
+    )
   }
 
   TriggerFavDistrict = districtCode => {
@@ -217,7 +223,7 @@ class BattleGroundPage extends Component {
             const DCCAStatus =
               district.tags &&
               district.tags.find(tag => tag.type === 'boundary')
-
+            console.log(district)
             return (
               <>
                 <BreadcrumbsContainer>
@@ -227,7 +233,10 @@ class BattleGroundPage extends Component {
                   >
                     <UnstyledLink
                       onClick={() => {
-                        this.props.history.push(`/district/2019`)
+                        const currentLanguage = getCurrentLanguage()
+                        this.props.history.push(
+                          `/${currentLanguage}/district/2019`
+                        )
                       }}
                     >
                       <Typography color="textPrimary"> {year}</Typography>

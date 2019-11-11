@@ -3,7 +3,11 @@ import { PeopleAvatar } from 'components/atoms/Avatar'
 import { withRouter } from 'react-router-dom'
 import { Box, Grid } from '@material-ui/core'
 import styled from 'styled-components'
-import { getColorFromCamp } from 'utils/helper'
+import {
+  getColorFromCamp,
+  getCurrentLanguage,
+  withLanguage,
+} from 'utils/helper'
 import { COLORS } from 'ui/theme'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
@@ -93,7 +97,7 @@ const CandidateGrid = props => {
         />
       </Grid>
       <Grid item>
-        {candidate.person.name_zh || candidate.person.name_en}
+        {withLanguage(candidate.person.name_en, candidate.person.name_zh)}
         {candidate.tags.findIndex(
           tag => tag.type === 'camp' && tag.tag === '有爭議'
         ) > -1 && (
@@ -148,6 +152,7 @@ class CandidatesTableContent extends Component {
   render() {
     const { props, matchCamp } = this
     const { candidates, showEstablishment, showDemocracy, showOthers } = props
+    const currentLanguage = getCurrentLanguage()
     return (
       <>
         {candidates
@@ -159,7 +164,7 @@ class CandidatesTableContent extends Component {
               key={candidate.person.id}
               onClick={() => {
                 props.history.push(
-                  `/profile/${candidate.person.name_zh ||
+                  `/${currentLanguage}/profile/${candidate.person.name_zh ||
                     candidate.person.name_en}/${candidate.person.uuid}`
                 )
               }}

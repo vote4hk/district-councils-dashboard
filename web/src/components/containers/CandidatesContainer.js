@@ -14,6 +14,7 @@ import {
   getColorFromCamp,
   getConstituencyTagsByCandidateCamps,
   withLanguage,
+  getCurrentLanguage,
 } from 'utils/helper'
 import { COLORS } from 'ui/theme'
 
@@ -104,6 +105,8 @@ const CandidatesContainer = props => {
           data.dcd_candidates &&
           data.dcd_candidates.filter(c => c.election_type === 'ordinary')
 
+        const currentLanguage = getCurrentLanguage()
+
         const tags = getConstituencyTagsByCandidateCamps(candidates)
         return (
           <>
@@ -136,8 +139,8 @@ const CandidatesContainer = props => {
                           }
                         >
                           <UnstyledNavLink
-                            to={`/profile/${candidate.person.name_zh ||
-                              candidate.person.name_en}/${
+                            to={`/${currentLanguage}/profile/${candidate.person
+                              .name_zh || candidate.person.name_en}/${
                               candidate.person.uuid
                             }`}
                           >
@@ -194,9 +197,10 @@ const CandidatesContainer = props => {
                               </CandidateName>
 
                               <Typography variant="body2">
-                                {candidate.political_affiliation ||
-                                  // '未報稱政治聯繫'}{' '}
-                                  t('candidate.noPoliticalAffiliation')}
+                                {withLanguage(
+                                  candidate.political_affiliation_en,
+                                  candidate.political_affiliation_zh
+                                ) || t('candidate.noPoliticalAffiliation')}
                               </Typography>
 
                               {candidate.nominate_status === 'disqualified' && (

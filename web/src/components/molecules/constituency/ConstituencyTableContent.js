@@ -3,7 +3,11 @@ import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import CandidatesTableContent from 'components/molecules/candidate/CandidatesTableContent'
 import { TableRow, TableCell, Box, Typography } from '@material-ui/core'
-import { getConstituencyTagsByCandidateCamps, withLanguage } from 'utils/helper'
+import {
+  getConstituencyTagsByCandidateCamps,
+  withLanguage,
+  getCurrentLanguage,
+} from 'utils/helper'
 import { SecondaryTag } from 'components/atoms/Tag'
 import { SeperatedColumns } from 'components/atoms/Columns'
 
@@ -34,12 +38,15 @@ const ConstituencyTableContent = props => {
     showOthers,
   } = props
   const tags = getConstituencyTagsByCandidateCamps(constituency.candidates)
+  const currentLanguage = getCurrentLanguage()
 
   return (
     <>
       <ConstituencyNameTableRow
         onClick={() => {
-          props.history.push(`/district/${year}/${constituency.code}`)
+          props.history.push(
+            `/${currentLanguage}/district/${year}/${constituency.code}`
+          )
         }}
       >
         <TableCell colSpan={5}>

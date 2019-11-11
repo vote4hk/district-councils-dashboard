@@ -10,6 +10,8 @@ import {
   getColorFromPoliticalAffiliation,
   getCouncillorMeta,
   formatNumber,
+  withLanguage,
+  getCurrentLanguage,
 } from 'utils/helper'
 
 const Councillor = props => {
@@ -25,13 +27,13 @@ const Councillor = props => {
   const meta = getCouncillorMeta(councillor)
   const { t } = useTranslation()
   const [imageLoadError, setImageLoadError] = useState(true)
+  const currentLanguage = getCurrentLanguage()
 
   return (
     <UnstyledNavLink
       key={councillor.code}
-      to={`/profile/${councillor.person.name_zh || councillor.person.name_en}/${
-        councillor.person.uuid
-      }`}
+      to={`/${currentLanguage}/profile/${councillor.person.name_zh ||
+        councillor.person.name_en}/${councillor.person.uuid}`}
     >
       <Box>
         <Box display="flex">
@@ -70,7 +72,10 @@ const Councillor = props => {
           </Grid>
           <Grid item xs>
             <Typography variant="h4" gutterBottom>
-              {councillor.person.name_zh}
+              {withLanguage(
+                councillor.person.name_en,
+                councillor.person.name_zh
+              )}
             </Typography>
             <Box display="flex">
               <Box pr={1} alignSelf="flex-end">
@@ -89,8 +94,7 @@ const Councillor = props => {
             <Box display="flex">
               <Box pr={1} alignSelf="flex-end">
                 <Typography variant="body2">
-                  {meta.lastParticipated.year}
-                  {/* 選舉結果 */}
+                  {meta.lastParticipated.year} {/* 選舉結果 */}
                   {t('electionResults')}
                 </Typography>
               </Box>

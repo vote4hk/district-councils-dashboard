@@ -9,7 +9,12 @@ import LinearProgress from '@material-ui/core/LinearProgress'
 import { COLORS } from 'ui/theme'
 import { UnstyledNavLink } from 'components/atoms/Link'
 
-import { formatNumber, getColorFromCamp } from 'utils/helper'
+import {
+  formatNumber,
+  getColorFromCamp,
+  withLanguage,
+  getCurrentLanguage,
+} from 'utils/helper'
 
 const Container = styled.div`
   && {
@@ -89,6 +94,7 @@ const DCCAElectionResult = props => {
   )
 
   const [imageLoadError, setImageLoadError] = useState(true)
+  const currentLanguage = getCurrentLanguage()
 
   return (
     <Container>
@@ -101,10 +107,11 @@ const DCCAElectionResult = props => {
           (candidate.votes / electionResult.vote_sum) *
           100
         ).toFixed(1)
+
         return (
           <UnstyledNavLink
             key={index}
-            to={`/profile/${candidate.person.name_zh ||
+            to={`/${currentLanguage}/profile/${candidate.person.name_zh ||
               candidate.person.name_en}/${candidate.person.uuid}`}
           >
             <CandiateBox>
@@ -138,7 +145,10 @@ const DCCAElectionResult = props => {
               <CandidateName>
                 <Rows>
                   <Typography variant="h5" className="person-name">
-                    {candidate.person.name_zh}
+                    {withLanguage(
+                      candidate.person.name_en,
+                      candidate.person.name_zh
+                    )}
                   </Typography>
                 </Rows>
                 <Rows>

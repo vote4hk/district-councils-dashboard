@@ -7,6 +7,7 @@ import Columns from 'components/atoms/Columns'
 import { withRouter } from 'react-router-dom'
 import { Disclaimer } from 'components/templates/Disclaimer'
 import { useTranslation } from 'react-i18next'
+import { getCurrentLanguage } from 'utils/helper'
 
 const StyledFooter = styled(Box)`
   && {
@@ -39,6 +40,7 @@ const LinkBox = styled(Box)`
 
 function Footer(props) {
   const { t } = useTranslation()
+  const currentLanguage = getCurrentLanguage()
   return (
     <>
       <StyledFooter>
@@ -49,7 +51,7 @@ function Footer(props) {
           <LinkBox>
             <DefaultLink
               onClick={
-                () => props.history.push(`/about-us`)
+                () => props.history.push(`/${currentLanguage}/about-us`)
                 // console.log(props)
               }
             >
@@ -68,7 +70,7 @@ function Footer(props) {
           <LinkBox>
             <StyledFooterLink
               onClick={
-                () => props.history.push(`/disclaimer`)
+                () => props.history.push(`/${currentLanguage}/disclaimer`)
                 // console.log(props)
               }
             >

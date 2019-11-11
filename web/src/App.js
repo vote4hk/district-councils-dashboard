@@ -66,7 +66,7 @@ const Wrapper = styled(Box)`
 const LangSwitch = props => {
   const { path, url } = useRouteMatch()
   if (url !== '/') {
-    i18n.changeLanguage(url.replace('/', ''))
+    i18n.changeLanguage(url.replace(/\//g, ''))
   }
 
   return (
