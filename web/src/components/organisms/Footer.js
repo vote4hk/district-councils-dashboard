@@ -39,6 +39,9 @@ const LinkBox = styled(Box)`
 
 function Footer(props) {
   const { t } = useTranslation()
+  React.useEffect(() => {
+    window.FB.XFBML.parse()
+  }, [])
   return (
     <>
       <StyledFooter>
