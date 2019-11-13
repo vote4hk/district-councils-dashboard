@@ -2,33 +2,73 @@ import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { ThemeProvider } from '@material-ui/core/styles/'
-import IndexPage from 'components/pages/landing'
-import ProfilePage from 'components/pages/profile'
-import DistrictPage from 'components/pages/district'
-import FavDistrictListPage from 'components/pages/fav-district'
-import DistrictListPage from 'components/pages/district/list'
-import BattleGroundPage from 'components/pages/battleground'
-import DisclaimerPage from 'components/pages/disclaimer'
-import AboutDCPage from 'components/pages/about/dc'
-import NotfoundPage from 'components/pages/notfound'
-import SupportUsPage from 'components/pages/support-us'
+import loadable from '@loadable/component'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 import theme from 'ui/theme'
 import './App.css'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
-import MobileAppBar from 'components/organisms/MobileAppBar'
-import ShareButton from 'components/organisms/ShareButton'
-import Footer from 'components/organisms/Footer'
 import { ContextStoreProvider } from 'ContextStore'
 import withTracker from './WithTracker'
-import SearchDrawer from 'components/pages/SearchDrawer'
-import DistrictOverviewPage from 'components/pages/district/overview'
-import DistrictAllPage from 'components/pages/district/all'
-import GlobalDisclaimer from 'components/organisms/GlobalDisclaimer'
-import { fireEvent } from 'utils/ga_fireevent'
 import i18n from 'i18n'
+import { fireEvent } from 'utils/ga_fireevent'
+
+const IndexPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/landing')
+)
+const ProfilePage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/profile')
+)
+const DistrictPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/district')
+)
+const DistrictListPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/district/list')
+)
+const BattleGroundPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/battleground')
+)
+const DisclaimerPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/disclaimer')
+)
+const AboutDCPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/about/dc')
+)
+
+const FavDistrictListPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/fav-district')
+)
+
+const NotfoundPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/notfound')
+)
+const SupportUsPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/support-us')
+)
+const DistrictOverviewPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/district/overview')
+)
+const DistrictAllPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/district/all')
+)
+
+const MobileAppBar = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/organisms/MobileAppBar')
+)
+const Footer = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/organisms/Footer')
+)
+const SearchDrawer = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/SearchDrawer')
+)
+const GlobalDisclaimer = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/organisms/GlobalDisclaimer')
+)
+
+const ShareButton = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/organisms/ShareButton')
+)
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_URI,

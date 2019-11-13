@@ -53,6 +53,8 @@ constituencies( where: { year: { _eq: $year } }, order_by: {code: asc} ) {
     candidate_number
     is_won
     political_affiliation
+    political_affiliation_zh
+    political_affiliation_en
     election_type
     camp
     person {

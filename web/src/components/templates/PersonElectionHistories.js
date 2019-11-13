@@ -7,7 +7,12 @@ import { Box, Grid } from '@material-ui/core'
 import { SuccessText, FailureText } from '../atoms/Text'
 import { UnstyledNavLink } from '../atoms/Link'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
-import { formatNumber, getCurrentLanguage, withLanguage } from 'utils/helper'
+import {
+  formatNumber,
+  getCurrentLanguage,
+  withLanguage,
+  geti18nFromCamp,
+} from 'utils/helper'
 import { useTranslation } from 'react-i18next'
 import {
   getCentroidFromYearAndCode,
@@ -95,17 +100,20 @@ const PersonElectionHistories = props => {
                     m.political_affiliation_en,
                     m.political_affiliation_zh
                   ) || t('candidate.noPoliticalAffiliation')}
-                  （{m.camp}）
+                  （{t(geti18nFromCamp(m.camp))}）
                 </Typography>
               </Grid>
               <Grid item xs={3}>
                 {m.is_won ? (
                   <SuccessText>
-                    {m.votes > 0 ? `${formatNumber(m.votes)}票` : '自動當選'}
+                    {m.votes > 0
+                      ? t('electionResults.votes', { n: formatNumber(m.votes) })
+                      : t('electionResults.uncontested')}
                   </SuccessText>
                 ) : (
                   <FailureText>
-                    {m.votes > 0 && `${formatNumber(m.votes)}票`}
+                    {m.votes > 0 &&
+                      t('electionResults.votes', { n: formatNumber(m.votes) })}
                   </FailureText>
                 )}
               </Grid>
@@ -125,12 +133,12 @@ const PersonElectionHistories = props => {
                   {m.is_won ? (
                     <SuccessText>
                       {/* 當選 */}
-                      {t('election.tag1')}
+                      {t('election.won')}
                     </SuccessText>
                   ) : (
                     <FailureText>
                       {/* 落敗 */}
-                      {t('election.tag3')}
+                      {t('election.lost')}
                     </FailureText>
                   )}
                 </Grid>

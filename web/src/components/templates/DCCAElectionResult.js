@@ -8,12 +8,14 @@ import Rows from 'components/atoms/Rows'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import { COLORS } from 'ui/theme'
 import { UnstyledNavLink } from 'components/atoms/Link'
+import { useTranslation } from 'react-i18next'
 
 import {
   formatNumber,
   getColorFromCamp,
   withLanguage,
   getCurrentLanguage,
+  geti18nFromCamp,
 } from 'utils/helper'
 
 const Container = styled.div`
@@ -56,6 +58,7 @@ const CandidateName = styled(Columns)`
   && {
     width: auto;
     min-width: 120px;
+    max-width: 180px;
     .person-name {
       font-weight: 600;
     }
@@ -95,11 +98,13 @@ const DCCAElectionResult = props => {
 
   const [imageLoadError, setImageLoadError] = useState(true)
   const currentLanguage = getCurrentLanguage()
+  const { t } = useTranslation()
 
   return (
     <Container>
       <Typography variant="h6">
-        {electionResult.year}年 - {electionResult.name_zh}（
+        {t('electionResults.year', { n: electionResult.year })} -{' '}
+        {withLanguage(electionResult.name_en, electionResult.name_zh)}（
         {electionResult.code}）
       </Typography>
       {sortedCandidates.map((candidate, index) => {
@@ -153,7 +158,8 @@ const DCCAElectionResult = props => {
                 </Rows>
                 <Rows>
                   <Typography variant="body2">
-                    {candidate.political_affiliation} （{candidate.camp}）
+                    {candidate.political_affiliation} （
+                    {t(geti18nFromCamp(candidate.camp))}）
                   </Typography>
                 </Rows>
               </CandidateName>
@@ -162,7 +168,9 @@ const DCCAElectionResult = props => {
                   <>
                     <Rows>
                       <VoteText>
-                        {formatNumber(candidate.votes)}票{' '}
+                        {t('electionResults.votes', {
+                          n: formatNumber(candidate.votes),
+                        })}
                         <span className="vote-percentage">
                           （{candidate.vote_percentage}%）
                         </span>
@@ -181,7 +189,9 @@ const DCCAElectionResult = props => {
                     </Rows>
                   </>
                 ) : (
-                  <Typography variant="h5">自動當選</Typography>
+                  <Typography variant="h5">
+                    {t('electionResults.uncontested')}
+                  </Typography>
                 )}
               </Columns>
             </CandiateBox>

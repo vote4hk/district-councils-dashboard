@@ -78,7 +78,7 @@ const SearchMenu = props => {
           onClick={() => goToPage('/SelectedDistrict')}
         >
           {/* 己關注選區 */}
-          己關注選區⭐
+          {t('searchMenu.text4')}
         </Typography>
       </LeftMargin>
 

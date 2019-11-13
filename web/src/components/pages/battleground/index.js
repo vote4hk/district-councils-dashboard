@@ -248,7 +248,6 @@ class BattleGroundPage extends Component {
             const DCCAStatus =
               district.tags &&
               district.tags.find(tag => tag.type === 'boundary')
-            console.log(district)
             return (
               <>
                 <BreadcrumbsContainer>

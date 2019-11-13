@@ -7,7 +7,8 @@ import { Typography } from '@material-ui/core'
 import DCCAElectionResult from 'components/templates/DCCAElectionResult'
 import Box from '@material-ui/core/Box'
 import { COLORS } from 'ui/theme'
-import { getColorFromCamp } from 'utils/helper'
+import { getColorFromCamp, geti18nFromCamp } from 'utils/helper'
+import { withTranslation } from 'react-i18next'
 
 const DCCAElectionResultContainer = styled(Box)`
   && {
@@ -34,6 +35,7 @@ class DCCAElectionHistories extends Component {
       code
       year
       name_zh
+      name_en
       candidates(where: { year: { _eq: $year${year} }, cacode: { _eq: $code${code} } }) {
         person {
           name_en
@@ -46,6 +48,8 @@ class DCCAElectionHistories extends Component {
         vote_percentage
         is_won
         political_affiliation
+        political_affiliation_en
+        political_affiliation_zh
       }
     }
     dcd_candidates_aggregate_${year}_${code}: dcd_candidates_aggregate(
@@ -81,7 +85,7 @@ class DCCAElectionHistories extends Component {
   }
 
   render() {
-    const { histories, presetTabIndex } = this.props
+    const { histories, presetTabIndex, t } = this.props
     const filteredHistories = histories.filter(
       history => history.year !== '2019'
     )
@@ -129,10 +133,13 @@ class DCCAElectionHistories extends Component {
                           .camp
                       )}
                     >
-                      {
-                        electionResult.candidates.find(candi => candi.is_won)
-                          .camp
-                      }
+                      {t(
+                        geti18nFromCamp(
+                          electionResult.candidates.find(candi => candi.is_won)
+                            .camp,
+                          true
+                        )
+                      )}
                     </CampText>
                     <Typography variant="body2">
                       {electionResult.year}
@@ -158,4 +165,4 @@ class DCCAElectionHistories extends Component {
   }
 }
 
-export default DCCAElectionHistories
+export default withTranslation()(DCCAElectionHistories)

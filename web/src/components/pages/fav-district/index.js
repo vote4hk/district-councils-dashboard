@@ -6,6 +6,7 @@ import ConstituencyCard from 'components/organisms/ConstituencyCard'
 import { Typography } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
 import { Loading } from 'components/atoms/Loading'
+import { withTranslation } from 'react-i18next'
 import localforage from 'localforage'
 
 const Container = styled(Paper)`
@@ -29,6 +30,8 @@ class FavDistrictListPage extends Component {
   }
 
   render() {
+    const { t } = this.props
+
     return (
       <Query
         query={QUERY_GET_CONSTITUENCIES_BY_DISTRICT_CODES}
@@ -41,7 +44,10 @@ class FavDistrictListPage extends Component {
           return (
             <>
               <Container>
-                <Typography variant="h4">{`${data.dcd_constituencies.length}個選區`}</Typography>
+                <Typography variant="h4">
+                  {`${data.dcd_constituencies.length}`}
+                  {t('no_of_districts')}
+                </Typography>
               </Container>
               <Container>
                 {data.dcd_constituencies.map(c => (
@@ -56,4 +62,4 @@ class FavDistrictListPage extends Component {
   }
 }
 
-export default FavDistrictListPage
+export default withTranslation()(FavDistrictListPage)
