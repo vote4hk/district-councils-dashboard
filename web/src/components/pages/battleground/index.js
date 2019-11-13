@@ -69,36 +69,33 @@ const ToggleMapButton = styled(UnstyledButton)`
 
 const FavDistrictButton = styled(UnstyledButton)`
   && {
-    border-radius: 0;
     width: 100%;
     font-size: 14px;
     text-align: center;
-    margin-top: 30px;
-    margin-bottom: 20px;
   }
 `
 
-const StarIconSvg = styled(StarIcon)`
-  && {
-    font-size: ${props => props.size || 24}px;
-    vertical-align: bottom;
-    position: relative;
-    top: 10px;
-    left: 10px;
-    color: #ffcd00;
-  }
-`
+// const StarIconSvg = styled(StarIcon)`
+//   && {
+//     font-size: ${props => props.size || 24}px;
+//     vertical-align: bottom;
+//     position: relative;
+//     top: 10px;
+//     left: 10px;
+//     color: #ffcd00;
+//   }
+// `
 
-const UnstarIconSvg = styled(UnstarIcon)`
-  && {
-    font-size: ${props => props.size || 24}px;
-    vertical-align: bottom;
-    position: relative;
-    top: 10px;
-    left: 10px;
-    color: #ccc;
-  }
-`
+// const UnstarIconSvg = styled(UnstarIcon)`
+//   && {
+//     font-size: ${props => props.size || 24}px;
+//     vertical-align: bottom;
+//     position: relative;
+//     top: 10px;
+//     left: 10px;
+//     color: #ccc;
+//   }
+// `
 
 class BattleGroundPage extends Component {
   constructor(props) {
@@ -297,7 +294,7 @@ class BattleGroundPage extends Component {
                   </Alert>
                 )}
 
-                {this.state.battlegroundArr.find(
+                {/* {this.state.battlegroundArr.find(
                   code => code === district.code
                 ) ? (
                   <StarIconSvg
@@ -309,7 +306,7 @@ class BattleGroundPage extends Component {
                     size={24}
                     onClick={() => this.TriggerFavDistrict(district.code)}
                   />
-                )}
+                )} */}
 
                 <Container>
                   <CandidatesContainer year={year} code={district.code} />
