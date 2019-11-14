@@ -10,7 +10,6 @@ import './App.css'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
 import { ContextStoreProvider } from 'ContextStore'
-import withTracker from './WithTracker'
 import i18n from 'i18n'
 import { fireEvent } from 'utils/ga_fireevent'
 
@@ -111,42 +110,30 @@ const LangSwitch = props => {
 
   return (
     <Switch>
-      <Route exact path={path} component={withTracker(IndexPage)} />
-      <Route
-        path={`${path}/profile/:name/:uuid`}
-        component={withTracker(ProfilePage)}
-      />
+      <Route exact path={path} component={IndexPage} />
+      <Route path={`${path}/profile/:name/:uuid`} component={ProfilePage} />
       <Route
         path={`${path}/district/:year/tags/:tag`}
-        component={withTracker(DistrictListPage)}
+        component={DistrictListPage}
       />
       <Route
         path={`${path}/district/:year/:code(\\w{1})`}
-        component={withTracker(DistrictOverviewPage)}
+        component={DistrictOverviewPage}
       />
       <Route
         path={`${path}/district/2019/:code`}
-        component={withTracker(BattleGroundPage)}
+        component={BattleGroundPage}
       />
-      <Route
-        path={`${path}/district/:year/:code`}
-        component={withTracker(DistrictPage)}
-      />
-      <Route
-        path={`${path}/district/:year`}
-        component={withTracker(DistrictAllPage)}
-      />
-      <Route
-        path={`${path}/disclaimer`}
-        component={withTracker(DisclaimerPage)}
-      />
+      <Route path={`${path}/district/:year/:code`} component={DistrictPage} />
+      <Route path={`${path}/district/:year`} component={DistrictAllPage} />
+      <Route path={`${path}/disclaimer`} component={DisclaimerPage} />
       <Route
         path={`${path}/SelectedDistrict`}
-        component={withTracker(FavDistrictListPage)}
+        component={FavDistrictListPage}
       />
-      <Route path={`${path}/about-dc`} component={withTracker(AboutDCPage)} />
-      <Route path="/about-us" component={withTracker(SupportUsPage)} />
-      <Route component={withTracker(NotfoundPage)} />
+      <Route path={`${path}/about-dc`} component={AboutDCPage} />
+      <Route path="/about-us" component={SupportUsPage} />
+      <Route component={NotfoundPage} />
     </Switch>
   )
 }
@@ -171,48 +158,36 @@ const App = props => {
                     <Route path="/(en|zh)?">
                       <LangSwitch />
                     </Route>
-                    <Route exact path="/" component={withTracker(IndexPage)} />
+                    <Route exact path="/" component={IndexPage} />
                     <Route
                       path="/profile/:name/:uuid"
-                      component={withTracker(ProfilePage)}
+                      component={ProfilePage}
                     />
                     <Route
                       path="/district/:year/tags/:tag"
-                      component={withTracker(DistrictListPage)}
+                      component={DistrictListPage}
                     />
                     <Route
                       path="/district/:year/:code(\w{1})"
-                      component={withTracker(DistrictOverviewPage)}
+                      component={DistrictOverviewPage}
                     />
                     <Route
                       path="/district/2019/:code"
-                      component={withTracker(BattleGroundPage)}
+                      component={BattleGroundPage}
                     />
                     <Route
                       path="/district/:year/:code"
-                      component={withTracker(DistrictPage)}
+                      component={DistrictPage}
                     />
-                    <Route
-                      path="/district/:year"
-                      component={withTracker(DistrictAllPage)}
-                    />
-                    <Route
-                      path="/disclaimer"
-                      component={withTracker(DisclaimerPage)}
-                    />
-                    <Route
-                      path="/about-dc"
-                      component={withTracker(AboutDCPage)}
-                    />
-                    <Route
-                      path="/about-us"
-                      component={withTracker(SupportUsPage)}
-                    />
+                    <Route path="/district/:year" component={DistrictAllPage} />
+                    <Route path="/disclaimer" component={DisclaimerPage} />
+                    <Route path="/about-dc" component={AboutDCPage} />
+                    <Route path="/about-us" component={SupportUsPage} />
                     <Route
                       path="/SelectedDistrict"
-                      component={withTracker(FavDistrictListPage)}
+                      component={FavDistrictListPage}
                     />
-                    <Route component={withTracker(NotfoundPage)} />
+                    <Route component={NotfoundPage} />
                   </Switch>
                 </main>
               </Wrapper>
