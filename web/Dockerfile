@@ -15,7 +15,12 @@ WORKDIR /tmp
 # Install app dependencies
 COPY . .
 
-RUN npm install
+RUN apk add --no-cache --virtual .gyp \
+        python \
+        make \
+        g++ \
+    && npm install \
+    && apk del .gyp
 
 RUN npm run build
 
