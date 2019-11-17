@@ -317,7 +317,8 @@ class BattleGroundPage extends Component {
                   code={district.code}
                   tags={district.tags}
                   voterData={groupVoteStat(district.vote_stats)}
-                  description={district.description}
+                  description_zh={district.description_zh}
+                  description_en={district.description_en}
                 />
 
                 <FavDistrictButton
