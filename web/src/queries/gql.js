@@ -16,7 +16,8 @@ code
 deviation_percentage
 expected_population
 main_areas
-description
+description_zh
+description_en
 vote_stats {
   count
   type
@@ -34,6 +35,7 @@ tags {
   tag
   type
 }
+meta
 `
 
 const DISTRICT_DATA = `

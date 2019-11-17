@@ -13,7 +13,11 @@ import Rows from 'components/atoms/Rows'
 import Box from '@material-ui/core/Box'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
-import { getDistrictListUriFromTag, formatNumber } from 'utils/helper'
+import {
+  getDistrictListUriFromTag,
+  formatNumber,
+  withLanguage,
+} from 'utils/helper'
 import { withRouter } from 'react-router-dom'
 import { SuccessText, FailureText } from 'components/atoms/Text'
 import { withTranslation } from 'react-i18next'
@@ -75,7 +79,14 @@ class DCCAOverview extends Component {
   }
 
   render() {
-    const { code, tags, voterData, description, t } = this.props
+    const {
+      code,
+      tags,
+      voterData,
+      description_zh,
+      description_en,
+      t,
+    } = this.props
     const sortedTags = tags.sort((a, b) =>
       a.type === 'boundary' ? -1 : a.type === b.type ? 0 : 1
     )
@@ -87,11 +98,11 @@ class DCCAOverview extends Component {
     return (
       <>
         <Container>
-          {description && (
-            <SeperatedColumns>
-              <Typography variant="h6">{description}</Typography>
-            </SeperatedColumns>
-          )}
+          <SeperatedColumns>
+            <Typography variant="h6">
+              {withLanguage(description_en, description_zh) || ''}
+            </Typography>
+          </SeperatedColumns>
           <SeperatedColumns>
             <Rows>
               <UnstyledButton onClick={this.toggleGraph.bind(this)}>
