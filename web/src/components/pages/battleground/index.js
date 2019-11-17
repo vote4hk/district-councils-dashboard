@@ -307,9 +307,12 @@ class BattleGroundPage extends Component {
                     onClick={() => this.TriggerFavDistrict(district.code)}
                   />
                 )} */}
-
                 <Container>
-                  <CandidatesContainer year={year} code={district.code} />
+                  <CandidatesContainer
+                    year={year}
+                    code={district.code}
+                    election_forum={district.meta.election_forum}
+                  />
                 </Container>
                 <DCCAOverview
                   year={year}

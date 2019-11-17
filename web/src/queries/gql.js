@@ -35,6 +35,7 @@ tags {
   tag
   type
 }
+meta
 `
 
 const DISTRICT_DATA = `

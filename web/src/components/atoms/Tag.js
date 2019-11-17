@@ -10,6 +10,10 @@ const StyledChip = styled(Chip)`
     color: ${props => props.textcolor || COLORS.main.background};
     border: ${props => props.borderwidth || 0}px
       ${props => props.bordercolor || 'rgba(0, 0, 0, 0.5)'} solid;
+    padding: 0 6px 0;
+    svg {
+      fill: ${props => props.textcolor || COLORS.main.background};
+    }
   }
 `
 const SecondaryStyledChip = styled(Chip)`
@@ -34,6 +38,7 @@ export const Tag = props => {
       size="small"
       onClick={props.handleClick}
       className={props.className}
+      icon={props.icon}
     />
   )
 }

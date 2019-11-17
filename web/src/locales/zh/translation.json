@@ -4,6 +4,7 @@
   "countdown.minute": "分鐘",
   "countdown.second": "秒",
   "candidateContainer.title": "已接獲提名",
+  "candidateContainer.election_forum": "選舉論壇 {{n}}",
   "candidate.tag": "有爭議",
   "candidate.unknownPosition": "侯選人政治立場未明",
   "candidate.noPoliticalAffiliation": "未報稱政治聯繫",
