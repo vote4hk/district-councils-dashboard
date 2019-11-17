@@ -1,19 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import Box from '@material-ui/core/Box'
-import AddressSearcher from 'components/molecules/AddressSearcher'
-import PeopleSearcher from 'components/molecules/PeopleSearcher'
-import Button from '@material-ui/core/Button'
+import SearchAllBox from 'components/organisms/SearchAllBox'
 import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
-import { COLORS } from 'ui/theme'
 import { withRouter } from 'react-router-dom'
 import ContextStore from 'ContextStore'
 import { DRAWER_CLOSE } from 'reducers/drawer'
-import { getProfilePath } from 'utils/helper'
 import DistrictSelector from 'components/molecules/DistrictSelector'
-import { fireEvent } from 'utils/ga_fireevent'
-import { useTranslation } from 'react-i18next'
+import { getCurrentLanguage } from 'utils/helper'
 
 const Container = styled(Paper)`
   && {
@@ -43,27 +37,7 @@ const AddressSearchContainer = styled(Box)`
     position: relative;
     left: 0;
     right: 0;
-    padding: 21px 0px;
-  }
-`
-
-const TabContainer = styled(Box)`
-  && {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-  }
-`
-
-const TabButton = styled(Button)`
-  && {
-    margin: 10px 10px 15px 10px;
-    padding-bottom: 15px;
-    color: ${props =>
-      props.active === 'active' ? COLORS.main.primary : COLORS.main.text};
-    border-bottom: ${props =>
-      props.active === 'active' ? `1px solid ${COLORS.main.primary}` : 'none'};
-    border-radius: 0px;
+    padding: 8px 0px 8px;
   }
 `
 
@@ -71,10 +45,6 @@ function SearchTab(props) {
   const {
     drawer: { dispatch },
   } = React.useContext(ContextStore)
-  const [selectedTab, setSelectedTab] = React.useState(
-    props.selectedTab || 'district'
-  )
-  const { t } = useTranslation()
 
   function handleAddressSelected(result) {
     /* TODO:
@@ -82,74 +52,21 @@ function SearchTab(props) {
       When user select click previous button in district page,
       the CACODE should follow follow the above result
     */
-
-    props.history.push(`/district/${result.year}/${result.code}`)
-    dispatch({ type: DRAWER_CLOSE })
-  }
-
-  function handlePeopleSelected(person) {
-    const path = getProfilePath(person)
-    props.history.push(path)
-    dispatch({ type: DRAWER_CLOSE })
-  }
-
-  function onTabSelected(tab) {
-    return () => {
-      fireEvent({
-        ca: 'search',
-        ac: 'click',
-        lb: `by_${tab}`,
-      })
-      setSelectedTab(tab)
-    }
-  }
-
-  function renderSearchDistrict() {
-    return (
-      <ContentRowContainer>
-        <DistrictSelector expanded={false} />
-        <AddressSearchContainer>
-          <AddressSearcher handleAddressSelected={handleAddressSelected} />
-        </AddressSearchContainer>
-      </ContentRowContainer>
+    const currentLanguage = getCurrentLanguage()
+    props.history.push(
+      `/${currentLanguage}/district/${result.year}/${result.code}`
     )
-  }
-
-  function renderSearchPeople() {
-    return (
-      <ContentRowContainer>
-        <AddressSearchContainer>
-          <PeopleSearcher handlePeopleSelected={handlePeopleSelected} />
-        </AddressSearchContainer>
-      </ContentRowContainer>
-    )
+    dispatch({ type: DRAWER_CLOSE })
   }
 
   return (
     <Container>
-      <TabContainer>
-        <TabButton
-          active={selectedTab === 'district' ? 'active' : 'inactive'}
-          onClick={onTabSelected('district')}
-        >
-          <Typography variant="h3">
-            {/* 找選區 */}
-            {t('searchTab.text1')}
-          </Typography>
-        </TabButton>
-        <TabButton
-          active={selectedTab === 'people' ? 'active' : 'inactive'}
-          onClick={onTabSelected('people')}
-        >
-          <Typography variant="h3">
-            {/* 找候選人 */}
-            {t('searchTab.text2')}
-          </Typography>
-        </TabButton>
-      </TabContainer>
-      {selectedTab === 'district'
-        ? renderSearchDistrict()
-        : renderSearchPeople()}
+      <ContentRowContainer>
+        <DistrictSelector expanded={false} />
+        <AddressSearchContainer>
+          <SearchAllBox handleAddressSelected={handleAddressSelected} />
+        </AddressSearchContainer>
+      </ContentRowContainer>
     </Container>
   )
 }

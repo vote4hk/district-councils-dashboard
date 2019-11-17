@@ -2,11 +2,12 @@ import React from 'react'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
 import Divider from '@material-ui/core/Divider'
-import { UnstyledLink } from 'components/atoms/Link'
+import { UnstyledLink, DefaultLink } from 'components/atoms/Link'
 import Columns from 'components/atoms/Columns'
 import { withRouter } from 'react-router-dom'
 import { Disclaimer } from 'components/templates/Disclaimer'
 import { useTranslation } from 'react-i18next'
+import { getCurrentLanguage } from 'utils/helper'
 
 const StyledFooter = styled(Box)`
   && {
@@ -39,6 +40,10 @@ const LinkBox = styled(Box)`
 
 function Footer(props) {
   const { t } = useTranslation()
+  const currentLanguage = getCurrentLanguage()
+  React.useEffect(() => {
+    window.FB.XFBML.parse()
+  }, [])
   return (
     <>
       <StyledFooter>
@@ -47,6 +52,16 @@ function Footer(props) {
         <StyledDivider />
         <Columns>
           <LinkBox>
+            <DefaultLink
+              onClick={
+                () => props.history.push(`/${currentLanguage}/about-us`)
+                // console.log(props)
+              }
+            >
+              {t('about.support_us')}
+            </DefaultLink>
+          </LinkBox>
+          <LinkBox>
             <StyledFooterLink
               target="_blank"
               href="https://www.facebook.com/g0vhk.io"
@@ -54,14 +69,16 @@ function Footer(props) {
               g0vhk.io
             </StyledFooterLink>
           </LinkBox>
+
           <LinkBox>
             <StyledFooterLink
               onClick={
-                () => props.history.push(`/disclaimer`)
+                () => props.history.push(`/${currentLanguage}/disclaimer`)
                 // console.log(props)
               }
             >
-              關於候選人陣營
+              {/* 關於候選人陣營 */}
+              {t('about.camp')}
             </StyledFooterLink>
           </LinkBox>
           <LinkBox>
@@ -69,7 +86,8 @@ function Footer(props) {
               target="_blank"
               href="https://forms.gle/irD6tEznWPNda6w59"
             >
-              反映意見
+              {/* 反映意見 */}
+              {t('about.feedback')}
             </StyledFooterLink>
           </LinkBox>
           <LinkBox>
@@ -86,6 +104,7 @@ function Footer(props) {
               {t('thirdParty.dfo')}
             </StyledFooterLink>
           </LinkBox>
+
           <LinkBox>
             <div
               className="fb-like"
@@ -95,8 +114,8 @@ function Footer(props) {
               data-action="like"
               data-size="small"
               data-show-faces="false"
-              data-share="false">
-            </div>
+              data-share="false"
+            ></div>
             &nbsp;&nbsp;&nbsp;
             <div
               className="fb-share-button"
@@ -106,8 +125,10 @@ function Footer(props) {
             >
               <a
                 target="_blank"
+                rel="noopener noreferrer"
                 href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fvote4.hk%2F&amp;src=sdkpreparse"
-                className="fb-xfbml-parse-ignore">
+                className="fb-xfbml-parse-ignore"
+              >
                 Share
               </a>
             </div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -8,8 +8,15 @@ import Rows from 'components/atoms/Rows'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import { COLORS } from 'ui/theme'
 import { UnstyledNavLink } from 'components/atoms/Link'
+import { useTranslation } from 'react-i18next'
 
-import { formatNumber, getColorFromCamp } from 'utils/helper'
+import {
+  formatNumber,
+  getColorFromCamp,
+  withLanguage,
+  getCurrentLanguage,
+  geti18nFromCamp,
+} from 'utils/helper'
 
 const Container = styled.div`
   && {
@@ -51,6 +58,7 @@ const CandidateName = styled(Columns)`
   && {
     width: auto;
     min-width: 120px;
+    max-width: 180px;
     .person-name {
       font-weight: 600;
     }
@@ -87,10 +95,16 @@ const DCCAElectionResult = props => {
   const sortedCandidates = electionResult.candidates.sort(
     (a, b) => b.votes - a.votes
   )
+
+  const [imageLoadError, setImageLoadError] = useState(true)
+  const currentLanguage = getCurrentLanguage()
+  const { t } = useTranslation()
+
   return (
     <Container>
       <Typography variant="h6">
-        {electionResult.year}年 - {electionResult.name_zh}（
+        {t('electionResults.year', { n: electionResult.year })} -{' '}
+        {withLanguage(electionResult.name_en, electionResult.name_zh)}（
         {electionResult.code}）
       </Typography>
       {sortedCandidates.map((candidate, index) => {
@@ -98,10 +112,11 @@ const DCCAElectionResult = props => {
           (candidate.votes / electionResult.vote_sum) *
           100
         ).toFixed(1)
+
         return (
           <UnstyledNavLink
             key={index}
-            to={`/profile/${candidate.person.name_zh ||
+            to={`/${currentLanguage}/profile/${candidate.person.name_zh ||
               candidate.person.name_en}/${candidate.person.uuid}`}
           >
             <CandiateBox>
@@ -110,11 +125,15 @@ const DCCAElectionResult = props => {
                   dimension="60px"
                   borderwidth={'3'}
                   camp={getColorFromCamp(candidate.camp)}
-                  src={`${IMAGE_HOST_URI}/static/images/avatar/${candidate.person.uuid}.jpg`}
+                  src={`${IMAGE_HOST_URI}/static/images/avatar/100x100/${candidate.person.uuid}.jpg`}
                   imgProps={{
                     onError: e => {
-                      e.target.src =
-                        IMAGE_HOST_URI + '/static/images/avatar/default.png'
+                      // wingkwong: avoid infinite callbacks if fallback image fails
+                      if (imageLoadError) {
+                        setImageLoadError(false)
+                        e.target.src =
+                          IMAGE_HOST_URI + '/static/images/avatar/default.png'
+                      }
                     },
                   }}
                 />
@@ -131,12 +150,16 @@ const DCCAElectionResult = props => {
               <CandidateName>
                 <Rows>
                   <Typography variant="h5" className="person-name">
-                    {candidate.person.name_zh}
+                    {withLanguage(
+                      candidate.person.name_en,
+                      candidate.person.name_zh
+                    )}
                   </Typography>
                 </Rows>
                 <Rows>
                   <Typography variant="body2">
-                    {candidate.political_affiliation} （{candidate.camp}）
+                    {candidate.political_affiliation} （
+                    {t(geti18nFromCamp(candidate.camp))}）
                   </Typography>
                 </Rows>
               </CandidateName>
@@ -145,7 +168,9 @@ const DCCAElectionResult = props => {
                   <>
                     <Rows>
                       <VoteText>
-                        {formatNumber(candidate.votes)}票{' '}
+                        {t('electionResults.votes', {
+                          n: formatNumber(candidate.votes),
+                        })}
                         <span className="vote-percentage">
                           （{candidate.vote_percentage}%）
                         </span>
@@ -164,7 +189,9 @@ const DCCAElectionResult = props => {
                     </Rows>
                   </>
                 ) : (
-                  <Typography variant="h5">自動當選</Typography>
+                  <Typography variant="h5">
+                    {t('electionResults.uncontested')}
+                  </Typography>
                 )}
               </Columns>
             </CandiateBox>

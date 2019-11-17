@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Query } from 'react-apollo'
 import { QUERY_GET_CANDIDATES } from 'queries/gql'
 import { PeopleAvatar } from 'components/atoms/Avatar'
 import { UnstyledNavLink } from 'components/atoms/Link'
-import { Tag } from 'components/atoms/Tag'
+import { SecondaryTag } from 'components/atoms/Tag'
 import Rows from 'components/atoms/Rows'
 import { SeperatedColumns } from 'components/atoms/Columns'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
@@ -13,6 +13,8 @@ import { useTranslation } from 'react-i18next'
 import {
   getColorFromCamp,
   getConstituencyTagsByCandidateCamps,
+  withLanguage,
+  getCurrentLanguage,
 } from 'utils/helper'
 import { COLORS } from 'ui/theme'
 
@@ -30,14 +32,15 @@ const CandidateGrid = styled(Grid)`
   }
 `
 
-const TagContainer = styled(Box)`
+const DCCAStatusTagsContainer = styled(SeperatedColumns)`
   && {
+    justify-content: flex-end;
   }
 `
 
-const StyledTag = styled(Tag)`
+const StyledSecondaryTag = styled(SecondaryTag)`
   && {
-    margin-left: 4px;
+    margin-left: 8px;
   }
 `
 
@@ -87,6 +90,7 @@ const CandidateName = styled(Typography)`
 const CandidatesContainer = props => {
   const { code, year } = props
   const { t } = useTranslation()
+  const [imageLoadError, setImageLoadError] = useState(true)
 
   return (
     <Query
@@ -101,25 +105,20 @@ const CandidatesContainer = props => {
           data.dcd_candidates &&
           data.dcd_candidates.filter(c => c.election_type === 'ordinary')
 
+        const currentLanguage = getCurrentLanguage()
+
         const tags = getConstituencyTagsByCandidateCamps(candidates)
         return (
           <>
             {candidates.length > 0 && (
               <>
                 <Rows>
-                  <SeperatedColumns>
-                    <Typography variant="h6" gutterBottom>
-                      {/* 已接獲提名 */}
-                      {t('candidateContainer.title')}
-                    </Typography>
-                    {tags.length > 0 && (
-                      <TagContainer>
-                        {tags.map((tag, index) => (
-                          <StyledTag value={tag} key={index} />
-                        ))}
-                      </TagContainer>
-                    )}
-                  </SeperatedColumns>
+                  <DCCAStatusTagsContainer>
+                    {tags.length > 0 &&
+                      tags.map((tag, index) => (
+                        <StyledSecondaryTag value={tag} key={index} />
+                      ))}
+                  </DCCAStatusTagsContainer>
                 </Rows>
                 <Rows>
                   <SeperatedColumns>
@@ -140,8 +139,8 @@ const CandidatesContainer = props => {
                           }
                         >
                           <UnstyledNavLink
-                            to={`/profile/${candidate.person.name_zh ||
-                              candidate.person.name_en}/${
+                            to={`/${currentLanguage}/profile/${candidate.person
+                              .name_zh || candidate.person.name_en}/${
                               candidate.person.uuid
                             }`}
                           >
@@ -150,20 +149,20 @@ const CandidatesContainer = props => {
                                 dimension="84px"
                                 borderwidth={'4'}
                                 camp={getColorFromCamp(candidate.camp)}
-                                src={`${IMAGE_HOST_URI}/static/images/avatar/${candidate.person.uuid}.jpg`}
+                                src={`${IMAGE_HOST_URI}/static/images/avatar/100x100/${candidate.person.uuid}.jpg`}
                                 imgProps={{
                                   onError: e => {
-                                    e.target.src =
-                                      IMAGE_HOST_URI +
-                                      '/static/images/avatar/default.png'
+                                    // wingkwong: avoid infinite callbacks if fallback image fails
+                                    if (imageLoadError) {
+                                      setImageLoadError(false)
+                                      e.target.src =
+                                        IMAGE_HOST_URI +
+                                        '/static/images/avatar/default.png'
+                                    }
                                   },
                                 }}
                                 opacity={
-                                  candidate.nominate_status ===
-                                    'disqualified' ||
-                                  candidate.nominate_status === 'suspended'
-                                    ? 0.1
-                                    : 1
+                                  candidate.nominate_status === 'disqualified'
                                 }
                               />
                               {candidate.candidate_number > 0 && (
@@ -183,31 +182,52 @@ const CandidatesContainer = props => {
                                     disableFocusListener
                                     disableTouchListener
                                     // text="侯選人政治立場未明"
-                                    text={t('candidate.unknownPosition')}
+                                    text={t('candidate.noPoliticalAffiliation')}
                                     placement="bottom"
                                     size={21}
                                   />
                                 </ControversialAlert>
                               )}
                               <CandidateName variant="h5">
-                                {candidate.person.name_zh ||
-                                  candidate.person.name_en}
+                                {withLanguage(
+                                  candidate.person.name_en,
+                                  candidate.person.name_zh ||
+                                    candidate.person.name_en
+                                )}
                               </CandidateName>
 
                               <Typography variant="body2">
-                                {candidate.political_affiliation ||
-                                  // '未報稱政治聯繫'}{' '}
-                                  t('candidate.unknownPosition')}
+                                {withLanguage(
+                                  candidate.political_affiliation_en,
+                                  candidate.political_affiliation_zh
+                                ) || t('candidate.noPoliticalAffiliation')}
                               </Typography>
 
                               {candidate.nominate_status === 'disqualified' && (
                                 <Typography variant="body2">
                                   {/* 取消資格 */}
-                                  {t('candidate.nominateStatus.disqualified')}
+                                  {t(
+                                    'candidate.nominateStatus.disqualified_bracket'
+                                  )}
                                 </Typography>
                               )}
                               {candidate.nominate_status === 'suspended' && (
-                                <Typography variant="body2"></Typography>
+                                <Typography variant="body2">
+                                  {t(
+                                    'candidate.nominateStatus.suspended_bracket'
+                                  )}
+                                </Typography>
+                              )}
+                              {candidate.tags.findIndex(
+                                tag =>
+                                  tag.type === 'demo_status' &&
+                                  tag.tag === 'planb'
+                              ) > -1 && (
+                                <Typography variant="body2">
+                                  {t(
+                                    'candidate.nominateStatus.demo_planb_bracket'
+                                  )}
+                                </Typography>
                               )}
                             </Candidate>
                           </UnstyledNavLink>

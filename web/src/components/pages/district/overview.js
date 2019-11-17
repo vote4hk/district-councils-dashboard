@@ -3,6 +3,7 @@ import { Query } from 'react-apollo'
 import { QUERY_GET_DISTRICT } from 'queries/gql'
 import { Loading } from 'components/atoms/Loading'
 import DistrictsTable from 'components/molecules/district/DistrictsTable'
+import DistrictCampCompareChartContainer from 'components/templates/DistrictCampCompareChartContainer'
 
 const DistrictOverviewPage = props => {
   const {
@@ -19,7 +20,12 @@ const DistrictOverviewPage = props => {
 
         const districts = data.dcd_districts
 
-        return <DistrictsTable districts={districts} year={year} />
+        return (
+          <>
+            <DistrictCampCompareChartContainer code={code} />
+            <DistrictsTable districts={districts} year={year} />
+          </>
+        )
       }}
     </Query>
   )

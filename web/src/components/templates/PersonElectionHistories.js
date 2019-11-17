@@ -7,7 +7,12 @@ import { Box, Grid } from '@material-ui/core'
 import { SuccessText, FailureText } from '../atoms/Text'
 import { UnstyledNavLink } from '../atoms/Link'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
-import { formatNumber } from 'utils/helper'
+import {
+  formatNumber,
+  getCurrentLanguage,
+  withLanguage,
+  geti18nFromCamp,
+} from 'utils/helper'
 import { useTranslation } from 'react-i18next'
 import {
   getCentroidFromYearAndCode,
@@ -23,7 +28,8 @@ const PersonElectionHistoriesTitle = styled.div`
 `
 
 const createQueryStringToBattlegroundPage = election => {
-  let targetPath = `/district/2019/${election.constituency.code}`
+  const currentLanguage = getCurrentLanguage()
+  let targetPath = `/${currentLanguage}/district/2019/${election.constituency.code}`
   switch (election.year) {
     case 2019:
       return targetPath
@@ -40,7 +46,7 @@ const createQueryStringToBattlegroundPage = election => {
         lat: coordinates[1],
       }
       const dccaHistories = getAllFeaturesFromPoint(point)
-      targetPath = `/district/2019/${
+      targetPath = `/${currentLanguage}/district/2019/${
         dccaHistories.find(history => history.year === '2019').CACODE
       }`
       return targetPath + `?year=${election.year}`
@@ -84,21 +90,30 @@ const PersonElectionHistories = props => {
             </PersonElectionHistoriesTitle>
             <Grid container>
               <Grid item xs={4}>
-                <Typography variant="h5">{m.constituency.name_zh}</Typography>
+                <Typography variant="h5">
+                  {withLanguage(m.constituency.name_en, m.constituency.name_zh)}
+                </Typography>
               </Grid>
               <Grid item xs={5}>
-                <Typography variant="h5">{`${m.political_affiliation || '-'}（${
-                  m.camp
-                }）`}</Typography>
+                <Typography variant="h5">
+                  {withLanguage(
+                    m.political_affiliation_en,
+                    m.political_affiliation_zh
+                  ) || t('candidate.noPoliticalAffiliation')}
+                  （{t(geti18nFromCamp(m.camp))}）
+                </Typography>
               </Grid>
               <Grid item xs={3}>
                 {m.is_won ? (
                   <SuccessText>
-                    {m.votes > 0 ? `${formatNumber(m.votes)}票` : '自動當選'}
+                    {m.votes > 0
+                      ? t('electionResults.votes', { n: formatNumber(m.votes) })
+                      : t('electionResults.uncontested')}
                   </SuccessText>
                 ) : (
                   <FailureText>
-                    {m.votes > 0 && `${formatNumber(m.votes)}票`}
+                    {m.votes > 0 &&
+                      t('electionResults.votes', { n: formatNumber(m.votes) })}
                   </FailureText>
                 )}
               </Grid>
@@ -118,12 +133,12 @@ const PersonElectionHistories = props => {
                   {m.is_won ? (
                     <SuccessText>
                       {/* 當選 */}
-                      {t('election.tag1')}
+                      {t('election.won')}
                     </SuccessText>
                   ) : (
                     <FailureText>
                       {/* 落敗 */}
-                      {t('election.tag3')}
+                      {t('election.lost')}
                     </FailureText>
                   )}
                 </Grid>

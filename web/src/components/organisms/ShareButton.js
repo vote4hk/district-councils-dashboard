@@ -1,11 +1,12 @@
 import React from 'react'
-import IconButton from '@material-ui/core/IconButton'
-import ShareIcon from '@material-ui/icons/Share'
 import CopyIcon from '@material-ui/icons/Link'
 import styled from 'styled-components'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
+import Fab from '@material-ui/core/Fab'
+import ShareIcon from '@material-ui/icons/Share'
 import { getCurrentUrl } from 'utils/helper'
+import { COLORS } from 'ui/theme'
 import {
   FacebookShareButton,
   TelegramShareButton,
@@ -17,17 +18,22 @@ import {
   TwitterIcon,
 } from 'react-share'
 
-const RightIconButton = styled(IconButton)`
-  && {
-    position: absolute;
-    right: 0;
-  }
-`
-
 const StyledCopyIcon = styled(CopyIcon)`
   && {
     width: 32px;
     height: 32px;
+  }
+`
+
+const StyledFab = styled(Fab)`
+  && {
+    margin: 0px;
+    top: auto;
+    right: 20px;
+    bottom: 20px;
+    left: auto;
+    position: fixed;
+    color: ${COLORS.main.background};
   }
 `
 
@@ -80,16 +86,15 @@ function ShareButton(props) {
 
   return (
     <>
-      <RightIconButton
-        color="inherit"
-        component="span"
+      <StyledFab
+        color="primary"
         aria-label="Share"
         aria-controls="share-menu"
         aria-haspopup="true"
         onClick={handleShareButtonClick}
       >
         <ShareIcon />
-      </RightIconButton>
+      </StyledFab>
       <Menu
         id="share-menu"
         anchorEl={anchorEl}

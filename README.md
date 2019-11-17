@@ -48,6 +48,98 @@ npm i
 npm run dev
 ```
 
+### i18n
+We are using react-i18next to assert that needed translations get loaded or that your content gets rendered when the language changes. The full documentation is [here](https://react.i18next.com/). 
+
+The translation json files for ``en`` and ``zh`` are located at ``web/src/locales/en/translation.json`` and ``web/src/locales/zh/translation.json`` respectively. By default, ``zh`` is used. If you have changes to the wording, please make sure they are added or updated in both json files. 
+
+Example: 
+
+web/src/locales/en/translation.json
+````json
+{
+    "candidate.nominateStatus.disqualified": "Disqualified"
+}
+````
+
+web/src/locales/zh/translation.json
+````json
+{
+    "candidate.nominateStatus.disqualified": "取消資格"
+}
+````
+
+Use ``useTranslation()`` for functional components:
+````javascript
+// Example: CandidatesContainer.js
+// ---------------------------------------------
+// 1. import useTranslation from react-i18next
+import { useTranslation } from 'react-i18next'
+// 2. define t from useTranslation()
+const { t } = useTranslation()
+// 3. use the t function with the key as the parameter 
+const  status = t('candidate.nominateStatus.disqualified')
+````
+
+Use ``withTranslation()`` for class components:
+````javascript
+// Example: MainAreas.js
+// ---------------------------------------------
+// 1. import withTranslation from react-i18next
+import { withTranslation } from 'react-i18next'
+// 2. define t from the props
+const { t } = this.props
+// 3. use the t function with the key as the parameter 
+const text = t('mainAreas.text1')
+// 4. wrap the class component with withTranslation HOC
+export default withTranslation()(MainAreas)
+````
+
+Use ``withLanguage()`` to show values for the selected language. 
+````javascript
+// Example: Summary.js
+// ---------------------------------------------
+// 1. import withLanguage from utils/helper
+import { withLanguage } from 'utils/helper'
+// 2. withLanguage() takes 2 parameters - value in en and value in zh respectively
+// In this example, district.name_en will be used if the lang is en
+// if the lang is zh, district.name_zh will be used
+// if district.name_en is null, it will fall back to zh 
+withLanguage(district.name_en, district.name_zh)
+// if you are not sure what the field names for both language are, check the query 
+// which can be found either in the same file or in web/src/queries/gql.js
+````
+
+For interpolation, surround the dynamic value by curly brackets in ``translation.json``
+````json
+{
+    "districtNewVoterchartContainer.text1": "Voters increased by {{ n }}%"
+}
+````
+
+and pass an object with the key defined in curly brackets and the dynamic value in the second parameter
+````javascript
+// Example: DistrictNewVoterChartContainer.js
+<Typography variant="h2">
+    {
+        t('districtNewVoterchartContainer.text1', {
+            n: _.round(meta.increased * 100, 2)
+        })
+    }
+</Typography>
+````
+
+Use ``getCurrentLanguage()`` to retrieve the current language
+````javascript
+// Example: CandidatesContainer.js
+// ---------------------------------------------
+// 1. import getCurrentLanguage from utils/helper
+import { getCurrentLanguage } from 'utils/helper'
+// 2. call getCurrentLanguage() to retrieve the current language
+const currentLanguage = getCurrentLanguage()
+// possible currentLanguage value: en or zh (default)
+````
+
 ## Reference
 
 [立場區議會選舉專頁 - 2015](https://dce2015.thestandnews.com)  

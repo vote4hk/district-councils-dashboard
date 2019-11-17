@@ -10,6 +10,9 @@ import DCCAOverview from 'components/district/DCCAOverview'
 import { UnstyledButton } from 'components/atoms/Button'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
+// import StarIcon from '@material-ui/icons/Star'
+// import UnstarIcon from '@material-ui/icons/StarBorder'
+
 import Collapse from '@material-ui/core/Collapse'
 import _ from 'lodash'
 import { QUERY_CONSTITUENCIES } from 'queries/gql'
@@ -19,13 +22,19 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/Link'
 import { Alert } from 'components/atoms/Alert'
-import { getDistrictOverviewUriFromTag, getParameterByName } from 'utils/helper'
+import {
+  getDistrictOverviewUriFromTag,
+  getParameterByName,
+  withLanguage,
+  getCurrentLanguage,
+} from 'utils/helper'
 import {
   getCentroidFromYearAndCode,
   getAllFeaturesFromPoint,
 } from 'utils/features'
 import DCCAElectionHistories from 'components/templates/DCCAElectionHistories'
 import { withTranslation } from 'react-i18next'
+import localforage from 'localforage'
 
 const groupVoteStat = voteStats => {
   const data = _.groupBy(voteStats, stat => stat.subtype)
@@ -58,6 +67,36 @@ const ToggleMapButton = styled(UnstyledButton)`
   }
 `
 
+const FavDistrictButton = styled(UnstyledButton)`
+  && {
+    width: 100%;
+    font-size: 14px;
+    text-align: center;
+  }
+`
+
+// const StarIconSvg = styled(StarIcon)`
+//   && {
+//     font-size: ${props => props.size || 24}px;
+//     vertical-align: bottom;
+//     position: relative;
+//     top: 10px;
+//     left: 10px;
+//     color: #ffcd00;
+//   }
+// `
+
+// const UnstarIconSvg = styled(UnstarIcon)`
+//   && {
+//     font-size: ${props => props.size || 24}px;
+//     vertical-align: bottom;
+//     position: relative;
+//     top: 10px;
+//     left: 10px;
+//     color: #ccc;
+//   }
+// `
+
 class BattleGroundPage extends Component {
   constructor(props) {
     super(props)
@@ -68,7 +107,14 @@ class BattleGroundPage extends Component {
         lng: centroid[0],
         lat: centroid[1],
       },
+      selectedYear: null,
+      selectedCode: null,
+      battlegroundArr: [],
     }
+
+    localforage.getItem('battleground').then(value => {
+      this.setState({ battlegroundArr: value === null ? [] : value })
+    })
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -78,7 +124,15 @@ class BattleGroundPage extends Component {
 
   handleChangeDistrict = (year, code) => {
     if (!year || !code) return
-    this.props.history.push(`/district/${year}/${code}`)
+
+    const { selectedYear, selectedCode } = this.state
+    if (
+      (selectedYear == null && selectedCode == null) ||
+      (year !== selectedYear || code !== selectedCode)
+    ) {
+      const currentLanguage = getCurrentLanguage()
+      this.props.history.push(`/${currentLanguage}/district/${year}/${code}`)
+    }
   }
 
   handleMapClick = coordinate => {
@@ -87,7 +141,26 @@ class BattleGroundPage extends Component {
       lat: coordinate[1],
     }
 
-    this.setState({ currentPoint: point })
+    const {
+      match: {
+        params: { year = 2019, code },
+      },
+    } = this.props
+    const { selectedYear, selectedCode } = this.state
+
+    var state = {
+      currentPoint: point,
+    }
+
+    if ((selectedYear == null) & (selectedCode == null)) {
+      state = {
+        ...state,
+        selectedYear: year,
+        selectedCode: code,
+      }
+    }
+
+    this.setState(state)
   }
 
   handleMapLoaded = props => {
@@ -105,7 +178,8 @@ class BattleGroundPage extends Component {
         params: { code },
       },
     } = this.props
-    this.props.history.push(`/district/2015/${code}`)
+    const currentLanguage = getCurrentLanguage()
+    this.props.history.push(`/${currentLanguage}/district/2015/${code}`)
   }
 
   onNextElection() {
@@ -114,7 +188,25 @@ class BattleGroundPage extends Component {
         params: { year, code },
       },
     } = this.props
-    this.props.history.push(`/district/${parseInt(year, 10) + 4}/${code}`)
+    const currentLanguage = getCurrentLanguage()
+    this.props.history.push(
+      `/${currentLanguage}/district/${parseInt(year, 10) + 4}/${code}`
+    )
+  }
+
+  TriggerFavDistrict = districtCode => {
+    const dc = districtCode
+    var battleArr = this.state.battlegroundArr
+    if (this.state.battlegroundArr.find(code => code === dc)) {
+      battleArr = battleArr.filter((value, index, arr) => {
+        return value !== dc
+      })
+      this.setState({ battlegroundArr: battleArr })
+    } else {
+      battleArr.push(dc)
+      this.setState({ battlegroundArr: battleArr })
+    }
+    localforage.setItem('battleground', battleArr.sort())
   }
 
   render() {
@@ -153,7 +245,6 @@ class BattleGroundPage extends Component {
             const DCCAStatus =
               district.tags &&
               district.tags.find(tag => tag.type === 'boundary')
-
             return (
               <>
                 <BreadcrumbsContainer>
@@ -163,7 +254,10 @@ class BattleGroundPage extends Component {
                   >
                     <UnstyledLink
                       onClick={() => {
-                        this.props.history.push(`/district/2019`)
+                        const currentLanguage = getCurrentLanguage()
+                        this.props.history.push(
+                          `/${currentLanguage}/district/2019`
+                        )
                       }}
                     >
                       <Typography color="textPrimary"> {year}</Typography>
@@ -178,11 +272,15 @@ class BattleGroundPage extends Component {
                       }}
                     >
                       <Typography color="textPrimary">
-                        {district.district.dc_name_zh}
+                        {withLanguage(
+                          district.district.dc_name_en,
+                          district.district.dc_name_zh
+                        )}
                       </Typography>
                     </UnstyledLink>
                     <Typography color="primary" style={{ fontWeight: 600 }}>
-                      {district.name_zh}（{code}）
+                      {withLanguage(district.name_en, district.name_zh)}（{code}
+                      ）
                     </Typography>
                   </Breadcrumbs>
                 </BreadcrumbsContainer>
@@ -195,19 +293,43 @@ class BattleGroundPage extends Component {
                     </Typography>
                   </Alert>
                 )}
+
+                {/* {this.state.battlegroundArr.find(
+                  code => code === district.code
+                ) ? (
+                  <StarIconSvg
+                    size={24}
+                    onClick={() => this.TriggerFavDistrict(district.code)}
+                  />
+                ) : (
+                  <UnstarIconSvg
+                    size={24}
+                    onClick={() => this.TriggerFavDistrict(district.code)}
+                  />
+                )} */}
+
                 <Container>
                   <CandidatesContainer year={year} code={district.code} />
                 </Container>
                 <DCCAOverview
                   year={year}
-                  name_zh={district.name_zh}
                   dc_code={district.district.dc_code}
-                  dc_name_zh={district.district.dc_name_zh}
                   code={district.code}
                   tags={district.tags}
                   voterData={groupVoteStat(district.vote_stats)}
                   description={district.description}
                 />
+
+                <FavDistrictButton
+                  onClick={() => this.TriggerFavDistrict(district.code)}
+                >
+                  {this.state.battlegroundArr.find(
+                    code => code === district.code
+                  )
+                    ? t('battleground.button.unfollow')
+                    : t('battleground.button.follow')}
+                </FavDistrictButton>
+
                 {/* TODO Refactor style for ToggleMap Button */}
                 <ToggleMapButton
                   onClick={() => this.setState({ showMap: !showMap })}

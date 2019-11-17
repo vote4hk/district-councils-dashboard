@@ -39,17 +39,22 @@ tags {
 const DISTRICT_DATA = `
 area_code
 area_name_zh
+area_name_en
 dc_code
 dc_name_zh
+dc_name_en
 dc_description_zh
 constituencies( where: { year: { _eq: $year } }, order_by: {code: asc} ) {
   id
   name_zh
+  name_en
   code
   candidates( where: { year: { _eq: $year } }, order_by: {candidate_number: asc} ) {
     candidate_number
     is_won
     political_affiliation
+    political_affiliation_zh
+    political_affiliation_en
     election_type
     camp
     person {
@@ -78,6 +83,17 @@ query($year: Int!, $code: String!) {
         ${CONSTITUENCIES_DATA}
       }
     }
+  }  
+}
+`
+
+export const QUERY_GET_CONSTITUENCIES_BY_DISTRICT_CODES = gql`
+query($year: Int!, $dc: [String!]) {
+  dcd_constituencies(
+    where: { year: { _eq: $year }, code: { _in: $dc } } 
+    order_by: {code: asc }
+  ) {
+    ${CONSTITUENCIES_DATA}
   }  
 }
 `
@@ -135,6 +151,7 @@ export const QUERY_GET_AREA = gql`
       constituencies(where: { year: { _eq: 2019 } }) {
         code
         name_zh
+        name_en
       }
     }
   }
@@ -147,11 +164,14 @@ export const QUERY_GET_PERSON_ELECTIONS = gql`
         year
         constituency {
           name_zh
+          name_en
           code
         }
         election_type
         camp
         political_affiliation
+        political_affiliation_zh
+        political_affiliation_en
         votes
         is_won
       }
@@ -248,6 +268,8 @@ export const QUERY_GET_CANDIDATES = gql`
       candidate_number
       is_won
       political_affiliation
+      political_affiliation_en
+      political_affiliation_zh
       election_type
       camp
       nominate_status
@@ -267,6 +289,7 @@ export const QUERY_GET_CANDIDATES = gql`
   }
 `
 
+// This is a dangerous query.. the data size is huge (for 2019 it is 19MB)
 export const QUERY_GET_CONSTITUENCY_CAMP_DATA = gql`
   query fetch_camp_data($year: Int!) {
     dcd_constituencies(where: { year: { _eq: $year } }) {
@@ -278,6 +301,13 @@ export const QUERY_GET_CONSTITUENCY_CAMP_DATA = gql`
             camp
             votes
             is_won
+          }
+          vote_stats(where: { subtype: { _eq: "NEW_VOTERS" } }) {
+            type
+            subtype
+            category_1
+            category_2
+            count
           }
         }
       }
@@ -298,11 +328,32 @@ export const QUERY_GET_NOMINATION_SUMMARY = gql`
       code
       name_en
       name_zh
+      district {
+        dc_code
+        dc_name_en
+        dc_name_zh
+      }
       candidates {
         camp
         nominated_at
         nominate_status
         election_type
+        tags {
+          tag
+          type
+        }
+      }
+      tags {
+        tag
+      }
+    }
+
+    c2015: dcd_constituencies(where: { year: { _eq: 2015 } }) {
+      code
+      name_en
+      name_zh
+      candidates {
+        votes
       }
       tags {
         tag

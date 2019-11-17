@@ -1,30 +1,74 @@
 import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
-import IndexPage from 'components/pages/landing'
-import ProfilePage from 'components/pages/profile'
-import DistrictPage from 'components/pages/district'
-import DistrictListPage from 'components/pages/district/list'
-import BattleGroundPage from 'components/pages/battleground'
-import DisclaimerPage from 'components/pages/disclaimer'
-import AboutDCPage from 'components/pages/about/dc'
-import NotfoundPage from 'components/pages/notfound'
+import { ThemeProvider } from '@material-ui/core/styles/'
+import loadable from '@loadable/component'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 import theme from 'ui/theme'
 import './App.css'
 import Box from '@material-ui/core/Box'
 import styled from 'styled-components'
-import MobileAppBar from 'components/organisms/MobileAppBar'
-import Footer from 'components/organisms/Footer'
 import { ContextStoreProvider } from 'ContextStore'
 import withTracker from './WithTracker'
-import SearchDrawer from 'components/pages/SearchDrawer'
-import DistrictOverviewPage from 'components/pages/district/overview'
-import DistrictAllPage from 'components/pages/district/all'
-import GlobalDisclaimer from 'components/organisms/GlobalDisclaimer'
 import i18n from 'i18n'
+import { fireEvent } from 'utils/ga_fireevent'
+
+const IndexPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/landing')
+)
+const ProfilePage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/profile')
+)
+const DistrictPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/district')
+)
+const DistrictListPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/district/list')
+)
+const BattleGroundPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/battleground')
+)
+const DisclaimerPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/disclaimer')
+)
+const AboutDCPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/about/dc')
+)
+
+const FavDistrictListPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/fav-district')
+)
+
+const NotfoundPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/notfound')
+)
+const SupportUsPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/support-us')
+)
+const DistrictOverviewPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/district/overview')
+)
+const DistrictAllPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/district/all')
+)
+
+const MobileAppBar = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/organisms/MobileAppBar')
+)
+const Footer = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/organisms/Footer')
+)
+const SearchDrawer = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/SearchDrawer')
+)
+const GlobalDisclaimer = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/organisms/GlobalDisclaimer')
+)
+
+const ShareButton = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/organisms/ShareButton')
+)
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_URI,
@@ -62,7 +106,7 @@ const Wrapper = styled(Box)`
 const LangSwitch = props => {
   const { path, url } = useRouteMatch()
   if (url !== '/') {
-    i18n.changeLanguage(url.replace('/', ''))
+    i18n.changeLanguage(url.replace(/\//g, ''))
   }
 
   return (
@@ -96,7 +140,12 @@ const LangSwitch = props => {
         path={`${path}/disclaimer`}
         component={withTracker(DisclaimerPage)}
       />
+      <Route
+        path={`${path}/SelectedDistrict`}
+        component={withTracker(FavDistrictListPage)}
+      />
       <Route path={`${path}/about-dc`} component={withTracker(AboutDCPage)} />
+      <Route path="/about-us" component={withTracker(SupportUsPage)} />
       <Route component={withTracker(NotfoundPage)} />
     </Switch>
   )
@@ -109,10 +158,10 @@ const App = props => {
 
   return (
     <ApolloProvider client={client}>
-      <MuiThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
         <ContextStoreProvider>
           <Root>
-            <ContentContainer>
+            <ContentContainer id="contentContainer">
               <CssBaseline />
               <Wrapper>
                 <MobileAppBar />
@@ -122,15 +171,66 @@ const App = props => {
                     <Route path="/(en|zh)?">
                       <LangSwitch />
                     </Route>
+                    <Route exact path="/" component={withTracker(IndexPage)} />
+                    <Route
+                      path="/profile/:name/:uuid"
+                      component={withTracker(ProfilePage)}
+                    />
+                    <Route
+                      path="/district/:year/tags/:tag"
+                      component={withTracker(DistrictListPage)}
+                    />
+                    <Route
+                      path="/district/:year/:code(\w{1})"
+                      component={withTracker(DistrictOverviewPage)}
+                    />
+                    <Route
+                      path="/district/2019/:code"
+                      component={withTracker(BattleGroundPage)}
+                    />
+                    <Route
+                      path="/district/:year/:code"
+                      component={withTracker(DistrictPage)}
+                    />
+                    <Route
+                      path="/district/:year"
+                      component={withTracker(DistrictAllPage)}
+                    />
+                    <Route
+                      path="/disclaimer"
+                      component={withTracker(DisclaimerPage)}
+                    />
+                    <Route
+                      path="/about-dc"
+                      component={withTracker(AboutDCPage)}
+                    />
+                    <Route
+                      path="/about-us"
+                      component={withTracker(SupportUsPage)}
+                    />
+                    <Route
+                      path="/SelectedDistrict"
+                      component={withTracker(FavDistrictListPage)}
+                    />
+                    <Route component={withTracker(NotfoundPage)} />
                   </Switch>
                 </main>
               </Wrapper>
+              <ShareButton
+                onClick={() =>
+                  fireEvent({
+                    ca: 'general',
+                    ac: 'click',
+                    lb: 'share_button',
+                  })
+                }
+              />
               <Footer />
             </ContentContainer>
             <SearchDrawer />
           </Root>
         </ContextStoreProvider>
-      </MuiThemeProvider>
+      </ThemeProvider>
     </ApolloProvider>
   )
 }

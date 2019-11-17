@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next'
 import {
   getColorFromPoliticalAffiliation,
   getElectionResults,
+  getCurrentLanguage,
 } from 'utils/helper'
 import moment from 'moment'
 
@@ -67,6 +68,7 @@ class Councillor extends Component {
 
     const tags = [] // ['競逐連任'] //getTagsForPerson(councillor.person)
     const { t } = useTranslation()
+    const currentLanguage = getCurrentLanguage()
 
     return (
       <PlainCard>
@@ -80,7 +82,7 @@ class Councillor extends Component {
         {councillors.map(councillor => (
           <UnstyledNavLink
             key={councillor.code}
-            to={`/profile/${councillor.person.name_zh ||
+            to={`/${currentLanguage}/profile/${councillor.person.name_zh ||
               councillor.person.name_en}/${councillor.person.uuid}`}
           >
             <Box>
@@ -117,7 +119,7 @@ class Councillor extends Component {
                     camp={getColorFromPoliticalAffiliation(
                       councillor.political_affiliation
                     )}
-                    src={`${homeUrl}/static/images/avatar/${councillor.person.uuid}.jpg`}
+                    src={`${homeUrl}/static/images/avatar/100x100/${councillor.person.uuid}.jpg`}
                     imgProps={{
                       onError: e => {
                         e.target.src =

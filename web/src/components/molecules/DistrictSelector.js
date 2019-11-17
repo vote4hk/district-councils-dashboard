@@ -19,38 +19,44 @@ import {
   getConstituencyUriFromTag,
   withLanguage,
 } from 'utils/helper'
+import { useTranslation } from 'react-i18next'
 
 const Container = styled.div`
   && {
     width: 100%;
     display: flex;
     flex-direction: column;
+    vertical-align: top;
   }
 `
 
 const DistrictContainer = styled(Button)`
   && {
-    width: 120px;
+    width: 50%;
     justify-content: left;
     text-align: left;
+    text-transform: capitalize;
+    font-size: ${props => props.fontsize}px;
   }
 `
 
 const DistrictExpansionPanel = styled(ExpansionPanel)`
   && {
-    margin: 5px 0;
     box-shadow: none;
   }
 `
 
 const DistrictExpansionPanelSummary = styled(ExpansionPanelSummary)`
   && {
+    font-weightL 600px;
+    .Mui-expanded {
+    }
   }
 `
 
 const DistrictExpansionPanelDetails = styled(ExpansionPanelDetails)`
   && {
-    padding: 16px;
+    padding: 0 16px 0;
   }
 `
 
@@ -58,6 +64,8 @@ const DistrictSelector = props => {
   const {
     drawer: { dispatch },
   } = React.useContext(ContextStore)
+
+  const { t } = useTranslation()
 
   const renderDCCA = district => {
     return (
@@ -70,7 +78,7 @@ const DistrictSelector = props => {
           }}
           color="secondary"
         >
-          <Typography variant="h5">總覽</Typography>
+          <Typography variant="h5">{t('districtSelector.overview')}</Typography>
         </DistrictContainer>
         {district.constituencies.map(c => {
           return (
@@ -80,9 +88,10 @@ const DistrictSelector = props => {
                 dispatch({ type: DRAWER_CLOSE })
                 props.history.push(getConstituencyUriFromTag(c.code))
               }}
-              color="secondary"
             >
-              <Typography variant="h5">{c.name_zh}</Typography>
+              <Typography variant="h5">
+                {withLanguage(c.name_en, c.name_zh)}
+              </Typography>
             </DistrictContainer>
           )
         })}

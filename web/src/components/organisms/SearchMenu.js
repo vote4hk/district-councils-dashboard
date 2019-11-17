@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom'
 import ContextStore from 'ContextStore'
 import { DRAWER_CLOSE } from 'reducers/drawer'
 import { useTranslation } from 'react-i18next'
+import { getCurrentLanguage } from 'utils/helper'
 
 const ExpandedRow = styled(Box)`
   && {
@@ -36,13 +37,15 @@ const SearchMenu = props => {
     dispatch({ type: DRAWER_CLOSE })
   }
 
+  const currentLanguage = getCurrentLanguage()
+
   return (
     <>
       <LeftMargin>
         <Typography
           variant="h5"
           color="secondary"
-          onClick={() => goToPage('/')}
+          onClick={() => goToPage(`/${currentLanguage}/`)}
         >
           {/* 返回首頁 */}
           {t('searchMenu.text1')}
@@ -53,7 +56,7 @@ const SearchMenu = props => {
         <Typography
           variant="h5"
           color="secondary"
-          onClick={() => goToPage('/district/2019')}
+          onClick={() => goToPage(`/${currentLanguage}/district/2019`)}
         >
           {/* 全港選區一覽 */}
           {t('searchMenu.text2')}
@@ -64,10 +67,21 @@ const SearchMenu = props => {
         <Typography
           variant="h5"
           color="secondary"
-          onClick={() => goToPage('/about-dc')}
+          onClick={() => goToPage(`/${currentLanguage}/about-dc`)}
         >
           {/* 關於區議會選舉 */}
           {t('searchMenu.text3')}
+        </Typography>
+      </LeftMargin>
+
+      <LeftMargin>
+        <Typography
+          variant="h5"
+          color="secondary"
+          onClick={() => goToPage(`/${currentLanguage}/SelectedDistrict`)}
+        >
+          {/* 己關注選區 */}
+          {t('searchMenu.text4')}
         </Typography>
       </LeftMargin>
 
@@ -80,10 +94,22 @@ const SearchMenu = props => {
               'https://docs.google.com/forms/u/1/d/e/1FAIpQLSdXtbdry3w8hkmZuN0MJaj2CP2X3RUUnCTWLnOujsfx1pHDrw/viewform?usp=send_form')
           }
         >
-          {/* TODO: i18n */}
-          反映意見
+          {/* 反映意見 */}
+          {t('searchMenu.feedback')}
         </Typography>
       </LeftMargin>
+
+      <LeftMargin>
+        <Typography
+          variant="h5"
+          color="primary"
+          onClick={() => goToPage(`/${currentLanguage}/about-us`)}
+        >
+          {/* 我們是誰？ */}
+          {t('about.support_us')}
+        </Typography>
+      </LeftMargin>
+
       <LeftMargin>
         <SearchTab />
       </LeftMargin>

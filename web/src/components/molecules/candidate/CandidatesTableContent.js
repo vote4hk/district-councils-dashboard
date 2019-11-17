@@ -1,14 +1,18 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import { PeopleAvatar } from 'components/atoms/Avatar'
 import { withRouter } from 'react-router-dom'
 import { Box, Grid } from '@material-ui/core'
 import styled from 'styled-components'
-import { getColorFromCamp } from 'utils/helper'
+import {
+  getColorFromCamp,
+  getCurrentLanguage,
+  withLanguage,
+} from 'utils/helper'
 import { COLORS } from 'ui/theme'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
-import { useTranslation } from 'react-i18next'
+import { useTranslation, withTranslation } from 'react-i18next'
 
 const IMAGE_HOST_URI =
   process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'
@@ -50,6 +54,8 @@ const StyledTableRow = styled(TableRow)`
 const CandidateGrid = props => {
   const { candidate } = props
   const { t } = useTranslation()
+  const [imageLoadError, setImageLoadError] = useState(true)
+
   return (
     <Grid
       container
@@ -57,7 +63,7 @@ const CandidateGrid = props => {
       justify="flex-start"
       alignItems="center"
       spacing={1}
-      style={{ minWidth: '140px' }}
+      style={{ minWidth: '140px', flexFlow: 'nowrap' }}
     >
       {candidate.candidate_number > 0 && (
         <Grid item>
@@ -76,23 +82,22 @@ const CandidateGrid = props => {
           dimension="40px"
           borderwidth={2}
           camp={getColorFromCamp(candidate.camp)}
-          src={`${IMAGE_HOST_URI}/static/images/avatar/${candidate.person.uuid}.jpg`}
+          src={`${IMAGE_HOST_URI}/static/images/avatar/100x100/${candidate.person.uuid}.jpg`}
           imgProps={{
             onError: e => {
-              e.target.src =
-                IMAGE_HOST_URI + '/static/images/avatar/default.png'
+              // wingkwong: avoid infinite callbacks if fallback image fails
+              if (imageLoadError) {
+                setImageLoadError(false)
+                e.target.src =
+                  IMAGE_HOST_URI + '/static/images/avatar/default.png'
+              }
             },
           }}
-          opacity={
-            candidate.nominate_status === 'disqualified' ||
-            candidate.nominate_status === 'suspended'
-              ? 0.1
-              : 1
-          }
+          opacity={candidate.nominate_status === 'disqualified' ? 0.1 : 1}
         />
       </Grid>
       <Grid item>
-        {candidate.person.name_zh || candidate.person.name_en}
+        {withLanguage(candidate.person.name_en, candidate.person.name_zh)}
         {candidate.tags.findIndex(
           tag => tag.type === 'camp' && tag.tag === '有爭議'
         ) > -1 && (
@@ -100,7 +105,7 @@ const CandidateGrid = props => {
             disableFocusListener
             disableTouchListener
             // text="侯選人政治立場未明"
-            text={t('candidate.unknownPosition')}
+            text={t('candidate.noPoliticalAffiliation')}
             placement="bottom"
             size={16}
           />
@@ -109,7 +114,8 @@ const CandidateGrid = props => {
           <>
             <br />
             <span>
-              {/* (取消資格) */}({t('candidate.nominateStatus.disqualified')})
+              {/* (取消資格) */}
+              {t('candidate.nominateStatus.disqualified_bracket')}
             </span>
           </>
         )}
@@ -117,8 +123,17 @@ const CandidateGrid = props => {
           <>
             <br />
             <span>
-              {/* (棄選) */}({t('candidate.nominateStatus.suspended')})
+              {/* (棄選) */}
+              {t('candidate.nominateStatus.suspended_bracket')}
             </span>
+          </>
+        )}
+        {candidate.tags.findIndex(
+          tag => tag.type === 'demo_status' && tag.tag === 'planb'
+        ) > -1 && (
+          <>
+            <br />
+            <span>{t('candidate.nominateStatus.demo_planb_bracket')}</span>
           </>
         )}
       </Grid>
@@ -136,7 +151,14 @@ class CandidatesTableContent extends Component {
 
   render() {
     const { props, matchCamp } = this
-    const { candidates, showEstablishment, showDemocracy, showOthers } = props
+    const {
+      candidates,
+      showEstablishment,
+      showDemocracy,
+      showOthers,
+      t,
+    } = props
+    const currentLanguage = getCurrentLanguage()
     return (
       <>
         {candidates
@@ -148,7 +170,7 @@ class CandidatesTableContent extends Component {
               key={candidate.person.id}
               onClick={() => {
                 props.history.push(
-                  `/profile/${candidate.person.name_zh ||
+                  `/${currentLanguage}/profile/${candidate.person.name_zh ||
                     candidate.person.name_en}/${candidate.person.uuid}`
                 )
               }}
@@ -169,7 +191,10 @@ class CandidatesTableContent extends Component {
                 {candidate.person.related_organization || '-'}
               </StyledTableCell>
               <StyledTableCell>
-                {candidate.political_affiliation || '-'}
+                {withLanguage(
+                  candidate.political_affiliation_en,
+                  candidate.political_affiliation_zh
+                ) || t('candidate.noPoliticalAffiliation')}
               </StyledTableCell>
             </StyledTableRow>
           ))}
@@ -178,4 +203,4 @@ class CandidatesTableContent extends Component {
   }
 }
 
-export default withRouter(CandidatesTableContent)
+export default withTranslation()(withRouter(CandidatesTableContent))

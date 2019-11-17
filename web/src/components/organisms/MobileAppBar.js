@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import ContextStore from 'ContextStore'
 import { DRAWER_OPEN } from '../../reducers/drawer'
 import { UnstyledNavLink } from '../atoms/Link'
-import ShareButton from './ShareButton'
+import LanguageSwitcher from './LanguageSwitcher'
 import { fireEvent } from 'utils/ga_fireevent'
 
 const StyledAppBar = styled(AppBar)`
@@ -39,8 +39,8 @@ function MobileAppBar(props) {
         <Toolbar disableGutters>
           <AppBarTitle to={'/'}>
             <Typography variant="h1" align="center">
-              <span role="img" aria-label="區議會 2019">
-                區議會 2019 ✋🏻💜⚡
+              <span role="img" aria-label="Vote4.hk ✋🏻💜⚡">
+                Vote4.hk ✋🏻💜⚡
               </span>
             </Typography>
           </AppBarTitle>
@@ -59,12 +59,12 @@ function MobileAppBar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <ShareButton
+          <LanguageSwitcher
             onClick={() =>
               fireEvent({
                 ca: 'general',
                 ac: 'click',
-                lb: 'share_button',
+                lb: 'lang_switcher_button', //TODO: do we need that?
               })
             }
           />

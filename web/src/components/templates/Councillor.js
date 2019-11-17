@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
@@ -10,6 +10,8 @@ import {
   getColorFromPoliticalAffiliation,
   getCouncillorMeta,
   formatNumber,
+  withLanguage,
+  getCurrentLanguage,
 } from 'utils/helper'
 
 const Councillor = props => {
@@ -24,13 +26,14 @@ const Councillor = props => {
     process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'
   const meta = getCouncillorMeta(councillor)
   const { t } = useTranslation()
+  const [imageLoadError, setImageLoadError] = useState(true)
+  const currentLanguage = getCurrentLanguage()
 
   return (
     <UnstyledNavLink
       key={councillor.code}
-      to={`/profile/${councillor.person.name_zh || councillor.person.name_en}/${
-        councillor.person.uuid
-      }`}
+      to={`/${currentLanguage}/profile/${councillor.person.name_zh ||
+        councillor.person.name_en}/${councillor.person.uuid}`}
     >
       <Box>
         <Box display="flex">
@@ -54,18 +57,25 @@ const Councillor = props => {
               camp={getColorFromPoliticalAffiliation(
                 councillor.political_affiliation
               )}
-              src={`${IMAGE_HOST_URI}/static/images/avatar/${councillor.person.uuid}.jpg`}
+              src={`${IMAGE_HOST_URI}/static/images/avatar/100x100/${councillor.person.uuid}.jpg`}
               imgProps={{
                 onError: e => {
-                  e.target.src =
-                    IMAGE_HOST_URI + '/static/images/avatar/default.png'
+                  // wingkwong: avoid infinite callbacks if fallback image fails
+                  if (imageLoadError) {
+                    setImageLoadError(false)
+                    e.target.src =
+                      IMAGE_HOST_URI + '/static/images/avatar/default.png'
+                  }
                 },
               }}
             />
           </Grid>
           <Grid item xs>
             <Typography variant="h4" gutterBottom>
-              {councillor.person.name_zh}
+              {withLanguage(
+                councillor.person.name_en,
+                councillor.person.name_zh
+              )}
             </Typography>
             <Box display="flex">
               <Box pr={1} alignSelf="flex-end">
@@ -84,8 +94,7 @@ const Councillor = props => {
             <Box display="flex">
               <Box pr={1} alignSelf="flex-end">
                 <Typography variant="body2">
-                  {meta.lastParticipated.year}
-                  {/* 選舉結果 */}
+                  {meta.lastParticipated.year} {/* 選舉結果 */}
                   {t('electionResults')}
                 </Typography>
               </Box>

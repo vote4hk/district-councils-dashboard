@@ -5,11 +5,11 @@ import { Typography, Grid, Breadcrumbs, Avatar } from '@material-ui/core'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/Link'
 import { PeopleAvatar } from 'components/atoms/Avatar'
-import HtmlParagraph from 'components/atoms/HtmlParagraph'
+// import HtmlParagraph from 'components/atoms/HtmlParagraph'
 import ScrollableTabs from 'components/organisms/ScrollableTabs'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import { getColorFromCamp } from 'utils/helper'
+import { getColorFromCamp, withLanguage } from 'utils/helper'
 import CouncillorMeetingAttendanceContainer from 'components/containers/CouncillorMeetingAttendanceContainer'
 import PersonElectionHistoriesContainer from 'components/containers/PersonElectionHistoriesContainer'
 import FCPersonData from 'components/templates/FCPersonData'
@@ -17,9 +17,11 @@ import { COLORS } from 'ui/theme'
 import { Tag } from 'components/atoms/Tag'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
 import { withTranslation } from 'react-i18next'
+
 import {
   getDistrictOverviewUriFromTag,
   getConstituencyUriFromTag,
+  getCurrentLanguage,
 } from 'utils/helper'
 
 // TODO: add age, camp & related_organization
@@ -34,6 +36,7 @@ const GET_PEOPLE_PROFILE = gql`
       gender
       related_organization
       estimated_yob
+      yod
       description
       councillors {
         meeting_attendances {
@@ -46,6 +49,7 @@ const GET_PEOPLE_PROFILE = gql`
         career
         district {
           dc_name_zh
+          dc_name_en
           dc_code
         }
         political_affiliation
@@ -54,22 +58,27 @@ const GET_PEOPLE_PROFILE = gql`
           id
           year
           name_zh
+          name_en
         }
       }
       candidates {
         constituency {
           name_zh
+          name_en
           code
           district {
             dc_name_zh
+            dc_name_en
             dc_code
           }
         }
         candidate_number
         is_won
         fb_id
-        occupation
-        political_affiliation
+        occupation_zh
+        occupation_en
+        political_affiliation_zh
+        political_affiliation_en
         age
         cacode
         camp
@@ -89,7 +98,8 @@ const FlexRowContainer = styled(Box)`
 
 const CandidateHeaderContainer = styled(FlexRowContainer)`
   && {
-    height: 116px;
+    height: 120px;
+    margin-bottom: 16px;
     position: relative;
     display: flex;
     background: linear-gradient(
@@ -111,8 +121,32 @@ const PersonName = styled.div`
   && {
     position: absolute;
     left: 116px;
-    top: 32px;
+    top: 36px;
+    margin-right: 16px;
     color: ${props => COLORS.camp[props.camp].text};
+  }
+`
+
+const ImgTag = styled.img`
+  && {
+    display: block;
+    width: 100%;
+  }
+`
+
+const CandidateNumber = styled(Box)`
+  && {
+    position: relative;
+    margin-bottom: -18px !important;
+    top: -22px;
+    left: 2px;
+    border-radius: 50%;
+    font-weight: 700;
+    width: ${props => props.dimension};
+    height: ${props => props.dimension};
+    background-color: ${props => COLORS.camp[props.camp].background};
+    color: ${props => COLORS.camp[props.camp].text};
+    text-align: center;
   }
 `
 
@@ -148,31 +182,58 @@ const PersonHighlightContainer = styled(FlexRowContainer)`
     text-align: left;
   }
 `
+
+const PlatformContainer = styled(Box)`
+  && {
+    background: ${props => COLORS.camp[props.camp].background};
+    margin: 0 auto;
+    padding: 8px 16px 16px;
+  }
+`
+const PlatformHeader = styled(Box)`
+  && {
+    color: ${props => COLORS.camp[props.camp].text};
+    margin-bottom: 8px;
+  }
+`
+
+const PlatformImage = styled(Box)`
+  && {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 600px;
+  }
+`
+
 const BreadcrumbsContainer = styled(Box)`
   && {
     flex-grow: 1;
     padding: 4px 16px;
   }
 `
-const PersonDescriptionParagraph = styled(HtmlParagraph)`
-  && {
-    margin-top: 0px;
-    padding-left: 16px;
-    padding-right: 16px;
-    margin-bottom: 8px;
-  }
-`
+// const PersonDescriptionParagraph = styled(HtmlParagraph)`
+//   && {
+//     margin-top: 0px;
+//     padding-left: 16px;
+//     padding-right: 16px;
+//     margin-bottom: 8px;
+//   }
+// `
 
 class ProfilePage extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      imageLoadError: true,
+    }
   }
 
   async componentDidMount() {}
 
   handleElectionDetailButton = (year, code) => {
-    this.props.history.push(`/district/${year}/${code}`)
+    const currentLanguage = getCurrentLanguage()
+    this.props.history.push(`/${currentLanguage}/district/${year}/${code}`)
   }
 
   renderFacebook = person => {
@@ -202,15 +263,42 @@ class ProfilePage extends Component {
       currentTerm.term_to &&
       Date.parse(new Date()) < Date.parse(currentTerm.term_to)
     ) {
-      text = `現任${currentTerm.district.dc_name_zh}區議員（${currentTerm.constituency.name_zh}）`
+      text = t('currentTerm.councilor.withDistrict', {
+        district_name: withLanguage(
+          currentTerm.district.dc_name_en,
+          currentTerm.district.dc_name_zh
+        ),
+        dcca_name: withLanguage(
+          currentTerm.constituency.name_en,
+          currentTerm.constituency.name_zh
+        ),
+      })
     } else {
-      const electionResult = person.candidates[0].is_won
+      text = person.candidates[0].is_won
         ? // '當選' :
-          t('election.tag1')
+          t('election.elected', {
+            year: person.candidates[0].year,
+            district_name: withLanguage(
+              person.candidates[0].constituency.district.dc_name_en,
+              person.candidates[0].constituency.district.dc_name_zh
+            ),
+            dcca_name: withLanguage(
+              person.candidates[0].constituency.name_en,
+              person.candidates[0].constituency.name_zh
+            ),
+          })
         : // '參選'
-          t('election.tag2')
-
-      text = `${electionResult}${person.candidates[0].year}年${person.candidates[0].constituency.district.dc_name_zh}區議員（${person.candidates[0].constituency.name_zh}）`
+          t('election.run_for', {
+            year: person.candidates[0].year,
+            district_name: withLanguage(
+              person.candidates[0].constituency.district.dc_name_en,
+              person.candidates[0].constituency.district.dc_name_zh
+            ),
+            dcca_name: withLanguage(
+              person.candidates[0].constituency.name_en,
+              person.candidates[0].constituency.name_zh
+            ),
+          })
     }
 
     return <Typography variant="h6">{text}</Typography>
@@ -285,6 +373,7 @@ class ProfilePage extends Component {
       },
       t,
     } = this.props
+    const { imageLoadError } = this.state
 
     const homeUrl = process.env.REACT_APP_HOST_URI
 
@@ -293,6 +382,7 @@ class ProfilePage extends Component {
         {({ loading, error, data }) => {
           if (loading) return null
           if (error) return `Error! ${error}`
+
           const person = data.dcd_people[0]
 
           const currentTerm =
@@ -321,16 +411,18 @@ class ProfilePage extends Component {
 
           const personHighlight = []
 
-          if (person.estimated_yob) {
-            personHighlight.push({
-              xs: 2,
-              // title: '年齡',
-              title: t('personHighlight.age.title'),
-              // tips: '根據候選人簡介的年齡推算',
-              tips: t('personHighlight.age.tips'),
-              text: `${2019 - person.estimated_yob}歲`,
-            })
-          }
+          personHighlight.push({
+            xs: 2,
+            // title: '年齡',
+            title: t('personHighlight.age.title'),
+            // tips: '根據候選人簡介的年齡推算',
+            tips: t('personHighlight.age.tips'),
+            text: person.estimated_yob
+              ? t('personHighlight.age.value', {
+                  n: (person.yod || 2019) - person.estimated_yob,
+                })
+              : '-',
+          })
 
           personHighlight.push({
             xs: 6,
@@ -338,7 +430,7 @@ class ProfilePage extends Component {
             title: t('relatedOrganizations'),
             // tips: '候選人或議員的所屬政黨或社區組織，來源綜合媒體報道',
             tips: t('relatedOrganizations.tips'),
-            text: person.related_organization || '-',
+            text: person.related_organization || '-', // withLanguage(person.related_organization_en, person.related_organization_zh) || '-'
           })
 
           personHighlight.push({
@@ -348,7 +440,12 @@ class ProfilePage extends Component {
             // tips: '候選人：取自最近選舉的候選人簡介<br />議員：取自區議會網頁<br />來源綜合媒體報道',
             tips: t('personHighlight.occupation.tips'),
             text:
-              (currentTerm && currentTerm.career) || lastElection.occupation,
+              withLanguage(
+                lastElection.occupation_en,
+                lastElection.occupation_zh
+              ) ||
+              (currentTerm && currentTerm.career) ||
+              '-',
           })
 
           const titles = []
@@ -386,7 +483,10 @@ class ProfilePage extends Component {
                     >
                       <UnstyledLink
                         onClick={() => {
-                          this.props.history.push(`/district/2019`)
+                          const currentLanguage = getCurrentLanguage()
+                          this.props.history.push(
+                            `/${currentLanguage}/district/2019`
+                          )
                         }}
                       >
                         <Typography color="textPrimary">
@@ -403,7 +503,10 @@ class ProfilePage extends Component {
                         }}
                       >
                         <Typography color="textPrimary">
-                          {lastElection.constituency.district.dc_name_zh}
+                          {withLanguage(
+                            lastElection.constituency.district.dc_name_en,
+                            lastElection.constituency.district.dc_name_zh
+                          )}
                         </Typography>
                       </UnstyledLink>
                       <UnstyledLink
@@ -416,12 +519,15 @@ class ProfilePage extends Component {
                         }}
                       >
                         <Typography color="textPrimary">
-                          {lastElection.constituency.name_zh}（
-                          {lastElection.constituency.code}）
+                          {withLanguage(
+                            lastElection.constituency.name_en,
+                            lastElection.constituency.name_zh
+                          )}
+                          （{lastElection.constituency.code}）
                         </Typography>
                       </UnstyledLink>
                       <Typography color="primary" style={{ fontWeight: 600 }}>
-                        {person.name_zh}
+                        {withLanguage(person.name_en, person.name_zh)}
                       </Typography>
                     </Breadcrumbs>
                   </BreadcrumbsContainer>
@@ -435,13 +541,27 @@ class ProfilePage extends Component {
                   <PeopleAvatar
                     dimension={'84px'}
                     borderwidth={'0'}
-                    src={`${homeUrl}/static/images/avatar/${person.uuid}.jpg`}
+                    src={`${homeUrl}/static/images/avatar/100x100/${person.uuid}.jpg`}
                     imgProps={{
                       onError: e => {
-                        e.target.src = `${homeUrl}/static/images/avatar/default.png`
+                        // wingkwong: avoid infinite callbacks if fallback image fails
+                        if (imageLoadError) {
+                          this.setState({
+                            imageLoadError: false,
+                          })
+                          e.target.src = `${homeUrl}/static/images/avatar/default.png`
+                        }
                       },
                     }}
                   />
+                  {person.candidates[0].candidate_number && (
+                    <CandidateNumber
+                      dimension="18px"
+                      camp={getColorFromCamp(person.candidates[0].camp)}
+                    >
+                      {person.candidates[0].candidate_number}
+                    </CandidateNumber>
+                  )}
                 </CandidateAvatorContainer>
                 <Box>
                   <PersonName
@@ -499,16 +619,39 @@ class ProfilePage extends Component {
                   ))}
                 </Grid>
               </PersonHighlightContainer>
-              {person.description && (
+              {/* {person.description && (
                 <PersonDescriptionParagraph text={person.description} />
-              )}
+              )} */}
+              {lastElection.year === 2019 &&
+                lastElection.election_type === 'ordinary' && (
+                  <PlatformContainer
+                    camp={getColorFromCamp(lastElection && lastElection.camp)}
+                  >
+                    <PlatformHeader
+                      camp={getColorFromCamp(lastElection && lastElection.camp)}
+                    >
+                      <Typography variant="h6">
+                        {t('electoral_messages')}
+                        <HtmlTooltip
+                          disableFocusListener
+                          disableTouchListener
+                          text={t('electoral_messages.tips')}
+                          placement="bottom"
+                          size={21}
+                        />
+                      </Typography>
+                    </PlatformHeader>
+                    <PlatformImage>
+                      <ImgTag
+                        src={`${homeUrl}/static/images/platform/${person.uuid}.jpg`}
+                        alt={''} // TODO: use candidate.candi_intro for SEO
+                      />
+                    </PlatformImage>
+                  </PlatformContainer>
+                )}
               <ScrollableTabs
                 titles={titles}
-                indicatorcolor={
-                  COLORS.camp[
-                    getColorFromCamp(lastElection && lastElection.camp)
-                  ].background
-                }
+                indicatorcolor={COLORS.main.primary}
                 variant="scrollable"
               >
                 {person.fc_uuid && (

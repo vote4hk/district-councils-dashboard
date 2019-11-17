@@ -12,6 +12,7 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import { useTranslation } from 'react-i18next'
 
 const Container = styled(Box)`
   && {
@@ -29,7 +30,6 @@ const FlexLink = styled(DefaultLink)`
 `
 const SummaryExpansionPanel = styled(ExpansionPanel)`
   && {
-    margin: 5px 0;
     box-shadow: none;
   }
 `
@@ -47,12 +47,13 @@ const SummaryExpansionPanelDetails = styled(ExpansionPanelDetails)`
 
 function ControlledExpansionPanels(props) {
   const [expanded, setExpanded] = React.useState(false)
+  const { t } = useTranslation()
 
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false)
   }
 
-  const { demo_clash, estab_clash, auto_win, margin_win } = props.tagsData
+  const { demo_clash, estab_clash, highlight } = props.tagsData // auto_win, highlight
 
   return (
     <div>
@@ -66,35 +67,16 @@ function ControlledExpansionPanels(props) {
           id="panel1bh-header"
         >
           <Typography variant="h5" gutterBottom>
-            撞區 - {demo_clash.length + estab_clash.length}區
+            {/* 撞區 - {demo_clash.length + estab_clash.length}區 */}
+            {t('summary.tag.highlight', { n: highlight.length })}
           </Typography>
         </SummaryExpansionPanelSummary>
-        <SummaryExpansionPanelDetails style={{ flexDirection: 'column' }}>
-          <SeperatedColumns>
-            <Typography variant="h6" gutterBottom>
-              民主派撞區 - {demo_clash.length}區
-            </Typography>
-          </SeperatedColumns>
+        <SummaryExpansionPanelDetails>
           <Columns>
-            {demo_clash.map((district, index) => (
-              <FlexLink
-                key={index}
-                onClick={() =>
-                  props.history.push(`district/2019/${district.code}`)
-                }
-              >
-                {withLanguage(district.name_en, district.name_zh)}
-              </FlexLink>
-            ))}
-          </Columns>
-
-          <SeperatedColumns>
             <Typography variant="h6" gutterBottom>
-              建制派撞區 - {estab_clash.length}區
+              {t('summary.tag.highlight_text')}
             </Typography>
-          </SeperatedColumns>
-          <Columns>
-            {estab_clash.map((district, index) => (
+            {highlight.map((district, index) => (
               <FlexLink
                 key={index}
                 onClick={() =>
@@ -117,12 +99,39 @@ function ControlledExpansionPanels(props) {
           id="panel2bh-header"
         >
           <Typography variant="h5" gutterBottom>
-            可能翻盤 - {margin_win.length}區
+            {t('summary.tag.clash', {
+              n: demo_clash.length + estab_clash.length,
+            })}
           </Typography>
         </SummaryExpansionPanelSummary>
-        <SummaryExpansionPanelDetails>
+        <SummaryExpansionPanelDetails style={{ flexDirection: 'column' }}>
+          <SeperatedColumns>
+            <Typography variant="h6" gutterBottom>
+              {/* 民主派撞區 - {demo_clash.length}區 */}
+              {t('summary.tag.demo_clash', { n: demo_clash.length })}
+            </Typography>
+          </SeperatedColumns>
           <Columns>
-            {margin_win.map((district, index) => (
+            {demo_clash.map((district, index) => (
+              <FlexLink
+                key={index}
+                onClick={() =>
+                  props.history.push(`district/2019/${district.code}`)
+                }
+              >
+                {withLanguage(district.name_en, district.name_zh)}
+              </FlexLink>
+            ))}
+          </Columns>
+
+          <SeperatedColumns>
+            <Typography variant="h6" gutterBottom>
+              {/* 建制派撞區 - {estab_clash.length}區 */}
+              {t('summary.tag.estab_clash', { n: estab_clash.length })}
+            </Typography>
+          </SeperatedColumns>
+          <Columns>
+            {estab_clash.map((district, index) => (
               <FlexLink
                 key={index}
                 onClick={() =>
@@ -135,7 +144,7 @@ function ControlledExpansionPanels(props) {
           </Columns>
         </SummaryExpansionPanelDetails>
       </SummaryExpansionPanel>
-      <SummaryExpansionPanel
+      {/* <SummaryExpansionPanel
         expanded={expanded === 'panel3'}
         onChange={handleChange('panel3')}
       >
@@ -145,7 +154,7 @@ function ControlledExpansionPanels(props) {
           id="panel3bh-header"
         >
           <Typography variant="h5" gutterBottom>
-            上屆自動當選 - {auto_win.length}區
+            {t('summary.tag.uncontested', { n: auto_win.length })}
           </Typography>
         </SummaryExpansionPanelSummary>
         <SummaryExpansionPanelDetails>
@@ -162,7 +171,7 @@ function ControlledExpansionPanels(props) {
             ))}
           </Columns>
         </SummaryExpansionPanelDetails>
-      </SummaryExpansionPanel>
+      </SummaryExpansionPanel> */}
     </div>
   )
 }
@@ -194,20 +203,33 @@ const Summary = props => {
         // const candi_4 = result.filter(r => r.tags.includes('多人混戰')).filter(district => district.candidates.length === 4)
 
         let auto_win = []
-        let margin_win = []
+        let highlight = []
         if (data && data.c2015) {
           data.c2015.forEach(dcca2015 => {
             let dcca2019 = data.c2019.find(c => c.name_zh === dcca2015.name_zh)
             if (dcca2019) {
+              const filteredCandidates2019 = dcca2019.candidates.filter(
+                c =>
+                  c.election_type === 'ordinary' &&
+                  c.nominate_status === 'confirmed' &&
+                  c.tags.findIndex(
+                    tag => tag.type === 'demo_status' && tag.tag === 'planb'
+                  ) === -1
+              )
               if (dcca2015.candidates.length <= 1) {
                 auto_win.push(dcca2019)
+                if (filteredCandidates2019.length > 2) highlight.push(dcca2019)
               } else {
                 var votes = dcca2015.candidates
                   .map(c => c.votes)
                   .sort((a, b) => b - a)
                 var allVotes = votes.reduce((a, b) => a + b, 0)
                 var votesDiffFrac = (votes[0] - votes[1]) / allVotes
-                if (votesDiffFrac < 0.08) margin_win.push(dcca2019)
+                if (votesDiffFrac < 0.1) {
+                  // Check if 2019 has 3 and more candidates
+                  if (filteredCandidates2019.length > 2)
+                    highlight.push(dcca2019)
+                }
               }
             }
           })
@@ -217,7 +239,7 @@ const Summary = props => {
           demo_clash: demo_clash,
           estab_clash: estab_clash,
           auto_win: auto_win,
-          margin_win: margin_win,
+          highlight: highlight,
         }
 
         return (

@@ -58,7 +58,7 @@ const getDistricts = async () => {
             img: [
               {
                 title: candidate.person.name_zh || candidate.person.name_en,
-                url: `/static/images/avatar/${candidate.person.uuid}.jpg`,
+                url: `/static/images/avatar/100x100/${candidate.person.uuid}.jpg`,
               },
             ],
             changefreq: 'daily',

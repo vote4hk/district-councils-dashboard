@@ -3,8 +3,12 @@ import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import CandidatesTableContent from 'components/molecules/candidate/CandidatesTableContent'
 import { TableRow, TableCell, Box, Typography } from '@material-ui/core'
-import { getConstituencyTagsByCandidateCamps } from 'utils/helper'
-import { Tag } from 'components/atoms/Tag'
+import {
+  getConstituencyTagsByCandidateCamps,
+  withLanguage,
+  getCurrentLanguage,
+} from 'utils/helper'
+import { SecondaryTag } from 'components/atoms/Tag'
 import { SeperatedColumns } from 'components/atoms/Columns'
 
 const ConstituencyNameTableRow = styled(TableRow)`
@@ -13,9 +17,9 @@ const ConstituencyNameTableRow = styled(TableRow)`
   }
 `
 
-const StyledTag = styled(Tag)`
+const StyledSecondaryTag = styled(SecondaryTag)`
   && {
-    margin-left: 4px;
+    margin-left: 8px;
   }
 `
 
@@ -34,22 +38,28 @@ const ConstituencyTableContent = props => {
     showOthers,
   } = props
   const tags = getConstituencyTagsByCandidateCamps(constituency.candidates)
+  const currentLanguage = getCurrentLanguage()
 
   return (
     <>
       <ConstituencyNameTableRow
         onClick={() => {
-          props.history.push(`/district/${year}/${constituency.code}`)
+          props.history.push(
+            `/${currentLanguage}/district/${year}/${constituency.code}`
+          )
         }}
       >
         <TableCell colSpan={5}>
           <SeperatedColumns>
             <Typography variant="h6">
-              {constituency.name_zh}（{constituency.code}）
+              {withLanguage(constituency.name_en, constituency.name_zh)}（
+              {constituency.code}）
             </Typography>
             <TagContainer>
               {tags.length > 0 &&
-                tags.map((tag, index) => <StyledTag value={tag} key={index} />)}
+                tags.map((tag, index) => (
+                  <StyledSecondaryTag value={tag} key={index} />
+                ))}
             </TagContainer>
           </SeperatedColumns>
         </TableCell>

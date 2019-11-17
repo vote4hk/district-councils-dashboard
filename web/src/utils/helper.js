@@ -1,11 +1,21 @@
 import { DCREGION } from 'constants/dcregion'
 import _ from 'lodash'
+import i18n from 'i18n'
 
-export const getDistrictListUriFromTag = tag => `/district/2019/tags/${tag}`
+export const getDistrictListUriFromTag = tag => {
+  const currentLanguage = getCurrentLanguage()
+  return `/${currentLanguage}/district/2019/tags/${tag}`
+}
 
-export const getDistrictOverviewUriFromTag = code => `/district/2019/${code}`
+export const getDistrictOverviewUriFromTag = code => {
+  const currentLanguage = getCurrentLanguage()
+  return `/${currentLanguage}/district/2019/${code}`
+}
 
-export const getConstituencyUriFromTag = code => `/district/2019/${code}`
+export const getConstituencyUriFromTag = code => {
+  const currentLanguage = getCurrentLanguage()
+  return `/${currentLanguage}/district/2019/${code}`
+}
 
 export const getCodeFromDistrictName = name => {
   let code = 'A'
@@ -157,7 +167,8 @@ export const getColorFromPoliticalAffiliation = pa => {
 
 export const getProfilePath = person => {
   const { name_en, name_zh, uuid } = person
-  return `/profile/${name_zh || name_en}/${uuid}`
+  const currentLanguage = getCurrentLanguage()
+  return `/${currentLanguage}/profile/${name_zh || name_en}/${uuid}`
 }
 
 export const formatNumber = num =>
@@ -180,7 +191,12 @@ export const getCurrentUrl = () => {
 export const getConstituencyTagsByCandidateCamps = candidates => {
   const tags = []
   const filteredCandidates = candidates.filter(
-    c => c.election_type === 'ordinary' && c.nominate_status === 'confirmed'
+    c =>
+      c.election_type === 'ordinary' &&
+      c.nominate_status === 'confirmed' &&
+      c.tags.findIndex(
+        tag => tag.type === 'demo_status' && tag.tag === 'planb'
+      ) === -1
   )
 
   if (filteredCandidates.length >= 3) {
@@ -200,7 +216,25 @@ export const getConstituencyTagsByCandidateCamps = candidates => {
 }
 
 export const withLanguage = (name_en, name_zh) => {
-  var lang = window.location.href.match(/(en|zh)$/)
-  lang = lang ? lang[0] : 'zh'
-  return lang == 'en' && name_en ? name_en : name_zh
+  var lang = window.location.pathname.match(/^\/([\w]{2})\//)
+  lang = lang ? lang[1] : 'zh'
+  return lang === 'en' && name_en ? name_en : name_zh
+}
+
+export const getCurrentLanguage = () => {
+  return i18n.language || window.localStorage.i18nextLng || 'zh'
+}
+
+export const geti18nFromCamp = (camp, isShortForm = false) => {
+  if (!camp) return camp
+
+  const suffix = isShortForm ? '_short_form' : ''
+  const mapping = {
+    民主: `camp.democracy${suffix}`,
+    建制: `camp.establishment${suffix}`,
+    其他: `camp.others${suffix}`,
+  }
+
+  if (!mapping[camp]) return camp
+  return mapping[camp]
 }

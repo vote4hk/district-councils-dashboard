@@ -128,6 +128,7 @@ const PeopleSearcher = props => {
   const { classes, handlePeopleSelected } = props
   const [value, setValue] = useState('')
   const [suggestions, setSuggestions] = useState([])
+  const [imageLoadError, setImageLoadError] = useState(true)
   const { t } = useTranslation()
   let debounced = null
 
@@ -173,7 +174,7 @@ const PeopleSearcher = props => {
     const district = constituency['district']
 
     const avatarPath = uuid
-      ? `${homeUrl}/static/images/avatar/${uuid}.jpg`
+      ? `${homeUrl}/static/images/avatar/100x100/${uuid}.jpg`
       : `${homeUrl}/static/images/avatar/default.png`
 
     // keyword this is not accessible here. so define the style here
@@ -211,7 +212,11 @@ const PeopleSearcher = props => {
           src={avatarPath}
           imgProps={{
             onError: e => {
-              e.target.src = `${homeUrl}/static/images/avatar/default.png`
+              // wingkwong: avoid infinite callbacks if fallback image fails
+              if (imageLoadError) {
+                setImageLoadError(false)
+                e.target.src = `${homeUrl}/static/images/avatar/default.png`
+              }
             },
           }}
           style={{

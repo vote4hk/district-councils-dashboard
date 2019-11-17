@@ -14,6 +14,10 @@ const StyledAppBar = styled(AppBar)`
     .MuiTabs-indicator {
       background: ${props => props.indicatorcolor || 'black'};
     }
+    .MuiTab-wrapper {
+      text-transform: capitalize;
+    }
+    border-bottom: 1px solid #e8e8e8;
   }
 `
 

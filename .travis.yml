@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-    - "8"
+  - "8"
 stages:
   # - name: build
   # Build the docker image only on master branch
@@ -8,7 +8,7 @@ stages:
 
 branches:
   only:
-  - master
+    - master
 
 cache: npm
 
@@ -19,7 +19,6 @@ jobs:
   include:
     - stage: deploy
       script:
-        - npm install
         - npm run build
       deploy:
         provider: pages
