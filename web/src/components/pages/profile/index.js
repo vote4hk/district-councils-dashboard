@@ -34,7 +34,8 @@ const GET_PEOPLE_PROFILE = gql`
       name_zh
       name_en
       gender
-      related_organization
+      related_organization_en
+      related_organization_zh
       estimated_yob
       yod
       description
@@ -430,7 +431,11 @@ class ProfilePage extends Component {
             title: t('relatedOrganizations'),
             // tips: '候選人或議員的所屬政黨或社區組織，來源綜合媒體報道',
             tips: t('relatedOrganizations.tips'),
-            text: person.related_organization || '-', // withLanguage(person.related_organization_en, person.related_organization_zh) || '-'
+            text:
+              withLanguage(
+                person.related_organization_en,
+                person.related_organization_zh
+              ) || '-',
           })
 
           personHighlight.push({

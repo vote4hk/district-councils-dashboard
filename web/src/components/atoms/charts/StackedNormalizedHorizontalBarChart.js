@@ -7,6 +7,7 @@ import {
   getConstituencyUriFromTag,
   getCodeFromDistrictName,
 } from 'utils/helper'
+import { useTranslation } from 'react-i18next'
 
 const ROW_HEIGHT = 20
 
@@ -33,6 +34,8 @@ export default props => {
   ]
 
   const d3Container = useRef(null)
+
+  const { t } = useTranslation()
 
   const updateLegend = (res, svg) => {
     if (hideLegend) {
@@ -107,7 +110,7 @@ export default props => {
       .attr('y', 29)
       .style('text-anchor', 'start')
       .text(function(d) {
-        return `${d.label} ${d.count}席`
+        return `${d.label} ${t('election.seat_plural', { n: d.count })}`
       })
   }
 

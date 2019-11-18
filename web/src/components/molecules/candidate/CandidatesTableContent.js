@@ -188,7 +188,10 @@ class CandidatesTableContent extends Component {
                 />
               </StyledTableCell>
               <StyledTableCell>
-                {candidate.person.related_organization || '-'}
+                {withLanguage(
+                  candidate.person.related_organization_en,
+                  candidate.person.related_organization_zh
+                ) || '-'}
               </StyledTableCell>
               <StyledTableCell>
                 {withLanguage(

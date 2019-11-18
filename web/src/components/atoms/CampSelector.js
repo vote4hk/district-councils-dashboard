@@ -6,6 +6,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import { COLORS } from 'ui/theme'
 import React, { Component } from 'react'
 import { withTranslation } from 'react-i18next'
+import { geti18nFromCamp } from 'utils/helper'
 
 const styles = {
   establishment: {
@@ -85,7 +86,7 @@ class CampSelector extends Component {
                   onChange={this.handleChange.bind(this)}
                 />
               }
-              label={c.text}
+              label={t(geti18nFromCamp(c.text, true))}
             />
           ))}
         </FormGroup>
