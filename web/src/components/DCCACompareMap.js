@@ -20,6 +20,7 @@ import dc2015 from '../data/DCCA_2015'
 import dc2019 from '../data/DCCA_2019'
 
 import { adjustConcavePolygonCentroid } from 'utils/features'
+import { withLanguage } from 'utils/helper'
 
 const MapContainer = styled.div`
   width: 100%;
@@ -115,7 +116,14 @@ class DCCACompareMap extends Component {
       featuresLayer = new VectorLayer({
         source: this.featureSource,
         style: feature => {
-          regionStyle.getText().setText(feature.getProperties().CNAME)
+          regionStyle
+            .getText()
+            .setText(
+              withLanguage(
+                feature.getProperties().ENAME,
+                feature.getProperties().CNAME
+              )
+            )
           return regionStyle
         },
       })
@@ -151,7 +159,14 @@ class DCCACompareMap extends Component {
       source: new VectorSource(),
       map: map,
       style: function(feature) {
-        highlightStyle.getText().setText(`${feature.getProperties().CNAME}`)
+        highlightStyle
+          .getText()
+          .setText(
+            `${withLanguage(
+              feature.getProperties().ENAME,
+              feature.getProperties().CNAME
+            )}`
+          )
         return highlightStyle
       },
     })

@@ -64,7 +64,8 @@ constituencies( where: { year: { _eq: $year } }, order_by: {code: asc} ) {
       uuid
       name_zh
       name_en
-      related_organization
+      related_organization_en
+      related_organization_zh
     }
     nominate_status
     tags {
