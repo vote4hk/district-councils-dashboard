@@ -21,6 +21,7 @@ import dc2019 from '../data/DCCA_2019'
 
 import { adjustConcavePolygonCentroid } from 'utils/features'
 import { withLanguage } from 'utils/helper'
+import { fireEvent } from 'utils/ga_fireevent'
 
 const MapContainer = styled.div`
   width: 100%;
@@ -297,6 +298,12 @@ class DCCACompareMap extends Component {
 
     // No more select polygon
     e.target.getFeatures().clear()
+
+    fireEvent({
+      ca: 'battleground',
+      ac: 'click',
+      lb: `map`,
+    })
   }
 
   mapHover = e => {

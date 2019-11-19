@@ -9,6 +9,7 @@ import { SeperatedColumns } from 'components/atoms/Columns'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
 import { Box, Typography, Grid } from '@material-ui/core'
 import styled from 'styled-components'
+import { fireEvent } from 'utils/ga_fireevent'
 import { useTranslation } from 'react-i18next'
 import {
   getColorFromCamp,
@@ -125,7 +126,6 @@ const CandidatesContainer = props => {
                       tags.map((tag, index) => (
                         <StyledSecondaryTag value={tag} key={index} />
                       ))}
-                    {console.log(election_forum)}
                     {election_forum &&
                       election_forum.map((forum, index) => (
                         <StyledTag
@@ -134,6 +134,11 @@ const CandidatesContainer = props => {
                             n: election_forum.length > 1 ? index + 1 : '',
                           })}
                           handleClick={() => {
+                            fireEvent({
+                              ca: 'battleground',
+                              ac: 'click',
+                              lb: 'watch_election_forum',
+                            })
                             window.open(forum, '_blank')
                           }}
                         />

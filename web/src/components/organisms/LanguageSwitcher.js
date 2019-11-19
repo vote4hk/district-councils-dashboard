@@ -5,6 +5,7 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import LanguageIcon from '@material-ui/icons/Language'
 import { useTranslation } from 'react-i18next'
+import { fireEvent } from 'utils/ga_fireevent'
 
 const RightIconButton = styled(IconButton)`
   && {
@@ -38,6 +39,11 @@ function LanguageSwitcher(props) {
     } else {
       handleButtonClose()
     }
+    fireEvent({
+      ca: 'language',
+      ac: 'click',
+      lb: `switch_to_${lng}`,
+    })
   }
 
   const { t } = useTranslation()
