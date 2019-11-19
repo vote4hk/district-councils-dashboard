@@ -6,6 +6,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/Link'
 import { PeopleAvatar } from 'components/atoms/Avatar'
 // import HtmlParagraph from 'components/atoms/HtmlParagraph'
+import { UnstyledButton } from 'components/atoms/Button'
 import ScrollableTabs from 'components/organisms/ScrollableTabs'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
@@ -17,6 +18,7 @@ import { COLORS } from 'ui/theme'
 import { Tag } from 'components/atoms/Tag'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
 import { withTranslation } from 'react-i18next'
+import localforage from 'localforage'
 
 import {
   getDistrictOverviewUriFromTag,
@@ -213,6 +215,15 @@ const BreadcrumbsContainer = styled(Box)`
     padding: 4px 16px;
   }
 `
+
+const FavCandidateButton = styled(UnstyledButton)`
+  && {
+    width: 100%;
+    font-size: 14px;
+    text-align: center;
+  }
+`
+
 // const PersonDescriptionParagraph = styled(HtmlParagraph)`
 //   && {
 //     margin-top: 0px;
@@ -227,7 +238,12 @@ class ProfilePage extends Component {
     super(props)
     this.state = {
       imageLoadError: true,
+      candidateArr: [],
     }
+
+    localforage.getItem('candidate').then(value => {
+      this.setState({ candidateArr: value === null ? [] : value })
+    })
   }
 
   async componentDidMount() {}
@@ -365,6 +381,21 @@ class ProfilePage extends Component {
     }
 
     return null
+  }
+
+  TriggerFavCandidate = candidateId => {
+    const cid = candidateId
+    var candidateArr = this.state.candidateArr
+    if (this.state.candidateArr.find(code => code === cid)) {
+      candidateArr = candidateArr.filter((value, index, arr) => {
+        return value !== cid
+      })
+      this.setState({ candidateArr: candidateArr })
+    } else {
+      candidateArr.push(cid)
+      this.setState({ candidateArr: candidateArr })
+    }
+    localforage.setItem('candidate', candidateArr.sort())
   }
 
   render() {
@@ -654,6 +685,14 @@ class ProfilePage extends Component {
                     </PlatformImage>
                   </PlatformContainer>
                 )}
+              <FavCandidateButton
+                onClick={() => this.TriggerFavCandidate(person.id)}
+              >
+                {this.state.candidateArr.find(id => id === person.id)
+                  ? t('candidate.button.unfollow')
+                  : t('candidate.button.follow')}
+              </FavCandidateButton>
+
               <ScrollableTabs
                 titles={titles}
                 indicatorcolor={COLORS.main.primary}

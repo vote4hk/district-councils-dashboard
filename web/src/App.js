@@ -40,6 +40,10 @@ const FavDistrictListPage = loadable(() =>
   import(/* webpackPrefetch: true */ 'components/pages/fav-district')
 )
 
+const FavCandidateListPage = loadable(() =>
+  import(/* webpackPrefetch: true */ 'components/pages/fav-candidate')
+)
+
 const NotfoundPage = loadable(() =>
   import(/* webpackPrefetch: true */ 'components/pages/notfound')
 )
@@ -144,6 +148,10 @@ const LangSwitch = props => {
         path={`${path}/SelectedDistrict`}
         component={withTracker(FavDistrictListPage)}
       />
+      <Route
+        path={`${path}/SelectedCandidate`}
+        component={withTracker(FavCandidateListPage)}
+      />
       <Route path={`${path}/about-dc`} component={withTracker(AboutDCPage)} />
       <Route path="/about-us" component={withTracker(SupportUsPage)} />
       <Route component={withTracker(NotfoundPage)} />
@@ -211,6 +219,10 @@ const App = props => {
                     <Route
                       path="/SelectedDistrict"
                       component={withTracker(FavDistrictListPage)}
+                    />
+                    <Route
+                      path="/SelectedCandidate"
+                      component={withTracker(FavCandidateListPage)}
                     />
                     <Route component={withTracker(NotfoundPage)} />
                   </Switch>

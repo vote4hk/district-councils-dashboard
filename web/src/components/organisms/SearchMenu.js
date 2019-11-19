@@ -89,6 +89,17 @@ const SearchMenu = props => {
         <Typography
           variant="h5"
           color="secondary"
+          onClick={() => goToPage(`/${currentLanguage}/SelectedCandidate`)}
+        >
+          {/* 己關注候選人 */}
+          {t('searchMenu.text5')}
+        </Typography>
+      </LeftMargin>
+
+      <LeftMargin>
+        <Typography
+          variant="h5"
+          color="secondary"
           onClick={() =>
             (window.location.href =
               'https://docs.google.com/forms/u/1/d/e/1FAIpQLSdXtbdry3w8hkmZuN0MJaj2CP2X3RUUnCTWLnOujsfx1pHDrw/viewform?usp=send_form')
