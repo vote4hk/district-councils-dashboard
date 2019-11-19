@@ -78,7 +78,7 @@ const SearchMenu = props => {
         <Typography
           variant="h5"
           color="secondary"
-          onClick={() => goToPage(`/${currentLanguage}/SelectedDistrict`)}
+          onClick={() => goToPage(`/${currentLanguage}/followed-district`)}
         >
           {/* 己關注選區 */}
           {t('searchMenu.text4')}
