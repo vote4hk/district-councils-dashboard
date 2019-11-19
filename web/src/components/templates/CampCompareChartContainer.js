@@ -366,7 +366,7 @@ const CampCompareChartContainer = props => {
                     })
                   }}
                   // label="模擬結果"
-                  label={t('predictionChartHeader.button.label1')}
+                  label={t('predictionChartHeader.button.simulation_result')}
                 />
               )}
             </PredictionChartHeader>
