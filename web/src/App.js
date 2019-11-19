@@ -145,7 +145,7 @@ const LangSwitch = props => {
         component={withTracker(FavDistrictListPage)}
       />
       <Route path={`${path}/about-dc`} component={withTracker(AboutDCPage)} />
-      <Route path="/about-us" component={withTracker(SupportUsPage)} />
+      <Route path={`${path}/about-us`} component={withTracker(SupportUsPage)} />
       <Route component={withTracker(NotfoundPage)} />
     </Switch>
   )
