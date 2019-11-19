@@ -16,7 +16,8 @@ code
 deviation_percentage
 expected_population
 main_areas
-description
+description_zh
+description_en
 vote_stats {
   count
   type
@@ -34,6 +35,7 @@ tags {
   tag
   type
 }
+meta
 `
 
 const DISTRICT_DATA = `
@@ -62,7 +64,8 @@ constituencies( where: { year: { _eq: $year } }, order_by: {code: asc} ) {
       uuid
       name_zh
       name_en
-      related_organization
+      related_organization_en
+      related_organization_zh
     }
     nominate_status
     tags {

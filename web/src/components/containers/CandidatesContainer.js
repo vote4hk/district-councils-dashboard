@@ -3,7 +3,7 @@ import { Query } from 'react-apollo'
 import { QUERY_GET_CANDIDATES } from 'queries/gql'
 import { PeopleAvatar } from 'components/atoms/Avatar'
 import { UnstyledNavLink } from 'components/atoms/Link'
-import { SecondaryTag } from 'components/atoms/Tag'
+import { Tag, SecondaryTag } from 'components/atoms/Tag'
 import Rows from 'components/atoms/Rows'
 import { SeperatedColumns } from 'components/atoms/Columns'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
@@ -17,6 +17,7 @@ import {
   getCurrentLanguage,
 } from 'utils/helper'
 import { COLORS } from 'ui/theme'
+import OndemandVideoIcon from '@material-ui/icons/OndemandVideo'
 
 const IMAGE_HOST_URI =
   process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'
@@ -35,6 +36,12 @@ const CandidateGrid = styled(Grid)`
 const DCCAStatusTagsContainer = styled(SeperatedColumns)`
   && {
     justify-content: flex-end;
+  }
+`
+
+const StyledTag = styled(Tag)`
+  && {
+    margin-left: 8px;
   }
 `
 
@@ -88,7 +95,7 @@ const CandidateName = styled(Typography)`
 `
 
 const CandidatesContainer = props => {
-  const { code, year } = props
+  const { code, year, election_forum } = props
   const { t } = useTranslation()
   const [imageLoadError, setImageLoadError] = useState(true)
 
@@ -117,6 +124,19 @@ const CandidatesContainer = props => {
                     {tags.length > 0 &&
                       tags.map((tag, index) => (
                         <StyledSecondaryTag value={tag} key={index} />
+                      ))}
+                    {console.log(election_forum)}
+                    {election_forum &&
+                      election_forum.map((forum, index) => (
+                        <StyledTag
+                          icon={<OndemandVideoIcon />}
+                          value={t('candidateContainer.election_forum', {
+                            n: election_forum.length > 1 ? index + 1 : '',
+                          })}
+                          handleClick={() => {
+                            window.open(forum, '_blank')
+                          }}
+                        />
                       ))}
                   </DCCAStatusTagsContainer>
                 </Rows>

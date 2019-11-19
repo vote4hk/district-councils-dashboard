@@ -126,7 +126,13 @@ function PredictionChartPanel(props) {
 
   return (
     <div>
-      <Tabs titles={['投票取向', '投票率']} buttonLayout="centered">
+      <Tabs
+        titles={[
+          t('predictionChartPanel.tab.voting_preference'),
+          t('predictionChartPanel.tab.voter_turnout'),
+        ]}
+        buttonLayout="centered"
+      >
         <TabSection>
           {renderSettings()}
           <Text variant="h5">
@@ -134,17 +140,17 @@ function PredictionChartPanel(props) {
             {t('predictionChartPanel.tabSection.title1')}
           </Text>
           <StyledValueSlider
-            label={'18-30歲'}
+            label={t('predictionChartPanel.18_to_30')}
             value={settings.camp_rate[0]}
             setValue={setSettingFunc(0, 0)}
           ></StyledValueSlider>
           <StyledValueSlider
-            label={'31-59歲'}
+            label={t('predictionChartPanel.31_to_59')}
             value={settings.camp_rate[1]}
             setValue={setSettingFunc(0, 1)}
           ></StyledValueSlider>
           <StyledValueSlider
-            label={'60歲及以上'}
+            label={t('predictionChartPanel.60_or_above')}
             value={settings.camp_rate[2]}
             setValue={setSettingFunc(0, 2)}
           ></StyledValueSlider>
@@ -156,17 +162,17 @@ function PredictionChartPanel(props) {
             {t('predictionChartPanel.tabSection.title2')}
           </Text>
           <StyledValueSlider
-            label={'18-30歲'}
+            label={t('predictionChartPanel.18_to_30')}
             value={settings.vote_rate[0]}
             setValue={setSettingFunc(1, 0)}
           ></StyledValueSlider>
           <StyledValueSlider
-            label={'31-59歲'}
+            label={t('predictionChartPanel.31_to_59')}
             value={settings.vote_rate[1]}
             setValue={setSettingFunc(1, 1)}
           ></StyledValueSlider>
           <StyledValueSlider
-            label={'60歲及以上'}
+            label={t('predictionChartPanel.60_or_above')}
             value={settings.vote_rate[2]}
             setValue={setSettingFunc(1, 2)}
           ></StyledValueSlider>
