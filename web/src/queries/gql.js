@@ -88,14 +88,41 @@ query($year: Int!, $code: String!) {
 `
 
 export const QUERY_GET_CONSTITUENCIES_BY_DISTRICT_CODES = gql`
-query($year: Int!, $dc: [String!]) {
-  dcd_constituencies(
-    where: { year: { _eq: $year }, code: { _in: $dc } } 
-    order_by: {code: asc }
-  ) {
-    ${CONSTITUENCIES_DATA}
-  }  
-}
+  query($year: Int!, $dc: [String!]) {
+    dcd_constituencies(
+      where: { year: { _eq: $year }, code: { _in: $dc } }
+      order_by: { code: asc }
+    ) {
+      id
+      name_zh
+      name_en
+      code
+      candidates(
+        where: { year: { _eq: $year } }
+        order_by: { candidate_number: asc }
+      ) {
+        candidate_number
+        is_won
+        political_affiliation
+        political_affiliation_zh
+        political_affiliation_en
+        election_type
+        camp
+        person {
+          id
+          uuid
+          name_zh
+          name_en
+          related_organization
+        }
+        nominate_status
+        tags {
+          tag
+          type
+        }
+      }
+    }
+  }
 `
 
 export const QUERY_GET_CONSTITUENCIES_BY_TAG = gql`
