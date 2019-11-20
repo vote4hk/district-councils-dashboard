@@ -17,7 +17,7 @@ import {
   WhatsappIcon,
   TwitterIcon,
 } from 'react-share'
-
+import { fireEvent } from 'utils/ga_fireevent'
 const StyledCopyIcon = styled(CopyIcon)`
   && {
     width: 32px;
@@ -78,8 +78,15 @@ function ShareButton(props) {
     setAnchorEl(event.currentTarget)
   }
 
-  const handleShareButtonClose = () => {
+  const handleShareButtonClose = media => {
     setAnchorEl(null)
+    if (typeof media === 'string') {
+      fireEvent({
+        ca: 'general',
+        ac: 'click',
+        lb: `share_${media}`,
+      })
+    }
   }
 
   const url = getCurrentUrl()
@@ -102,31 +109,31 @@ function ShareButton(props) {
         open={Boolean(anchorEl)}
         onClose={handleShareButtonClose}
       >
-        <MenuItem>
+        <MenuItem onClick={() => handleShareButtonClose('facebook')}>
           <FacebookShareButton
             url={getShareUrl(url, 'facebook')}
             children={<FacebookIcon size={32} round={true} />}
           />
         </MenuItem>
-        <MenuItem onClick={handleShareButtonClose}>
+        <MenuItem onClick={() => handleShareButtonClose('telegram')}>
           <TelegramShareButton
             url={getShareUrl(url, 'telegram')}
             children={<TelegramIcon size={32} round={true} />}
           />
         </MenuItem>
-        <MenuItem onClick={handleShareButtonClose}>
+        <MenuItem onClick={() => handleShareButtonClose('whatsapp')}>
           <WhatsappShareButton
             url={getShareUrl(url, 'whatsapp')}
             children={<WhatsappIcon size={32} round={true} />}
           />
         </MenuItem>
-        <MenuItem onClick={handleShareButtonClose}>
+        <MenuItem onClick={() => handleShareButtonClose('twitter')}>
           <TwitterShareButton
             url={getShareUrl(url, 'twitter')}
             children={<TwitterIcon size={32} round={true} />}
           />
         </MenuItem>
-        <MenuItem onClick={handleShareButtonClose}>
+        <MenuItem onClick={() => handleShareButtonClose('link')}>
           <StyledCopyIcon
             onClick={() => {
               navigator.clipboard.writeText(url)

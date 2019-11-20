@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
-import { QUERY_GET_CONSTITUENCIES_BY_DISTRICT_CODES } from 'queries/gql'
+import { QUERY_GET_CANDIDATES_BY_IDS } from 'queries/gql'
 import ConstituencyTableContent from 'components/molecules/constituency/ConstituencyTableContent'
 import CampSelector from 'components/atoms/CampSelector'
 import { Loading } from 'components/atoms/Loading'
@@ -25,11 +25,11 @@ const StyledTableCell = styled(TableCell)`
   }
 `
 
-class FavDistrictListPage extends Component {
+class FavCandidateListPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      battlegroundArr: [],
+      candidateArr: [],
       checked: {
         democracy: true,
         establishment: true,
@@ -38,8 +38,8 @@ class FavDistrictListPage extends Component {
       },
     }
 
-    localforage.getItem('battleground').then(value => {
-      this.setState({ battlegroundArr: value === null ? [] : value })
+    localforage.getItem('candidate').then(value => {
+      this.setState({ candidateArr: value === null ? [] : value })
     })
   }
 
@@ -53,8 +53,8 @@ class FavDistrictListPage extends Component {
 
     return (
       <Query
-        query={QUERY_GET_CONSTITUENCIES_BY_DISTRICT_CODES}
-        variables={{ dc: this.state.battlegroundArr, year: 2019 }}
+        query={QUERY_GET_CANDIDATES_BY_IDS}
+        variables={{ person_id: this.state.candidateArr, year: 2019 }}
       >
         {({ loading, error, data }) => {
           if (loading) return <Loading />
@@ -129,4 +129,4 @@ class FavDistrictListPage extends Component {
   }
 }
 
-export default withTranslation()(FavDistrictListPage)
+export default withTranslation()(FavCandidateListPage)

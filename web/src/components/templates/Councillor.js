@@ -40,7 +40,10 @@ const Councillor = props => {
           <Box flexGrow={1}>
             <Typography variant="h6" gutterBottom>
               {`${councillor.term_from.substring(0, 4)} `}
-              {`${councillor.constituency.name_zh} （${councillor.constituency.code}）`}
+              {`${withLanguage(
+                councillor.constituency.name_en,
+                councillor.constituency.name_zh
+              )} （${councillor.constituency.code}）`}
             </Typography>
           </Box>
           <Box>

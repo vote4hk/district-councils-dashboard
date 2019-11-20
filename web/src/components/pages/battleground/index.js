@@ -36,6 +36,7 @@ import {
 import DCCAElectionHistories from 'components/templates/DCCAElectionHistories'
 import { withTranslation } from 'react-i18next'
 import localforage from 'localforage'
+import { fireEvent } from 'utils/ga_fireevent'
 
 const groupVoteStat = voteStats => {
   const data = _.groupBy(voteStats, stat => stat.subtype)
@@ -197,17 +198,25 @@ class BattleGroundPage extends Component {
 
   TriggerFavDistrict = districtCode => {
     const dc = districtCode
+    let action = 'follow'
     var battleArr = this.state.battlegroundArr
     if (this.state.battlegroundArr.find(code => code === dc)) {
       battleArr = battleArr.filter((value, index, arr) => {
         return value !== dc
       })
       this.setState({ battlegroundArr: battleArr })
+      action = 'unfollow'
     } else {
       battleArr.push(dc)
       this.setState({ battlegroundArr: battleArr })
     }
     localforage.setItem('battleground', battleArr.sort())
+
+    fireEvent({
+      ca: 'battleground',
+      ac: 'click',
+      lb: `${action}_${districtCode}`,
+    })
   }
 
   render() {
