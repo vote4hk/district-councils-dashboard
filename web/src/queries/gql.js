@@ -77,7 +77,7 @@ constituencies( where: { year: { _eq: $year } }, order_by: {code: asc} ) {
 `
 
 export const QUERY_CONSTITUENCIES = gql`
-query($year: Int!, $code: String!) {
+query($year: Int!, $code: String!, $stationPattern: String) {
   dcd_constituencies(where: { year: { _eq: $year }, code: { _eq: $code } }) {
     ${CONSTITUENCIES_DATA}
     predecessors {
@@ -86,7 +86,18 @@ query($year: Int!, $code: String!) {
         ${CONSTITUENCIES_DATA}
       }
     }
-  }  
+  }
+  dcd_constituency_vote_stations (
+    where: {
+      station_code: {_like:$stationPattern}, 
+      year:{_eq:$year}},    
+  ){
+    station_code
+    name_en
+    name_zh
+    address_en
+    address_zh   
+    }  
 }
 `
 

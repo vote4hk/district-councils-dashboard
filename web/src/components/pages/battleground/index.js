@@ -4,6 +4,7 @@ import Box from '@material-ui/core/Box'
 import DCCACompareMap from '../../DCCACompareMap'
 import { Query } from 'react-apollo'
 import MainAreas from 'components/district/MainAreas'
+import VoteStations from 'components/district/VoteStations'
 import CouncillorContainer from 'components/containers/CouncillorContainer'
 import CandidatesContainer from 'components/containers/CandidatesContainer'
 import DCCAOverview from 'components/district/DCCAOverview'
@@ -225,13 +226,20 @@ class BattleGroundPage extends Component {
       year => year === queryYear
     )
 
+    const stationPattern = code + '%'
+
     return (
       <>
-        <Query query={QUERY_CONSTITUENCIES} variables={{ year, code }}>
+        <Query
+          query={QUERY_CONSTITUENCIES}
+          variables={{ year, code, stationPattern }}
+        >
           {({ loading, error, data }) => {
             if (loading) return null
             if (error) return `Error! ${error}`
             const district = data.dcd_constituencies[0]
+            const voteStations = data.dcd_constituency_vote_stations
+            console.log(data)
             const previousDistricts = district.predecessors.filter(
               district =>
                 district.intersect_area === null ||
@@ -357,6 +365,7 @@ class BattleGroundPage extends Component {
                   </Box>
                 </Collapse>
                 <MainAreas areas={district.main_areas || []} />
+                <VoteStations stations={voteStations || []} />
 
                 {DCCAStatus && (
                   <Container>
