@@ -43,7 +43,9 @@ function Footer(props) {
   const currentLanguage = getCurrentLanguage()
   if (typeof window.FB !== 'undefined') {
     React.useEffect(() => {
-      window.FB.XFBML.parse()
+      try {
+        window.FB.XFBML.parse()
+      } catch (e) {}
     }, [])
   }
   return (
