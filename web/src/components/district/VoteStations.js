@@ -81,9 +81,7 @@ class VoteStations extends Component {
                   lb: `vote_station_${station.station_code}`,
                 })
                 window.open(
-                  `https://maps.google.com/?q=${
-                    station.location.coordinates[1]
-                  },${station.location.coordinates[0]}`,
+                  `https://maps.google.com/?q=${station.name_zh}`,
                   '_blank'
                 )
               }}
