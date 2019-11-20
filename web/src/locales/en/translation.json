@@ -176,5 +176,5 @@
   "election.seat_single": "{{n}} seat",
   "election.seat_plural": "{{n}} seats",
   "vote_stations.title": "Polling stations",
-  "vote_stations.note": "For electors who have not received their poll cards, please log in to the <a href='www.voterinfo.gov.hk' target='_blank'>Online Voter Information Enquiry System</a> or call <a href='tel:+85228911001'>2891 1001</a> to check their registration status and details of their designated polling stations."
+  "vote_stations.note": "For electors who have not received their poll cards, please log in to the <a href='https://www.voterinfo.gov.hk?lang=en' target='_blank'>Online Voter Information Enquiry System</a> or call <a href='tel:+85228911001'>2891 1001</a> to check their registration status and details of their designated polling stations."
 }
