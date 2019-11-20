@@ -12,12 +12,18 @@ import { COLORS } from 'ui/theme'
 const Container = styled.div`
    {
     padding: 16px;
+    a {
+      text-decoration: unset;
+      color: ${COLORS.main.primary};
+      font-weight: 500;
+    }
   }
 `
 
 const VoteStationContainer = styled(Box)`
   && {
-    padding: 4px 8px 4px;
+    background-color: #fafafa;
+    padding: 6px 12px 8px;
     margin-bottom: 8px;
     svg {
       fill: ${COLORS.main.primary};
@@ -46,12 +52,11 @@ class VoteStations extends Component {
     let reminder
     if (stations.length > 1) {
       reminder = (
-        <Typography variant="body2" gutterBottom>
-          {withLanguage(
-            'Please confirm your allocated polling station before voting',
-            '請於投票前確認閣下獲編配之票站'
-          )}
-        </Typography>
+        <Typography
+          variant="body2"
+          gutterBottom
+          dangerouslySetInnerHTML={{ __html: t('vote_stations.note') }}
+        />
       )
     }
     return (
@@ -59,13 +64,24 @@ class VoteStations extends Component {
         <Typography variant="h6" gutterBottom>
           {/* 主要屋邨 / 地區 */}
 
-          {withLanguage('Polling stations', '投票站')}
+          {t('vote_stations.title')}
         </Typography>
         {/* <Box display="flex" flexWrap="wrap" alignContent="flex-start"> */}
 
         {stations.map((station, index) => (
           <VoteStationContainer key={index}>
-            <VoteStation container spacing={1}>
+            <VoteStation
+              container
+              spacing={1}
+              onClick={() => {
+                window.open(
+                  `https://maps.google.com/?q=${
+                    station.location.coordinates[1]
+                  },${station.location.coordinates[0]}`,
+                  '_blank'
+                )
+              }}
+            >
               <Grid item xs={11}>
                 <Typography variant="body2">
                   <Box>{station.station_code}</Box>
@@ -78,16 +94,7 @@ class VoteStations extends Component {
                 </Typography>
               </Grid>
               <Grid item xs={1}>
-                <MapIcon
-                  onClick={() => {
-                    window.open(
-                      `https://maps.google.com/?q=${
-                        station.location.coordinates[1]
-                      },${station.location.coordinates[0]}`,
-                      '_blank'
-                    )
-                  }}
-                />
+                <MapIcon />
               </Grid>
             </VoteStation>
           </VoteStationContainer>

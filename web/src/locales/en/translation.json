@@ -174,5 +174,7 @@
   "predictionChartPanel.31_to_59": "Age 31-59",
   "predictionChartPanel.60_or_above": "Age 60 or above",
   "election.seat_single": "{{n}} seat",
-  "election.seat_plural": "{{n}} seats"
+  "election.seat_plural": "{{n}} seats",
+  "vote_stations.title": "Polling stations",
+  "vote_stations.note": "For electors who have not received their poll cards, please log in to the <a href='www.voterinfo.gov.hk' target='_blank'>Online Voter Information Enquiry System</a> or call <a href='tel:+85228911001'>2891 1001</a> to check their registration status and details of their designated polling stations."
 }

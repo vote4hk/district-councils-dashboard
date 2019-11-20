@@ -174,5 +174,7 @@
   "predictionChartPanel.31_to_59": "31-59歲",
   "predictionChartPanel.60_or_above": "60歲及以上",
   "election.seat_single": "{{n}}席",
-  "election.seat_plural": "{{n}}席"
+  "election.seat_plural": "{{n}}席",
+  "vote_stations.title": "投票站",
+  "vote_stations.note": "尚未收到投票通知卡的選民，請登入<a href='www.voterinfo.gov.hk' target='_blank'>政府選民資料網上查閱系統</a>或致電<a href='tel:+85228911001'>2891 1001</a>查詢選民身分及獲編配的投票站詳情。"
 }
