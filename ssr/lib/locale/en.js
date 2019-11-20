@@ -4,7 +4,7 @@ const zh = {
   formatSiteName: () => '2019 District Council Election｜Vote4.hk The Guide to Voting',
   formatTitle: (prefix) => `${prefix ? prefix + '｜' : '' }2019 District Council Election｜Vote4.hk The Guide to Voting`,
   formatDescription: () => `The Guide to Voting in 2019 District Council Election is the best search engine for the list of districts and candidates. The page contains information on nomination of candidates, past results of District Council Election, data analysis, remarks made by candidates and their attendance at meetings.`,
-  formatKeyword: (prefix) => `${prefix ? prefix + ', ' : '' }vote4hk, vote4, guide to voting, district council election, district council, dce, election, 2019 dc, candidate, constituency, boundary, map, situation, data, analysis, south china morning post, scmp, hong kong free press, hkfp, pro-democratic, pro-establishment`,
+  formatKeyword: (prefix) => `${prefix ? prefix + ', ' : '' }vote4hk, vote4, guide to voting, district council election, district council, dce, election, 2019 dc, candidate, constituency, boundary, map, situation, data, analysis, south china morning post, scmp, orange news, hong kong free press, hkfp, pro-democratic, pro-establishment`,
   formatImageUrl: () => 'https://vote4.hk/og-image.png',
   formatArticleSection: () => 'Candidate information｜Boundary and map｜Data analysis',
 
