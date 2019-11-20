@@ -42,6 +42,7 @@
   "camp.establishment_short_form": "Estab",
   "camp.others_short_form": "Others",
   "no_of_districts": "{{n}} districts",
+  "constituency": "Constituency",
   "candidates": "Candidates",
   "relatedOrganizations": "Related organizations",
   "relatedOrganizations.tips": "Party or community organization to which the candidate or member of Parliament belongs. From source of comprehensive media coverage.",

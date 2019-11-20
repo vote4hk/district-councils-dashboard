@@ -42,6 +42,7 @@
   "camp.establishment_short_form": "建制",
   "camp.others_short_form": "其他",
   "no_of_districts": "{{n}}個選區",
+  "constituency": "選區",
   "candidates": "候選人",
   "relatedOrganizations": "相關組織",
   "relatedOrganizations.tips": "候選人或議員的所屬政黨或社區組織，來源綜合媒體報道",

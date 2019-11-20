@@ -40,6 +40,7 @@
     "jest-watch-typeahead": "^0.2.1",
     "localforage": "^1.7.3",
     "lodash": "^4.17.15",
+    "lodash.get": "^4.4.2",
     "mini-css-extract-plugin": "0.5.0",
     "moment": "^2.24.0",
     "ol": "^5.3.3",
