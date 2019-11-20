@@ -19,6 +19,7 @@ import { Tag } from 'components/atoms/Tag'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
 import { withTranslation } from 'react-i18next'
 import localforage from 'localforage'
+import { fireEvent } from 'utils/ga_fireevent'
 
 import {
   getDistrictOverviewUriFromTag,
@@ -385,17 +386,25 @@ class ProfilePage extends Component {
 
   TriggerFavCandidate = candidateId => {
     const cid = candidateId
+    let action = 'follow'
     var candidateArr = this.state.candidateArr
     if (this.state.candidateArr.find(code => code === cid)) {
       candidateArr = candidateArr.filter((value, index, arr) => {
         return value !== cid
       })
       this.setState({ candidateArr: candidateArr })
+      action = 'unfollow'
     } else {
       candidateArr.push(cid)
       this.setState({ candidateArr: candidateArr })
     }
     localforage.setItem('candidate', candidateArr.sort())
+
+    fireEvent({
+      ca: 'profile',
+      ac: 'click',
+      lb: `${action}_${candidateId}`,
+    })
   }
 
   render() {
