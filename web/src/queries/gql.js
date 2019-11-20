@@ -96,7 +96,8 @@ query($year: Int!, $code: String!, $stationPattern: String) {
     name_en
     name_zh
     address_en
-    address_zh   
+    address_zh
+    location
     }  
 }
 `

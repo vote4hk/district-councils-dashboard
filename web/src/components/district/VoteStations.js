@@ -7,6 +7,7 @@ import MapIcon from '@material-ui/icons/Map'
 import PropTypes from 'prop-types'
 import { withTranslation } from 'react-i18next'
 import { withLanguage } from 'utils/helper'
+import { COLORS } from 'ui/theme'
 
 const Container = styled.div`
    {
@@ -14,6 +15,27 @@ const Container = styled.div`
   }
 `
 
+const VoteStationContainer = styled(Box)`
+  && {
+    padding: 4px 8px 4px;
+    margin-bottom: 8px;
+    svg {
+      fill: ${COLORS.main.primary};
+    }
+  }
+`
+const VoteStation = styled(Grid)`
+  && {
+    align-items: center;
+  }
+`
+
+const VoteStationName = styled(Typography)`
+  && {
+    font-size: 16px;
+    font-weight: 600;
+  }
+`
 class VoteStations extends Component {
   static propTypes = {
     stations: PropTypes.array.isRequired,
@@ -42,38 +64,33 @@ class VoteStations extends Component {
         {/* <Box display="flex" flexWrap="wrap" alignContent="flex-start"> */}
 
         {stations.map((station, index) => (
-          <Box
-            marginY="8px"
-            display="flex"
-            flexWrap="wrap"
-            alignContent="flex-start"
-            bgcolor="WhiteSmoke"
-          >
-            <Grid container spacing={0} alignItems="center">
+          <VoteStationContainer key={index}>
+            <VoteStation container spacing={1}>
               <Grid item xs={11}>
-                <Typography variant="h5">
-                  <Box fontWeight="fontWeightBold">
-                    {station.station_code}{' '}
-                    {withLanguage(station.name_en, station.name_zh)}
-                  </Box>
+                <Typography variant="body2">
+                  <Box>{station.station_code}</Box>
                 </Typography>
-                <Typography variant="body1">
+                <VoteStationName>
+                  {withLanguage(station.name_en, station.name_zh)}
+                </VoteStationName>
+                <Typography variant="body2">
                   {withLanguage(station.address_en, station.address_zh)}
                 </Typography>
               </Grid>
               <Grid item xs={1}>
-                <a
-                  href={
-                    'https://www.elections.gov.hk/dc2019/pdf/polling/' +
-                    station.station_code +
-                    '_2019_M1.pdf'
-                  }
-                >
-                  <MapIcon />
-                </a>
+                <MapIcon
+                  onClick={() => {
+                    window.open(
+                      `https://maps.google.com/?q=${
+                        station.location.coordinates[1]
+                      },${station.location.coordinates[0]}`,
+                      '_blank'
+                    )
+                  }}
+                />
               </Grid>
-            </Grid>
-          </Box>
+            </VoteStation>
+          </VoteStationContainer>
         ))}
         {reminder}
       </Container>
