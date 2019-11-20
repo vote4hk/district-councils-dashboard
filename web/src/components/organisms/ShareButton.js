@@ -80,7 +80,7 @@ function ShareButton(props) {
 
   const handleShareButtonClose = media => {
     setAnchorEl(null)
-    if (media) {
+    if (typeof media === 'string') {
       fireEvent({
         ca: 'general',
         ac: 'click',
