@@ -8,6 +8,7 @@ import PropTypes from 'prop-types'
 import { withTranslation } from 'react-i18next'
 import { withLanguage } from 'utils/helper'
 import { COLORS } from 'ui/theme'
+import { fireEvent } from 'utils/ga_fireevent'
 
 const Container = styled.div`
    {
@@ -74,6 +75,11 @@ class VoteStations extends Component {
               container
               spacing={1}
               onClick={() => {
+                fireEvent({
+                  ca: 'battleground',
+                  ac: 'click',
+                  lb: `vote_station_${station.station_code}`,
+                })
                 window.open(
                   `https://maps.google.com/?q=${
                     station.location.coordinates[1]
