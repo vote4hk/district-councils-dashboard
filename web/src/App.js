@@ -145,11 +145,11 @@ const LangSwitch = props => {
         component={withTracker(DisclaimerPage)}
       />
       <Route
-        path={`${path}/followed-district`}
+        path={`${path}/followed-districts`}
         component={withTracker(FavDistrictListPage)}
       />
       <Route
-        path={`${path}/SelectedCandidate`}
+        path={`${path}/followed-candidates`}
         component={withTracker(FavCandidateListPage)}
       />
       <Route path={`${path}/about-dc`} component={withTracker(AboutDCPage)} />
@@ -217,11 +217,11 @@ const App = props => {
                       component={withTracker(SupportUsPage)}
                     />
                     <Route
-                      path="/followed-district"
+                      path="/followed-districts"
                       component={withTracker(FavDistrictListPage)}
                     />
                     <Route
-                      path="/SelectedCandidate"
+                      path="/followed-candidates"
                       component={withTracker(FavCandidateListPage)}
                     />
                     <Route component={withTracker(NotfoundPage)} />

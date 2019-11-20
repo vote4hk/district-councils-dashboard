@@ -78,7 +78,7 @@ const SearchMenu = props => {
         <Typography
           variant="h5"
           color="secondary"
-          onClick={() => goToPage(`/${currentLanguage}/followed-district`)}
+          onClick={() => goToPage(`/${currentLanguage}/followed-districts`)}
         >
           {/* 己關注選區 */}
           {t('searchMenu.text4')}
@@ -89,7 +89,7 @@ const SearchMenu = props => {
         <Typography
           variant="h5"
           color="secondary"
-          onClick={() => goToPage(`/${currentLanguage}/SelectedCandidate`)}
+          onClick={() => goToPage(`/${currentLanguage}/followed-candidates`)}
         >
           {/* 己關注候選人 */}
           {t('searchMenu.text5')}
