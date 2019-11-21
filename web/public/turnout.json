@@ -1,0 +1,82 @@
+{
+  "A01": {
+    "available": true,
+    "cumulative_turnout": [
+      110,
+      125,
+      290,
+      593,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "A02": {
+    "available": false,
+    "cumulative_turnout": [
+      89,
+      132,
+      389,
+      503,
+      712,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "B01": {
+    "available": true,
+    "cumulative_turnout": [
+      110,
+      125,
+      290,
+      593,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "B02": {
+    "available": false,
+    "cumulative_turnout": [
+      89,
+      132,
+      389,
+      503,
+      712,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  }
+}

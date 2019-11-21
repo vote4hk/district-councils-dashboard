@@ -11,11 +11,7 @@ import DCCAOverview from 'components/district/DCCAOverview'
 import { UnstyledButton } from 'components/atoms/Button'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
-// import StarIcon from '@material-ui/icons/Star'
-// import UnstarIcon from '@material-ui/icons/StarBorder'
-
 import Collapse from '@material-ui/core/Collapse'
-import _ from 'lodash'
 import { QUERY_CONSTITUENCIES } from 'queries/gql'
 import { Typography } from '@material-ui/core'
 import { PlainCard } from '../../molecules/Card'
@@ -24,28 +20,22 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/Link'
 import { Alert } from 'components/atoms/Alert'
 import {
+  getCurrentLanguage,
   getDistrictOverviewUriFromTag,
   getParameterByName,
+  groupVoteStat,
   withLanguage,
-  getCurrentLanguage,
 } from 'utils/helper'
 import {
-  getCentroidFromYearAndCode,
   getAllFeaturesFromPoint,
+  getCentroidFromYearAndCode,
 } from 'utils/features'
 import DCCAElectionHistories from 'components/templates/DCCAElectionHistories'
 import { withTranslation } from 'react-i18next'
 import localforage from 'localforage'
 import { fireEvent } from 'utils/ga_fireevent'
-
-const groupVoteStat = voteStats => {
-  const data = _.groupBy(voteStats, stat => stat.subtype)
-  data.aggregations = {
-    all_voters: data.VOTERS.map(v => v.count).reduce((c, v) => c + v, 0),
-    new_voters: data.NEW_VOTERS.map(v => v.count).reduce((c, v) => c + v, 0),
-  }
-  return data
-}
+// import StarIcon from '@material-ui/icons/Star'
+// import UnstarIcon from '@material-ui/icons/StarBorder'
 
 const Container = styled(Box)`
   && {
