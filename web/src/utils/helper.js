@@ -200,16 +200,16 @@ export const getConstituencyTagsByCandidateCamps = candidates => {
   )
 
   if (filteredCandidates.length >= 3) {
-    tags.push('多人混戰')
+    tags.push(withLanguage('Multiple candidates', '多人混戰'))
   }
 
   const groupedCamps = _.groupBy(filteredCandidates, c => c.camp)
   if (groupedCamps['民主'] && groupedCamps['民主'].length > 1) {
-    tags.push('民主撞區')
+    tags.push(withLanguage('Multiple Pan-dem. candidates', '民主撞區'))
   }
 
   if (groupedCamps['建制'] && groupedCamps['建制'].length > 1) {
-    tags.push('建制撞區')
+    tags.push(withLanguage('Multiple Pro-Est. candidates', '建制撞區'))
   }
 
   return tags
