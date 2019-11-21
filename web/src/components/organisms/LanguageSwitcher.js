@@ -3,7 +3,7 @@ import IconButton from '@material-ui/core/IconButton'
 import styled from 'styled-components'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import LanguageIcon from '@material-ui/icons/Language'
+import TranslateIcon from '@material-ui/icons/Translate'
 import { useTranslation } from 'react-i18next'
 import { fireEvent } from 'utils/ga_fireevent'
 
@@ -58,7 +58,7 @@ function LanguageSwitcher(props) {
         aria-haspopup="true"
         onClick={handleButtonClick}
       >
-        <LanguageIcon />
+        <TranslateIcon />
       </RightIconButton>
       <Menu
         id="lang-menu"

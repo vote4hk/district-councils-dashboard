@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography'
 import styled from 'styled-components'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
-import MapIcon from '@material-ui/icons/Map'
+import DirectionIcon from '@material-ui/icons/Directions'
 import PropTypes from 'prop-types'
 import { withTranslation } from 'react-i18next'
 import { withLanguage } from 'utils/helper'
@@ -104,7 +104,7 @@ class VoteStations extends Component {
                   </Typography>
                 </Grid>
                 <Grid item xs={1}>
-                  <MapIcon />
+                  <DirectionIcon />
                 </Grid>
               </VoteStation>
             </VoteStationContainer>
