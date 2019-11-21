@@ -105,6 +105,7 @@ const DistrictSelector = props => {
         .sort((a, b) => {
           if (a.dc_code > b.dc_code) return 1
           if (a.dc_code < b.dc_code) return -1
+          return 0
         })
         .map((d, index) => (
           <DistrictExpansionPanel

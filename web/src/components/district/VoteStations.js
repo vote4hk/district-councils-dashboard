@@ -73,6 +73,7 @@ class VoteStations extends Component {
           .sort((a, b) => {
             if (a.station_code > b.station_code) return 1
             if (a.station_code < b.station_code) return -1
+            return 0
           })
           .map((station, index) => (
             <VoteStationContainer key={index}>
