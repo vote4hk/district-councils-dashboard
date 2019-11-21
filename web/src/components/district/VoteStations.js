@@ -69,40 +69,45 @@ class VoteStations extends Component {
         </Typography>
         {/* <Box display="flex" flexWrap="wrap" alignContent="flex-start"> */}
 
-        {stations.map((station, index) => (
-          <VoteStationContainer key={index}>
-            <VoteStation
-              container
-              spacing={1}
-              onClick={() => {
-                fireEvent({
-                  ca: 'battleground',
-                  ac: 'click',
-                  lb: `vote_station_${station.station_code}`,
-                })
-                window.open(
-                  `https://maps.google.com/?q=${station.name_zh}`,
-                  '_blank'
-                )
-              }}
-            >
-              <Grid item xs={11}>
-                <Typography variant="body2">
-                  <Box>{station.station_code}</Box>
-                </Typography>
-                <VoteStationName>
-                  {withLanguage(station.name_en, station.name_zh)}
-                </VoteStationName>
-                <Typography variant="body2">
-                  {withLanguage(station.address_en, station.address_zh)}
-                </Typography>
-              </Grid>
-              <Grid item xs={1}>
-                <MapIcon />
-              </Grid>
-            </VoteStation>
-          </VoteStationContainer>
-        ))}
+        {stations
+          .sort((a, b) => {
+            if (a.station_code > b.station_code) return 1
+            if (a.station_code < b.station_code) return -1
+          })
+          .map((station, index) => (
+            <VoteStationContainer key={index}>
+              <VoteStation
+                container
+                spacing={1}
+                onClick={() => {
+                  fireEvent({
+                    ca: 'battleground',
+                    ac: 'click',
+                    lb: `vote_station_${station.station_code}`,
+                  })
+                  window.open(
+                    `https://maps.google.com/?q=${station.name_zh}`,
+                    '_blank'
+                  )
+                }}
+              >
+                <Grid item xs={11}>
+                  <Typography variant="body2">
+                    <Box>{station.station_code}</Box>
+                  </Typography>
+                  <VoteStationName>
+                    {withLanguage(station.name_en, station.name_zh)}
+                  </VoteStationName>
+                  <Typography variant="body2">
+                    {withLanguage(station.address_en, station.address_zh)}
+                  </Typography>
+                </Grid>
+                <Grid item xs={1}>
+                  <MapIcon />
+                </Grid>
+              </VoteStation>
+            </VoteStationContainer>
+          ))}
         {reminder}
       </Container>
     )

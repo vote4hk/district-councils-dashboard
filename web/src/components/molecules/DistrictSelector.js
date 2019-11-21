@@ -101,25 +101,30 @@ const DistrictSelector = props => {
 
   const renderArea = (area, i) => (
     <div key={`area-${i}`}>
-      {area.districts.map((d, index) => (
-        <DistrictExpansionPanel
-          key={`district-panel-${d.dc_code}`}
-          TransitionProps={{ unmountOnExit: true }}
-        >
-          <DistrictExpansionPanelSummary
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-            expandIcon={<ExpandMoreIcon />}
+      {area.districts
+        .sort((a, b) => {
+          if (a.dc_code > b.dc_code) return 1
+          if (a.dc_code < b.dc_code) return -1
+        })
+        .map((d, index) => (
+          <DistrictExpansionPanel
+            key={`district-panel-${d.dc_code}`}
+            TransitionProps={{ unmountOnExit: true }}
           >
-            <Typography variant="h5">
-              {withLanguage(d.dc_name_en, d.dc_name_zh)}
-            </Typography>
-          </DistrictExpansionPanelSummary>
-          <DistrictExpansionPanelDetails>
-            {renderDCCA(d)}
-          </DistrictExpansionPanelDetails>
-        </DistrictExpansionPanel>
-      ))}
+            <DistrictExpansionPanelSummary
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+              expandIcon={<ExpandMoreIcon />}
+            >
+              <Typography variant="h5">
+                {withLanguage(d.dc_name_en, d.dc_name_zh)}
+              </Typography>
+            </DistrictExpansionPanelSummary>
+            <DistrictExpansionPanelDetails>
+              {renderDCCA(d)}
+            </DistrictExpansionPanelDetails>
+          </DistrictExpansionPanel>
+        ))}
     </div>
   )
 
