@@ -37,18 +37,21 @@ const CandidateGrid = styled(Grid)`
 const DCCAStatusTagsContainer = styled(SeperatedColumns)`
   && {
     justify-content: flex-end;
+    flex-wrap: wrap;
   }
 `
 
 const StyledTag = styled(Tag)`
   && {
     margin-left: 8px;
+    margin-bottom: 5px;
   }
 `
 
 const StyledSecondaryTag = styled(SecondaryTag)`
   && {
     margin-left: 8px;
+    margin-bottom: 5px;
   }
 `
 
