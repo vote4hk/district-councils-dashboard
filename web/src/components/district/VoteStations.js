@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid'
 import DirectionIcon from '@material-ui/icons/Directions'
 import PropTypes from 'prop-types'
 import { withTranslation } from 'react-i18next'
-import { withLanguage } from 'utils/helper'
+import { withLanguage, customVoteStationMapping } from 'utils/helper'
 import { COLORS } from 'ui/theme'
 import { fireEvent } from 'utils/ga_fireevent'
 
@@ -86,10 +86,10 @@ class VoteStations extends Component {
                     ac: 'click',
                     lb: `vote_station_${station.station_code}`,
                   })
-                  window.open(
-                    `https://maps.google.com/?q=${station.name_zh}`,
-                    '_blank'
-                  )
+                  const query =
+                    customVoteStationMapping(station.station_code) ||
+                    station.name_zh
+                  window.open(`https://maps.google.com/?q=${query}`, '_blank')
                 }}
               >
                 <Grid item xs={11}>

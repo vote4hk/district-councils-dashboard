@@ -238,3 +238,11 @@ export const geti18nFromCamp = (camp, isShortForm = false) => {
   if (!mapping[camp]) return camp
   return mapping[camp]
 }
+
+export const customVoteStationMapping = station_code => {
+  const mapping = {
+    M3901: '22.427643,114.071966',
+  }
+  if (mapping[station_code]) return mapping[station_code]
+  return null
+}
