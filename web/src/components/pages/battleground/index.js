@@ -22,7 +22,7 @@ import { PlainCard } from '../../molecules/Card'
 import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/Link'
-import { Alert } from 'components/atoms/Alert'
+// import { Alert } from 'components/atoms/Alert'
 import {
   getDistrictOverviewUriFromTag,
   getParameterByName,
@@ -301,7 +301,7 @@ class BattleGroundPage extends Component {
                     </Typography>
                   </Breadcrumbs>
                 </BreadcrumbsContainer>
-                {DCCAStatus && (
+                {/* {DCCAStatus && (
                   <Alert>
                     <Typography variant="h6" gutterBottom>
                       {DCCAStatus.tag === '改劃界'
@@ -309,7 +309,7 @@ class BattleGroundPage extends Component {
                         : `此選區為2019年${DCCAStatus.tag}`}
                     </Typography>
                   </Alert>
-                )}
+                )} */}
 
                 {/* {this.state.battlegroundArr.find(
                   code => code === district.code
