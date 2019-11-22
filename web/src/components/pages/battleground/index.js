@@ -34,6 +34,7 @@ import DCCAElectionHistories from 'components/templates/DCCAElectionHistories'
 import { withTranslation } from 'react-i18next'
 import localforage from 'localforage'
 import { fireEvent } from 'utils/ga_fireevent'
+import DistrictTurnoutChartContainer from 'components/templates/DistrictTurnoutChartContainer'
 // import StarIcon from '@material-ui/icons/Star'
 // import UnstarIcon from '@material-ui/icons/StarBorder'
 
@@ -66,29 +67,6 @@ const FavDistrictButton = styled(UnstyledButton)`
     text-align: center;
   }
 `
-
-// const StarIconSvg = styled(StarIcon)`
-//   && {
-//     font-size: ${props => props.size || 24}px;
-//     vertical-align: bottom;
-//     position: relative;
-//     top: 10px;
-//     left: 10px;
-//     color: #ffcd00;
-//   }
-// `
-
-// const UnstarIconSvg = styled(UnstarIcon)`
-//   && {
-//     font-size: ${props => props.size || 24}px;
-//     vertical-align: bottom;
-//     position: relative;
-//     top: 10px;
-//     left: 10px;
-//     color: #ccc;
-//   }
-// `
-
 class BattleGroundPage extends Component {
   constructor(props) {
     super(props)
@@ -238,7 +216,6 @@ class BattleGroundPage extends Component {
             if (error) return `Error! ${error}`
             const district = data.dcd_constituencies[0]
             const voteStations = data.dcd_constituency_vote_stations
-            console.log(data)
             const previousDistricts = district.predecessors.filter(
               district =>
                 district.intersect_area === null ||
@@ -301,19 +278,6 @@ class BattleGroundPage extends Component {
                   </Alert>
                 )}
 
-                {/* {this.state.battlegroundArr.find(
-                  code => code === district.code
-                ) ? (
-                  <StarIconSvg
-                    size={24}
-                    onClick={() => this.TriggerFavDistrict(district.code)}
-                  />
-                ) : (
-                  <UnstarIconSvg
-                    size={24}
-                    onClick={() => this.TriggerFavDistrict(district.code)}
-                  />
-                )} */}
                 <Container>
                   <CandidatesContainer
                     year={year}
@@ -321,6 +285,7 @@ class BattleGroundPage extends Component {
                     election_forum={district.meta.election_forum}
                   />
                 </Container>
+                <DistrictTurnoutChartContainer turnouts />
                 <DCCAOverview
                   year={year}
                   dc_code={district.district.dc_code}

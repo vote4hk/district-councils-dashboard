@@ -1,7 +1,7 @@
 import React from 'react'
 import DCPredictionChartPanel from 'components/organisms/PredictionChartPanel'
 import DCStackedNormalizedHorizontalBarChart from 'components/atoms/charts/StackedNormalizedHorizontalBarChart'
-import { Columns } from 'components/atoms/Columns'
+import DCDistrictTurnoutChart from 'components/atoms/charts/DistrictTurnoutChart'
 
 export default { title: 'Charts' }
 
@@ -159,5 +159,65 @@ export const PredictionChartPanel = props => {
       settings={settings}
       setSettings={setSettings}
     ></DCPredictionChartPanel>
+  )
+}
+
+export const DistrictTurnoutChart = props => {
+  return (
+    <DCDistrictTurnoutChart
+      data={{
+        constituency: [
+          0.0,
+          0.1,
+          0.11,
+          0.15,
+          0.2,
+          0.3,
+          0.4,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+        ],
+        district: [
+          0.0,
+          0.08,
+          0.09,
+          0.11,
+          0.15,
+          0.22,
+          0.35,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+        ],
+        total: [
+          0.0,
+          0.11,
+          0.13,
+          0.16,
+          0.23,
+          0.35,
+          0.45,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+        ],
+      }}
+    ></DCDistrictTurnoutChart>
   )
 }

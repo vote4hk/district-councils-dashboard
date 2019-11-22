@@ -11,7 +11,7 @@ import _ from 'lodash'
 import { Grid } from '@material-ui/core'
 
 const VoteTurnouts = props => {
-  const { turnouts, type } = props
+  const { turnouts } = props
 
   return (
     <Grid container spacing={3}>
