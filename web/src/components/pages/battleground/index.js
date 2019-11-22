@@ -395,22 +395,24 @@ class BattleGroundPage extends Component {
                   presetTabIndex={presetTabIndex}
                   isDce19ResultReady={isDce19ResultReady}
                 />
-                <PlainCard>
-                  <Typography variant="h6">
-                    {/* 現任區議員 */}
-                    {t('currentTerm.councilor')}
-                  </Typography>
-                  {previousDistricts.length > 1 && (
-                    <Typography variant="h6">{`此區與上屆${previousDistricts.length}個選區重疊`}</Typography>
-                  )}
-                  {previousDistricts.map((d, index) => (
-                    <CouncillorContainer
-                      key={index}
-                      year={2015}
-                      code={d.predecessor.code}
-                    />
-                  ))}
-                </PlainCard>
+                {!isDce19ResultReady && (
+                  <PlainCard>
+                    <Typography variant="h6">
+                      {/* 現任區議員 */}
+                      {t('currentTerm.councilor')}
+                    </Typography>
+                    {previousDistricts.length > 1 && (
+                      <Typography variant="h6">{`此區與上屆${previousDistricts.length}個選區重疊`}</Typography>
+                    )}
+                    {previousDistricts.map((d, index) => (
+                      <CouncillorContainer
+                        key={index}
+                        year={2015}
+                        code={d.predecessor.code}
+                      />
+                    ))}
+                  </PlainCard>
+                )}
               </>
             )
           }}
