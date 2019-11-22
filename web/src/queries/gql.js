@@ -36,6 +36,11 @@ tags {
   type
 }
 meta
+candidates_aggregate {
+  aggregate {
+    count(columns: is_won, distinct: true)
+  }
+}
 `
 
 const DISTRICT_DATA = `

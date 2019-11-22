@@ -248,7 +248,8 @@ class BattleGroundPage extends Component {
             if (error) return `Error! ${error}`
             const district = data.dcd_constituencies[0]
             const voteStations = data.dcd_constituency_vote_stations
-            console.log(data)
+            const isDce19ResultReady =
+              district.candidates_aggregate.aggregate.count === 2 ? true : false
             const previousDistricts = district.predecessors.filter(
               district =>
                 district.intersect_area === null ||
@@ -392,6 +393,7 @@ class BattleGroundPage extends Component {
                 <DCCAElectionHistories
                   histories={pointHistory}
                   presetTabIndex={presetTabIndex}
+                  isDce19ResultReady={isDce19ResultReady}
                 />
                 <PlainCard>
                   <Typography variant="h6">

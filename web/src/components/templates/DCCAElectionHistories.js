@@ -85,9 +85,9 @@ class DCCAElectionHistories extends Component {
   }
 
   render() {
-    const { histories, presetTabIndex, t } = this.props
-    const filteredHistories = histories.filter(
-      history => history.year !== '2019'
+    const { histories, presetTabIndex, isDce19ResultReady, t } = this.props
+    const filteredHistories = histories.filter(history =>
+      isDce19ResultReady ? history : history.year !== '2019'
     )
 
     const { query, variables } = this.createQuery(filteredHistories)
