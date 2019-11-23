@@ -1,13 +1,13 @@
 import React from 'react'
 import AsyncSelect from 'react-select/async'
 import { components } from 'react-select'
-import * as AddressParser from 'hk-address-parser-lib'
+// import * as AddressParser from 'hk-address-parser-lib'
 import SearchBoxOption from 'components/molecules/SearchBoxOption'
 import gql from 'graphql-tag'
 import { withApollo } from 'react-apollo'
-import { getSingleFeatureFromPoint } from 'utils/features'
-import { useQuery } from '@apollo/react-hooks'
-import { QUERY_GET_ALL_DISTRICTS } from 'queries/gql'
+// import { getSingleFeatureFromPoint } from 'utils/features'
+// import { useQuery } from '@apollo/react-hooks'
+// import { QUERY_GET_ALL_DISTRICTS } from 'queries/gql'
 import { Search } from '@material-ui/icons'
 import { useTranslation } from 'react-i18next'
 import { withLanguage } from 'utils/helper'
@@ -66,50 +66,50 @@ const DropdownIndicator = props => {
 const SearchAllBox = props => {
   const { t } = useTranslation()
   const { client } = props
-  const { loading, data, error } = useQuery(QUERY_GET_ALL_DISTRICTS, {
-    variables: {
-      year: 2019,
-    },
-    client,
-  })
+  // const { loading, data, error } = useQuery(QUERY_GET_ALL_DISTRICTS, {
+  //   variables: {
+  //     year: 2019,
+  //   },
+  //   client,
+  // })
 
-  const getDisctrictNameByCode = code => {
-    if (loading || error) {
-      return {
-        dname_zh: null,
-        dname_en: null,
-      }
-    } else {
-      return data.dcd_districts.find(d => d.dc_code === code.charAt(0))
-    }
-  }
+  // const getDisctrictNameByCode = code => {
+  //   if (loading || error) {
+  //     return {
+  //       dname_zh: null,
+  //       dname_en: null,
+  //     }
+  //   } else {
+  //     return data.dcd_districts.find(d => d.dc_code === code.charAt(0))
+  //   }
+  // }
 
-  const searchAddress = async query => {
-    const records = await AddressParser.parse(query)
-    return records
-      .filter((_, index) => index < 10)
-      .map(record => {
-        let constituency = getSingleFeatureFromPoint(record.coordinate())
-        constituency = {
-          ...constituency,
-          ...getDisctrictNameByCode(constituency.code),
-        }
-        return {
-          coordinate: record.coordinate(),
-          constituency,
-          label: withLanguage(
-            record.fullAddress(AddressParser.Address.LANG_EN),
-            record.fullAddress(AddressParser.Address.LANG_ZH)
-          ),
-          type: 'address',
-        }
-      })
-      .filter(
-        (ele, index, self) =>
-          index === self.findIndex(record => record.label === ele.label)
-      )
-      .filter((_, i) => i <= 3)
-  }
+  // const searchAddress = async query => {
+  //   const records = await AddressParser.parse(query)
+  //   return records
+  //     .filter((_, index) => index < 10)
+  //     .map(record => {
+  //       let constituency = getSingleFeatureFromPoint(record.coordinate())
+  //       constituency = {
+  //         ...constituency,
+  //         ...getDisctrictNameByCode(constituency.code),
+  //       }
+  //       return {
+  //         coordinate: record.coordinate(),
+  //         constituency,
+  //         label: withLanguage(
+  //           record.fullAddress(AddressParser.Address.LANG_EN),
+  //           record.fullAddress(AddressParser.Address.LANG_ZH)
+  //         ),
+  //         type: 'address',
+  //       }
+  //     })
+  //     .filter(
+  //       (ele, index, self) =>
+  //         index === self.findIndex(record => record.label === ele.label)
+  //     )
+  //     .filter((_, i) => i <= 3)
+  // }
 
   const searchPeople = async query => {
     const { data } = await client.query({
@@ -133,18 +133,15 @@ const SearchAllBox = props => {
   }
 
   const search = async query => {
-    const results = await Promise.all([
-      searchAddress(query),
-      searchPeople(query),
-    ])
+    const results = await Promise.all([searchPeople(query)])
     return [
       {
         label: t('candidates'),
-        options: results[1],
+        options: results[0],
       },
       {
         label: t('constituency'),
-        options: results[0],
+        options: [], // TODO: wait until addressparser is fixed
       },
     ]
   }
