@@ -59,6 +59,7 @@ constituencies( where: { year: { _eq: $year } }, order_by: {code: asc} ) {
   candidates( where: { year: { _eq: $year } }, order_by: {candidate_number: asc} ) {
     candidate_number
     is_won
+    votes
     political_affiliation
     political_affiliation_zh
     political_affiliation_en
@@ -126,6 +127,7 @@ export const QUERY_GET_CANDIDATES_BY_IDS = gql`
       ) {
         candidate_number
         is_won
+        votes
         political_affiliation
         political_affiliation_zh
         political_affiliation_en
@@ -164,6 +166,7 @@ export const QUERY_GET_CONSTITUENCIES_BY_DISTRICT_CODES = gql`
       ) {
         candidate_number
         is_won
+        votes
         political_affiliation
         political_affiliation_zh
         political_affiliation_en
@@ -180,6 +183,11 @@ export const QUERY_GET_CONSTITUENCIES_BY_DISTRICT_CODES = gql`
         tags {
           tag
           type
+        }
+      }
+      candidates_aggregate {
+        aggregate {
+          count(columns: is_won, distinct: true)
         }
       }
     }
@@ -355,6 +363,7 @@ export const QUERY_GET_CANDIDATES = gql`
     ) {
       candidate_number
       is_won
+      votes
       political_affiliation
       political_affiliation_en
       political_affiliation_zh
