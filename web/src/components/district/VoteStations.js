@@ -94,7 +94,7 @@ class VoteStations extends Component {
               >
                 <Grid item xs={11}>
                   <Typography variant="body2">
-                    <Box>{station.station_code}</Box>
+                    {station.station_code}
                   </Typography>
                   <VoteStationName>
                     {withLanguage(station.name_en, station.name_zh)}

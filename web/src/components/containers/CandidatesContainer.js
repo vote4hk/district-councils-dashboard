@@ -191,6 +191,8 @@ const CandidatesContainer = props => {
                                 }}
                                 opacity={
                                   candidate.nominate_status === 'disqualified'
+                                    ? 0.4
+                                    : 1.0
                                 }
                               />
                               {candidate.candidate_number > 0 && (
