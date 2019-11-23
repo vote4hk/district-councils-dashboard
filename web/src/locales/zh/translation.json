@@ -192,5 +192,6 @@
   "voting_instructions_2": "投票時間為 07:30 am 至 10:30 pm",
   "voting_instructions_3": "不得在票站內使用手提電話或任何其他器材進行電子通訊、拍照、拍攝影片、錄影或錄音",
   "voting_instructions_4": "必需使用投票站提供的印章投選一名候選人，如在選票蓋印時出錯或選票意外受損，可把選票交到投票站主任，換取另一張選票",
-  "voting_instructions_5": "蓋印後盡快吹乾，以免對摺時轉印到其他地方導致廢票"
+  "voting_instructions_5": "蓋印後盡快吹乾，以免對摺時轉印到其他地方導致廢票",
+  "turnout_chart.text": "投完票，記得去票站門口點人數，Click 入<a href='https://bit.ly/dc19count' target='_blank'>bit.ly/dc19count</a>更新投票人數！"
 }

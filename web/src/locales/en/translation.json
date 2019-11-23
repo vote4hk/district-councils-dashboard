@@ -190,5 +190,6 @@
   "voting_instructions_2": "Voting time is from 07:30 am to 10:30 pm",
   "voting_instructions_3": "Do not use mobile phones or any other equipment in the station for electronic communication, photo taking, filming, video recording or recording",
   "voting_instructions_4": "Use the chop provided to stamp a tick on the ballot paper in the circle next to the chosen candidate's name.",
-  "voting_instructions_5": "If the ballot paper is accidentally damaged, please ask the polling staff for another ballot paper."
+  "voting_instructions_5": "If the ballot paper is accidentally damaged, please ask the polling staff for another ballot paper.",
+  "turnout_chart.text": "Please fill the form for instant vote turnout stat - <a href='https://bit.ly/dc19count' target='_blank'>bit.ly/dc19count</a> after voting."
 }

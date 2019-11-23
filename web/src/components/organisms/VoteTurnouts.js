@@ -19,6 +19,7 @@ import { useTranslation } from 'react-i18next'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import styled from 'styled-components'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import { COLORS } from 'ui/theme'
 
 const VoteTurnoutsContainer = styled.div`
   && {
@@ -26,6 +27,11 @@ const VoteTurnoutsContainer = styled.div`
     display: flex;
     flex-direction: column;
     vertical-align: top;
+    a {
+      text-decoration: unset;
+      color: ${COLORS.main.primary};
+      font-weight: 500;
+    }
   }
 `
 
@@ -101,6 +107,11 @@ const VoteTurnouts = props => {
             alignItems="stretch"
             spacing={1}
           >
+            <Typography
+              variant="body1"
+              gutterBottom
+              dangerouslySetInnerHTML={{ __html: t('turnout_chart.text') }}
+            />
             {turnouts.length === 0 && <StyledCircularProgress />}
             {turnouts &&
               turnouts.length > 0 &&
