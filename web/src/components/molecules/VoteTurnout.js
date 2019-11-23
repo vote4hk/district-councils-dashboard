@@ -14,11 +14,11 @@ const colors = {
     text: 'black',
   },
   district: {
-    background: '#7b68ee',
+    background: '#ff574f',
     text: 'black',
   },
   all: {
-    background: '#ff574f',
+    background: '#ffbc4c',
     text: 'black',
   },
 }
@@ -60,6 +60,7 @@ const VotePercentageBar = styled(LinearProgress)`
       background-color: ${props => colors[props.type].background};
     }
     border-bottom: 1px solid #cccccc;
+    margin-bottom: 4px;
   }
 `
 

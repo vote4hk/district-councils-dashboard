@@ -46,7 +46,7 @@ const SummaryExpansionPanelDetails = styled(ExpansionPanelDetails)`
 `
 
 function ControlledExpansionPanels(props) {
-  const [expanded, setExpanded] = React.useState(false)
+  const [expanded, setExpanded] = React.useState('panel1')
   const { t } = useTranslation()
 
   const handleChange = panel => (event, isExpanded) => {
