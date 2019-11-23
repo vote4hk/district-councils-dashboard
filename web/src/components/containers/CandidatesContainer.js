@@ -149,6 +149,7 @@ const CandidatesContainer = props => {
                     {election_forum &&
                       election_forum.map((forum, index) => (
                         <StyledTag
+                          key={index}
                           icon={<OndemandVideoIcon />}
                           value={t('candidateContainer.election_forum', {
                             n: election_forum.length > 1 ? index + 1 : '',
