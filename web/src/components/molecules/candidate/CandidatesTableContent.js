@@ -7,6 +7,7 @@ import {
   getColorFromCamp,
   getCurrentLanguage,
   withLanguage,
+  formatNumber,
 } from 'utils/helper'
 import { COLORS } from 'ui/theme'
 import TableRow from '@material-ui/core/TableRow'
@@ -234,7 +235,7 @@ class CandidatesTableContent extends Component {
               </StyledTableCell>
               <StyledTableCell>
                 {candidate.votes
-                  ? candidate.votes +
+                  ? formatNumber(candidate.votes) +
                     ' ' +
                     '(' +
                     ((candidate.votes / totVotes) * 100).toFixed(0) +
