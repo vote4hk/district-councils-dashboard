@@ -177,6 +177,7 @@ function ControlledExpansionPanels(props) {
 }
 
 const Summary = props => {
+  const { t } = useTranslation()
   return (
     <Query query={QUERY_GET_NOMINATION_SUMMARY}>
       {({ loading, error, data }) => {
@@ -196,8 +197,12 @@ const Summary = props => {
           })
         }
 
-        const demo_clash = result.filter(r => r.tags.includes('民主撞區'))
-        const estab_clash = result.filter(r => r.tags.includes('建制撞區'))
+        const demo_clash = result.filter(r =>
+          r.tags.includes(t('constituency.tags.multi_demo'))
+        )
+        const estab_clash = result.filter(r =>
+          r.tags.includes(t('constituency.tags.multi_estab'))
+        )
 
         // const candi_5 = result.filter(r => r.tags.includes('多人混戰')).filter(district => district.candidates.length === 5)
         // const candi_4 = result.filter(r => r.tags.includes('多人混戰')).filter(district => district.candidates.length === 4)
