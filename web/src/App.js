@@ -5,6 +5,7 @@ import { ThemeProvider } from '@material-ui/core/styles/'
 import loadable from '@loadable/component'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
+import * as ReactHook from '@apollo/react-hooks'
 import theme from 'ui/theme'
 import './App.css'
 import Box from '@material-ui/core/Box'
@@ -165,85 +166,92 @@ const App = props => {
   }
 
   return (
-    <ApolloProvider client={client}>
-      <ThemeProvider theme={theme}>
-        <ContextStoreProvider>
-          <Root>
-            <ContentContainer id="contentContainer">
-              <CssBaseline />
-              <Wrapper>
-                <MobileAppBar />
-                <GlobalDisclaimer />
-                <main>
-                  <Switch>
-                    <Route path="/(en|zh)?">
-                      <LangSwitch />
-                    </Route>
-                    <Route exact path="/" component={withTracker(IndexPage)} />
-                    <Route
-                      path="/profile/:name/:uuid"
-                      component={withTracker(ProfilePage)}
-                    />
-                    <Route
-                      path="/district/:year/tags/:tag"
-                      component={withTracker(DistrictListPage)}
-                    />
-                    <Route
-                      path="/district/:year/:code(\w{1})"
-                      component={withTracker(DistrictOverviewPage)}
-                    />
-                    <Route
-                      path="/district/2019/:code"
-                      component={withTracker(BattleGroundPage)}
-                    />
-                    <Route
-                      path="/district/:year/:code"
-                      component={withTracker(DistrictPage)}
-                    />
-                    <Route
-                      path="/district/:year"
-                      component={withTracker(DistrictAllPage)}
-                    />
-                    <Route
-                      path="/disclaimer"
-                      component={withTracker(DisclaimerPage)}
-                    />
-                    <Route
-                      path="/about-dc"
-                      component={withTracker(AboutDCPage)}
-                    />
-                    <Route
-                      path="/about-us"
-                      component={withTracker(SupportUsPage)}
-                    />
-                    <Route
-                      path="/followed-districts"
-                      component={withTracker(FavDistrictListPage)}
-                    />
-                    <Route
-                      path="/followed-candidates"
-                      component={withTracker(FavCandidateListPage)}
-                    />
-                    <Route component={withTracker(NotfoundPage)} />
-                  </Switch>
-                </main>
-              </Wrapper>
-              <ShareButton
-                onClick={() =>
-                  fireEvent({
-                    ca: 'general',
-                    ac: 'click',
-                    lb: 'share_button',
-                  })
-                }
-              />
-              <Footer />
-            </ContentContainer>
-            <SearchDrawer />
-          </Root>
-        </ContextStoreProvider>
-      </ThemeProvider>
-    </ApolloProvider>
+    // TODO: refactor all to use useQuery
+    <ReactHook.ApolloProvider client={client}>
+      <ApolloProvider client={client}>
+        <ThemeProvider theme={theme}>
+          <ContextStoreProvider>
+            <Root>
+              <ContentContainer id="contentContainer">
+                <CssBaseline />
+                <Wrapper>
+                  <MobileAppBar />
+                  <GlobalDisclaimer />
+                  <main>
+                    <Switch>
+                      <Route path="/(en|zh)?">
+                        <LangSwitch />
+                      </Route>
+                      <Route
+                        exact
+                        path="/"
+                        component={withTracker(IndexPage)}
+                      />
+                      <Route
+                        path="/profile/:name/:uuid"
+                        component={withTracker(ProfilePage)}
+                      />
+                      <Route
+                        path="/district/:year/tags/:tag"
+                        component={withTracker(DistrictListPage)}
+                      />
+                      <Route
+                        path="/district/:year/:code(\w{1})"
+                        component={withTracker(DistrictOverviewPage)}
+                      />
+                      <Route
+                        path="/district/2019/:code"
+                        component={withTracker(BattleGroundPage)}
+                      />
+                      <Route
+                        path="/district/:year/:code"
+                        component={withTracker(DistrictPage)}
+                      />
+                      <Route
+                        path="/district/:year"
+                        component={withTracker(DistrictAllPage)}
+                      />
+                      <Route
+                        path="/disclaimer"
+                        component={withTracker(DisclaimerPage)}
+                      />
+                      <Route
+                        path="/about-dc"
+                        component={withTracker(AboutDCPage)}
+                      />
+                      <Route
+                        path="/about-us"
+                        component={withTracker(SupportUsPage)}
+                      />
+                      <Route
+                        path="/followed-districts"
+                        component={withTracker(FavDistrictListPage)}
+                      />
+                      <Route
+                        path="/followed-candidates"
+                        component={withTracker(FavCandidateListPage)}
+                      />
+                      <Route component={withTracker(NotfoundPage)} />
+                    </Switch>
+                  </main>
+                </Wrapper>
+                <ShareButton
+                  onClick={() =>
+                    fireEvent({
+                      ca: 'general',
+                      ac: 'click',
+                      lb: 'share_button',
+                    })
+                  }
+                />
+                <Footer />
+              </ContentContainer>
+              <SearchDrawer />
+            </Root>
+          </ContextStoreProvider>
+        </ThemeProvider>
+      </ApolloProvider>
+    </ReactHook.ApolloProvider>
   )
 }
 

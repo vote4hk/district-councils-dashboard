@@ -239,6 +239,111 @@ export const geti18nFromCamp = (camp, isShortForm = false) => {
   return mapping[camp]
 }
 
+export const groupVoteStat = voteStats => {
+  const data = _.groupBy(voteStats, stat => stat.subtype)
+  data.aggregations = {
+    all_voters: data.VOTERS.map(v => v.count).reduce((c, v) => c + v, 0),
+    new_voters: data.NEW_VOTERS.map(v => v.count).reduce((c, v) => c + v, 0),
+  }
+  return data
+}
+
+export const computeTurnouts = (constituencies, turnouts) => {
+  if (_.isEmpty(constituencies) || _.isEmpty(turnouts)) {
+    return []
+  }
+
+  const constituencyTurnouts = constituencies.map(constituency => {
+    const constituencyTurnouts = _.get(
+      turnouts,
+      `${constituency.code}.cumulativeTurnout`,
+      []
+    )
+    const turnoutIndex = _.findLastIndex(constituencyTurnouts, t => t !== null)
+    const now = new Date()
+
+    return {
+      ...constituency,
+      total: _.get(
+        groupVoteStat(constituency.vote_stats),
+        'aggregations.all_voters',
+        0
+      ),
+      type: 'constituency',
+      current: turnoutIndex >= 0 ? constituencyTurnouts[turnoutIndex] : 0,
+      // hourly from 07:30
+      updateTime: new Date(now.setHours(8 + (turnoutIndex || 0), 30)),
+      url: `district/2019/${constituency.code}`,
+    }
+  })
+
+  const districtTurnouts = _.map(
+    _.groupBy(constituencyTurnouts, 'district.dc_code'),
+    value => {
+      return value.reduce((c, v) => {
+        return c === null
+          ? v
+          : {
+              ...v.district,
+              current: c.current + v.current,
+              total: c.total + v.total,
+              updateTime:
+                c.updateTime > v.updateTime ? c.updateTime : v.updateTime,
+              type: 'district',
+              url: `district/2019/${v.district.dc_code}`,
+            }
+      }, null)
+    }
+  )
+
+  const totalTurnout = districtTurnouts.reduce((c, v) => {
+    return c === null
+      ? v
+      : {
+          current: c.current + v.current,
+          total: c.total + v.total,
+          updateTime: c.updateTime > v.updateTime ? c.updateTime : v.updateTime,
+          type: 'all',
+          url: null,
+        }
+  }, null)
+
+  return constituencyTurnouts
+    .concat(districtTurnouts)
+    .concat([totalTurnout])
+    .map(turnout => {
+      return {
+        ...turnout,
+        percentage:
+          (turnout.current > 0 ? turnout.current / turnout.total : 0) * 100,
+        updateTime: turnout.updateTime.toLocaleTimeString(navigator.language, {
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+      }
+    })
+    .sort((a, b) => a.percentage - b.percentage)
+}
+
+export const getDistrictTurnouts = (constituencies, turnouts) => {
+  return computeTurnouts(constituencies, turnouts).filter(
+    t => t.type === 'district' || t.type === 'all'
+  )
+}
+
+export const getConstituencyTurnouts = (
+  constituencies,
+  turnouts,
+  districtCode
+) => {
+  return computeTurnouts(constituencies, turnouts).filter(
+    t =>
+      (t.type === 'constituency' && t.district.dc_code === districtCode) ||
+      (t.type === 'district' && t.dc_code === districtCode) ||
+      t.type === 'all'
+  )
+}
+
 export const customVoteStationMapping = station_code => {
   const mapping = {
     M3901: '22.427643,114.071966',

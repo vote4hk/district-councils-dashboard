@@ -1,0 +1,4526 @@
+{
+  "data": {
+    "dcd_constituencies": [
+      {
+        "code": "C35",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9184
+            }
+          }
+        }
+      },
+      {
+        "code": "D02",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8929
+            }
+          }
+        }
+      },
+      {
+        "code": "D03",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6668
+            }
+          }
+        }
+      },
+      {
+        "code": "D04",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8556
+            }
+          }
+        }
+      },
+      {
+        "code": "D05",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11241
+            }
+          }
+        }
+      },
+      {
+        "code": "D06",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8461
+            }
+          }
+        }
+      },
+      {
+        "code": "D07",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9325
+            }
+          }
+        }
+      },
+      {
+        "code": "D08",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10963
+            }
+          }
+        }
+      },
+      {
+        "code": "D09",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8346
+            }
+          }
+        }
+      },
+      {
+        "code": "Q22",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12706
+            }
+          }
+        }
+      },
+      {
+        "code": "Q23",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12254
+            }
+          }
+        }
+      },
+      {
+        "code": "Q24",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11083
+            }
+          }
+        }
+      },
+      {
+        "code": "Q25",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 13048
+            }
+          }
+        }
+      },
+      {
+        "code": "Q26",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10661
+            }
+          }
+        }
+      },
+      {
+        "code": "Q27",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6769
+            }
+          }
+        }
+      },
+      {
+        "code": "C30",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9479
+            }
+          }
+        }
+      },
+      {
+        "code": "C31",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9063
+            }
+          }
+        }
+      },
+      {
+        "code": "B02",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6181
+            }
+          }
+        }
+      },
+      {
+        "code": "D10",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9142
+            }
+          }
+        }
+      },
+      {
+        "code": "F10",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9522
+            }
+          }
+        }
+      },
+      {
+        "code": "A01",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 4377
+            }
+          }
+        }
+      },
+      {
+        "code": "A02",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6708
+            }
+          }
+        }
+      },
+      {
+        "code": "A03",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7560
+            }
+          }
+        }
+      },
+      {
+        "code": "B01",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5023
+            }
+          }
+        }
+      },
+      {
+        "code": "A04",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5618
+            }
+          }
+        }
+      },
+      {
+        "code": "A06",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8989
+            }
+          }
+        }
+      },
+      {
+        "code": "A08",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7986
+            }
+          }
+        }
+      },
+      {
+        "code": "A10",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8189
+            }
+          }
+        }
+      },
+      {
+        "code": "A11",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7303
+            }
+          }
+        }
+      },
+      {
+        "code": "A12",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7032
+            }
+          }
+        }
+      },
+      {
+        "code": "A13",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5729
+            }
+          }
+        }
+      },
+      {
+        "code": "A14",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6980
+            }
+          }
+        }
+      },
+      {
+        "code": "A15",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7408
+            }
+          }
+        }
+      },
+      {
+        "code": "C32",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8595
+            }
+          }
+        }
+      },
+      {
+        "code": "B03",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5011
+            }
+          }
+        }
+      },
+      {
+        "code": "B04",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5805
+            }
+          }
+        }
+      },
+      {
+        "code": "B05",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6784
+            }
+          }
+        }
+      },
+      {
+        "code": "B06",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7825
+            }
+          }
+        }
+      },
+      {
+        "code": "B07",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5319
+            }
+          }
+        }
+      },
+      {
+        "code": "B08",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6328
+            }
+          }
+        }
+      },
+      {
+        "code": "B09",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5520
+            }
+          }
+        }
+      },
+      {
+        "code": "B10",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5638
+            }
+          }
+        }
+      },
+      {
+        "code": "B11",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5362
+            }
+          }
+        }
+      },
+      {
+        "code": "B12",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5060
+            }
+          }
+        }
+      },
+      {
+        "code": "B13",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 4983
+            }
+          }
+        }
+      },
+      {
+        "code": "C15",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7542
+            }
+          }
+        }
+      },
+      {
+        "code": "C01",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9464
+            }
+          }
+        }
+      },
+      {
+        "code": "C02",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10546
+            }
+          }
+        }
+      },
+      {
+        "code": "C03",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10089
+            }
+          }
+        }
+      },
+      {
+        "code": "C04",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9277
+            }
+          }
+        }
+      },
+      {
+        "code": "C05",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12133
+            }
+          }
+        }
+      },
+      {
+        "code": "C06",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6952
+            }
+          }
+        }
+      },
+      {
+        "code": "C08",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11641
+            }
+          }
+        }
+      },
+      {
+        "code": "C09",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9003
+            }
+          }
+        }
+      },
+      {
+        "code": "C10",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9990
+            }
+          }
+        }
+      },
+      {
+        "code": "C11",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8654
+            }
+          }
+        }
+      },
+      {
+        "code": "C12",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11794
+            }
+          }
+        }
+      },
+      {
+        "code": "C14",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9476
+            }
+          }
+        }
+      },
+      {
+        "code": "C16",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7884
+            }
+          }
+        }
+      },
+      {
+        "code": "C17",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9127
+            }
+          }
+        }
+      },
+      {
+        "code": "C18",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8583
+            }
+          }
+        }
+      },
+      {
+        "code": "C20",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7376
+            }
+          }
+        }
+      },
+      {
+        "code": "C21",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9304
+            }
+          }
+        }
+      },
+      {
+        "code": "C22",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9037
+            }
+          }
+        }
+      },
+      {
+        "code": "C23",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8041
+            }
+          }
+        }
+      },
+      {
+        "code": "C24",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6767
+            }
+          }
+        }
+      },
+      {
+        "code": "C25",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8833
+            }
+          }
+        }
+      },
+      {
+        "code": "C26",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8933
+            }
+          }
+        }
+      },
+      {
+        "code": "C27",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8313
+            }
+          }
+        }
+      },
+      {
+        "code": "C28",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12998
+            }
+          }
+        }
+      },
+      {
+        "code": "C29",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8589
+            }
+          }
+        }
+      },
+      {
+        "code": "C33",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7486
+            }
+          }
+        }
+      },
+      {
+        "code": "H13",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12434
+            }
+          }
+        }
+      },
+      {
+        "code": "H14",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9300
+            }
+          }
+        }
+      },
+      {
+        "code": "H15",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11322
+            }
+          }
+        }
+      },
+      {
+        "code": "H16",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12341
+            }
+          }
+        }
+      },
+      {
+        "code": "H17",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12864
+            }
+          }
+        }
+      },
+      {
+        "code": "H18",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12072
+            }
+          }
+        }
+      },
+      {
+        "code": "H19",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11433
+            }
+          }
+        }
+      },
+      {
+        "code": "H20",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 13013
+            }
+          }
+        }
+      },
+      {
+        "code": "H21",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7628
+            }
+          }
+        }
+      },
+      {
+        "code": "H22",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8110
+            }
+          }
+        }
+      },
+      {
+        "code": "H23",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9099
+            }
+          }
+        }
+      },
+      {
+        "code": "H24",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9463
+            }
+          }
+        }
+      },
+      {
+        "code": "J31",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9600
+            }
+          }
+        }
+      },
+      {
+        "code": "D11",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6450
+            }
+          }
+        }
+      },
+      {
+        "code": "D12",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9683
+            }
+          }
+        }
+      },
+      {
+        "code": "D13",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9805
+            }
+          }
+        }
+      },
+      {
+        "code": "D14",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11850
+            }
+          }
+        }
+      },
+      {
+        "code": "D15",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9344
+            }
+          }
+        }
+      },
+      {
+        "code": "D16",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 4152
+            }
+          }
+        }
+      },
+      {
+        "code": "E03",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7182
+            }
+          }
+        }
+      },
+      {
+        "code": "E04",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7805
+            }
+          }
+        }
+      },
+      {
+        "code": "F11",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7097
+            }
+          }
+        }
+      },
+      {
+        "code": "E06",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6233
+            }
+          }
+        }
+      },
+      {
+        "code": "E07",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10404
+            }
+          }
+        }
+      },
+      {
+        "code": "E08",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6815
+            }
+          }
+        }
+      },
+      {
+        "code": "E09",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6058
+            }
+          }
+        }
+      },
+      {
+        "code": "E10",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6622
+            }
+          }
+        }
+      },
+      {
+        "code": "E11",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8495
+            }
+          }
+        }
+      },
+      {
+        "code": "E13",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6591
+            }
+          }
+        }
+      },
+      {
+        "code": "E14",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6443
+            }
+          }
+        }
+      },
+      {
+        "code": "E15",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5819
+            }
+          }
+        }
+      },
+      {
+        "code": "E16",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5644
+            }
+          }
+        }
+      },
+      {
+        "code": "E17",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 4642
+            }
+          }
+        }
+      },
+      {
+        "code": "E18",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 4249
+            }
+          }
+        }
+      },
+      {
+        "code": "E19",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 4649
+            }
+          }
+        }
+      },
+      {
+        "code": "E20",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 4788
+            }
+          }
+        }
+      },
+      {
+        "code": "F12",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 3495
+            }
+          }
+        }
+      },
+      {
+        "code": "F04",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9476
+            }
+          }
+        }
+      },
+      {
+        "code": "F05",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7082
+            }
+          }
+        }
+      },
+      {
+        "code": "F06",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6159
+            }
+          }
+        }
+      },
+      {
+        "code": "F07",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5013
+            }
+          }
+        }
+      },
+      {
+        "code": "F08",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8569
+            }
+          }
+        }
+      },
+      {
+        "code": "F09",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12270
+            }
+          }
+        }
+      },
+      {
+        "code": "F02",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7318
+            }
+          }
+        }
+      },
+      {
+        "code": "F13",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8704
+            }
+          }
+        }
+      },
+      {
+        "code": "F14",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11207
+            }
+          }
+        }
+      },
+      {
+        "code": "F15",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9400
+            }
+          }
+        }
+      },
+      {
+        "code": "F16",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8011
+            }
+          }
+        }
+      },
+      {
+        "code": "F17",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8765
+            }
+          }
+        }
+      },
+      {
+        "code": "F18",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5710
+            }
+          }
+        }
+      },
+      {
+        "code": "F19",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10707
+            }
+          }
+        }
+      },
+      {
+        "code": "F20",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7028
+            }
+          }
+        }
+      },
+      {
+        "code": "F21",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9780
+            }
+          }
+        }
+      },
+      {
+        "code": "F22",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8283
+            }
+          }
+        }
+      },
+      {
+        "code": "F23",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8321
+            }
+          }
+        }
+      },
+      {
+        "code": "F24",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6497
+            }
+          }
+        }
+      },
+      {
+        "code": "F25",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12087
+            }
+          }
+        }
+      },
+      {
+        "code": "G02",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7383
+            }
+          }
+        }
+      },
+      {
+        "code": "G05",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8544
+            }
+          }
+        }
+      },
+      {
+        "code": "G07",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9994
+            }
+          }
+        }
+      },
+      {
+        "code": "G08",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8696
+            }
+          }
+        }
+      },
+      {
+        "code": "G10",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7947
+            }
+          }
+        }
+      },
+      {
+        "code": "G11",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5824
+            }
+          }
+        }
+      },
+      {
+        "code": "G13",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6373
+            }
+          }
+        }
+      },
+      {
+        "code": "G14",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 4115
+            }
+          }
+        }
+      },
+      {
+        "code": "G15",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8146
+            }
+          }
+        }
+      },
+      {
+        "code": "G16",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5258
+            }
+          }
+        }
+      },
+      {
+        "code": "G17",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5665
+            }
+          }
+        }
+      },
+      {
+        "code": "G19",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10345
+            }
+          }
+        }
+      },
+      {
+        "code": "G20",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9979
+            }
+          }
+        }
+      },
+      {
+        "code": "G04",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6718
+            }
+          }
+        }
+      },
+      {
+        "code": "G06",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11067
+            }
+          }
+        }
+      },
+      {
+        "code": "G22",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 4977
+            }
+          }
+        }
+      },
+      {
+        "code": "G23",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11397
+            }
+          }
+        }
+      },
+      {
+        "code": "G24",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9441
+            }
+          }
+        }
+      },
+      {
+        "code": "G25",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9551
+            }
+          }
+        }
+      },
+      {
+        "code": "H01",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8294
+            }
+          }
+        }
+      },
+      {
+        "code": "H02",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10600
+            }
+          }
+        }
+      },
+      {
+        "code": "H03",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12438
+            }
+          }
+        }
+      },
+      {
+        "code": "H04",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6552
+            }
+          }
+        }
+      },
+      {
+        "code": "H05",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11527
+            }
+          }
+        }
+      },
+      {
+        "code": "H06",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12414
+            }
+          }
+        }
+      },
+      {
+        "code": "H07",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10856
+            }
+          }
+        }
+      },
+      {
+        "code": "H08",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10822
+            }
+          }
+        }
+      },
+      {
+        "code": "H09",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10876
+            }
+          }
+        }
+      },
+      {
+        "code": "H10",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9209
+            }
+          }
+        }
+      },
+      {
+        "code": "H11",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11213
+            }
+          }
+        }
+      },
+      {
+        "code": "H12",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10167
+            }
+          }
+        }
+      },
+      {
+        "code": "L29",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9148
+            }
+          }
+        }
+      },
+      {
+        "code": "H25",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9993
+            }
+          }
+        }
+      },
+      {
+        "code": "J01",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7643
+            }
+          }
+        }
+      },
+      {
+        "code": "J03",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11752
+            }
+          }
+        }
+      },
+      {
+        "code": "J04",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10598
+            }
+          }
+        }
+      },
+      {
+        "code": "J05",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8280
+            }
+          }
+        }
+      },
+      {
+        "code": "J06",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7181
+            }
+          }
+        }
+      },
+      {
+        "code": "J07",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10510
+            }
+          }
+        }
+      },
+      {
+        "code": "J08",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12070
+            }
+          }
+        }
+      },
+      {
+        "code": "J09",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10759
+            }
+          }
+        }
+      },
+      {
+        "code": "J10",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9607
+            }
+          }
+        }
+      },
+      {
+        "code": "J11",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7139
+            }
+          }
+        }
+      },
+      {
+        "code": "J12",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11047
+            }
+          }
+        }
+      },
+      {
+        "code": "J13",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11430
+            }
+          }
+        }
+      },
+      {
+        "code": "J14",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8538
+            }
+          }
+        }
+      },
+      {
+        "code": "J15",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11045
+            }
+          }
+        }
+      },
+      {
+        "code": "J16",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11430
+            }
+          }
+        }
+      },
+      {
+        "code": "J18",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11828
+            }
+          }
+        }
+      },
+      {
+        "code": "J19",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11327
+            }
+          }
+        }
+      },
+      {
+        "code": "J20",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12035
+            }
+          }
+        }
+      },
+      {
+        "code": "J21",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9423
+            }
+          }
+        }
+      },
+      {
+        "code": "J22",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9514
+            }
+          }
+        }
+      },
+      {
+        "code": "J23",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8421
+            }
+          }
+        }
+      },
+      {
+        "code": "J24",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8504
+            }
+          }
+        }
+      },
+      {
+        "code": "J25",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8129
+            }
+          }
+        }
+      },
+      {
+        "code": "J26",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10929
+            }
+          }
+        }
+      },
+      {
+        "code": "J27",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 13239
+            }
+          }
+        }
+      },
+      {
+        "code": "J28",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12034
+            }
+          }
+        }
+      },
+      {
+        "code": "J29",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12390
+            }
+          }
+        }
+      },
+      {
+        "code": "J30",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12271
+            }
+          }
+        }
+      },
+      {
+        "code": "J32",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7719
+            }
+          }
+        }
+      },
+      {
+        "code": "J33",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7313
+            }
+          }
+        }
+      },
+      {
+        "code": "J34",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7962
+            }
+          }
+        }
+      },
+      {
+        "code": "J35",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8356
+            }
+          }
+        }
+      },
+      {
+        "code": "J36",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7945
+            }
+          }
+        }
+      },
+      {
+        "code": "J37",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9202
+            }
+          }
+        }
+      },
+      {
+        "code": "J38",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9699
+            }
+          }
+        }
+      },
+      {
+        "code": "J39",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10487
+            }
+          }
+        }
+      },
+      {
+        "code": "J40",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8712
+            }
+          }
+        }
+      },
+      {
+        "code": "K01",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5997
+            }
+          }
+        }
+      },
+      {
+        "code": "K02",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8095
+            }
+          }
+        }
+      },
+      {
+        "code": "K03",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7808
+            }
+          }
+        }
+      },
+      {
+        "code": "K06",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7959
+            }
+          }
+        }
+      },
+      {
+        "code": "K07",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8765
+            }
+          }
+        }
+      },
+      {
+        "code": "K08",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10517
+            }
+          }
+        }
+      },
+      {
+        "code": "K09",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7889
+            }
+          }
+        }
+      },
+      {
+        "code": "K10",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8665
+            }
+          }
+        }
+      },
+      {
+        "code": "K11",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6983
+            }
+          }
+        }
+      },
+      {
+        "code": "K12",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10131
+            }
+          }
+        }
+      },
+      {
+        "code": "K13",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8513
+            }
+          }
+        }
+      },
+      {
+        "code": "K14",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11218
+            }
+          }
+        }
+      },
+      {
+        "code": "K04",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11421
+            }
+          }
+        }
+      },
+      {
+        "code": "K15",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10523
+            }
+          }
+        }
+      },
+      {
+        "code": "K16",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7712
+            }
+          }
+        }
+      },
+      {
+        "code": "K17",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7659
+            }
+          }
+        }
+      },
+      {
+        "code": "K18",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9519
+            }
+          }
+        }
+      },
+      {
+        "code": "L30",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 13369
+            }
+          }
+        }
+      },
+      {
+        "code": "K19",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10857
+            }
+          }
+        }
+      },
+      {
+        "code": "L01",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9058
+            }
+          }
+        }
+      },
+      {
+        "code": "L02",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11868
+            }
+          }
+        }
+      },
+      {
+        "code": "L03",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10705
+            }
+          }
+        }
+      },
+      {
+        "code": "L04",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 13349
+            }
+          }
+        }
+      },
+      {
+        "code": "L05",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9194
+            }
+          }
+        }
+      },
+      {
+        "code": "L06",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8782
+            }
+          }
+        }
+      },
+      {
+        "code": "L07",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10188
+            }
+          }
+        }
+      },
+      {
+        "code": "L08",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11279
+            }
+          }
+        }
+      },
+      {
+        "code": "L10",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10386
+            }
+          }
+        }
+      },
+      {
+        "code": "L11",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8057
+            }
+          }
+        }
+      },
+      {
+        "code": "L12",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 4180
+            }
+          }
+        }
+      },
+      {
+        "code": "L13",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7338
+            }
+          }
+        }
+      },
+      {
+        "code": "L14",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8022
+            }
+          }
+        }
+      },
+      {
+        "code": "L15",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9099
+            }
+          }
+        }
+      },
+      {
+        "code": "L16",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7671
+            }
+          }
+        }
+      },
+      {
+        "code": "L17",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8429
+            }
+          }
+        }
+      },
+      {
+        "code": "L18",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10234
+            }
+          }
+        }
+      },
+      {
+        "code": "L20",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8569
+            }
+          }
+        }
+      },
+      {
+        "code": "L21",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10270
+            }
+          }
+        }
+      },
+      {
+        "code": "L22",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9910
+            }
+          }
+        }
+      },
+      {
+        "code": "L23",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10366
+            }
+          }
+        }
+      },
+      {
+        "code": "L25",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7327
+            }
+          }
+        }
+      },
+      {
+        "code": "L26",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10874
+            }
+          }
+        }
+      },
+      {
+        "code": "L27",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8897
+            }
+          }
+        }
+      },
+      {
+        "code": "L28",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6416
+            }
+          }
+        }
+      },
+      {
+        "code": "L31",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10909
+            }
+          }
+        }
+      },
+      {
+        "code": "M01",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9495
+            }
+          }
+        }
+      },
+      {
+        "code": "M02",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6741
+            }
+          }
+        }
+      },
+      {
+        "code": "M03",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8538
+            }
+          }
+        }
+      },
+      {
+        "code": "M06",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10019
+            }
+          }
+        }
+      },
+      {
+        "code": "M07",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9012
+            }
+          }
+        }
+      },
+      {
+        "code": "M04",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7135
+            }
+          }
+        }
+      },
+      {
+        "code": "M05",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9047
+            }
+          }
+        }
+      },
+      {
+        "code": "M08",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10395
+            }
+          }
+        }
+      },
+      {
+        "code": "M09",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5130
+            }
+          }
+        }
+      },
+      {
+        "code": "M10",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 4960
+            }
+          }
+        }
+      },
+      {
+        "code": "M11",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5718
+            }
+          }
+        }
+      },
+      {
+        "code": "M12",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10139
+            }
+          }
+        }
+      },
+      {
+        "code": "M14",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 4852
+            }
+          }
+        }
+      },
+      {
+        "code": "M15",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7739
+            }
+          }
+        }
+      },
+      {
+        "code": "M16",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7051
+            }
+          }
+        }
+      },
+      {
+        "code": "M17",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8628
+            }
+          }
+        }
+      },
+      {
+        "code": "M18",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8504
+            }
+          }
+        }
+      },
+      {
+        "code": "M19",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8871
+            }
+          }
+        }
+      },
+      {
+        "code": "M20",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9302
+            }
+          }
+        }
+      },
+      {
+        "code": "M21",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9855
+            }
+          }
+        }
+      },
+      {
+        "code": "M22",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9232
+            }
+          }
+        }
+      },
+      {
+        "code": "M23",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12025
+            }
+          }
+        }
+      },
+      {
+        "code": "M24",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9911
+            }
+          }
+        }
+      },
+      {
+        "code": "M25",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9143
+            }
+          }
+        }
+      },
+      {
+        "code": "M26",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8555
+            }
+          }
+        }
+      },
+      {
+        "code": "M27",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11794
+            }
+          }
+        }
+      },
+      {
+        "code": "M28",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10231
+            }
+          }
+        }
+      },
+      {
+        "code": "M29",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9962
+            }
+          }
+        }
+      },
+      {
+        "code": "M30",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11315
+            }
+          }
+        }
+      },
+      {
+        "code": "M31",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11627
+            }
+          }
+        }
+      },
+      {
+        "code": "M32",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 13951
+            }
+          }
+        }
+      },
+      {
+        "code": "M34",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6419
+            }
+          }
+        }
+      },
+      {
+        "code": "M35",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11097
+            }
+          }
+        }
+      },
+      {
+        "code": "M36",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7763
+            }
+          }
+        }
+      },
+      {
+        "code": "M37",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7040
+            }
+          }
+        }
+      },
+      {
+        "code": "M38",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7818
+            }
+          }
+        }
+      },
+      {
+        "code": "M39",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10096
+            }
+          }
+        }
+      },
+      {
+        "code": "N01",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11132
+            }
+          }
+        }
+      },
+      {
+        "code": "N02",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6798
+            }
+          }
+        }
+      },
+      {
+        "code": "N03",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12174
+            }
+          }
+        }
+      },
+      {
+        "code": "N04",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12135
+            }
+          }
+        }
+      },
+      {
+        "code": "N05",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12319
+            }
+          }
+        }
+      },
+      {
+        "code": "N06",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 14227
+            }
+          }
+        }
+      },
+      {
+        "code": "N09",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10705
+            }
+          }
+        }
+      },
+      {
+        "code": "N10",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9195
+            }
+          }
+        }
+      },
+      {
+        "code": "N11",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9343
+            }
+          }
+        }
+      },
+      {
+        "code": "Q28",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8742
+            }
+          }
+        }
+      },
+      {
+        "code": "N07",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7693
+            }
+          }
+        }
+      },
+      {
+        "code": "N12",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11563
+            }
+          }
+        }
+      },
+      {
+        "code": "N13",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10071
+            }
+          }
+        }
+      },
+      {
+        "code": "N14",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10632
+            }
+          }
+        }
+      },
+      {
+        "code": "N15",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9706
+            }
+          }
+        }
+      },
+      {
+        "code": "N16",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9207
+            }
+          }
+        }
+      },
+      {
+        "code": "N17",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10297
+            }
+          }
+        }
+      },
+      {
+        "code": "N18",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8864
+            }
+          }
+        }
+      },
+      {
+        "code": "P01",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6726
+            }
+          }
+        }
+      },
+      {
+        "code": "P02",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9426
+            }
+          }
+        }
+      },
+      {
+        "code": "P03",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8326
+            }
+          }
+        }
+      },
+      {
+        "code": "P06",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12129
+            }
+          }
+        }
+      },
+      {
+        "code": "P07",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9381
+            }
+          }
+        }
+      },
+      {
+        "code": "P04",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9193
+            }
+          }
+        }
+      },
+      {
+        "code": "P08",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9176
+            }
+          }
+        }
+      },
+      {
+        "code": "P09",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10668
+            }
+          }
+        }
+      },
+      {
+        "code": "P10",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8538
+            }
+          }
+        }
+      },
+      {
+        "code": "P11",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12377
+            }
+          }
+        }
+      },
+      {
+        "code": "P12",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10275
+            }
+          }
+        }
+      },
+      {
+        "code": "P13",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9514
+            }
+          }
+        }
+      },
+      {
+        "code": "P14",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 13654
+            }
+          }
+        }
+      },
+      {
+        "code": "P15",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11074
+            }
+          }
+        }
+      },
+      {
+        "code": "P16",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9996
+            }
+          }
+        }
+      },
+      {
+        "code": "P17",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8181
+            }
+          }
+        }
+      },
+      {
+        "code": "P18",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10133
+            }
+          }
+        }
+      },
+      {
+        "code": "P19",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6814
+            }
+          }
+        }
+      },
+      {
+        "code": "Q01",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6822
+            }
+          }
+        }
+      },
+      {
+        "code": "Q02",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7227
+            }
+          }
+        }
+      },
+      {
+        "code": "Q03",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5657
+            }
+          }
+        }
+      },
+      {
+        "code": "Q04",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5418
+            }
+          }
+        }
+      },
+      {
+        "code": "Q05",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7200
+            }
+          }
+        }
+      },
+      {
+        "code": "Q07",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10183
+            }
+          }
+        }
+      },
+      {
+        "code": "Q09",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7776
+            }
+          }
+        }
+      },
+      {
+        "code": "Q11",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9520
+            }
+          }
+        }
+      },
+      {
+        "code": "Q12",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11245
+            }
+          }
+        }
+      },
+      {
+        "code": "Q13",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10068
+            }
+          }
+        }
+      },
+      {
+        "code": "Q14",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 13402
+            }
+          }
+        }
+      },
+      {
+        "code": "Q15",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12482
+            }
+          }
+        }
+      },
+      {
+        "code": "Q08",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7259
+            }
+          }
+        }
+      },
+      {
+        "code": "Q16",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8418
+            }
+          }
+        }
+      },
+      {
+        "code": "Q17",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11130
+            }
+          }
+        }
+      },
+      {
+        "code": "Q18",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11657
+            }
+          }
+        }
+      },
+      {
+        "code": "Q19",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12017
+            }
+          }
+        }
+      },
+      {
+        "code": "Q20",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8393
+            }
+          }
+        }
+      },
+      {
+        "code": "R26",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10487
+            }
+          }
+        }
+      },
+      {
+        "code": "R01",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10345
+            }
+          }
+        }
+      },
+      {
+        "code": "R03",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11917
+            }
+          }
+        }
+      },
+      {
+        "code": "R04",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9744
+            }
+          }
+        }
+      },
+      {
+        "code": "R05",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9163
+            }
+          }
+        }
+      },
+      {
+        "code": "R06",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8742
+            }
+          }
+        }
+      },
+      {
+        "code": "R07",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10420
+            }
+          }
+        }
+      },
+      {
+        "code": "R08",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12710
+            }
+          }
+        }
+      },
+      {
+        "code": "Q29",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8779
+            }
+          }
+        }
+      },
+      {
+        "code": "R09",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8491
+            }
+          }
+        }
+      },
+      {
+        "code": "R10",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11144
+            }
+          }
+        }
+      },
+      {
+        "code": "R11",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9477
+            }
+          }
+        }
+      },
+      {
+        "code": "R12",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9916
+            }
+          }
+        }
+      },
+      {
+        "code": "R13",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9597
+            }
+          }
+        }
+      },
+      {
+        "code": "R15",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10129
+            }
+          }
+        }
+      },
+      {
+        "code": "R16",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9229
+            }
+          }
+        }
+      },
+      {
+        "code": "R17",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 13023
+            }
+          }
+        }
+      },
+      {
+        "code": "R18",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9202
+            }
+          }
+        }
+      },
+      {
+        "code": "R14",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9968
+            }
+          }
+        }
+      },
+      {
+        "code": "R20",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12731
+            }
+          }
+        }
+      },
+      {
+        "code": "R21",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9568
+            }
+          }
+        }
+      },
+      {
+        "code": "R22",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9063
+            }
+          }
+        }
+      },
+      {
+        "code": "R23",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8719
+            }
+          }
+        }
+      },
+      {
+        "code": "R24",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6940
+            }
+          }
+        }
+      },
+      {
+        "code": "R25",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5909
+            }
+          }
+        }
+      },
+      {
+        "code": "R29",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8766
+            }
+          }
+        }
+      },
+      {
+        "code": "R30",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11006
+            }
+          }
+        }
+      },
+      {
+        "code": "R31",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12355
+            }
+          }
+        }
+      },
+      {
+        "code": "R33",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 13787
+            }
+          }
+        }
+      },
+      {
+        "code": "R34",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 15819
+            }
+          }
+        }
+      },
+      {
+        "code": "R35",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12031
+            }
+          }
+        }
+      },
+      {
+        "code": "R32",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11639
+            }
+          }
+        }
+      },
+      {
+        "code": "R36",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9770
+            }
+          }
+        }
+      },
+      {
+        "code": "R37",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10862
+            }
+          }
+        }
+      },
+      {
+        "code": "R38",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5736
+            }
+          }
+        }
+      },
+      {
+        "code": "R39",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9914
+            }
+          }
+        }
+      },
+      {
+        "code": "R40",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7870
+            }
+          }
+        }
+      },
+      {
+        "code": "R41",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9716
+            }
+          }
+        }
+      },
+      {
+        "code": "S01",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7395
+            }
+          }
+        }
+      },
+      {
+        "code": "S04",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7698
+            }
+          }
+        }
+      },
+      {
+        "code": "S05",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9156
+            }
+          }
+        }
+      },
+      {
+        "code": "S06",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11177
+            }
+          }
+        }
+      },
+      {
+        "code": "S07",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10859
+            }
+          }
+        }
+      },
+      {
+        "code": "S08",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12310
+            }
+          }
+        }
+      },
+      {
+        "code": "S10",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7858
+            }
+          }
+        }
+      },
+      {
+        "code": "S11",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9962
+            }
+          }
+        }
+      },
+      {
+        "code": "S12",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8209
+            }
+          }
+        }
+      },
+      {
+        "code": "S13",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11792
+            }
+          }
+        }
+      },
+      {
+        "code": "S14",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11414
+            }
+          }
+        }
+      },
+      {
+        "code": "S17",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8686
+            }
+          }
+        }
+      },
+      {
+        "code": "S18",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8634
+            }
+          }
+        }
+      },
+      {
+        "code": "S19",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8405
+            }
+          }
+        }
+      },
+      {
+        "code": "S20",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11214
+            }
+          }
+        }
+      },
+      {
+        "code": "S22",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11038
+            }
+          }
+        }
+      },
+      {
+        "code": "S23",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11216
+            }
+          }
+        }
+      },
+      {
+        "code": "S03",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11599
+            }
+          }
+        }
+      },
+      {
+        "code": "S15",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7257
+            }
+          }
+        }
+      },
+      {
+        "code": "S21",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12957
+            }
+          }
+        }
+      },
+      {
+        "code": "S24",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10660
+            }
+          }
+        }
+      },
+      {
+        "code": "S25",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11904
+            }
+          }
+        }
+      },
+      {
+        "code": "S26",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9326
+            }
+          }
+        }
+      },
+      {
+        "code": "S27",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10194
+            }
+          }
+        }
+      },
+      {
+        "code": "S28",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11416
+            }
+          }
+        }
+      },
+      {
+        "code": "S29",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9492
+            }
+          }
+        }
+      },
+      {
+        "code": "T01",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8336
+            }
+          }
+        }
+      },
+      {
+        "code": "T02",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 13227
+            }
+          }
+        }
+      },
+      {
+        "code": "T03",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 13599
+            }
+          }
+        }
+      },
+      {
+        "code": "T05",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7333
+            }
+          }
+        }
+      },
+      {
+        "code": "T06",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 4841
+            }
+          }
+        }
+      },
+      {
+        "code": "S30",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12451
+            }
+          }
+        }
+      },
+      {
+        "code": "T07",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5228
+            }
+          }
+        }
+      },
+      {
+        "code": "T08",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 3630
+            }
+          }
+        }
+      },
+      {
+        "code": "T09",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 2687
+            }
+          }
+        }
+      },
+      {
+        "code": "T10",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12561
+            }
+          }
+        }
+      },
+      {
+        "code": "C07",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11482
+            }
+          }
+        }
+      },
+      {
+        "code": "C13",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9207
+            }
+          }
+        }
+      },
+      {
+        "code": "D01",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10965
+            }
+          }
+        }
+      },
+      {
+        "code": "J17",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12843
+            }
+          }
+        }
+      },
+      {
+        "code": "D17",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8114
+            }
+          }
+        }
+      },
+      {
+        "code": "E02",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5049
+            }
+          }
+        }
+      },
+      {
+        "code": "E05",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10605
+            }
+          }
+        }
+      },
+      {
+        "code": "F01",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7807
+            }
+          }
+        }
+      },
+      {
+        "code": "G12",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6525
+            }
+          }
+        }
+      },
+      {
+        "code": "G18",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8079
+            }
+          }
+        }
+      },
+      {
+        "code": "G21",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8940
+            }
+          }
+        }
+      },
+      {
+        "code": "A09",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10321
+            }
+          }
+        }
+      },
+      {
+        "code": "C19",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9722
+            }
+          }
+        }
+      },
+      {
+        "code": "C34",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9161
+            }
+          }
+        }
+      },
+      {
+        "code": "K05",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9542
+            }
+          }
+        }
+      },
+      {
+        "code": "L19",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12232
+            }
+          }
+        }
+      },
+      {
+        "code": "N08",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10435
+            }
+          }
+        }
+      },
+      {
+        "code": "E01",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 3649
+            }
+          }
+        }
+      },
+      {
+        "code": "A05",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8675
+            }
+          }
+        }
+      },
+      {
+        "code": "J02",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7434
+            }
+          }
+        }
+      },
+      {
+        "code": "M13",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8284
+            }
+          }
+        }
+      },
+      {
+        "code": "Q06",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12208
+            }
+          }
+        }
+      },
+      {
+        "code": "Q10",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 4680
+            }
+          }
+        }
+      },
+      {
+        "code": "R27",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 13405
+            }
+          }
+        }
+      },
+      {
+        "code": "R02",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8545
+            }
+          }
+        }
+      },
+      {
+        "code": "R28",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10307
+            }
+          }
+        }
+      },
+      {
+        "code": "P05",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11913
+            }
+          }
+        }
+      },
+      {
+        "code": "S31",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 10075
+            }
+          }
+        }
+      },
+      {
+        "code": "S02",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7699
+            }
+          }
+        }
+      },
+      {
+        "code": "T04",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 12771
+            }
+          }
+        }
+      },
+      {
+        "code": "A07",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7608
+            }
+          }
+        }
+      },
+      {
+        "code": "Q21",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7489
+            }
+          }
+        }
+      },
+      {
+        "code": "E12",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7408
+            }
+          }
+        }
+      },
+      {
+        "code": "F03",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 5738
+            }
+          }
+        }
+      },
+      {
+        "code": "G01",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11106
+            }
+          }
+        }
+      },
+      {
+        "code": "G03",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8894
+            }
+          }
+        }
+      },
+      {
+        "code": "G09",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 6894
+            }
+          }
+        }
+      },
+      {
+        "code": "L09",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 8615
+            }
+          }
+        }
+      },
+      {
+        "code": "M33",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11928
+            }
+          }
+        }
+      },
+      {
+        "code": "L24",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11541
+            }
+          }
+        }
+      },
+      {
+        "code": "R19",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 11691
+            }
+          }
+        }
+      },
+      {
+        "code": "S09",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 7031
+            }
+          }
+        }
+      },
+      {
+        "code": "S16",
+        "vote_stats_aggregate": {
+          "aggregate": {
+            "sum": {
+              "count": 9687
+            }
+          }
+        }
+      }
+    ]
+  }
+}

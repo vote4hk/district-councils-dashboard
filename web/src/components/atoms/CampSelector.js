@@ -78,7 +78,7 @@ class CampSelector extends Component {
           />
           {this.camps.map((c, i) => (
             <FormControlLabel
-              key={`label-${i}`}
+              key={c.name}
               control={
                 <Checkbox
                   className={c.className}

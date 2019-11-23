@@ -43,7 +43,7 @@ candidates_aggregate {
 }
 `
 
-const DISTRICT_DATA = `
+export const DISTRICT_DATA = `
 area_code
 area_name_zh
 area_name_en

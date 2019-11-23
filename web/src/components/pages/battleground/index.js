@@ -11,11 +11,7 @@ import DCCAOverview from 'components/district/DCCAOverview'
 import { UnstyledButton } from 'components/atoms/Button'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
-// import StarIcon from '@material-ui/icons/Star'
-// import UnstarIcon from '@material-ui/icons/StarBorder'
-
 import Collapse from '@material-ui/core/Collapse'
-import _ from 'lodash'
 import { QUERY_CONSTITUENCIES } from 'queries/gql'
 import { Typography } from '@material-ui/core'
 import { PlainCard } from '../../molecules/Card'
@@ -24,28 +20,23 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { UnstyledLink } from 'components/atoms/Link'
 // import { Alert } from 'components/atoms/Alert'
 import {
+  getCurrentLanguage,
   getDistrictOverviewUriFromTag,
   getParameterByName,
+  groupVoteStat,
   withLanguage,
-  getCurrentLanguage,
 } from 'utils/helper'
 import {
-  getCentroidFromYearAndCode,
   getAllFeaturesFromPoint,
+  getCentroidFromYearAndCode,
 } from 'utils/features'
 import DCCAElectionHistories from 'components/templates/DCCAElectionHistories'
 import { withTranslation } from 'react-i18next'
 import localforage from 'localforage'
 import { fireEvent } from 'utils/ga_fireevent'
-
-const groupVoteStat = voteStats => {
-  const data = _.groupBy(voteStats, stat => stat.subtype)
-  data.aggregations = {
-    all_voters: data.VOTERS.map(v => v.count).reduce((c, v) => c + v, 0),
-    new_voters: data.NEW_VOTERS.map(v => v.count).reduce((c, v) => c + v, 0),
-  }
-  return data
-}
+import DistrictTurnoutChartContainer from 'components/templates/DistrictTurnoutChartContainer'
+// import StarIcon from '@material-ui/icons/Star'
+// import UnstarIcon from '@material-ui/icons/StarBorder'
 
 const Container = styled(Box)`
   && {
@@ -77,28 +68,7 @@ const FavDistrictButton = styled(UnstyledButton)`
   }
 `
 
-// const StarIconSvg = styled(StarIcon)`
-//   && {
-//     font-size: ${props => props.size || 24}px;
-//     vertical-align: bottom;
-//     position: relative;
-//     top: 10px;
-//     left: 10px;
-//     color: #ffcd00;
-//   }
-// `
-
-// const UnstarIconSvg = styled(UnstarIcon)`
-//   && {
-//     font-size: ${props => props.size || 24}px;
-//     vertical-align: bottom;
-//     position: relative;
-//     top: 10px;
-//     left: 10px;
-//     color: #ccc;
-//   }
-// `
-
+const isLive = process.env.REACT_APP_LIVE_VOTE_TURNOUT_CHART
 class BattleGroundPage extends Component {
   constructor(props) {
     super(props)
@@ -312,19 +282,6 @@ class BattleGroundPage extends Component {
                   </Alert>
                 )} */}
 
-                {/* {this.state.battlegroundArr.find(
-                  code => code === district.code
-                ) ? (
-                  <StarIconSvg
-                    size={24}
-                    onClick={() => this.TriggerFavDistrict(district.code)}
-                  />
-                ) : (
-                  <UnstarIconSvg
-                    size={24}
-                    onClick={() => this.TriggerFavDistrict(district.code)}
-                  />
-                )} */}
                 <Container>
                   <CandidatesContainer
                     year={year}
@@ -332,6 +289,16 @@ class BattleGroundPage extends Component {
                     election_forum={district.meta.election_forum}
                   />
                 </Container>
+                {isLive === 'true' && (
+                  <DistrictTurnoutChartContainer
+                    code={code}
+                    dname={withLanguage(
+                      district.district.dc_name_en,
+                      district.district.dc_name_zh
+                    )}
+                    cname={withLanguage(district.name_en, district.name_zh)}
+                  />
+                )}
                 <DCCAOverview
                   year={year}
                   dc_code={district.district.dc_code}
