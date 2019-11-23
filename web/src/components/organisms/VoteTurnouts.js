@@ -11,6 +11,21 @@ import _ from 'lodash'
 import { Grid } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import { useTranslation } from 'react-i18next'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import styled from 'styled-components'
+
+const VoteTurnoutsHeader = styled(Typography)`
+  && {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+`
+
+const StyledCircularProgress = styled(CircularProgress)`
+  && {
+    margin: 0 auto;
+  }
+`
 
 const VoteTurnouts = props => {
   const { turnouts } = props
@@ -18,10 +33,11 @@ const VoteTurnouts = props => {
 
   return (
     <>
-      <Typography variant="h6" gutterBottom>
+      <VoteTurnoutsHeader variant="h6" gutterBottom>
         {t('turnout_chart.turnout_rate_title')}
-      </Typography>
+      </VoteTurnoutsHeader>
       <Grid container spacing={3}>
+        {turnouts.length === 0 && <StyledCircularProgress />}
         {turnouts &&
           turnouts.length > 0 &&
           turnouts.map((turnout, index) => {
