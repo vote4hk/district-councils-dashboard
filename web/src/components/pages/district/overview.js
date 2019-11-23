@@ -3,7 +3,7 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import { Loading } from 'components/atoms/Loading'
 import DistrictsOverview from 'components/organisms/DistrictsOverview'
-// import DistrictCampCompareChartContainer from 'components/templates/DistrictCampCompareChartContainer'
+import DistrictCampCompareChartContainer from 'components/templates/DistrictCampCompareChartContainer'
 import VoteTurnouts from 'components/organisms/VoteTurnouts'
 import axios from 'axios'
 import styled from 'styled-components'
@@ -48,6 +48,8 @@ const DistrictOverviewPage = props => {
     code,
   }
 
+  const isLive = process.env.REACT_APP_LIVE_VOTE_TURNOUT
+
   return (
     <Query query={query} variables={variables}>
       {({ loading, error, data }) => {
@@ -65,10 +67,13 @@ const DistrictOverviewPage = props => {
 
         return (
           <>
-            {/*<DistrictCampCompareChartContainer code={code} /> */}
-            <Container>
-              <VoteTurnouts data={mergedData} />
-            </Container>
+            {isLive === 'false' ? (
+              <DistrictCampCompareChartContainer code={code} />
+            ) : (
+              <Container>
+                <VoteTurnouts data={mergedData} />
+              </Container>
+            )}
             <DistrictsOverview data={mergedData} />
           </>
         )

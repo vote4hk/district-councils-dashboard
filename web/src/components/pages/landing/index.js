@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import Summary from 'components/templates/Summary'
-// import CampCompareChartContainer from 'components/templates/CampCompareChartContainer'
+import CampCompareChartContainer from 'components/templates/CampCompareChartContainer'
 import styled from 'styled-components'
 import SearchTab from 'components/organisms/SearchTab'
 import { withTranslation } from 'react-i18next'
@@ -22,13 +22,12 @@ const Container = styled.div`
   align-items: baseline;
   flex-grow: 1;
 `
-/*
+
 const StyledCampCompareChartContainer = styled(CampCompareChartContainer)`
   && {
     margin-top: 16px;
   }
 `
-*/
 
 const StyledSearchTab = styled(SearchTab)`
   && {
@@ -65,6 +64,8 @@ const IndexPage = props => {
     ...VoteTurnouts.variables,
   }
 
+  const isLive = process.env.REACT_APP_LIVE_VOTE_TURNOUT
+
   return (
     <Query query={query} variables={variables}>
       {({ data }) => {
@@ -86,8 +87,11 @@ const IndexPage = props => {
               <Summary />
               <CenterText data={data} />
               <StyledSearchTab />
-              {/*<StyledCampCompareChartContainer />*/}
-              <VoteTurnouts data={mergedData} />
+              {isLive === 'false' ? (
+                <StyledCampCompareChartContainer />
+              ) : (
+                <VoteTurnouts data={mergedData} />
+              )}
             </Container>
           </>
         )
