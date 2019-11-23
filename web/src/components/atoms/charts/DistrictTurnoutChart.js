@@ -18,8 +18,8 @@ export default props => {
     }
 
     const COLOR_CONSTITUENCY = COLORS.main.primary
-    const COLOR_DISTRICT = '#f35'
-    const COLOR_TOTAL = '#000'
+    const COLOR_DISTRICT = '#ff574f'
+    const COLOR_TOTAL = '#ffbc4c'
 
     const startTime = moment('07:30', 'HH:mm')
     const times = _.times(TOTAL_RECORDS, n =>

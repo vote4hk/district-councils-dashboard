@@ -48,7 +48,7 @@ const DistrictExpansionPanel = styled(ExpansionPanel)`
 
 const DistrictExpansionPanelSummary = styled(ExpansionPanelSummary)`
   && {
-    font-weightL 600px;
+    font-weight: 600px;
     .Mui-expanded {
     }
   }
