@@ -180,5 +180,6 @@
   "turnout_chart.HK_turnout_rate": "全港",
   "turnout_chart.district_turnout_rate": "{{district}}",
   "turnout_chart.turnout_rate_title": "各區實時投票率",
-  "turnont_chart.title": "每小時投票率"
+  "turnont_chart.title": "每小時投票率",
+  "turnont_chart.no_data": "暫無資料"
 }

@@ -3,14 +3,17 @@ import * as d3 from 'd3'
 import _ from 'lodash'
 import * as moment from 'moment'
 import { COLORS } from 'ui/theme'
+import { useTranslation } from 'react-i18next'
 
 const TOTAL_RECORDS = 15
 
 export default props => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
   const d3Container = useRef(null)
+  const { t } = useTranslation()
+
   const drawChart = (data, labels) => {
-    if (dimensions.width === 0 || !data.constituency[0]) {
+    if (dimensions.width === 0) {
       return
     }
 
@@ -28,7 +31,10 @@ export default props => {
     const width = dimensions.width - margin.left - margin.right
     const height = (dimensions.width * 2) / 3 - margin.top - margin.bottom
 
-    const max = Math.min(_.max(data.constituency) + 0.05, 1.0)
+    const max = Math.max(
+      Math.min(_.maxBy(data.constituency, d => d || 0) + 0.05, 1.0),
+      0.2
+    )
 
     const svg = d3
       .select(d3Container.current)
@@ -121,38 +127,37 @@ export default props => {
         .delay(animTime - 500)
         .duration(2000)
         .attr('opacity', styles.opactiy || 1.0)
-
-      // svg
-      //   .append('text')
-      //   .attr('class', 'legend')
-      //   .attr('x', xScale(validData.length - 1) + margin.left + 4)
-      //   .attr('y', yScale(validData[validData.length - 1]) + margin.top)
-      //   .attr('dy', '.15em')
-      //   .attr('fill', styles.color)
-      //   .style('text-anchor', 'start')
-      //   .text(label)
-      //   .attr('opacity', 0)
-      //   .transition()
-      //   .delay(animTime - 500)
-      //   .duration(2000)
-      //   .attr('opacity', 100)
     }
 
-    drawLine(data.constituency, labels.constituency, {
-      color: COLOR_CONSTITUENCY,
-    })
-    drawLine(data.district, labels.district, {
-      color: COLOR_DISTRICT,
-      'stroke-dasharray': '5, 2',
-      opactiy: 0.8,
-    })
-    drawLine(data.total, labels.total, {
-      color: COLOR_TOTAL,
-      'stroke-dasharray': '5, 5',
-      opactiy: 0.5,
-    })
+    if (data.constituency[0] !== null) {
+      drawLine(data.constituency, labels.constituency, {
+        color: COLOR_CONSTITUENCY,
+      })
+      drawLine(data.district, labels.district, {
+        color: COLOR_DISTRICT,
+        'stroke-dasharray': '5, 2',
+        opactiy: 0.8,
+      })
+      drawLine(data.total, labels.total, {
+        color: COLOR_TOTAL,
+        'stroke-dasharray': '5, 5',
+        opactiy: 0.5,
+      })
+    } else {
+      svg
+        .append('g')
+        .append('text')
+        .attr('font-size', '30px')
+        .style('text-anchor', 'middle')
+        .style('fill', COLOR_CONSTITUENCY)
+        .text(t('turnont_chart.no_data'))
+        .attr(
+          'transform',
+          `translate(${width / 2 + margin.left},${height / 2 +
+            margin.top})rotate(-30)`
+        )
+    }
 
-    console.log(Object.values(labels))
     //Legend
     const legend = svg
       .selectAll('.legend')
