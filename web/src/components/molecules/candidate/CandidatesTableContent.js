@@ -190,6 +190,8 @@ class CandidatesTableContent extends Component {
       totVotes += c.votes
     }
 
+    candidates.sort((a, b) => b.votes - a.votes)
+
     return (
       <>
         {candidates
