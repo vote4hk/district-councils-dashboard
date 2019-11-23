@@ -7,6 +7,7 @@ import { Typography } from '@material-ui/core'
 import TableRow from '@material-ui/core/TableRow'
 import { useTranslation } from 'react-i18next'
 import { withLanguage, getCurrentLanguage } from 'utils/helper'
+import VoteTurnouts from 'components/organisms/VoteTurnouts'
 
 const DistrictNameTableRow = styled(TableRow)`
   && {
@@ -22,10 +23,16 @@ const DistrictTableContent = props => {
     showDemocracy,
     showBlank,
     showOthers,
+    turnouts,
   } = props
+
+  const voteTurnoutProps = props
 
   const { t } = useTranslation()
   const currentLanguage = getCurrentLanguage()
+
+  const isLive = process.env.REACT_APP_LIVE_VOTE_TURNOUT
+
   return (
     <>
       <DistrictNameTableRow
@@ -49,6 +56,13 @@ const DistrictTableContent = props => {
           )}
         </TableCell>
       </DistrictNameTableRow>
+      {isLive === 'true' && turnouts && (
+        <TableRow>
+          <TableCell colSpan={5}>
+            <VoteTurnouts data={voteTurnoutProps} />
+          </TableCell>
+        </TableRow>
+      )}
       {district.constituencies.map(constituency => {
         return (
           <ConstituencyTableContent

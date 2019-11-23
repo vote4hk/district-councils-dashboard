@@ -6,12 +6,14 @@ import DistrictTableContent from 'components/molecules/district/DistrictTableCon
 import TableHead from '@material-ui/core/TableHead'
 import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
-import { debounce } from 'lodash'
+import _, { debounce } from 'lodash'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
 import CampSelector from 'components/atoms/CampSelector'
 import { Loading } from 'components/atoms/Loading'
 import styled from 'styled-components'
 import { withTranslation } from 'react-i18next'
+import withQuery from 'withQuery'
+import { DISTRICT_DATA } from 'queries/gql'
 
 const StyledTableCell = styled(TableCell)`
   && {
@@ -89,7 +91,8 @@ class DistrictsTable extends Component {
   }
 
   loadDistricts(toIndex) {
-    const { districts, year } = this.props
+    const { districts, year, turnouts } = this.props
+    const { constituencies, districtCode, type } = this.props // Quick fix for VoteTurnouts
     const { democracy, establishment, others, blank } = this.state.checked
     const districtsArray = districts.filter(
       (district, index) => index <= toIndex
@@ -103,6 +106,10 @@ class DistrictsTable extends Component {
         key={district.dc_code}
         district={district}
         year={year}
+        constituencies={constituencies}
+        turnouts={turnouts}
+        districtCode={districtCode}
+        type={type}
       />
     ))
   }
@@ -158,4 +165,20 @@ class DistrictsTable extends Component {
   }
 }
 
-export default withTranslation()(DistrictsTable)
+export default withQuery(
+  withTranslation()(DistrictsTable),
+  {
+    query: `
+      dcd_districts( where: { dc_code: { _eq: $code } } ) {
+        ${DISTRICT_DATA}
+      }
+    `,
+    variables: { year: 2019 },
+  },
+  data => {
+    return {
+      districts: _.get(data, 'dcd_districts', []),
+      ...data,
+    }
+  }
+)
