@@ -68,7 +68,6 @@ const CandidateGrid = props => {
       {candidate.candidate_number > 0 && (
         <Grid item>
           <CandidateNumber
-            item
             key={candidate.candidate_number}
             dimension="18px"
             camp={getColorFromCamp(candidate.camp)}

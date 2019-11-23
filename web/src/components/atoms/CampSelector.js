@@ -76,8 +76,9 @@ class CampSelector extends Component {
             // label="顯示："
             label={t('show')}
           />
-          {this.camps.map(c => (
+          {this.camps.map((c, i) => (
             <FormControlLabel
+              key={`label-${i}`}
               control={
                 <Checkbox
                   className={c.className}
