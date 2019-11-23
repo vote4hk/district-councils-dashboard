@@ -9,9 +9,9 @@ export default props => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
 
   const d3Container = useRef(null)
-
-  const drawChart = data => {
-    if (dimensions.width === 0) {
+  console.log(props)
+  const drawChart = (data, labels) => {
+    if (dimensions.width === 0 || !data.constituency[0]) {
       return
     }
 
@@ -20,19 +20,12 @@ export default props => {
       startTime.add(1, 'hour').format('HH:mm')
     )
 
-    const color = d3
-      .scaleOrdinal()
-      .range([
-        props.firstColor ? props.firstColor : '#ca0020',
-        props.secondColor ? props.secondColor : '#f4a582',
-      ])
-
     const margin = { top: 50, right: 20, bottom: 30, left: 40 }
 
     const width = dimensions.width - margin.left - margin.right
     const height = dimensions.width - margin.top - margin.bottom
 
-    const max = _.max(data.constituency)
+    const max = Math.max(_.max(data.constituency), 0.1)
 
     const svg = d3
       .select(d3Container.current)
@@ -57,19 +50,6 @@ export default props => {
     // y axis
     chart.append('g').call(d3.axisLeft(yScale).tickFormat(d3.format('.0%')))
 
-    // // draw the lines
-    // chart
-    //   .append('g')
-    //   .style('color', 'lightgrey')
-    //   .style('stroke-opacity', '0.7')
-    //   .call(
-    //     d3
-    //       .axisLeft(yScale)
-    //       .tickSizeOuter(0)
-    //       .tickSizeInner(-width)
-    //       .tickFormat('')
-    //   )
-
     // x axis
     chart
       .append('g')
@@ -79,6 +59,19 @@ export default props => {
       .attr('transform', 'translate(0,0)rotate(-45)')
       .style('text-anchor', 'end')
       .style('fill', '#69a3b2')
+
+    // draw the lines
+    chart
+      .append('g')
+      .style('color', 'lightgrey')
+      .style('stroke-opacity', '0.7')
+      .call(
+        d3
+          .axisLeft(yScale)
+          .tickSizeOuter(0)
+          .tickSizeInner(-width)
+          .tickFormat('')
+      )
 
     // 7. d3's line generator
     const line = d3
@@ -138,13 +131,13 @@ export default props => {
         .attr('opacity', 100)
     }
 
-    drawLine(data.constituency, 'A01', 'black')
-    drawLine(data.district, 'A', 'lightgreen')
-    drawLine(data.total, 'HK Total', 'steelblue')
+    drawLine(data.constituency, labels.constituency, 'black')
+    drawLine(data.district, labels.district, 'lightgreen')
+    drawLine(data.total, labels.total, 'steelblue')
   }
 
   useEffect(() => {
-    drawChart(props.data)
+    drawChart(props.data, props.labels)
   })
 
   useLayoutEffect(() => {

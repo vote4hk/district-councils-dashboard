@@ -285,7 +285,14 @@ class BattleGroundPage extends Component {
                     election_forum={district.meta.election_forum}
                   />
                 </Container>
-                <DistrictTurnoutChartContainer turnouts />
+                <DistrictTurnoutChartContainer
+                  code={code}
+                  dname={withLanguage(
+                    district.district.dc_name_en,
+                    district.district.dc_name_zh
+                  )}
+                  cname={withLanguage(district.name_en, district.name_zh)}
+                />
                 <DCCAOverview
                   year={year}
                   dc_code={district.district.dc_code}
