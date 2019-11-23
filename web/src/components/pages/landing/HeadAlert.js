@@ -4,6 +4,7 @@ import get from 'lodash.get'
 import { Typography } from '@material-ui/core'
 import withQuery from 'withQuery'
 import { Alert } from 'components/atoms/Alert'
+import { withLanguage } from 'utils/helper'
 
 function HeadAlert({ text }) {
   if (!text) {
@@ -35,9 +36,12 @@ export default withQuery(
           value
         }
     `,
-    variables: { alertTextKey: 'landing_alert' },
+    variables: { alertTextKey: 'landing_alert_i18n' },
   },
   data => ({
-    text: get(data, 'alertText.0.value.text'),
+    text: get(
+      data,
+      withLanguage('alertText.0.value.en', 'alertText.0.value.zh')
+    ),
   })
 )
