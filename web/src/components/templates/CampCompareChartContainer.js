@@ -47,7 +47,13 @@ const StyledLoadingButton = styled(LoadingButton)`
 
 const FETCH_CAMP_DATA = gql`
   query fetch_camp_data($year: Int!) {
-    dcd_candidates(where: { is_won: { _eq: true }, year: { _eq: $year } }) {
+    dcd_candidates(
+      where: {
+        is_won: { _eq: true }
+        year: { _eq: $year }
+        election_type: { _eq: "ordinary" }
+      }
+    ) {
       cacode
       camp
       person {
