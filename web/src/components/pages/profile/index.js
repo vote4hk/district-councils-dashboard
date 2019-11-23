@@ -389,6 +389,7 @@ class ProfilePage extends Component {
         <ElectionStatus>
           {tags.map(tag => (
             <Tag
+              key={`tag-${tag}`}
               textcolor="black"
               value={tag}
               borderwidth={1}

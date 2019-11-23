@@ -65,7 +65,7 @@ const FCPersonData = props => {
     <>
       <Container>
         {events.length > 0 ? (
-          <Typography variant="body">
+          <Typography variant="body1">
             <span
               dangerouslySetInnerHTML={{
                 __html: t('fcPersonData.report', { fc_url: fcUri }),
@@ -73,7 +73,7 @@ const FCPersonData = props => {
             />
           </Typography>
         ) : (
-          <Typography variant="body">
+          <Typography variant="body1">
             <span
               dangerouslySetInnerHTML={{
                 __html: t('fcPersonData.no_record', { fc_url: fcUri }),
