@@ -19,6 +19,7 @@ import {
 } from 'utils/helper'
 import { COLORS } from 'ui/theme'
 import OndemandVideoIcon from '@material-ui/icons/OndemandVideo'
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
 
 const IMAGE_HOST_URI =
   process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'
@@ -79,6 +80,22 @@ const CandidateNumber = styled(Box)`
     background-color: ${props => COLORS.camp[props.camp].background};
     color: ${props => COLORS.camp[props.camp].text};
     text-align: center;
+  }
+`
+const WinIndicator = styled(Box)`
+  && {
+    position: relative;
+    margin-bottom: -18px !important;
+    top: -25px;
+    right: -28px;
+    border-radius: 50%;
+    font-weight: 700;
+    width: ${props => props.dimension};
+    height: ${props => props.dimension};
+    background-color: white;
+    text-align: center;
+    padding-top: 1px;
+    padding-left: 0px;
   }
 `
 
@@ -200,6 +217,15 @@ const CandidatesContainer = props => {
                                 >
                                   {candidate.candidate_number}
                                 </CandidateNumber>
+                              )}
+
+                              {year === 2019 && candidate.is_won && (
+                                <WinIndicator
+                                  dimension="30px"
+                                  camp={getColorFromCamp(candidate.camp)}
+                                >
+                                  <CheckCircleOutlineIcon color="primary" />
+                                </WinIndicator>
                               )}
                               {candidate.tags.findIndex(
                                 tag =>

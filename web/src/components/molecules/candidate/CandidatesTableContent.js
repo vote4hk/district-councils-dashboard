@@ -13,6 +13,7 @@ import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 import { HtmlTooltip } from 'components/atoms/Tooltip'
 import { useTranslation, withTranslation } from 'react-i18next'
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
 
 const IMAGE_HOST_URI =
   process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.github.io'
@@ -26,6 +27,22 @@ const CandidateNumber = styled(Box)`
     background-color: ${props => COLORS.camp[props.camp].background};
     color: ${props => COLORS.camp[props.camp].text};
     text-align: center;
+  }
+`
+const WinIndicator = styled(Box)`
+  && {
+    position: relative;
+    margin-bottom: -18px !important;
+    top: -15px;
+    right: -28px;
+    border-radius: 50%;
+    font-weight: 700;
+    width: ${props => props.dimension};
+    height: ${props => props.dimension};
+    background-color: white;
+    text-align: center;
+    padding-top: 1px;
+    padding-left: 0px;
   }
 `
 
@@ -95,6 +112,14 @@ const CandidateGrid = props => {
           }}
           opacity={candidate.nominate_status === 'disqualified' ? 0.1 : 1}
         />
+        {candidate.is_won && (
+          <WinIndicator
+            dimension="24px"
+            camp={getColorFromCamp(candidate.camp)}
+          >
+            <CheckCircleOutlineIcon color="primary" fontSize="small" />
+          </WinIndicator>
+        )}
       </Grid>
       <Grid item>
         {withLanguage(candidate.person.name_en, candidate.person.name_zh)}
