@@ -273,6 +273,7 @@ export const computeTurnouts = (constituencies, turnouts) => {
       current: turnoutIndex >= 0 ? constituencyTurnouts[turnoutIndex] : 0,
       // hourly from 07:30
       updateTime: new Date(now.setHours(8 + (turnoutIndex || 0), 30)),
+      url: `district/2019/${constituency.code}`,
     }
   })
 
@@ -289,6 +290,7 @@ export const computeTurnouts = (constituencies, turnouts) => {
               updateTime:
                 c.updateTime > v.updateTime ? c.updateTime : v.updateTime,
               type: 'district',
+              url: `district/2019/${v.district.dc_code}`,
             }
       }, null)
     }
@@ -302,6 +304,7 @@ export const computeTurnouts = (constituencies, turnouts) => {
           total: c.total + v.total,
           updateTime: c.updateTime > v.updateTime ? c.updateTime : v.updateTime,
           type: 'all',
+          url: null,
         }
   }, null)
 

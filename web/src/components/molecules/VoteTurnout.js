@@ -2,10 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import LinearProgress from '@material-ui/core/LinearProgress'
-import { formatNumber } from 'utils/helper'
+import { formatNumber, getCurrentLanguage } from 'utils/helper'
 import Typography from '@material-ui/core/Typography'
 import { useTranslation } from 'react-i18next'
 import { Grid } from '@material-ui/core'
+import { withRouter } from 'react-router-dom'
 
 const colors = {
   constituency: {
@@ -59,12 +60,24 @@ const VotePercentageBar = styled(LinearProgress)`
 `
 
 const VoteTurnout = props => {
-  const { label, current, percentage, type, updateTime } = props
+  const { label, current, percentage, type, updateTime, url } = props
 
   const { t } = useTranslation()
+  const currentLanguage = getCurrentLanguage()
 
   return (
-    <Grid container alignItems="center" item xs={12} spacing={3}>
+    <Grid
+      container
+      alignItems="center"
+      item
+      xs={12}
+      spacing={3}
+      onClick={() => {
+        if (url) {
+          props.history.push(`/${currentLanguage}/${url}`)
+        }
+      }}
+    >
       <VoteGrid item xs={4}>
         <VoteLabel>{label}</VoteLabel>
       </VoteGrid>
@@ -78,7 +91,7 @@ const VoteTurnout = props => {
             })}
             ）
           </span>
-          <span className="vote-update-time">{updateTime}</span>
+          {/*<span className="vote-update-time">{updateTime}</span>*/}
         </VoteText>
         <VotePercentageBar
           variant="determinate"
@@ -98,4 +111,4 @@ VoteTurnout.propTypes = {
   updateTime: PropTypes.string,
 }
 
-export default VoteTurnout
+export default withRouter(VoteTurnout)

@@ -52,6 +52,7 @@ const VoteTurnouts = props => {
                 percentage={turnout.percentage}
                 updateTime={turnout.updateTime}
                 type={turnout.type}
+                url={turnout.url}
               />
             )
           })}
