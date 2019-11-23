@@ -2,3 +2,6 @@ script/output/*
 .DS_Store
 node_modules
 .idea
+script/gen_turnout_sample.js
+
+script/input/voters.json
