@@ -184,6 +184,12 @@ class CandidatesTableContent extends Component {
       t,
     } = props
     const currentLanguage = getCurrentLanguage()
+    var totVotes = 0
+    var c
+    for (c of candidates) {
+      totVotes += c.votes
+    }
+
     return (
       <>
         {candidates
@@ -223,6 +229,15 @@ class CandidatesTableContent extends Component {
                   candidate.political_affiliation_en,
                   candidate.political_affiliation_zh
                 ) || t('candidate.noPoliticalAffiliation')}
+              </StyledTableCell>
+              <StyledTableCell>
+                {candidate.votes
+                  ? candidate.votes +
+                    ' ' +
+                    '(' +
+                    ((candidate.votes / totVotes) * 100).toFixed(0) +
+                    '%)'
+                  : '---'}
               </StyledTableCell>
             </StyledTableRow>
           ))}

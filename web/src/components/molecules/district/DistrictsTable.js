@@ -144,7 +144,10 @@ class DistrictsTable extends Component {
                   size={20}
                 />
               </StyledTableCell>
-              {/* <TableCell>得票</TableCell> */}
+              <StyledTableCell>
+                {/* 得票 */}
+                {t('obtainedVotes')}{' '}
+              </StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>{this.loadDistricts(this.state.toIndex)}</TableBody>
