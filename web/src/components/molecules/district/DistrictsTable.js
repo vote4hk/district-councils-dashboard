@@ -165,8 +165,10 @@ class DistrictsTable extends Component {
   }
 }
 
+const TranslatedDistrictsTable = withTranslation()(DistrictsTable)
+
 export default withQuery(
-  withTranslation()(DistrictsTable),
+  TranslatedDistrictsTable,
   {
     query: `
       dcd_districts( where: { dc_code: { _eq: $code } } ) {
