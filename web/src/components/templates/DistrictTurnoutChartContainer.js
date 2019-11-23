@@ -13,7 +13,7 @@ const Title = styled(Typography)`
   && {
     margin-left: 16px;
     margin-top: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 20px;
   }
 `
 
@@ -93,19 +93,21 @@ const DistrictTurnoutChartContainer = props => {
   }, [])
 
   return (
-    <Grid container spacing={3}>
-      <Title variant="h4">{t('turnont_chart.title')}</Title>
-      {!loading && (
-        <DistrictTurnoutChart
-          data={mapData(turnoutsData, votersData, code)}
-          labels={{
-            constituency: cname,
-            district: dname,
-            total: t('turnout_chart.HK_turnout_rate'),
-          }}
-        />
-      )}
-    </Grid>
+    <>
+      <Title variant="h6">{t('turnont_chart.title')}</Title>
+      <Grid container spacing={3}>
+        {!loading && (
+          <DistrictTurnoutChart
+            data={mapData(turnoutsData, votersData, code)}
+            labels={{
+              constituency: cname,
+              district: dname,
+              total: t('turnout_chart.HK_turnout_rate'),
+            }}
+          />
+        )}
+      </Grid>
+    </>
   )
 }
 

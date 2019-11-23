@@ -180,5 +180,5 @@
   "turnout_chart.HK_turnout_rate": "HK Overall",
   "turnout_chart.district_turnout_rate": "{{district}}",
   "turnout_chart.turnout_rate_title": "Voter Turnout Rate for each dstrict",
-  "turnont_chart.title": "Voter Turnout Rate by hour"
+  "turnont_chart.title": "Hourly Voter Turnout Rate"
 }

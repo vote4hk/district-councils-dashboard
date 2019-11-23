@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect, useLayoutEffect } from 'react'
 import * as d3 from 'd3'
 import _ from 'lodash'
 import * as moment from 'moment'
+import { COLORS } from 'ui/theme'
 
 const TOTAL_RECORDS = 15
 
@@ -13,9 +14,9 @@ export default props => {
       return
     }
 
-    const COLOR_CONSTITUENCY = '#000'
+    const COLOR_CONSTITUENCY = COLORS.main.primary
     const COLOR_DISTRICT = '#f35'
-    const COLOR_TOTAL = '#3f5'
+    const COLOR_TOTAL = '#000'
 
     const startTime = moment('07:30', 'HH:mm')
     const times = _.times(TOTAL_RECORDS, n =>
@@ -159,7 +160,7 @@ export default props => {
       .enter()
       .append('g')
       .attr('class', 'legend')
-      .attr('transform', (d, i) => `translate(${margin.left + i * 80}, 0)`)
+      .attr('transform', (d, i) => `translate(${margin.left + i * 140}, 0)`)
 
     legend
       .append('rect')
