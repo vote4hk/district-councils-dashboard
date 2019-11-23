@@ -20,6 +20,7 @@ import { HtmlTooltip } from 'components/atoms/Tooltip'
 import { withTranslation } from 'react-i18next'
 import localforage from 'localforage'
 import { fireEvent } from 'utils/ga_fireevent'
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
 
 import {
   getDistrictOverviewUriFromTag,
@@ -151,6 +152,23 @@ const CandidateNumber = styled(Box)`
     background-color: ${props => COLORS.camp[props.camp].background};
     color: ${props => COLORS.camp[props.camp].text};
     text-align: center;
+  }
+`
+const WinIndicator = styled(Box)`
+  && {
+    position: relative;
+    margin-bottom: -18px !important;
+    top: -25px;
+    right: -55px;
+    border-radius: 50%;
+    font-weight: 700;
+    width: ${props => props.dimension};
+    height: ${props => props.dimension};
+    background-color: white;
+    color: green;
+    text-align: center;
+    padding-top: 1px;
+    padding-left: 1px;
   }
 `
 
@@ -517,6 +535,10 @@ class ProfilePage extends Component {
               t('fc.title4')
             )
 
+          const winAt2019 = person.candidates.find(
+            elem => elem.year === 2019 && elem.is_won
+          )
+
           return (
             <>
               {lastElection.year === 2019 &&
@@ -606,6 +628,14 @@ class ProfilePage extends Component {
                     >
                       {person.candidates[0].candidate_number}
                     </CandidateNumber>
+                  )}
+                  {winAt2019 && (
+                    <WinIndicator
+                      dimension="30px"
+                      camp={getColorFromCamp(person.candidates[0].camp)}
+                    >
+                      <CheckCircleOutlineIcon color="primary" />
+                    </WinIndicator>
                   )}
                 </CandidateAvatorContainer>
                 <Box>
