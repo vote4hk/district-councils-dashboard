@@ -87,11 +87,8 @@ const IndexPage = props => {
               <Summary />
               <CenterText data={data} />
               <StyledSearchTab />
-              {isLive === 'false' ? (
-                <StyledCampCompareChartContainer />
-              ) : (
-                <VoteTurnouts data={mergedData} />
-              )}
+              {isLive === 'true' && <VoteTurnouts data={mergedData} />}
+              <StyledCampCompareChartContainer />
             </Container>
           </>
         )

@@ -67,13 +67,12 @@ const DistrictOverviewPage = props => {
 
         return (
           <>
-            {isLive === 'false' ? (
-              <DistrictCampCompareChartContainer code={code} />
-            ) : (
+            {isLive === 'true' && (
               <Container>
                 <VoteTurnouts data={mergedData} />
               </Container>
             )}
+            <DistrictCampCompareChartContainer code={code} />
             <DistrictsOverview data={mergedData} />
           </>
         )
