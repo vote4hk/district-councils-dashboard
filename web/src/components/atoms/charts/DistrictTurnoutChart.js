@@ -7,9 +7,7 @@ const TOTAL_RECORDS = 15
 
 export default props => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
-
   const d3Container = useRef(null)
-  console.log(props)
   const drawChart = (data, labels) => {
     if (dimensions.width === 0 || !data.constituency[0]) {
       return
@@ -20,12 +18,12 @@ export default props => {
       startTime.add(1, 'hour').format('HH:mm')
     )
 
-    const margin = { top: 50, right: 20, bottom: 30, left: 40 }
+    const margin = { top: 50, right: 50, bottom: 30, left: 50 }
 
     const width = dimensions.width - margin.left - margin.right
     const height = dimensions.width - margin.top - margin.bottom
 
-    const max = Math.max(_.max(data.constituency), 0.1)
+    const max = Math.min(_.max(data.constituency) + 0.05, 1.0)
 
     const svg = d3
       .select(d3Container.current)
@@ -90,8 +88,8 @@ export default props => {
         .attr('fill', 'none')
         .attr('stroke', color)
         .attr('stroke-width', 1.5)
-        .attr('stroke-dashoffset', 385)
-        .attr('stroke-dasharray', [385, 385])
+        .attr('stroke-dashoffset', width * 2)
+        .attr('stroke-dasharray', [width * 2, width * 2])
         .attr('d', line)
         .transition()
         .duration(animTime)

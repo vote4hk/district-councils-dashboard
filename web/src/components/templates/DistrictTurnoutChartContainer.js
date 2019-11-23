@@ -27,6 +27,7 @@ const mapData = (turnouts, voters, cacode) => {
     total: 0.0,
   }
   let totalVoters = 0.0
+  let districtVoters = 0.0
 
   voters.forEach(c => {
     const count = _.get(c, 'vote_stats_aggregate.aggregate.sum.count', 0)
@@ -35,6 +36,9 @@ const mapData = (turnouts, voters, cacode) => {
     }
     votersByDistrict[c.code] = count
     totalVoters += count
+    if (c.code.charCodeAt(0) === cacode.charCodeAt(0)) {
+      districtVoters += count
+    }
   })
 
   Object.keys(turnouts).forEach(code => {
@@ -56,7 +60,7 @@ const mapData = (turnouts, voters, cacode) => {
   })
 
   final.district = final.district.map(t =>
-    t < 0.0001 ? null : t / totalVoters
+    t < 0.0001 ? null : t / districtVoters
   )
   final.total = final.total.map(t => (t < 0.0001 ? null : t / totalVoters))
 
