@@ -256,7 +256,7 @@ export const computeTurnouts = (constituencies, turnouts) => {
   const constituencyTurnouts = constituencies.map(constituency => {
     const constituencyTurnouts = _.get(
       turnouts,
-      `${constituency.code}.cumulative_turnout`,
+      `${constituency.code}.cumulativeTurnout`,
       []
     )
     const turnoutIndex = _.findLastIndex(constituencyTurnouts, t => t !== null)

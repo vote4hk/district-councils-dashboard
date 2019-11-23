@@ -44,8 +44,7 @@ const mapData = (turnouts, voters, cacode) => {
 
   Object.keys(turnouts).forEach(code => {
     const total = votersByDistrict[code]
-    const turnout =
-      turnouts[code].cumulative_turnout || _.times(PERIOD_COUNT, 0)
+    const turnout = turnouts[code].cumulativeTurnout || _.times(PERIOD_COUNT, 0)
 
     if (code === cacode) {
       final.constituency = turnout.map(t => (t === null ? null : t / total))
