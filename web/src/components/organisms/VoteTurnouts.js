@@ -160,14 +160,11 @@ export default withQuery(
           dc_code
           dc_name_en
           dc_name_zh
-
         }
         vote_stats {
           count
           type
           subtype
-          category_1
-          category_2
         }
       }
     `,
