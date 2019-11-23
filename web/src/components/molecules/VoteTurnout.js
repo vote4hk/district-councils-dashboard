@@ -60,7 +60,7 @@ const VotePercentageBar = styled(LinearProgress)`
 `
 
 const VoteTurnout = props => {
-  const { label, current, percentage, type, updateTime, url } = props
+  const { label, current, percentage, type, url } = props // updateTime
 
   const { t } = useTranslation()
   const currentLanguage = getCurrentLanguage()
@@ -91,7 +91,7 @@ const VoteTurnout = props => {
             })}
             ）
           </span>
-          {/*<span className="vote-update-time">{updateTime}</span>*/}
+          {/* <span className="vote-update-time">{updateTime}</span> */}
         </VoteText>
         <VotePercentageBar
           variant="determinate"
