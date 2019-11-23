@@ -183,5 +183,11 @@
   "constituency.tags.multi_candidates": "Multiple candidates",
   "constituency.tags.multi_estab": "Multiple Pro-Est. candidates",
   "constituency.tags.multi_demo": "Multiple Pan-dem. candidates",
-  "obtainedVotes": "Votes"
+  "obtainedVotes": "Votes",
+  "voting_instructions": "Voting instructions",
+  "voting_instructions_1": "Please bring along the original identity document (ID card / Special Administrative Region Passport / Exemption Registration Certificate / Application for Hong Kong Identity Card Receipt)",
+  "voting_instructions_2": "Voting time is from 07:30 am to 10:30 pm",
+  "voting_instructions_3": "Do not use mobile phones or any other equipment in the station for electronic communication, photo taking, filming, video recording or recording",
+  "voting_instructions_4": "A valid ticket must be selected by the seal provided by the polling station.",
+  "voting_instructions_5": "If there is an error in the stamping of the ballot paper or the ballot paper is accidentally damaged, the ballot paper can be handed over to the polling station director for another ballot paper."
 }

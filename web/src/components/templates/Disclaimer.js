@@ -16,11 +16,22 @@ const DisclaimerContainer = styled.div`
     }
   }
 `
-
 export const Disclaimer = props => {
   const { t } = useTranslation()
   return (
     <DisclaimerContainer>
+      <Typography variant="body2" gutterBottom>
+        {/* 本網站與任何2019年區議會選舉候選人或其助選成員無關，刊載資料目的非為促使或阻礙任何候選人在選舉中當選。 */}
+        {t('voting_instructions')}
+        <ul>
+          <li>{t('voting_instructions_1')}</li>
+          <li>{t('voting_instructions_2')}</li>
+          <li>{t('voting_instructions_3')}</li>
+          <li>{t('voting_instructions_4')}</li>
+          <li>{t('voting_instructions_5')}</li>
+        </ul>
+      </Typography>
+
       <Typography variant="body2" gutterBottom>
         {/* 本網站與任何2019年區議會選舉候選人或其助選成員無關，刊載資料目的非為促使或阻礙任何候選人在選舉中當選。 */}
         {t('disclaimer.segment.text1')}
