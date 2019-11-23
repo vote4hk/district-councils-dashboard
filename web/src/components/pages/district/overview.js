@@ -6,6 +6,16 @@ import DistrictsOverview from 'components/organisms/DistrictsOverview'
 // import DistrictCampCompareChartContainer from 'components/templates/DistrictCampCompareChartContainer'
 import VoteTurnouts from 'components/organisms/VoteTurnouts'
 import axios from 'axios'
+import styled from 'styled-components'
+import Box from '@material-ui/core/Box'
+
+const Container = styled(Box)`
+  && {
+    width: 100%;
+    padding: 0 16px;
+    box-shadow: none;
+  }
+`
 
 const DistrictOverviewPage = props => {
   const {
@@ -56,7 +66,9 @@ const DistrictOverviewPage = props => {
         return (
           <>
             {/*<DistrictCampCompareChartContainer code={code} /> */}
-            <VoteTurnouts data={mergedData} />
+            <Container>
+              <VoteTurnouts data={mergedData} />
+            </Container>
             <DistrictsOverview data={mergedData} />
           </>
         )

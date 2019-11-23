@@ -9,39 +9,54 @@ import VoteTurnout from 'components/molecules/VoteTurnout'
 import withQuery from 'withQuery'
 import _ from 'lodash'
 import { Grid } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
+import { useTranslation } from 'react-i18next'
 
 const VoteTurnouts = props => {
   const { turnouts } = props
+  const { t } = useTranslation()
 
   return (
-    <Grid container spacing={3}>
-      {turnouts &&
-        turnouts.length > 0 &&
-        turnouts.map((t, index) => {
-          const key =
-            t.type === 'district'
-              ? t.dc_code
-              : t.type === 'constituency'
-              ? t.code
-              : 'all'
-          const label =
-            t.type === 'district'
-              ? `${withLanguage(t.dc_name_en, t.dc_name_zh)}`
-              : t.type === 'constituency'
-              ? `${withLanguage(t.name_en, t.name_zh)} (${t.code})`
-              : '全港'
-          return (
-            <VoteTurnout
-              key={key}
-              label={label}
-              current={t.current}
-              percentage={t.percentage}
-              updateTime={t.updateTime}
-              type={t.type}
-            />
-          )
-        })}
-    </Grid>
+    <>
+      <Typography variant="h6" gutterBottom>
+        {t('turnout_chart.turnout_rate_title')}
+      </Typography>
+      <Grid container spacing={3}>
+        {turnouts &&
+          turnouts.length > 0 &&
+          turnouts.map((turnout, index) => {
+            const key =
+              turnout.type === 'district'
+                ? turnout.dc_code
+                : turnout.type === 'constituency'
+                ? turnout.code
+                : 'all'
+            const label =
+              turnout.type === 'district'
+                ? t('turnout_chart.district_turnout_rate', {
+                    district: withLanguage(
+                      turnout.dc_name_en,
+                      turnout.dc_name_zh
+                    ),
+                  })
+                : turnout.type === 'constituency'
+                ? `${withLanguage(turnout.name_en, turnout.name_zh)} (${
+                    turnout.code
+                  })`
+                : t('turnout_chart.HK_turnout_rate')
+            return (
+              <VoteTurnout
+                key={key}
+                label={label}
+                current={turnout.current}
+                percentage={turnout.percentage}
+                updateTime={turnout.updateTime}
+                type={turnout.type}
+              />
+            )
+          })}
+      </Grid>
+    </>
   )
 }
 

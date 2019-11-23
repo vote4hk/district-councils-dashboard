@@ -99,7 +99,7 @@ const DistrictTurnoutChartContainer = props => {
           labels={{
             constituency: cname,
             district: dname,
-            total: t('turnont_chart.total_turnout_rate'),
+            total: t('turnout_chart.HK_turnout_rate'),
           }}
         />
       )}

@@ -30,13 +30,13 @@ const VoteGrid = styled(Grid)`
 
 const VoteLabel = styled(Typography)`
   && {
-    font-size: 18px;
+    font-size: 14px;
   }
 `
 
 const VoteText = styled(Typography)`
   && {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600 .vote-current {
       font-size: 12px;
     }
@@ -51,7 +51,7 @@ const VotePercentageBar = styled(LinearProgress)`
   && {
     background: transparent;
     width: 100%;
-    height: 16px;
+    height: 12px;
     .MuiLinearProgress-barColorPrimary {
       background-color: ${props => colors[props.type].background};
     }
@@ -65,10 +65,10 @@ const VoteTurnout = props => {
 
   return (
     <Grid container alignItems="center" item xs={12} spacing={3}>
-      <VoteGrid item xs={2}>
+      <VoteGrid item xs={4}>
         <VoteLabel>{label}</VoteLabel>
       </VoteGrid>
-      <VoteGrid item xs={10}>
+      <VoteGrid item xs={8}>
         <VoteText>
           {percentage.toFixed(1)}%
           <span className="vote-current">
