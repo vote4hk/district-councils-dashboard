@@ -119,6 +119,7 @@
   "disclaimer.header.text2": "Category of camps before 2019",
   "disclaimer.paragraph4.segment1": "As for the classification of candidate camps prior to 2019, we have taken from the files collated by Initium Media in 2017. Every effort has been made to ensure the accuracy of the information before posting on this website. If there are suggestions or errors, please contact us by email at chiangsumlui@gmail.com, we will follow up as soon as possible.",
   "index.title1": "Election Countdown",
+  "index.title2": "Election End Countdown",
   "currentTerm.councilor.withDistrict": "Incumbent District Council member of {{district_name}} - {{ dcca_name }} ",
   "election.elected": "Elected as District Council member of {{district_name}} - {{ dcca_name }} in {{year}} ",
   "election.run_for": "Run for {{year}} DC Election ({{district_name}} - {{ dcca_name }})",

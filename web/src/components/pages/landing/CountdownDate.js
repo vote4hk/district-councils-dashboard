@@ -28,6 +28,7 @@ const CountdownContainer = styled.div`
 `
 
 const electionDate = 'Nov 24, 2019 07:30:00'
+const electionEndDate = 'Nov 24, 2019 22:30:00'
 
 export default function CountdownDate({ t }) {
   return (
@@ -41,6 +42,20 @@ export default function CountdownDate({ t }) {
           <Countdown date={electionDate} />
         </CountdownContainer>
       )}
+      {Date.parse(new Date(electionEndDate)) > Date.parse(new Date()) &&
+        Date.parse(new Date(electionDate)) < Date.parse(new Date()) && (
+          <CountdownContainer>
+            <Typography
+              variant="h5"
+              style={{ textAlign: 'center' }}
+              gutterBottom
+            >
+              {/* 距離投票日 */}
+              {t('index.title2')}
+            </Typography>
+            <Countdown date={electionEndDate} />
+          </CountdownContainer>
+        )}
       {/* <LandingIcon /> */}
     </TopSection>
   )

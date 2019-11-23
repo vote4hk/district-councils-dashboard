@@ -121,6 +121,7 @@
   "disclaimer.header.text2": "2019之前的陣營分類",
   "disclaimer.paragraph4.segment1": "至於2019年以前之候選人陣營分類，則取自端傳媒於2017年整理之檔案，本網站刊載前已盡力確保資料真確性，如有建議或錯漏，歡迎反映或電郵至chiangsumlui@gmail.com，我們會盡快跟進。",
   "index.title1": "距離投票日",
+  "index.title2": "距離投票結束",
   "currentTerm.councilor.withDistrict": "現任{{district_name}}區議員（{{dcca_name}}）",
   "election.elected": "當選{{year}}年{{district_name}}區議員（{{dcca_name}}）",
   "election.run_for": "參選{{year}}年區議會選舉（{{district_name}} - {{dcca_name}}）",
