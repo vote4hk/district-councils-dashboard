@@ -29,16 +29,19 @@ const VoteGrid = styled(Grid)`
   }
 `
 
-const VoteLabel = styled(Typography)`
-  && {
-    font-size: 14px;
-  }
-`
-
 const VoteText = styled(Typography)`
   && {
     font-size: 14px;
-    font-weight: 600 .vote-current {
+    padding-bottom: 4px;
+    .vote-label {
+      font-size: 14px;
+      padding-right: 10px;
+      font-weight: 600;
+    }
+    .vote-label {
+      font-size: 14px;
+    }
+    .vote-current {
       font-size: 12px;
     }
     .vote-update-time {
@@ -56,50 +59,47 @@ const VotePercentageBar = styled(LinearProgress)`
     .MuiLinearProgress-barColorPrimary {
       background-color: ${props => colors[props.type].background};
     }
+    border-bottom: 1px solid #cccccc;
   }
 `
 
 const VoteTurnout = props => {
-  const { label, current, percentage, type, url } = props // updateTime
+  const { label, current, total, percentage, type, url } = props // updateTime
+
+  const cleanedPercent = percentage > 100 ? 100 : percentage
+  const cleanedCurrent = current > total ? total : current
 
   const { t } = useTranslation()
   const currentLanguage = getCurrentLanguage()
 
   return (
-    <Grid
-      container
-      alignItems="center"
+    <VoteGrid
       item
       xs={12}
-      spacing={3}
       onClick={() => {
         if (url) {
           props.history.push(`/${currentLanguage}/${url}`)
         }
       }}
     >
-      <VoteGrid item xs={4}>
-        <VoteLabel>{label}</VoteLabel>
-      </VoteGrid>
-      <VoteGrid item xs={8}>
-        <VoteText>
-          {percentage.toFixed(1)}%
-          <span className="vote-current">
-            （
-            {t('electionResults.votes', {
-              n: formatNumber(current),
-            })}
-            ）
-          </span>
-          {/* <span className="vote-update-time">{updateTime}</span> */}
-        </VoteText>
-        <VotePercentageBar
-          variant="determinate"
-          type={type}
-          value={percentage}
-        />
-      </VoteGrid>
-    </Grid>
+      <VoteText>
+        <span className="vote-label">{label}</span>
+        <span className="vote-percent">{cleanedPercent.toFixed(1)}%</span>
+        <span className="vote-current">
+          （
+          {t('electionResults.votes', {
+            n: formatNumber(cleanedCurrent),
+          })}
+          ）
+        </span>
+        {/* <span className="vote-update-time">{updateTime}</span> */}
+      </VoteText>
+      <VotePercentageBar
+        variant="determinate"
+        type={type}
+        value={cleanedPercent}
+      />
+    </VoteGrid>
   )
 }
 

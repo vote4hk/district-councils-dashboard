@@ -2,20 +2,10 @@ import React, { useEffect } from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import { Loading } from 'components/atoms/Loading'
-import DistrictsOverview from 'components/organisms/DistrictsOverview'
 import DistrictCampCompareChartContainer from 'components/templates/DistrictCampCompareChartContainer'
 import VoteTurnouts from 'components/organisms/VoteTurnouts'
 import axios from 'axios'
-import styled from 'styled-components'
-import Box from '@material-ui/core/Box'
-
-const Container = styled(Box)`
-  && {
-    width: 100%;
-    padding: 0 16px;
-    box-shadow: none;
-  }
-`
+import DistrictsTable from 'components/molecules/district/DistrictsTable'
 
 const DistrictOverviewPage = props => {
   const {
@@ -38,7 +28,7 @@ const DistrictOverviewPage = props => {
 
   const query = gql`
     query DistrictOverviewQuery($year: Int!, $code: String!) {
-      ${DistrictsOverview.query}
+      ${DistrictsTable.query}
       ${VoteTurnouts.query}
     }
   `
@@ -67,13 +57,10 @@ const DistrictOverviewPage = props => {
 
         return (
           <>
-            {isLive === 'true' && (
-              <Container>
-                <VoteTurnouts data={mergedData} />
-              </Container>
+            {isLive === 'false' && (
+              <DistrictCampCompareChartContainer code={code} />
             )}
-            <DistrictCampCompareChartContainer code={code} />
-            <DistrictsOverview data={mergedData} />
+            <DistrictsTable data={mergedData} />
           </>
         )
       }}

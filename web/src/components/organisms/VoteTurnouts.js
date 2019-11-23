@@ -17,7 +17,8 @@ import styled from 'styled-components'
 const VoteTurnoutsHeader = styled(Typography)`
   && {
     font-size: 18px;
-    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #cccccc;
   }
 `
 
@@ -32,48 +33,55 @@ const VoteTurnouts = props => {
   const { t } = useTranslation()
 
   return (
-    <>
-      <VoteTurnoutsHeader variant="h6" gutterBottom>
-        {t('turnout_chart.turnout_rate_title')}
-      </VoteTurnoutsHeader>
-      <Grid container spacing={3}>
-        {turnouts.length === 0 && <StyledCircularProgress />}
-        {turnouts &&
-          turnouts.length > 0 &&
-          turnouts.map((turnout, index) => {
-            const key =
-              turnout.type === 'district'
-                ? turnout.dc_code
-                : turnout.type === 'constituency'
-                ? turnout.code
-                : 'all'
-            const label =
-              turnout.type === 'district'
-                ? t('turnout_chart.district_turnout_rate', {
-                    district: withLanguage(
-                      turnout.dc_name_en,
-                      turnout.dc_name_zh
-                    ),
-                  })
-                : turnout.type === 'constituency'
-                ? `${withLanguage(turnout.name_en, turnout.name_zh)} (${
-                    turnout.code
-                  })`
-                : t('turnout_chart.HK_turnout_rate')
-            return (
-              <VoteTurnout
-                key={key}
-                label={label}
-                current={turnout.current}
-                percentage={turnout.percentage}
-                updateTime={turnout.updateTime}
-                type={turnout.type}
-                url={turnout.url}
-              />
-            )
-          })}
+    <Grid
+      container
+      direction="column"
+      justify="center"
+      alignItems="stretch"
+      spacing={2}
+    >
+      <Grid item xs={12}>
+        <VoteTurnoutsHeader variant="h6" gutterBottom>
+          {t('turnout_chart.turnout_rate_title')}
+        </VoteTurnoutsHeader>
       </Grid>
-    </>
+      {turnouts.length === 0 && <StyledCircularProgress />}
+      {turnouts &&
+        turnouts.length > 0 &&
+        turnouts.map((turnout, index) => {
+          const key =
+            turnout.type === 'district'
+              ? turnout.dc_code
+              : turnout.type === 'constituency'
+              ? turnout.code
+              : 'all'
+          const label =
+            turnout.type === 'district'
+              ? t('turnout_chart.district_turnout_rate', {
+                  district: withLanguage(
+                    turnout.dc_name_en,
+                    turnout.dc_name_zh
+                  ),
+                })
+              : turnout.type === 'constituency'
+              ? `${withLanguage(turnout.name_en, turnout.name_zh)} (${
+                  turnout.code
+                })`
+              : t('turnout_chart.HK_turnout_rate')
+          return (
+            <VoteTurnout
+              key={key}
+              label={label}
+              current={turnout.current}
+              total={turnout.total}
+              percentage={turnout.percentage}
+              updateTime={turnout.updateTime}
+              type={turnout.type}
+              url={turnout.url}
+            />
+          )
+        })}
+    </Grid>
   )
 }
 

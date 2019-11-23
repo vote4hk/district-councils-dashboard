@@ -17,9 +17,12 @@ const DistrictAllPage = props => {
         if (loading) return <Loading />
         if (error) return `Error! ${error}`
 
-        const districts = data.dcd_districts
+        const mergedData = {
+          ...data,
+          year,
+        }
 
-        return <DistrictsTable districts={districts} year={year} />
+        return <DistrictsTable data={mergedData} />
       }}
     </Query>
   )
