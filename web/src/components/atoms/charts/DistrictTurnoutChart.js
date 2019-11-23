@@ -13,15 +13,19 @@ export default props => {
       return
     }
 
+    const COLOR_CONSTITUENCY = '#000'
+    const COLOR_DISTRICT = '#f35'
+    const COLOR_TOTAL = '#3f5'
+
     const startTime = moment('07:30', 'HH:mm')
     const times = _.times(TOTAL_RECORDS, n =>
       startTime.add(1, 'hour').format('HH:mm')
     )
 
-    const margin = { top: 50, right: 50, bottom: 30, left: 50 }
+    const margin = { top: 20, right: 20, bottom: 50, left: 50 }
 
     const width = dimensions.width - margin.left - margin.right
-    const height = dimensions.width - margin.top - margin.bottom
+    const height = (dimensions.width * 2) / 3 - margin.top - margin.bottom
 
     const max = Math.min(_.max(data.constituency) + 0.05, 1.0)
 
@@ -72,12 +76,12 @@ export default props => {
       )
 
     // 7. d3's line generator
-    const line = d3
+    const lineFunc = d3
       .line()
       .x((_, i) => xScale(i))
       .y(d => yScale(d))
 
-    const drawLine = (lineData, label, color) => {
+    const drawLine = (lineData, label, styles) => {
       const validData = lineData.filter(d => d !== null)
       const animTime = 1500 + Math.random() * 2000
 
@@ -86,14 +90,18 @@ export default props => {
         .attr('transform', `translate(${margin.left}, ${margin.top})`)
         .datum(validData)
         .attr('fill', 'none')
-        .attr('stroke', color)
+        .attr('stroke', styles.color)
         .attr('stroke-width', 1.5)
+        .attr('opacity', styles.opactiy || 1.0)
         .attr('stroke-dashoffset', width * 2)
         .attr('stroke-dasharray', [width * 2, width * 2])
-        .attr('d', line)
+        .attr('d', lineFunc)
         .transition()
         .duration(animTime)
         .attr('stroke-dashoffset', 0)
+        .transition()
+        .duration(0)
+        .attr('stroke-dasharray', styles['stroke-dasharray'])
 
       svg
         .append('g')
@@ -101,7 +109,7 @@ export default props => {
         .data(validData)
         .enter()
         .append('circle')
-        .attr('fill', color)
+        .attr('fill', styles.color)
         .attr('class', 'dot')
         .attr('transform', `translate(${margin.left}, ${margin.top})`)
         .attr('cx', (d, i) => xScale(i))
@@ -111,27 +119,68 @@ export default props => {
         .transition()
         .delay(animTime - 500)
         .duration(2000)
-        .attr('opacity', 100)
+        .attr('opacity', styles.opactiy || 1.0)
 
-      svg
-        .append('text')
-        .attr('class', 'legend')
-        .attr('x', xScale(validData.length - 1) + margin.left + 4)
-        .attr('y', yScale(validData[validData.length - 1]) + margin.top)
-        .attr('dy', '.15em')
-        .attr('fill', color)
-        .style('text-anchor', 'start')
-        .text(label)
-        .attr('opacity', 0)
-        .transition()
-        .delay(animTime - 500)
-        .duration(2000)
-        .attr('opacity', 100)
+      // svg
+      //   .append('text')
+      //   .attr('class', 'legend')
+      //   .attr('x', xScale(validData.length - 1) + margin.left + 4)
+      //   .attr('y', yScale(validData[validData.length - 1]) + margin.top)
+      //   .attr('dy', '.15em')
+      //   .attr('fill', styles.color)
+      //   .style('text-anchor', 'start')
+      //   .text(label)
+      //   .attr('opacity', 0)
+      //   .transition()
+      //   .delay(animTime - 500)
+      //   .duration(2000)
+      //   .attr('opacity', 100)
     }
 
-    drawLine(data.constituency, labels.constituency, 'black')
-    drawLine(data.district, labels.district, 'lightgreen')
-    drawLine(data.total, labels.total, 'steelblue')
+    drawLine(data.constituency, labels.constituency, {
+      color: COLOR_CONSTITUENCY,
+    })
+    drawLine(data.district, labels.district, {
+      color: COLOR_DISTRICT,
+      'stroke-dasharray': '5, 2',
+      opactiy: 0.8,
+    })
+    drawLine(data.total, labels.total, {
+      color: COLOR_TOTAL,
+      'stroke-dasharray': '5, 5',
+      opactiy: 0.5,
+    })
+
+    console.log(Object.values(labels))
+    //Legend
+    const legend = svg
+      .selectAll('.legend')
+      .data(Object.values(labels))
+      .enter()
+      .append('g')
+      .attr('class', 'legend')
+      .attr('transform', (d, i) => `translate(${margin.left + i * 80}, 0)`)
+
+    legend
+      .append('rect')
+      .attr('width', 14)
+      .attr('height', 14)
+      .style('fill', function(d, i) {
+        return [COLOR_CONSTITUENCY, COLOR_DISTRICT, COLOR_TOTAL][i]
+      })
+
+    legend
+      .append('text')
+      .attr('x', 16)
+      .attr('y', 7)
+      .attr('dy', '.35em')
+      .style('text-anchor', 'start')
+      .style('fill', function(d, i) {
+        return [COLOR_CONSTITUENCY, COLOR_DISTRICT, COLOR_TOTAL][i]
+      })
+      .text(function(d) {
+        return d
+      })
   }
 
   useEffect(() => {
@@ -150,7 +199,7 @@ export default props => {
     <>
       <svg
         ref={d3Container}
-        style={{ height: dimensions.width, width: '100%' }}
+        style={{ height: (dimensions.width * 2) / 3, width: '100%' }}
       ></svg>
     </>
   )

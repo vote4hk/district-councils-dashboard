@@ -156,7 +156,6 @@ export default props => {
           return (
             <>
               <Typography variant="h2">
-                {/* 選民人數增加 */}
                 {t('districtNewVoterchartContainer.text1', {
                   n: _.round(meta.increased * 100, 2),
                 })}

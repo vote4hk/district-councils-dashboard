@@ -2,20 +2,21 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import DistrictTurnoutChart from 'components/atoms/charts/DistrictTurnoutChart'
 import _ from 'lodash'
-import { Grid } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
+import styled from 'styled-components'
 
 const PERIOD_COUNT = 15
 
-// returning format:
-/*
-  {
-    district: [0.0, 0.0, 0.0, null],
-    constituency: [0.0, 0.0, 0.0, 0.0, ],
-    totla: []
+const Title = styled(Typography)`
+  && {
+    margin-left: 16px;
+    margin-top: 8px;
+    margin-bottom: 8px;
   }
-*/
+`
+
 const mapData = (turnouts, voters, cacode) => {
   const final = {
     constituency: _.times(PERIOD_COUNT, _.constant(null)),
@@ -93,6 +94,7 @@ const DistrictTurnoutChartContainer = props => {
 
   return (
     <Grid container spacing={3}>
+      <Title variant="h4">{t('turnont_chart.title')}</Title>
       {!loading && (
         <DistrictTurnoutChart
           data={mapData(turnoutsData, votersData, code)}

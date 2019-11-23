@@ -179,5 +179,6 @@
   "vote_stations.note": "尚未收到投票通知卡的選民，請登入<a href='https://www.voterinfo.gov.hk' target='_blank'>政府選民資料網上查閱系統</a>或致電<a href='tel:+85228911001'>2891 1001</a>查詢選民身分及獲編配的投票站詳情。",
   "turnout_chart.HK_turnout_rate": "全港",
   "turnout_chart.district_turnout_rate": "{{district}}",
-  "turnout_chart.turnout_rate_title": "各區實時投票率"
+  "turnout_chart.turnout_rate_title": "各區實時投票率",
+  "turnont_chart.title": "每小時投票率"
 }
