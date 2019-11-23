@@ -195,9 +195,17 @@ const Summary = props => {
             }
           })
         }
-
-        const demo_clash = result.filter(r => r.tags.includes('民主撞區'))
-        const estab_clash = result.filter(r => r.tags.includes('建制撞區'))
+        console.log(result)
+        const demo_clash = result.filter(
+          r =>
+            r.tags.includes('民主撞區') ||
+            r.tags.includes('Multiple Pan-dem. candidates')
+        )
+        const estab_clash = result.filter(
+          r =>
+            r.tags.includes('建制撞區') ||
+            r.tags.includes('Multiple Pro-Est. candidates')
+        )
 
         // const candi_5 = result.filter(r => r.tags.includes('多人混戰')).filter(district => district.candidates.length === 5)
         // const candi_4 = result.filter(r => r.tags.includes('多人混戰')).filter(district => district.candidates.length === 4)
