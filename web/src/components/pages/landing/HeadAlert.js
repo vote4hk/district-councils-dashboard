@@ -5,6 +5,18 @@ import { Typography } from '@material-ui/core'
 import withQuery from 'withQuery'
 import { Alert } from 'components/atoms/Alert'
 import { withLanguage } from 'utils/helper'
+import styled from 'styled-components'
+import { COLORS } from 'ui/theme'
+
+const StyledAlert = styled(Alert)`
+  && {
+    a {
+      text-decoration: unset;
+      color: ${COLORS.main.background};
+      font-weight: 500;
+    }
+  }
+`
 
 function HeadAlert({ text }) {
   if (!text) {
@@ -12,11 +24,13 @@ function HeadAlert({ text }) {
   }
 
   return (
-    <Alert>
-      <Typography variant="h6" gutterBottom>
-        {text}
-      </Typography>
-    </Alert>
+    <StyledAlert>
+      <Typography
+        variant="h6"
+        gutterBottom
+        dangerouslySetInnerHTML={{ __html: text }}
+      ></Typography>
+    </StyledAlert>
   )
 }
 
