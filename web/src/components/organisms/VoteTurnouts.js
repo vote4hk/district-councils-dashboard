@@ -179,18 +179,27 @@ export default withQuery(
           subtype
         }
       }
+      dcd_config(where: {key:{_eq:"gov_turnout_rate"}}) {
+        value
+      }
     `,
     variables: { year: 2019 },
   },
   data => {
     const constituencies = _.get(data, 'constituencies', [])
+    const govData = _.get(data, 'dcd_config.0.value', {})
     const turnouts = _.get(data, 'turnouts', {})
     const districtCode = _.get(data, 'districtCode', null)
     return {
       turnouts:
         data.type === 'district'
-          ? getDistrictTurnouts(constituencies, turnouts)
-          : getConstituencyTurnouts(constituencies, turnouts, districtCode),
+          ? getDistrictTurnouts(constituencies, turnouts, govData)
+          : getConstituencyTurnouts(
+              constituencies,
+              turnouts,
+              govData,
+              districtCode
+            ),
       districtCode: districtCode,
       type: data.type,
     }
