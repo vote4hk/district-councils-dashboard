@@ -32,7 +32,13 @@ export default props => {
     const height = (dimensions.width * 2) / 3 - margin.top - margin.bottom
 
     const max = Math.max(
-      Math.min(_.maxBy(data.constituency, d => d || 0) + 0.05, 1.0),
+      Math.min(
+        _.maxBy(
+          _.concat(data.constituency, data.total, data.district),
+          d => d || 0
+        ) + 0.05,
+        1.0
+      ),
       0.2
     )
 
