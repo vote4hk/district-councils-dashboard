@@ -5,13 +5,10 @@ import { Query } from 'react-apollo'
 import _ from 'lodash'
 import { DCREGION } from 'constants/dcregion'
 import StackedNormalizedHorizontalBarChart from 'components/atoms/charts/StackedNormalizedHorizontalBarChart'
-import PredictionChartPanel from 'components/organisms/PredictionChartPanel'
-import LoadingButton from 'components/molecules/LoadingButton'
 import Text from 'components/atoms/Text'
 import axios from 'axios'
 import Box from '@material-ui/core/Box'
 import { COLORS } from 'ui/theme'
-import { fireEvent } from 'utils/ga_fireevent'
 import { groupExpectDataByRegionAndCamp } from './CampCompareChartContainer'
 import { useTranslation } from 'react-i18next'
 import ScrollableTabs from 'components/organisms/ScrollableTabs'
@@ -40,22 +37,6 @@ const PredictionChartHeader = styled(Box)`
     justify-content: space-between;
     align-items: center;
     padding-top: 8px;
-  }
-`
-
-const StyledLoadingButton = styled(LoadingButton)`
-  && {
-    position: absolute;
-    width: auto;
-    right: 16px;
-    bottom: 0px;
-    padding: 0 16px 0;
-    background-color: ${COLORS.main.primary};
-    color: ${COLORS.main.background};
-    :hover {
-      color: ${COLORS.main.primary};
-      border-color: 1px ${COLORS.main.primary} solid;
-    }
   }
 `
 
@@ -133,10 +114,10 @@ const sortByDefaultChartOrderFunc = defaultChartData => (a, b) => {
 
 const DistrictCampCompareChartContainer = props => {
   const { className, code } = props
-  const [predictEnabled, setPredictEnabled] = React.useState(false)
+  const [predictEnabled] = React.useState(false)
   const [isLoadingPrediction, setIsLoadingPrediction] = React.useState(true)
   const [predictoinData, setPredictionData] = React.useState({})
-  const [settings, setSettings] = React.useState({
+  const [settings] = React.useState({
     config: {
       auto_won_add_components: true,
       reference_last_election: true,
