@@ -38,8 +38,6 @@ const DistrictOverviewPage = props => {
     code,
   }
 
-  const isLive = process.env.REACT_APP_LIVE_VOTE_TURNOUT
-
   return (
     <Query query={query} variables={variables}>
       {({ loading, error, data }) => {
@@ -57,9 +55,7 @@ const DistrictOverviewPage = props => {
 
         return (
           <>
-            {isLive === 'false' && (
-              <DistrictCampCompareChartContainer code={code} />
-            )}
+            <DistrictCampCompareChartContainer code={code} />
             <DistrictsTable data={mergedData} />
           </>
         )

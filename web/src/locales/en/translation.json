@@ -144,11 +144,12 @@
   "fc.title3": "Electoral history",
   "fc.title4": "Meeting attendance",
   "predictionChartHeader.text1": "2019 DC election simulation result",
-  "predictionChartHeader.text2": "Distribution of seats in current District Councils",
+  "predictionChartHeader.text2": "Distribution of seats",
+  "predictionChartHeader.text3": "Election Results",
   "predictionChartHeader.paragraph1": "This simulation combines the number of electors registered in 2019, the number of new electors added in 18 and 19 years, and the actual voting results of the 2015 District Council election.",
   "predictionChartHeader.paragraph2": "First, the voting results of each constituency in the 15-year district were grouped into three camps: “Establishment”, “Democracy” and “Other”. It is assumed that voters maintain their voting orientation and distribute the votes to Number of voter registration in 2018.",
   "predictionChartHeader.paragraph3": "Slider to adjust the voting orientation and voter turnout of the new electors in 2018 and 19 years only. To directly adjust the 19 year voter's stance, please go to “Settings” to cancel “Calculate new electors only, and assume the last vote Voter maintain political orientation”.",
-  "predictionChartHeader.paragraph4": "A total of 452 elected seats, together with 27 ex officio members from the New Territories, will be elected. The ex officio members are the chairmen of the District Rural Committees. Therefore, these seats are all classified as formed.",
+  "predictionChartHeader.paragraph4": "A total of 452 elected seats, together with 27 ex officio members from the New Territories, will be elected. The ex officio members are the chairmen of the District Rural Committees. Therefore, these seats are all classified as Pro-establishment.",
   "predictionChartHeader.paragraph5": "Voting results are affected by many factors. The simulation is simplified because of the limitation of data sources. The results are for reference only. We welcome all <a href='https://forms.gle/irD6tEznWPNda6w59' target='_blank'>information and suggestions</a>.",
   "predictionChartHeader.button.simulation_result": "Simulation Results",
   "councillorMeetingAttendace.table.text1": "Meetings",
@@ -191,5 +192,6 @@
   "voting_instructions_3": "Do not use mobile phones or any other equipment in the station for electronic communication, photo taking, filming, video recording or recording",
   "voting_instructions_4": "Use the chop provided to stamp a tick on the ballot paper in the circle next to the chosen candidate's name.",
   "voting_instructions_5": "If the ballot paper is accidentally damaged, please ask the polling staff for another ballot paper.",
-  "turnout_chart.text": "Please fill the form for instant vote turnout stat - <a href='https://bit.ly/dc19count' target='_blank'>bit.ly/dc19count</a> after voting."
+  "turnout_chart.text": "Voting period ended, we will update finalized voter turnout rate later.",
+  "predictionChartHeader.note_for_NT": "Other than 452 elected seats, there are 27 ex officio members from the New Territories, who are the chairmen of the District Rural Committees, these seats are all classified as pro-establishment."
 }

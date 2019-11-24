@@ -736,7 +736,7 @@ class ProfilePage extends Component {
               <ScrollableTabs
                 titles={titles}
                 indicatorcolor={COLORS.main.primary}
-                variant="scrollable"
+                variant="fullWidth"
               >
                 {person.fc_uuid && (
                   <FCPersonData

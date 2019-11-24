@@ -64,8 +64,6 @@ const IndexPage = props => {
     ...VoteTurnouts.variables,
   }
 
-  const isLive = process.env.REACT_APP_LIVE_VOTE_TURNOUT
-
   return (
     <Query query={query} variables={variables}>
       {({ data }) => {
@@ -84,11 +82,11 @@ const IndexPage = props => {
             <HeadAlert data={data} />
             <CountdownDate t={t} />
             <Container>
-              <Summary />
               <CenterText data={data} />
               <StyledSearchTab />
-              {isLive === 'true' && <VoteTurnouts data={mergedData} />}
               <StyledCampCompareChartContainer />
+              <Summary />
+              <VoteTurnouts data={mergedData} />
             </Container>
           </>
         )
