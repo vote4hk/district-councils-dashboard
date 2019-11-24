@@ -78,7 +78,7 @@ const VoteTurnouts = props => {
   const { turnouts } = props
   const { t } = useTranslation()
 
-  console.log(turnouts)
+  // console.log(turnouts)
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false)
   }
