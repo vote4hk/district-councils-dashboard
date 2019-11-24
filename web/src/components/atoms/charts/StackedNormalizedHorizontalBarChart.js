@@ -125,7 +125,8 @@ export default props => {
     let rowHeight = ROW_HEIGHT
     if (hideLegend) {
       margin.top = 0
-      margin.left = 15
+      margin.left = 0
+      margin.right = 0
       rowHeight = ROW_HEIGHT * 1.5
     }
     const width = dimensions.width
