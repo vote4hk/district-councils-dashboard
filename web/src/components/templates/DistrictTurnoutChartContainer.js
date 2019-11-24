@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
+import * as moment from 'moment'
 
 const PERIOD_COUNT = 15
 const QUERY_FETCH_GOV_TURNOUT = gql`
@@ -52,12 +53,17 @@ const mapData = (turnouts, voters, govData, cacode) => {
     }
   })
 
+  const currentTimeIndex =
+    (moment().diff(moment('2019-11-24 08:30')) / (1000 * 60 * 60)) | 0
+
   Object.keys(turnouts).forEach(code => {
     const total = votersByDistrict[code]
     const turnout = turnouts[code].cumulativeTurnout || _.times(PERIOD_COUNT, 0)
 
     if (code === cacode) {
-      final.constituency = turnout.map(t => (t === null ? null : t / total))
+      final.constituency = turnout.map((t, i) =>
+        t === null || i > currentTimeIndex ? null : t / total
+      )
     }
 
     if (code.charCodeAt(0) === cacode.charCodeAt(0)) {
@@ -68,7 +74,7 @@ const mapData = (turnouts, voters, govData, cacode) => {
 
   let max = 0
   for (let i = 0; i < final.total.length; i++) {
-    if (final.total[i] < 0.0001) {
+    if (final.total[i] < 0.0001 || i > currentTimeIndex) {
       final.total[i] = null
     } else {
       if (govData.total[i] > final.total[i]) {
@@ -82,9 +88,10 @@ const mapData = (turnouts, voters, govData, cacode) => {
       final.total[i] = final.total[i] / totalVoters
     }
   }
+
   max = 0
   for (let i = 0; i < final.district.length; i++) {
-    if (final.district[i] < 0.0001) {
+    if (final.district[i] < 0.0001 || i > currentTimeIndex) {
       final.district[i] = null
     } else {
       if (govData[districtCode][i] > final.district[i]) {
