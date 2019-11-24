@@ -190,7 +190,6 @@ export default withQuery(
     const govData = _.get(data, 'config.0.value', {})
     const turnouts = _.get(data, 'turnouts', {})
     const districtCode = _.get(data, 'districtCode', null)
-    console.log(govData)
     return {
       turnouts:
         data.type === 'district'

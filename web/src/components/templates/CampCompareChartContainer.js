@@ -317,6 +317,14 @@ const CampCompareChartContainer = props => {
           if (error) return `Error! ${error}`
 
           const dataFroGraph = groupDataByRegionAndCamp(data.dcd_candidates)
+
+          const district_NT = ['K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T']
+          district_NT.forEach(NTcode => {
+            if (dataFroGraph.findIndex(d => d.code === NTcode) === -1) {
+              dataFroGraph.push({ code: NTcode, count: { 建制: 0 } })
+            }
+          })
+
           const dataForD3 = convertToD3Compatible(dataFroGraph)
 
           let d3Data = dataForD3
@@ -324,7 +332,12 @@ const CampCompareChartContainer = props => {
           return (
             <Container className={className}>
               <PredictionChartHeader>
-                <Text variant="h5">{t('predictionChartHeader.text3')}</Text>
+                <Text variant="h5" gutterBottom>
+                  {t('predictionChartHeader.text3')}
+                </Text>
+                <Text varient="body2">
+                  {t('predictionChartHeader.note_for_NT')}
+                </Text>
               </PredictionChartHeader>
               <StackedNormalizedHorizontalBarChart
                 data={d3Data}
