@@ -61,7 +61,6 @@ const mapData = (turnouts, voters, govData, cacode) => {
     }
 
     if (code.charCodeAt(0) === cacode.charCodeAt(0)) {
-      const dcode = code[0]
       final.district = final.district.map((v, i) => v + (turnout[i] || 0))
     }
     final.total = final.total.map((v, i) => v + (turnout[i] || 0))
@@ -108,7 +107,7 @@ const DistrictTurnoutChartContainer = props => {
   const [turnoutsData, setTurnoutsData] = useState({})
   const [votersData, setVotersData] = useState([])
 
-  const { loading, error, data } = useQuery(QUERY_FETCH_GOV_TURNOUT)
+  const { loading, data } = useQuery(QUERY_FETCH_GOV_TURNOUT)
 
   const allLoaded =
     !_.isEmpty(turnoutsData) > 0 && votersData.length > 0 && !loading
