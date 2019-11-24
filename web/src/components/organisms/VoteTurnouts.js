@@ -179,7 +179,7 @@ export default withQuery(
           subtype
         }
       }
-      dcd_config(where: {key:{_eq:"gov_turnout_rate"}}) {
+      config: dcd_config(where: {key:{_eq:"gov_turnout_rate"}}) {
         value
       }
     `,
@@ -187,9 +187,10 @@ export default withQuery(
   },
   data => {
     const constituencies = _.get(data, 'constituencies', [])
-    const govData = _.get(data, 'dcd_config.0.value', {})
+    const govData = _.get(data, 'config.0.value', {})
     const turnouts = _.get(data, 'turnouts', {})
     const districtCode = _.get(data, 'districtCode', null)
+    console.log(govData)
     return {
       turnouts:
         data.type === 'district'
