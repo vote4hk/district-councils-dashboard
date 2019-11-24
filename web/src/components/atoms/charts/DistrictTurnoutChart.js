@@ -149,6 +149,17 @@ export default props => {
         'stroke-dasharray': '5, 5',
         opactiy: 0.5,
       })
+
+      const lastIndex = _.findLastIndex(data.constituency, c => c !== null)
+      svg
+        .append('g')
+        .append('text')
+        .attr('font-size', '12px')
+        .style('text-anchor', 'middle')
+        .style('fill', COLOR_CONSTITUENCY)
+        .text(data.current)
+        .attr('x', xScale(lastIndex) + margin.left)
+        .attr('y', yScale(data.constituency[lastIndex]) + margin.top - 8)
     } else {
       svg
         .append('g')

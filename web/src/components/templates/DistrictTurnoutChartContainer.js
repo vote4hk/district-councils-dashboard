@@ -64,6 +64,8 @@ const mapData = (turnouts, voters, govData, cacode) => {
       final.constituency = turnout.map((t, i) =>
         t === null || i > currentTimeIndex ? null : t / total
       )
+
+      final.current = _.maxBy(turnout, d => d || 0)
     }
 
     if (code.charCodeAt(0) === cacode.charCodeAt(0)) {
@@ -105,6 +107,7 @@ const mapData = (turnouts, voters, govData, cacode) => {
       final.district[i] = final.district[i] / districtVoters
     }
   }
+
   return final
 }
 

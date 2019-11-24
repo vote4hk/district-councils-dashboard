@@ -78,7 +78,6 @@ const VoteTurnouts = props => {
   const { turnouts } = props
   const { t } = useTranslation()
 
-  // console.log(turnouts)
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false)
   }
@@ -190,7 +189,6 @@ export default withQuery(
     const govData = _.get(data, 'config.0.value', {})
     const turnouts = _.get(data, 'turnouts', {})
     const districtCode = _.get(data, 'districtCode', null)
-    console.log(govData)
     return {
       turnouts:
         data.type === 'district'
