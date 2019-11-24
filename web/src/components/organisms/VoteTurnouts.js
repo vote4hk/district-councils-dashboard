@@ -78,6 +78,7 @@ const VoteTurnouts = props => {
   const { turnouts } = props
   const { t } = useTranslation()
 
+  // console.log(turnouts)
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false)
   }
@@ -178,18 +179,28 @@ export default withQuery(
           subtype
         }
       }
+      config: dcd_config(where: {key:{_eq:"gov_turnout_rate"}}) {
+        value
+      }
     `,
     variables: { year: 2019 },
   },
   data => {
     const constituencies = _.get(data, 'constituencies', [])
+    const govData = _.get(data, 'config.0.value', {})
     const turnouts = _.get(data, 'turnouts', {})
     const districtCode = _.get(data, 'districtCode', null)
+    console.log(govData)
     return {
       turnouts:
         data.type === 'district'
-          ? getDistrictTurnouts(constituencies, turnouts)
-          : getConstituencyTurnouts(constituencies, turnouts, districtCode),
+          ? getDistrictTurnouts(constituencies, turnouts, govData)
+          : getConstituencyTurnouts(
+              constituencies,
+              turnouts,
+              govData,
+              districtCode
+            ),
       districtCode: districtCode,
       type: data.type,
     }

@@ -91,7 +91,7 @@ class DistrictsTable extends Component {
   }
 
   loadDistricts(toIndex) {
-    const { districts, year, turnouts } = this.props
+    const { districts, year, turnouts, config } = this.props
     const { constituencies, districtCode, type } = this.props // Quick fix for VoteTurnouts
     const { democracy, establishment, others, blank } = this.state.checked
     const districtsArray = districts.filter(
@@ -108,6 +108,7 @@ class DistrictsTable extends Component {
         year={year}
         constituencies={constituencies}
         turnouts={turnouts}
+        config={config}
         districtCode={districtCode}
         type={type}
       />

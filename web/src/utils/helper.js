@@ -248,7 +248,7 @@ export const groupVoteStat = voteStats => {
   return data
 }
 
-export const computeTurnouts = (constituencies, turnouts) => {
+export const computeTurnouts = (constituencies, turnouts, govData) => {
   if (_.isEmpty(constituencies) || _.isEmpty(turnouts)) {
     return []
   }
@@ -296,6 +296,17 @@ export const computeTurnouts = (constituencies, turnouts) => {
     }
   )
 
+  // overwrite data from gov
+  districtTurnouts.forEach(dt => {
+    const districtTotalFromGov = _.maxBy(
+      _.get(govData, `${dt.dc_code}`, []),
+      d => d || 0
+    )
+    if (dt.current < districtTotalFromGov) {
+      dt.current = districtTotalFromGov
+    }
+  })
+
   const totalTurnout = districtTurnouts.reduce((c, v) => {
     return c === null
       ? v
@@ -307,6 +318,10 @@ export const computeTurnouts = (constituencies, turnouts) => {
           url: null,
         }
   }, null)
+  const totalFromGov = _.maxBy(_.get(govData, 'total', []), d => d || 0)
+  if (totalTurnout.current < totalFromGov) {
+    totalTurnout.current = totalFromGov
+  }
 
   return constituencyTurnouts
     .concat(districtTurnouts)
@@ -325,8 +340,8 @@ export const computeTurnouts = (constituencies, turnouts) => {
     .sort((a, b) => a.percentage - b.percentage)
 }
 
-export const getDistrictTurnouts = (constituencies, turnouts) => {
-  return computeTurnouts(constituencies, turnouts).filter(
+export const getDistrictTurnouts = (constituencies, turnouts, govData) => {
+  return computeTurnouts(constituencies, turnouts, govData).filter(
     t => t.type === 'district' || t.type === 'all'
   )
 }
@@ -334,9 +349,10 @@ export const getDistrictTurnouts = (constituencies, turnouts) => {
 export const getConstituencyTurnouts = (
   constituencies,
   turnouts,
+  govData,
   districtCode
 ) => {
-  return computeTurnouts(constituencies, turnouts).filter(
+  return computeTurnouts(constituencies, turnouts, govData).filter(
     t =>
       (t.type === 'constituency' && t.district.dc_code === districtCode) ||
       (t.type === 'district' && t.dc_code === districtCode) ||
