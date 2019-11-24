@@ -22,7 +22,7 @@ const Container = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 0 16px 32px;
+    padding: 0 16px 8px;
     p {
       font-size: 12px;
     }
@@ -66,6 +66,7 @@ const FETCH_CAMP_DATA = gql`
         is_won: { _eq: true }
         year: { _eq: $year }
         cacode: { _like: $dcode }
+        election_type: { _eq: "ordinary" }
       }
     ) {
       cacode
@@ -212,78 +213,15 @@ const DistrictCampCompareChartContainer = props => {
 
           let d3Data = dataForD3
 
-          if (!isLoadingPrediction && predictEnabled) {
-            const expectedDataForGraph = groupExpectDataByRegionAndCamp(
-              predictoinData.dcd_constituencies,
-              settings,
-              code
-            )
-            d3Data = convertToD3Compatible(
-              expectedDataForGraph,
-              sortByDefaultChartOrderFunc(dataForD3)
-            )
-          }
-
           return (
             <Container className={className}>
               <PredictionChartHeader>
-                <Text variant="h5">
-                  {predictEnabled
-                    ? t('predictionChartHeader.button.simulation_result')
-                    : t('predictionChartHeader.text2')}
-                </Text>
-                <br />
-                {predictEnabled && (
-                  <>
-                    <p>
-                      {/* 本模擬綜合2019年選民登記數字，18及19年間新增選民數字，以及2015區議會選舉實際投票結果。 */}
-                      {t('predictionChartHeader.paragraph1')}
-                    </p>
-                    <p>
-                      {/* 首先將15年區選各選區投票結果歸納為分為「建制」、「民主」及「其他」三陣營，並假設選民維持投票取向，並按其比例將各陣營得票分配至2018的選民登記數字。 */}
-                      {t('predictionChartHeader.paragraph2')}
-                    </p>
-                    <p>
-                      {/* 滑桿只調較2018及19年間新增選民的投票取向及投票率，如欲直接調較19年選民的取態，請到「設定
-                      」取消「只計算新增選民，同時假設上屆投票選民維持相冋政治取向」一項。 */}
-                      {t('predictionChartHeader.paragraph3')}
-                    </p>
-                    <p>
-                      {/* 是次選舉將選出452個民選議席，連同新界區27名當然議員共479席。當然議員即各區鄉事委員會主席，故這些議席全歸類為建制派。 */}
-                      {t('predictionChartHeader.paragraph4')}
-                    </p>
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html: t('predictionChartHeader.paragraph5'),
-                      }}
-                    />
-                  </>
-                )}
+                <Text variant="h5">{t('predictionChartHeader.text2')}</Text>
               </PredictionChartHeader>
-              {!loading && predictEnabled && (
-                <PredictionChartPanel
-                  settings={settings}
-                  setSettings={setSettings}
-                />
-              )}
               <StackedNormalizedHorizontalBarChart
                 hideLegend
                 data={d3Data}
               ></StackedNormalizedHorizontalBarChart>
-              {!predictEnabled && (
-                <StyledLoadingButton
-                  isLoading={loading}
-                  onClick={() => {
-                    setPredictEnabled(true)
-                    fireEvent({
-                      ca: 'simulation',
-                      ac: 'click',
-                      lb: 'start_simulate',
-                    })
-                  }}
-                  label={t('predictionChartHeader.button.simulation_result')}
-                />
-              )}
             </Container>
           )
         }}

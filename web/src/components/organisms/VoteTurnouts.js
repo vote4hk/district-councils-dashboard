@@ -74,7 +74,7 @@ const StyledExpansionPanelDetails = styled(ExpansionPanelDetails)`
 `
 
 const VoteTurnouts = props => {
-  const [expanded, setExpanded] = React.useState('panel1')
+  const [expanded, setExpanded] = React.useState(false)
   const { turnouts } = props
   const { t } = useTranslation()
 
