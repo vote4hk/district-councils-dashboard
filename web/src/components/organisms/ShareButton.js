@@ -34,6 +34,7 @@ const StyledFab = styled(Fab)`
     left: auto;
     position: fixed;
     color: ${COLORS.main.background};
+    z-index: 1201;
   }
 `
 

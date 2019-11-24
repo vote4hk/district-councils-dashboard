@@ -350,9 +350,17 @@ export default props => {
   }
 
   const updateWindowSize = () => {
-    if (d3Container.current) {
+    const windowWidth = Math.max(
+      document.body.scrollWidth,
+      document.documentElement.scrollWidth,
+      document.body.offsetWidth,
+      document.documentElement.offsetWidth,
+      document.documentElement.clientWidth
+    )
+
+    if (windowWidth) {
       setDimensions({
-        width: d3Container.current.clientWidth,
+        width: Math.max(windowWidth - 32, d3Container.current.clientWidth),
       })
     }
   }
