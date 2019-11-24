@@ -14,8 +14,8 @@ export default function GlobalDisclaimer() {
   useEffect(() => {
     async function fetchData() {
       try {
-        // const instructionRead = await localforage.getItem('instructionRead')
-        await setOpen(process.env.REACT_APP_POST_ELECTION !== 'true')
+        const instructionRead = await localforage.getItem('instructionRead')
+        await setOpen(!instructionRead)
       } catch (e) {
         await setOpen(true)
       }
