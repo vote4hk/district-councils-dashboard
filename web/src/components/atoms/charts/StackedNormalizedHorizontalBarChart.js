@@ -78,7 +78,7 @@ export default props => {
       .attr('class', 'legend')
       .attr(
         'transform',
-        (d, i) => `translate(${i * (dimensions.width - 90)}, 8)`
+        (d, i) => `translate(${i * (dimensions.width - 100)}, 8)`
       )
 
     legend
