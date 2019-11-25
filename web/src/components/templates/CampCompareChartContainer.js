@@ -92,13 +92,14 @@ function convertToD3Compatible(data, sortFunc) {
       .map(d => {
         return {
           name: withLanguage(DCREGION[d.code].en_us, DCREGION[d.code].zh_hk),
-          建制: DCREGION[d.code].unelected_dc_seat + (d.count['建制'] || 0), // 當然議員
+          建制: DCREGION[d.code].unelected_dc_seat + (d.count['建制'] || 0), // ex-officio member
           民主: d.count['民主'] || 0,
           其他: d.count['其他'] || 0,
-          total: Object.values(d.count).reduce((acc, c) => {
-            acc += c
-            return acc
-          }, 0),
+          total:
+            Object.values(d.count).reduce((acc, c) => {
+              acc += c
+              return acc
+            }, 0) + DCREGION[d.code].unelected_dc_seat, // ex-officio member
         }
       })
       .sort(
@@ -317,13 +318,6 @@ const CampCompareChartContainer = props => {
           if (error) return `Error! ${error}`
 
           const dataFroGraph = groupDataByRegionAndCamp(data.dcd_candidates)
-
-          const district_NT = ['K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T']
-          district_NT.forEach(NTcode => {
-            if (dataFroGraph.findIndex(d => d.code === NTcode) === -1) {
-              dataFroGraph.push({ code: NTcode, count: { 建制: 0 } })
-            }
-          })
 
           const dataForD3 = convertToD3Compatible(dataFroGraph)
 
