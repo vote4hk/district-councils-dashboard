@@ -361,7 +361,10 @@ export default props => {
 
     if (windowWidth) {
       setDimensions({
-        width: Math.max(windowWidth - 32, d3Container.current.clientWidth),
+        width: Math.min(
+          992,
+          Math.max(windowWidth - 32, d3Container.current.clientWidth)
+        ),
       })
     }
   }
