@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import SearchTab from 'components/organisms/SearchTab'
 import { withTranslation } from 'react-i18next'
 import HeadAlert from './HeadAlert'
-import CountdownDate from './CountdownDate'
+// import CountdownDate from './CountdownDate'
 import CenterText from './CenterText'
 import VoteTurnouts from 'components/organisms/VoteTurnouts'
 import axios from 'axios'
@@ -36,7 +36,7 @@ const StyledSearchTab = styled(SearchTab)`
 `
 
 const IndexPage = props => {
-  const { t } = props
+  // const { t } = props
 
   const [turnoutsData, setTurnoutsData] = React.useState({})
 
@@ -80,7 +80,7 @@ const IndexPage = props => {
         return (
           <>
             <HeadAlert data={data} />
-            <CountdownDate t={t} />
+            {/* <CountdownDate t={t} /> */}
             <Container>
               <CenterText data={data} />
               <StyledSearchTab />
