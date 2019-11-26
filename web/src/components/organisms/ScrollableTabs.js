@@ -9,6 +9,7 @@ import SwipeableViews from 'react-swipeable-views'
 
 const StyledAppBar = styled(AppBar)`
   && {
+    z-index: 0;
     box-shadow: none;
     background: white;
     .MuiTabs-indicator {
