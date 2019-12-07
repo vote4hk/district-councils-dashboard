@@ -50,6 +50,7 @@ class DCCAElectionHistories extends Component {
         political_affiliation
         political_affiliation_en
         political_affiliation_zh
+        nominate_status
       }
     }
     dcd_candidates_aggregate_${year}_${code}: dcd_candidates_aggregate(

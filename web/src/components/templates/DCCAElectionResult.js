@@ -92,9 +92,9 @@ const DCCAElectionResult = props => {
   const IMAGE_HOST_URI =
     process.env.REACT_APP_HOST_URI || 'https://hkvoteguide.io'
 
-  const sortedCandidates = electionResult.candidates.sort(
-    (a, b) => b.votes - a.votes
-  )
+  const sortedCandidates = electionResult.candidates
+    .filter(c => c.nominate_status !== 'disqualified')
+    .sort((a, b) => b.votes - a.votes)
 
   const [imageLoadError, setImageLoadError] = useState(true)
   const currentLanguage = getCurrentLanguage()
