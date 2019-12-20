@@ -106,7 +106,7 @@ export default props => {
         const newVoters = groupedByType['NEW_VOTERS'][0].count
         const totalVoters = groupedByType['VOTERS'][0].count
         if (newVoters / totalVoters > max) {
-          max = _.round(newVoters / totalVoters, 4)
+          max = _.round(newVoters / (totalVoters - newVoters), 4)
           meta.mostIncreasedGroup = {
             gender,
             age,
