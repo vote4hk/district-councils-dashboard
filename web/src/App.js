@@ -14,6 +14,7 @@ import { ContextStoreProvider } from 'ContextStore'
 import withTracker from './WithTracker'
 import i18n from 'i18n'
 import { fireEvent } from 'utils/ga_fireevent'
+import PrivacyPage from 'components/pages/privacy'
 
 const IndexPage = loadable(() =>
   import(/* webpackPrefetch: true */ 'components/pages/landing')
@@ -117,6 +118,7 @@ const LangSwitch = props => {
   return (
     <Switch>
       <Route exact path={path} component={withTracker(IndexPage)} />
+      <Route path={`${path}/privacy`} component={withTracker(PrivacyPage)} />
       <Route
         path={`${path}/profile/:name/:uuid`}
         component={withTracker(ProfilePage)}
@@ -182,6 +184,7 @@ const App = props => {
                       <Route path="/(en|zh)?">
                         <LangSwitch />
                       </Route>
+
                       <Route
                         exact
                         path="/"

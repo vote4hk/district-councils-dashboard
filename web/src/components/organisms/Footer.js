@@ -108,7 +108,16 @@ function Footer(props) {
               {t('thirdParty.dfo')}
             </StyledFooterLink>
           </LinkBox>
-
+          <LinkBox>
+            <DefaultLink
+              onClick={
+                () => props.history.push(`/${currentLanguage}/privacy`)
+                // console.log(props)
+              }
+            >
+              Privacy
+            </DefaultLink>
+          </LinkBox>
           <LinkBox>
             <div
               className="fb-like"
