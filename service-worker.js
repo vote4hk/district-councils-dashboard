@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "https://vote4.hk/precache-manifest.6a52c47f3319de4656210c940953787e.js"
+  "https://dce2019.vote4.hk/precache-manifest.3b4b2259e3d748bfe45bc6ca6c2f37ed.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("https://vote4.hk/index.html", {
+workbox.routing.registerNavigationRoute("https://dce2019.vote4.hk/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });

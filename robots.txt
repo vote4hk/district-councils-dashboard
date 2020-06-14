@@ -1,3 +1,3 @@
 User-agent: *
 Disallow:
-Sitemap: https://vote4.hk/sitemap.xml
+Sitemap: https://dce2019.vote4.hk/sitemap.xml
