@@ -23,11 +23,13 @@ jobs:
       deploy:
         provider: pages
         skip-cleanup: true
-        repo: hkvoteguide/hkvoteguide.github.io
-        fqdn: vote4.hk
+        #repo: hkvoteguide/hkvoteguide.github.io
+        fqdn: dce2019.vote4.hk
         github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
         keep-history: true
-        committer_from_gh: true
+        # committer_from_gh: true
+        name: "Deploy Bot"
+        email: "bot@vote4.hk"
         target_branch: master
         local-dir: web/build # the local dir is relative to root and ignoring the one set with before_install
         on:
