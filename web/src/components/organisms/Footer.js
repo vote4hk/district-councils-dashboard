@@ -139,7 +139,7 @@ function Footer(props) {
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fvote4.hk%2F&amp;src=sdkpreparse"
+                href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdce2019.vote4.hk%2F&amp;src=sdkpreparse"
                 className="fb-xfbml-parse-ignore"
               >
                 Share

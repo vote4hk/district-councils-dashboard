@@ -1,6 +1,6 @@
 # 2019區議會選舉｜投票指南 ✋🏻🧡⚡
 
-This is the repository for [vote4.hk](https://vote4.hk)
+This is the repository for [vote4.hk](https://dce2019.vote4.hk)
 
 ## About us
 
