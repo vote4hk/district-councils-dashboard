@@ -13,7 +13,7 @@
     "csvtojson": "^2.0.10",
     "dotenv": "^8.0.0",
     "json2csv": "^4.5.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "request": "^2.88.0"
   },
   "devDependencies": {
