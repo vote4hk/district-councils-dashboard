@@ -6,7 +6,7 @@
     "pretest": "eslint ."
   },
   "dependencies": {
-    "async": "^3.0.1",
+    "async": "^3.2.2",
     "bluebird": "^3.5.2",
     "chalk": "^2.4.2",
     "commander": "^2.18.0",
